@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71FC6DBF-22D2-435C-B14F-F5746BB1F6B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BrownRecognitionAPITestSuite</RootNamespace>
+    <AssemblyName>BrownRecognitionAPITestSuite</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoAPI">
+      <HintPath>..\libs\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\libs\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BrownRecognitionAPITest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libs\Geom\Geom.csproj">
+      <Project>{25C89864-6C12-4AAC-864C-D52174926B1F}</Project>
+      <Name>Geom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libs\Inq\Inq.csproj">
+      <Project>{F3D6D741-D9FA-4D76-A2D8-AE4CE3BAA31A}</Project>
+      <Name>Inq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libs\Math\CharRecognizer\CharRecognizer.csproj">
+      <Project>{AA0998D1-6EA3-4786-B7DE-6E7F260369B0}</Project>
+      <Name>CharRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrownRecognitionAPI\BrownRecognitionAPI.csproj">
+      <Project>{22684A3D-586A-4574-BAA0-60448710758F}</Project>
+      <Name>BrownRecognitionAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrownRecognitionCommon\BrownRecognitionCommon.csproj">
+      <Project>{8B184537-FB39-4E67-BF61-B3B8E27B336A}</Project>
+      <Name>BrownRecognitionCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShapeRecognizer\ShapeRecognizer.csproj">
+      <Project>{B77C39FF-32D4-4D6B-ABF0-4ED4F758ECA8}</Project>
+      <Name>ShapeRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemplateRecognizer\TemplateRecognizer.csproj">
+      <Project>{1547EEA6-1D41-4059-BA0B-102CDFC5A541}</Project>
+      <Name>TemplateRecognizer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

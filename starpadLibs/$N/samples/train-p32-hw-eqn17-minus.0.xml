@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="minus~32~17~0" Subject="32" NumPts="17">
+	<Stroke index="1">
+		<Point X="350" Y="115" T="-1" />
+		<Point X="352" Y="115" T="-1" />
+		<Point X="354" Y="114" T="-1" />
+		<Point X="356" Y="114" T="-1" />
+		<Point X="358" Y="114" T="-1" />
+		<Point X="360" Y="114" T="-1" />
+		<Point X="361" Y="114" T="-1" />
+		<Point X="362" Y="114" T="-1" />
+		<Point X="363" Y="114" T="-1" />
+		<Point X="364" Y="114" T="-1" />
+		<Point X="365" Y="114" T="-1" />
+		<Point X="366" Y="115" T="-1" />
+		<Point X="366" Y="116" T="-1" />
+		<Point X="367" Y="116" T="-1" />
+		<Point X="367" Y="117" T="-1" />
+		<Point X="368" Y="117" T="-1" />
+		<Point X="369" Y="116" T="-1" />
+	</Stroke>
+</Gesture>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMathInterface", "MSMathInterface.csproj", "{3585C21D-EF26-4BB6-B52E-0F893AFBCE68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExprStringEngine", "..\ExprStringEngine\ExprStringEngine.csproj", "{34C97A17-A678-4CE9-BBBE-68F7640A4143}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3585C21D-EF26-4BB6-B52E-0F893AFBCE68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3585C21D-EF26-4BB6-B52E-0F893AFBCE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3585C21D-EF26-4BB6-B52E-0F893AFBCE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3585C21D-EF26-4BB6-B52E-0F893AFBCE68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

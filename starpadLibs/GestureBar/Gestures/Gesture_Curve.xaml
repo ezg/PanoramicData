@@ -1,0 +1,11 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="GestureBarLib4.Gesture_Curve"
+	x:Name="UserControl"
+	Width="640" Height="480">
+
+	<Grid x:Name="LayoutRoot" Width="57" Height="55">
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Margin="5.5,3.25,6.623,6.25" Data="M6,3.75 C13.628265,5.5448858 32,8 40,16 48,24 50.5,42.25 49.75,48.25"/>
+	</Grid>
+</UserControl>

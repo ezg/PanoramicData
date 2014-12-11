@@ -1,0 +1,14 @@
+select 
+	ROW_NUMBER() OVER (ORDER BY main_playerId) as id,
+	t.id as teamId,
+	main_playerId as playerLahmanId,
+	main_teamId as teamLahmanId, 
+	main_yearId as year,
+	salaries_salary as salary
+into 
+	lahman.fact
+from 
+	baseball.baseball_main m , 
+	baseball.team t
+where 
+	t.teamId = m.main_teamId and t.yearId = m.main_yearId

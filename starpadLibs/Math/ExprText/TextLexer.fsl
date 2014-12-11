@@ -1,0 +1,46 @@
+{
+module starPadSDK.MathExpr.TextInternals.Lexer
+
+open System
+open starPadSDK.MathExpr.TextInternals.Parser
+}
+
+let whitespace = [' ' '\t']
+
+rule token = parse
+    | ['0'-'9']+'.'['0'-'9']*(['e' 'E']['-' '+']?['0'-'9']+)? { DOUBLE(Double.Parse (lexbuf.Lexeme.ToString())) }
+    | ['0'-'9']+ { INTEGER(lexbuf.Lexeme.ToString()) }
+    | "infinit2" { DOUBLE(Double.PositiveInfinity) }
+    | "NaN" { DOUBLE(Double.NaN) }
+    | "<=" {LE} | ">=" {GE} | "/=" {NE} | "!=" {NE}
+    | "+/-" { PM }
+    | "-/+" { MP }
+    | "<!" { ERRS }
+    | "!>" { ERRE }
+    | "[" {LSB} | "]" {RSB} | "_" {US} | "<" {LT} | ">" {GT} | "," {COMMA} | "(" {LP} | ")" {RP} | "{" {LCB} | "}" {RCB} | "=" {EQ} | "!" {FACT}
+    | "+" {PLUS} | "-" {MINUS} | "*" {TIMES} | "/" {DIVIDE} | "^" {POW}
+    | "|" {VB} | "<<" {LLT} | ">>" {GGT}
+    | whitespace+ { token lexbuf }
+    | '\n' { lexbuf.EndPos <- lexbuf.EndPos.NextLine; token lexbuf }
+    | "LetterSym" { LETTERSYM }
+    | "GroupedLetterSym" { GROUPEDLETTERSYM }
+    | "WordSym" { WORDSYM }
+    | "NULL" { NULL }
+    | "i"|"e"|"pi"|"infinity"|"naturals"|"integers"|"rationals"|"reals"|"complexes"|"del"|"re"|"im"|"arg"|"magnitude"|"ln"|"log"|"limit"|"integral"|"summation"|"differentiald"|"partiald"|"root"|"sin"|"cos"|"tan"|"sec"|"csc"|"cot"|"asin"|"acos"|"atan"|"asec"|"acsc"|"acot"|"sinh"|"cosh"|"tanh"|"sech"|"csch"|"coth"|"asinh"|"acosh"|"atanh"|"asech"|"acsch"|"acoth"|"plus"|"minus"|"plusminus"|"minusplus"|"times"|"divide"|"mod"|"power"|"factorial"|"assignment"|"definition"|"equals"|"greaterthan"|"lessthan"|"greaterequals"|"lessequals"|"notequals"|"True"|"False"|"lognot"|"logand"|"logor"|"floor"|"ceiling"|"dot"|"cross"|"index"|"subscript"|"elementof"|"subsetof"|"supersetof"|"subseteq"|"superseteq"|"setexplicit"|"setdef" { WKS(lexbuf.Lexeme.ToString()) }
+    | "\"" { ID(string lexbuf.StartPos "" lexbuf) }
+    | [^'[' ']' '_' '<' '>' ',' '(' ')' '{' '=' '}' '!' '+' '-' '*' '/' '^' ' ' '\t' '\n' '!' '|' '\"']+ { ID(lexbuf.Lexeme.ToString()) }
+    | eof { EOF }
+and string pos s = parse
+    | "\\" ['"' '\\'] { let s' = s + (match lexbuf.Lexeme.ToString() with
+                                      | "\\\"" -> "\""
+                                      | "\\\\" -> "\\"
+                                      | _ -> "") in
+                        string pos s' lexbuf }
+    | "\"" { s }
+    | "\n" { lexbuf.EndPos <- lexbuf.EndPos.NextLine;
+             string pos (s + "\n") lexbuf }
+    | eof { failwithf "end of input in string started at or near %A" pos }
+    | _ { string pos (s + lexbuf.Lexeme.ToString()) lexbuf }
+
+{
+}

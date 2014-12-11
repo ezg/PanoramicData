@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Experiment 
+GestureSet="MMG" 
+SamplesDirectory="..\..\multistroke-ui-corpus" 
+SearchMethod="GSS"
+RotationInvariant="false" 
+ProcessUnistrokes="false"
+Include1D="true"
+Include2D="true"
+TestFor1D="true"
+UseUniformScaling="true"
+MatchSameNumberOfStrokes="true" 
+DoStartAngleComparison="true" 
+StartAngleIndex="8" 
+StartAngleThreshold="30"
+NumResamplePoints="96" 
+>
+</Experiment>
+

@@ -1,0 +1,173 @@
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i}{
+\section{\-Brown\-Recognition\-A\-P\-I.\-A\-P\-I \-Class \-Reference}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i}\index{\-Brown\-Recognition\-A\-P\-I.\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I.\-A\-P\-I}}
+}
+
+
+\-Entry point for all calls to the \-Brown\-Recognition \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I}.  
+
+
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac40d9358eb8dc39addc178098afabe13}{\-Get\-Brown\-Recognition\-Settings} ()
+\begin{DoxyCompactList}\small\item\em \-Returns all the \-Brown \-Recognition settings as an \-X\-M\-L string (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). \end{DoxyCompactList}\item 
+static \-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape} $>$ \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac7a7ade4b50ffe3e1b6608a8ced64560}{\-Get\-Clean\-Template\-Shapes} (\hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Template} brown\-Template)
+\begin{DoxyCompactList}\small\item\em \-Creates a list of clean \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} according to the template that got passed in. \-Every returned shape has a list of \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke}. \-Their \-Data property can be used to backtrack the original stroke object of the application. \end{DoxyCompactList}\item 
+static \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape} \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}{\-Recognize\-Brown\-Shape} (\hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke} brown\-Input\-Stroke)
+\begin{DoxyCompactList}\small\item\em \-Takes a single stroke and tries to recognized it as a primitive shape. \end{DoxyCompactList}\item 
+static \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape} \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ab57e61c61b5f5727cc5a5c3c19059f92}{\-Recognize\-Brown\-Shape} (\-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape} $>$ brown\-Shapes)
+\begin{DoxyCompactList}\small\item\em \-Attempts to recognize a primitive shape from a set of lines. \end{DoxyCompactList}\item 
+static \-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Template} $>$ \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_a9f1a5fa344eca4e35f70fbc35fcc21ad}{\-Recognize\-Brown\-Template} (\-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape} $>$ brown\-Shapes)
+\begin{DoxyCompactList}\small\item\em \-Attempts to recognize templates from a set of shapes. \-This method can be used to provide some feedback to the user. \-Every new stroke that a user draws should first be processed with one of the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}{\-Recognize\-Brown\-Shape()} methods. \-All pre-\/recognized shapes (plus the new one) can then be passed into this method. \-Editing templates can be achieved by converting allready reognized template blocks back into a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} (set \-Data property of the underlying \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke} to backtrack). \end{DoxyCompactList}\item 
+static \-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Template} $>$ \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_a6005442b6ccd7f1c547f24f5ebfb138f}{\-Recognize\-Brown\-Template} (\-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke} $>$ strokes)
+\begin{DoxyCompactList}\small\item\em \-Attempts to recognize templates from a set of strokes. \-It can be used to do direct template recognition (without feedback). \-This method will be slower, since every input stroke will first be passed to the shape recognizer. \-It is not intended to be called on every new stroke. \-Editing templates can be achieved by converting allready reognized template blocks back into a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} (set \-Data property of the underlying \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke} to backtrack). \end{DoxyCompactList}\item 
+static void \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_a31048d83acc9c8a826cba133fd2c6b45}{\-Set\-Brown\-Recognition\-Settings} (string xml)
+\begin{DoxyCompactList}\small\item\em \-Sets all the \-Brown \-Recognition settings (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Entry point for all calls to the \-Brown\-Recognition \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I}. 
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_ac40d9358eb8dc39addc178098afabe13}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Get\-Brown\-Recognition\-Settings@{\-Get\-Brown\-Recognition\-Settings}}
+\index{\-Get\-Brown\-Recognition\-Settings@{\-Get\-Brown\-Recognition\-Settings}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Get\-Brown\-Recognition\-Settings}]{\setlength{\rightskip}{0pt plus 5cm}static string \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Get\-Brown\-Recognition\-Settings (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_ac40d9358eb8dc39addc178098afabe13}
+
+
+\-Returns all the \-Brown \-Recognition settings as an \-X\-M\-L string (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). 
+
+\begin{DoxyReturn}{\-Returns}
+\-X\-M\-L string containing all the current setting values.
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_ac7a7ade4b50ffe3e1b6608a8ced64560}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Get\-Clean\-Template\-Shapes@{\-Get\-Clean\-Template\-Shapes}}
+\index{\-Get\-Clean\-Template\-Shapes@{\-Get\-Clean\-Template\-Shapes}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Get\-Clean\-Template\-Shapes}]{\setlength{\rightskip}{0pt plus 5cm}static \-List$<${\bf \-Brown\-Shape}$>$ \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Get\-Clean\-Template\-Shapes (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Brown\-Template}}]{brown\-Template}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_ac7a7ade4b50ffe3e1b6608a8ced64560}
+
+
+\-Creates a list of clean \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} according to the template that got passed in. \-Every returned shape has a list of \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke}. \-Their \-Data property can be used to backtrack the original stroke object of the application. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em brown\-Template} & \-The template that needs to be cleaned up.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-List of clean \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape}.
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Recognize\-Brown\-Shape@{\-Recognize\-Brown\-Shape}}
+\index{\-Recognize\-Brown\-Shape@{\-Recognize\-Brown\-Shape}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Recognize\-Brown\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf \-Brown\-Shape} \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Recognize\-Brown\-Shape (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Brown\-Input\-Stroke}}]{brown\-Input\-Stroke}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}
+
+
+\-Takes a single stroke and tries to recognized it as a primitive shape. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em brown\-Input\-Stroke} & \-The input stroke. \-The \-Data property can be filled with an object that allows users to backtrack the original stroke object of their application. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} containing all the information about the recognized shape or null if no shape was recognized. \-The returned shape will contain the \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke} which was used to build this shape (application strokes can be backtracked with the \-Data property).
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_ab57e61c61b5f5727cc5a5c3c19059f92}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Recognize\-Brown\-Shape@{\-Recognize\-Brown\-Shape}}
+\index{\-Recognize\-Brown\-Shape@{\-Recognize\-Brown\-Shape}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Recognize\-Brown\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf \-Brown\-Shape} \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Recognize\-Brown\-Shape (
+\begin{DoxyParamCaption}
+\item[{\-List$<$ {\bf \-Brown\-Shape} $>$}]{brown\-Shapes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_ab57e61c61b5f5727cc5a5c3c19059f92}
+
+
+\-Attempts to recognize a primitive shape from a set of lines. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em brown\-Shapes} & \-The set of \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} that will be used to try to build a shape out of it. \-Only \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} of type \-Straight\-Line or \-Polyline are considered. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} containing all the information about the recognized shape or null if no shape was recognized. \-The returned shape will contain all \-Brown\-Recognition\-Common.\-Brown\-Input\-Strokes that were used to build this shape (application strokes can be backtracked with the \-Data property).
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_a9f1a5fa344eca4e35f70fbc35fcc21ad}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Recognize\-Brown\-Template@{\-Recognize\-Brown\-Template}}
+\index{\-Recognize\-Brown\-Template@{\-Recognize\-Brown\-Template}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Recognize\-Brown\-Template}]{\setlength{\rightskip}{0pt plus 5cm}static \-List$<${\bf \-Brown\-Template}$>$ \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Recognize\-Brown\-Template (
+\begin{DoxyParamCaption}
+\item[{\-List$<$ {\bf \-Brown\-Shape} $>$}]{brown\-Shapes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_a9f1a5fa344eca4e35f70fbc35fcc21ad}
+
+
+\-Attempts to recognize templates from a set of shapes. \-This method can be used to provide some feedback to the user. \-Every new stroke that a user draws should first be processed with one of the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}{\-Recognize\-Brown\-Shape()} methods. \-All pre-\/recognized shapes (plus the new one) can then be passed into this method. \-Editing templates can be achieved by converting allready reognized template blocks back into a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} (set \-Data property of the underlying \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke} to backtrack). 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em brown\-Shapes} & \-The set of \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} that will be used to try to recognize a template out of it. \-To get a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape}, one of the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i_ac7688bb14d67362c0b3082279dff8d51}{\-Recognize\-Brown\-Shape()} methods should be called.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-List of \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Recognition\-Common.\-Brown\-Template} that were recognized. \-The templates contain all the shapes that were used to reocognize it. 
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_a6005442b6ccd7f1c547f24f5ebfb138f}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Recognize\-Brown\-Template@{\-Recognize\-Brown\-Template}}
+\index{\-Recognize\-Brown\-Template@{\-Recognize\-Brown\-Template}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Recognize\-Brown\-Template}]{\setlength{\rightskip}{0pt plus 5cm}static \-List$<${\bf \-Brown\-Template}$>$ \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Recognize\-Brown\-Template (
+\begin{DoxyParamCaption}
+\item[{\-List$<$ {\bf \-Brown\-Input\-Stroke} $>$}]{strokes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_a6005442b6ccd7f1c547f24f5ebfb138f}
+
+
+\-Attempts to recognize templates from a set of strokes. \-It can be used to do direct template recognition (without feedback). \-This method will be slower, since every input stroke will first be passed to the shape recognizer. \-It is not intended to be called on every new stroke. \-Editing templates can be achieved by converting allready reognized template blocks back into a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} (set \-Data property of the underlying \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Recognition\-Common.\-Brown\-Input\-Stroke} to backtrack). 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em strokes} & \-The input strokes. \-The \-Data property can be filled with an object that allows users to backtrack the original stroke object of their application. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_a_p_i_1_1_a_p_i_a31048d83acc9c8a826cba133fd2c6b45}{
+\index{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}!\-Set\-Brown\-Recognition\-Settings@{\-Set\-Brown\-Recognition\-Settings}}
+\index{\-Set\-Brown\-Recognition\-Settings@{\-Set\-Brown\-Recognition\-Settings}!BrownRecognitionAPI::API@{\-Brown\-Recognition\-A\-P\-I\-::\-A\-P\-I}}
+\subsubsection[{\-Set\-Brown\-Recognition\-Settings}]{\setlength{\rightskip}{0pt plus 5cm}static void \-Brown\-Recognition\-A\-P\-I.\-A\-P\-I.\-Set\-Brown\-Recognition\-Settings (
+\begin{DoxyParamCaption}
+\item[{string}]{xml}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_a_p_i_1_1_a_p_i_a31048d83acc9c8a826cba133fd2c6b45}
+
+
+\-Sets all the \-Brown \-Recognition settings (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em xml} & \-X\-M\-L string containing all the setting values.\\
+\hline
+\end{DoxyParams}

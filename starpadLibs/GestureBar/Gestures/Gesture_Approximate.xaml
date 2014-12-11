@@ -1,0 +1,74 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Gesture_Approximate"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Width="65" Height="65">
+
+	<Grid x:Name="LayoutRoot" Width="58" Height="50">
+		<Canvas x:Name="ContextLayer" Margin="0,0,-14.5,-7.75">
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="9.483" Height="15.807" Canvas.Left="3.625" Canvas.Top="22.581" Data="M11,27.25 C11.541667,26.958333 12.048439,26.589591 12.625,26.375 12.98502,26.241004 13.365852,26.125 13.75,26.125 14.013523,26.125 14.259428,26.267438 14.5,26.375 14.80667,26.512115 15.137463,26.637463 15.375,26.875 16.212279,27.712279 17.116652,31.625 13.125,31.625 13.208333,31.541667 13.272446,31.433065 13.375,31.375 13.524497,31.290356 13.704255,31.231028 13.875,31.25 14.098009,31.274779 14.321904,31.363511&#xd;&#xa;14.5,31.5 14.830715,31.753453 15.071631,32.123443 15.25,32.5 16.255021,34.621711 15.466551,38.338121 9.25,36.375"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="2.946" Height="11.883" Canvas.Left="16.462" Canvas.Top="27.274" Data="M21.25,29.625 C21.25,31.166667 21.392139,32.7149 21.25,34.25 21.181927,34.98519 20.879656,35.681971 20.625,36.375 20.483462,36.760188 20.291667,37.125 20.125,37.5 20.041667,37.458333 19.958333,37.416667 19.875,37.375"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="4.745" Height="10.042" Canvas.Left="22.89" Canvas.Top="28.454" Data="M25.625,30.5 C25.748782,34.089689 23.532731,35.851933 28.125,37"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="13.443" Height="4.139" Canvas.Left="15.857" Canvas.Top="26.982" Data="M19.375,31.5 C22.672302,27.902943 20.936201,29.81224 26.25,30.875 27.944631,31.213926 28.081658,30.744667 29.5,29.5"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="7.703" Height="11.381" Canvas.Left="31.118" Canvas.Top="28.454" Data="M37.375,30.5 C35.636543,33.03525 33.566017,35.389972 32,38"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="8.458" Height="10.879" Canvas.Left="31.42" Canvas.Top="30.119" Data="M32.25,31.75 C33.675313,32.447494 34.76667,32.550009 35.375,34.375 36.198458,36.845375 34.929868,38.343779 38.25,38.875"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="4.29" Height="6.976" Canvas.Left="29.999" Canvas.Top="21.25" Data="M31.125,25.125 C32.685813,25.864333 33.682022,24.453933 32.375,28.375 32.282069,28.653794 30.201211,30.597578 31.5,28 32.346693,28.564462 32.586122,28.522815 33.625,28.625"/>
+		</Canvas>
+		<Canvas x:Name="DetailsLayer" RenderTransformOrigin="0.5,0.5">
+			<Canvas.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Canvas.RenderTransform>
+			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="7.42" Data="M44.25,50 L39,44.75 41.75,41.75 32.75,41 33.5,50 36,47.25 41.75,53 z" Height="7.67" Canvas.Left="45.066" Canvas.Top="38.441">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="48.108"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Path.RenderTransform>
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.854,0.16" StartPoint="0.146,0.84">
+						<GradientStop Color="#FFFF0000" Offset="1"/>
+						<GradientStop Color="#FFFFA0A0" Offset="0"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Rectangle Stroke="#FF000000" RadiusX="4.5" RadiusY="4.5" x:Name="BackgroundRectangle" RenderTransformOrigin="0.5,0.5" Width="69.667" Height="15" Canvas.Top="43.692" Canvas.Left="10.226">
+				<Rectangle.BitmapEffect>
+					<BitmapEffectGroup>
+						<BevelBitmapEffect BevelWidth="2"/>
+					</BitmapEffectGroup>
+				</Rectangle.BitmapEffect>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.5,-0.373" StartPoint="0.5,1.373">
+						<GradientStop Color="#FF6BD2FE" Offset="0"/>
+						<GradientStop Color="#FFFFFFFF" Offset="1"/>
+						<GradientStop Color="#FFCEF0FF" Offset="0.51"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<TextBlock FontSize="6" Text="Double-line arrow" TextWrapping="Wrap" Width="95.75" Height="7.173" Canvas.Left="20.566" Canvas.Top="46.566"/>
+		</Canvas>
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" HorizontalAlignment="Right" Margin="0,0,4.625,16.516" VerticalAlignment="Bottom" Width="10" Height="1.148" Data="M43.375,32.375 C46.378419,32.198328 49.439286,32.692374 52.375,32.375"/>
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" HorizontalAlignment="Right" Margin="0,0,3.25,12.625" VerticalAlignment="Bottom" Width="11.25" Height="1.185" Data="M43.5,36.375 C46.86302,36.245653 50.436821,36.032257 53.75,36.375"/>
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" HorizontalAlignment="Right" Margin="0,0,-0.512,9.75" VerticalAlignment="Bottom" Width="7.012" Height="10" Data="M51.5,30.25 C52.297761,30.808432 57.799557,33.077659 57.5,34.875 57.245132,36.404209 53.647491,38.151972 52.25,39.25"/>
+	</Grid>
+</UserControl>

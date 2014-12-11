@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="PanoramicData.view.filter.Styler"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PanoramicData.model.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="35">
+
+    <d:DesignProperties.DataContext>
+        <local:FilterHolderViewModel>
+            <local:FilterHolderViewModel.Color>Blue</local:FilterHolderViewModel.Color>
+            <local:FilterHolderViewModel.Margin>0</local:FilterHolderViewModel.Margin>
+            <local:FilterHolderViewModel.Label>Test gLabel</local:FilterHolderViewModel.Label>
+            <local:FilterHolderViewModel.NoChrome>False</local:FilterHolderViewModel.NoChrome>
+        </local:FilterHolderViewModel>
+    </d:DesignProperties.DataContext>
+    
+    <Grid
+        Background="#01000000" Name="stylerGrid"
+        Width="35"
+        Height="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Rectangle 
+            Grid.RowSpan="2"
+            Name="stylerGridRectangle"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            Margin="0,0,0,0"
+            Visibility="Collapsed"
+            Stroke="{Binding Brush}" StrokeThickness="2"/>
+        
+        <Grid 
+            Grid.Row="0"
+            Margin="2" Height="30">
+            <Path 
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,0"
+                Name="stylerGridP1"
+                Fill="{Binding Brush}"
+                Data="m 18.437756,26.55229 c 1.778183,0 3.556367,0 5.33455,0 0,-4.8256 0,-9.6513 0,-14.4769 -1.778183,0 -3.556367,0 -5.33455,0 0,4.8256 0,9.6513 0,14.4769 z m -13.3363897,0 c 0,-1.9983 0,-3.9966 0,-5.9949 1.7781867,0 3.5563733,0 5.3345597,0 0,1.9983 0,3.9966 0,5.9949 -1.7781864,0 -3.556373,0 -5.3345597,0 z m 6.6681897,0 c 1.778187,0 3.556373,0 5.33456,0 0,-3.7756 0,-7.5513 0,-11.3269 -1.778187,0 -3.556373,0 -5.33456,0 0,3.7756 0,7.5513 0,11.3269 z m 13.34706,-26.61570035 c 0.46281,0.8514 0.92561,1.70270005 1.38846,2.55410005 -2.85099,3.7442 -5.70702,7.4845 -8.55469,11.2312003 -1.85484,-2.6152 -3.71797,-5.2245003 -5.57623,-7.8373003 -1.30124,3.4554 -2.5939797,6.9140003 -3.9015497,10.3670003 -0.89262,-0.5782 -1.94398,-2.5084 -2.88398,-3.6143 -1.01744,2.879 -2.03486,5.7581 -3.0523,8.6371 -0.33854,0.8691 -1.3854,-0.9066 -2.03125003,-1.1846 1.49642003,-4.2207 2.95182003,-8.4559 4.47890003,-12.6657003 0.97391,1.2691 1.91576,2.5623 2.86649,3.8487003 1.33302,-3.5467003 2.7139797,-7.0754003 4.0086097,-10.63640035 2.03389,2.88880005 4.09166,5.76070005 6.13609,8.64200005 2.37383,-3.1139 4.74762,-6.2279 7.12145,-9.34180005 z">
+            </Path>
+        </Grid>
+
+        <TextBlock  
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Margin="0,-2,0,2"
+            Grid.Row="1"
+            Text="Style"
+            Foreground="#bb000000"
+            FontSize="10"/>
+    </Grid>
+</UserControl>

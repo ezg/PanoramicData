@@ -1,0 +1,17 @@
+select 
+	t.*,
+	tf.id as franchiseId
+into 
+	lahman.dim_team
+from 
+	baseball.team t,
+	baseball.team_franchises tf
+where 
+	t.franchID = tf.franchID
+
+select 
+	*
+into 
+	lahman.dim_franchise
+from 
+	baseball.team_franchises

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="PanoramicData.view.menu.SlideMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="100"
+             d:DesignHeight="100" d:DesignWidth="1400">
+    <Grid>
+        <Rectangle Fill="#ffd5d5d5"/>
+        <Rectangle Fill="#ff333b48" Height="1" VerticalAlignment="Top"/>
+
+        <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
+               FontSize="40"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Name="contentPanel"  Margin="10">
+
+
+        </StackPanel>
+    </Grid>
+</UserControl>

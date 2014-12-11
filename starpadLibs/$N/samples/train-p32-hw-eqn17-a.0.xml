@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="a~32~17~0" Subject="32" NumPts="52">
+	<Stroke index="1">
+		<Point X="655" Y="118" T="-1" />
+		<Point X="653" Y="119" T="-1" />
+		<Point X="650" Y="121" T="-1" />
+		<Point X="647" Y="122" T="-1" />
+		<Point X="645" Y="124" T="-1" />
+		<Point X="643" Y="126" T="-1" />
+		<Point X="641" Y="128" T="-1" />
+		<Point X="639" Y="129" T="-1" />
+		<Point X="638" Y="131" T="-1" />
+		<Point X="637" Y="133" T="-1" />
+		<Point X="636" Y="135" T="-1" />
+		<Point X="636" Y="137" T="-1" />
+		<Point X="635" Y="138" T="-1" />
+		<Point X="636" Y="139" T="-1" />
+		<Point X="636" Y="140" T="-1" />
+		<Point X="639" Y="142" T="-1" />
+		<Point X="641" Y="142" T="-1" />
+		<Point X="642" Y="141" T="-1" />
+		<Point X="644" Y="141" T="-1" />
+		<Point X="646" Y="140" T="-1" />
+		<Point X="648" Y="140" T="-1" />
+		<Point X="651" Y="139" T="-1" />
+		<Point X="652" Y="138" T="-1" />
+		<Point X="657" Y="135" T="-1" />
+		<Point X="658" Y="134" T="-1" />
+		<Point X="659" Y="133" T="-1" />
+		<Point X="660" Y="133" T="-1" />
+		<Point X="660" Y="132" T="-1" />
+		<Point X="661" Y="131" T="-1" />
+		<Point X="661" Y="130" T="-1" />
+		<Point X="662" Y="130" T="-1" />
+		<Point X="662" Y="131" T="-1" />
+		<Point X="662" Y="132" T="-1" />
+		<Point X="663" Y="135" T="-1" />
+		<Point X="663" Y="136" T="-1" />
+		<Point X="663" Y="138" T="-1" />
+		<Point X="663" Y="140" T="-1" />
+		<Point X="663" Y="142" T="-1" />
+		<Point X="664" Y="144" T="-1" />
+		<Point X="664" Y="147" T="-1" />
+		<Point X="664" Y="150" T="-1" />
+		<Point X="665" Y="158" T="-1" />
+		<Point X="665" Y="160" T="-1" />
+		<Point X="665" Y="162" T="-1" />
+		<Point X="665" Y="163" T="-1" />
+		<Point X="665" Y="164" T="-1" />
+		<Point X="665" Y="165" T="-1" />
+		<Point X="665" Y="166" T="-1" />
+		<Point X="666" Y="165" T="-1" />
+		<Point X="666" Y="164" T="-1" />
+		<Point X="666" Y="163" T="-1" />
+		<Point X="665" Y="163" T="-1" />
+	</Stroke>
+</Gesture>

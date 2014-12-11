@@ -1,0 +1,26 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:StarPadSDK_Inq="clr-namespace:starPadSDK.Inq;assembly=Inq"
+    x:Class="MathRecoScaffold.Window1"
+    Title="Window1" Height="300" Width="300" Loaded="Window_Loaded" xmlns:MathRecoScaffold="clr-namespace:MathRecoScaffold"
+    xmlns:WPFHelp="clr-namespace:starPadSDK.WPFHelp;assembly=WPFHelp">
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="File">
+				<MenuItem x:Name="reparseMenu" Header="Reparse" Click="reparseMenu_Click"/>
+        <MenuItem x:Name="newMenu" Header="New..." Click="newMenu_Click"/>
+				<MenuItem Header="Clear" x:Name="clearMenu" Click="clearMenu_Click"/>
+				<MenuItem Header="Quit" x:Name="quitMenu" Click="quitMenu_Click"/>
+			</MenuItem>
+      <MenuItem Header="Computation Engine" x:Name="_engineMenu"/>
+		</Menu>
+		<ToolBarTray DockPanel.Dock="Right" Orientation="Vertical" x:Name="alternatesTray">
+			<ToolBar x:Name="alternatesMenu" FontFamily="Times New Roman"/>
+		</ToolBarTray>
+		<Grid ClipToBounds="True" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+			<WPFHelp:ContainerVisualHost OpacityMask="{x:Null}" HorizontalAlignment="Stretch" x:Name="underlay" Width="Auto"/>
+			<StarPadSDK_Inq:InqCanvas x:Name="inqCanvas" Background="#00000000"/>
+		</Grid>
+	</DockPanel>
+</Window>

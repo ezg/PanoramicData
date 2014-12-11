@@ -1,0 +1,16 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Icon_Simplify"
+	x:Name="UserControl" Width="33.75" Height="23">
+
+	<Canvas x:Name="LayoutRoot">
+		<TextBlock Width="125" Height="47" Text="4x" TextWrapping="Wrap" Canvas.Top="-3.875" Canvas.Left="-0.5" FontFamily="Comic Sans MS"/>
+		<TextBlock Text="2" TextWrapping="Wrap" Canvas.Top="9.125" Canvas.Left="2.5" FontFamily="Comic Sans MS"/>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF000000" Width="13.5" Height="1.125" Canvas.Top="10.875" Data="M0.25,15 L12.75,14.875" Canvas.Left="-0.5"/>
+		<TextBlock Canvas.Left="16" Canvas.Top="1.375" Text="=?" TextWrapping="Wrap" FontFamily="Comic Sans MS"/>
+	</Canvas>
+</UserControl>

@@ -1,0 +1,215 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	xmlns:GestureBarLib="clr-namespace:starPadSDK.GestureBarLib"
+	x:Class="starPadSDK.GestureBarLib.GestureExplorer"
+	x:Name="UserControl"
+	Width="384" Height="284" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+
+	<UserControl.Resources>
+		<Storyboard x:Key="ShowExplorer">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.IsHitTestVisible)">
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00" Value="False"/>
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00.4000000" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.4000000" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.35"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="-73"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="DismissExplorer">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="50"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.4000000" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="ShowDisplayOnlyMode">
+			
+			
+
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="TryItParent" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="TryItRect" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="TryItLabels" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="ShowReplayButton">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.IsHitTestVisible)">
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00" Value="False"/>
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00.1000000" Value="True"/>
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00.3000000" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="HideReplayButton">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ReplayButton" Storyboard.TargetProperty="(UIElement.IsHitTestVisible)">
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00" Value="True"/>
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00.3000000" Value="False"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="IntroAnimation">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="7.122"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="7.122"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="5.765"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="5.765"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="6.5"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="6.5"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0.5"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0.5"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0.25"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="PracticeAttentionAttract">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PracticeTriangle" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:01" Value="180"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:02" Value="360"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot" RenderTransformOrigin="0.5,0.5">
+		<Grid.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform/>
+			</TransformGroup>
+		</Grid.RenderTransform>
+		<Rectangle Opacity="0" Fill="#FF000000" Stroke="#FF000000" StrokeThickness="0.5" Margin="-685,12,-592,-966" x:Name="DismissCatcher" MouseDown="DismissCatcher_MouseDown" MouseLeftButtonUp="DismissCatcher_MouseLeftButtonUp" IsHitTestVisible="False"/>
+		<Image Source="Icons/gesture_explorer_background.png" Margin="0,-13,0,13" x:Name="BackgroundVisuals" Opacity="0.39" />
+
+		<GestureBarLib:GestureExplorerDemoUnit d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Left" x:Name="DemoUnit1" Margin="0,57,0,0" VerticalAlignment="Top" Width="384" Height="200"/>
+		<InkCanvas Margin="14,0,0,22" VerticalAlignment="Bottom" Height="85" Background="{x:Null}" x:Name="TryItInkCanvas" StrokeCollected="TryItInkCanvas_StrokeCollected" Visibility="Hidden" HorizontalAlignment="Left" Width="119"/>
+		<Canvas RenderTransformOrigin="0.5,0.5" Margin="22.327,81.994,0,136.006" HorizontalAlignment="Left" Width="60">
+			<Canvas.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1.7" ScaleY="1.7"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Canvas.RenderTransform>
+		</Canvas>
+		<Canvas Margin="0,58,-224,-2" x:Name="AltRoot">
+			<Canvas x:Name="TryItContainer" Width="304" Height="167" Canvas.Top="20" Canvas.Left="223">
+				<Image Source="Icons/try_it_area.png" RenderTransformOrigin="0.5,0.5" x:Name="TryItBackground" Canvas.Left="-27" Canvas.Top="-27" >
+					<Image.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleX="0.78" ScaleY="0.75"/>
+							<SkewTransform AngleX="0" AngleY="0"/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform X="0" Y="0"/>
+						</TransformGroup>
+					</Image.RenderTransform>
+				</Image>
+				<Rectangle Opacity="0.1" Fill="#FFFFFFFF" Stroke="#FF7B7B7B" StrokeThickness="2" Height="146" x:Name="TryItRect" Width="135" Canvas.Left="7" Canvas.Top="11"/>
+				<Canvas x:Name="TryItLabels" Height="31.667" IsHitTestVisible="False" Width="135" Canvas.Left="8">
+					<TextBlock Height="18" Text="Practice" TextWrapping="Wrap" Width="94" FontSize="16" FontWeight="Bold"/>
+					<Path Fill="#FF000000" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="21.5" Height="23.167" Canvas.Left="63.42" Canvas.Top="-4.583" Data="M34.003667,13.334 L30.669999,10.000666 37.336332,4.3331004 42.335828,3.666367 46.002125,5.0001267 47.83693,7.4116028 48.668133,10.667158 47.667944,15.667486 46.668084,21.001649 51.667381,19.001168 45.668463,26.335045 39.710873,19.042838 44.585265,20.834638 44.501942,14.667515 43.668712,10.667219 41.917264,8.5303937 39.669211,7.6669965 37.336169,9.3337865 z"/>
+					<Path RenderTransformOrigin="0.5,0.5" Fill="#FF000000" Stretch="Fill" Stroke="#FF000000" x:Name="PracticeTriangle" Width="13.25" Height="15" Canvas.Left="-17.25" Canvas.Top="1.5" Data="M-4.5,9.5 L-16.75,16 -16.75,2 z">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="0"/>
+								<TranslateTransform X="0" Y="0"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+				</Canvas>
+				<Canvas ClipToBounds="True" x:Name="TryItParent" Height="146" Width="131" Canvas.Left="9" Canvas.Top="11"/>
+				<GestureBarLib:GestureTryItResult x:Name="TryItResult" Height="29" OnClick="TryItResult_OnClick" Canvas.Left="7" Canvas.Top="130"/>
+			</Canvas>
+		</Canvas>
+		<GestureBarLib:GestureExplorerTab HorizontalAlignment="Left" Margin="8,39,0,0" VerticalAlignment="Top" x:Name="Tab1" OnSelect="Tab1_OnSelect"/>
+		<GestureBarLib:GestureExplorerTab HorizontalAlignment="Left" Margin="67.172,39,0,0" x:Name="Tab2" VerticalAlignment="Top" OnSelect="Tab2_OnSelect"/>
+		<GestureBarLib:GestureExplorerTab HorizontalAlignment="Left" Margin="126.344,39,0,0" x:Name="Tab3" VerticalAlignment="Top" OnSelect="Tab3_OnSelect"/>
+		<GestureBarLib:GestureExplorerTab Margin="185.516,39,139.312,0" x:Name="Tab4" VerticalAlignment="Top" OnSelect="Tab4_OnSelect"/>
+		<Canvas IsHitTestVisible="False" Visibility="Hidden" Margin="-393.3,0,0,34" x:Name="ReplayButton" MouseLeftButtonUp="ReplayButton_MouseLeftButtonUp" HorizontalAlignment="Left" Width="129.337" VerticalAlignment="Bottom" Height="101.334">
+			<Rectangle Opacity="0.155" Fill="#FF000000" Stroke="{x:Null}" StrokeThickness="0.5" RadiusX="17" RadiusY="17" Width="113.337" Height="85.334" Canvas.Left="8" Canvas.Top="8"/>
+			<Path Opacity="0.51" RenderTransformOrigin="0.5,0.5" Fill="#FF000000" Stretch="Fill" Stroke="{x:Null}" StrokeThickness="0.5" Width="37" Height="39" Canvas.Left="44.337" Canvas.Top="32.334" Data="M44.337,46.334 L47.337002,39.834 53.337002,35.834 60.837002,34.834 68.337002,37.334 72.336997,43.334 73.336998,48.834 69.53212,53.590097 67.336999,56.334 62.336999,58.334 52.837001,58.334 55.337,51.334 43.337002,62.834 53.337001,69.834 51.837001,64.334 60.837,63.334 66.836999,61.334 73.336998,55.834 75.836998,50.834 77.336998,45.834 75.836998,40.834 71.836999,34.334 68.336999,32.334 61.837,30.834&#xa;56.337,31.334 50.837001,33.334 46.337001,35.834 42.837002,37.834 40.337002,41.834 z">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="13.2"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Path.RenderTransform>
+			</Path>
+		</Canvas>
+		<Canvas HorizontalAlignment="Right" Margin="0,90,18,48" x:Name="TryItOverlayParent" Width="133"/>
+		<Canvas Margin="8,64.687,0,120" x:Name="LeaderAnimationParent" HorizontalAlignment="Left" Width="167">
+			<Rectangle IsHitTestVisible="False" Opacity="0.25" RenderTransformOrigin="0.5,0.5" Fill="#FF000000" Stroke="#FF000000" RadiusX="7.5" RadiusY="7.5" x:Name="rectangle" Width="23.032" Height="17" Canvas.Left="67" Canvas.Top="41">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+		</Canvas>
+		<GestureBarLib:CloseWidget d:LayoutOverrides="Width" HorizontalAlignment="Right" Margin="0,46,8,0" VerticalAlignment="Top" x:Name="CloseExplorer" OnClick="CloseExplorer_OnClick"/>
+	</Grid>
+</UserControl>

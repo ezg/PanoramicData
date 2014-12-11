@@ -1,0 +1,95 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Gesture_ArrowThin"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Width="48" Height="42">
+
+	<Grid x:Name="LayoutRoot">
+		<Path Margin="4.25,20.25,10.75,19.495" Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Data="M4.25,20.25 C14.32279,22.264558 25.833125,21.25 36.25,21.25 36.083333,21.166667 35.916667,21.083333 35.75,21"/>
+		<Path HorizontalAlignment="Right" Margin="0,14.75,5.75,13.25" Width="14" Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Data="M28.25,14.75 C32.406676,17.10545 37.471535,19.166151 41.25,22 37.93392,23.65804 35.366616,26.627795 32,27.75 32.25,27.583333 32.5,27.416667 32.75,27.25"/>
+		<Canvas x:Name="DetailsLayer" Margin="0,0,-56.75,-43">
+			<Rectangle Stroke="#FF000000" RadiusX="4.5" RadiusY="4.5" Width="27.726" Height="16.834" x:Name="BackgroundRectangle" Canvas.Left="38.526" Canvas.Top="1.325" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.BitmapEffect>
+					<BitmapEffectGroup>
+						<BevelBitmapEffect BevelWidth="2"/>
+					</BitmapEffectGroup>
+				</Rectangle.BitmapEffect>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.5,-0.373" StartPoint="0.5,1.373">
+						<GradientStop Color="#FF6BD2FE" Offset="0"/>
+						<GradientStop Color="#FFFFFFFF" Offset="1"/>
+						<GradientStop Color="#FFCEF0FF" Offset="0.51"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<TextBlock Width="59.75" Height="7" Canvas.Left="45.5" Canvas.Top="5.742" FontSize="5.5" Text="Carat" TextWrapping="Wrap"/>
+			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="6.42" Height="6.677" Data="M44.25,50 L39,44.75 41.75,41.75 32.75,41 33.5,50 36,47.25 41.75,53 z" Canvas.Left="38.554" Canvas.Top="12.372">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="-89.264"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Path.RenderTransform>
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.854,0.16" StartPoint="0.146,0.84">
+						<GradientStop Color="#FFFF0000" Offset="1"/>
+						<GradientStop Color="#FFFFA0A0" Offset="0"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Rectangle Stroke="#FF000000" RadiusX="4.5" RadiusY="4.5" Width="39.726" Height="16.834" x:Name="BackgroundRectangle_Copy" RenderTransformOrigin="0.5,0.5" Canvas.Left="-2.061" Canvas.Top="-0.846">
+				<Rectangle.BitmapEffect>
+					<BitmapEffectGroup>
+						<BevelBitmapEffect BevelWidth="2"/>
+					</BitmapEffectGroup>
+				</Rectangle.BitmapEffect>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.5,-0.373" StartPoint="0.5,1.373">
+						<GradientStop Color="#FF6BD2FE" Offset="0"/>
+						<GradientStop Color="#FFFFFFFF" Offset="1"/>
+						<GradientStop Color="#FFCEF0FF" Offset="0.51"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<TextBlock Width="48.25" Height="7" FontSize="5.5" Text="Line First" TextWrapping="Wrap" Canvas.Left="6.416" Canvas.Top="3.571"/>
+			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="6.42" Height="6.677" Data="M44.25,50 L39,44.75 41.75,41.75 32.75,41 33.5,50 36,47.25 41.75,53 z" Canvas.Left="7.637" Canvas.Top="12.122">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="-117.775"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Path.RenderTransform>
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.854,0.16" StartPoint="0.146,0.84">
+						<GradientStop Color="#FFFF0000" Offset="1"/>
+						<GradientStop Color="#FFFFA0A0" Offset="0"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+		</Canvas>
+	</Grid>
+</UserControl>

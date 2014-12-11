@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="minus~17~43~0" Subject="17" NumPts="10">
+	<Stroke index="1">
+		<Point X="299" Y="121" T="-1" />
+		<Point X="302" Y="120" T="-1" />
+		<Point X="306" Y="120" T="-1" />
+		<Point X="309" Y="120" T="-1" />
+		<Point X="311" Y="120" T="-1" />
+		<Point X="313" Y="120" T="-1" />
+		<Point X="315" Y="120" T="-1" />
+		<Point X="316" Y="121" T="-1" />
+		<Point X="317" Y="121" T="-1" />
+		<Point X="317" Y="120" T="-1" />
+	</Stroke>
+</Gesture>

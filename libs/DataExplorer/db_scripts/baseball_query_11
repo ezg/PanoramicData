@@ -1,0 +1,89 @@
+ALTER TABLE lahman.dim_player ALTER COLUMN id int NOT NULL;
+
+ALTER TABLE lahman.dim_player
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.fact ALTER COLUMN playerId int NOT NULL;
+
+ALTER TABLE lahman.fact WITH CHECK ADD
+CONSTRAINT FK_player FOREIGN KEY (playerId) 
+REFERENCES lahman.dim_player (id) ON DELETE NO ACTION;
+
+
+
+ALTER TABLE lahman.dim_team ALTER COLUMN id int NOT NULL;
+
+ALTER TABLE lahman.dim_team
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.fact ALTER COLUMN teamId int NOT NULL;
+
+ALTER TABLE lahman.fact WITH CHECK ADD
+CONSTRAINT FK_team FOREIGN KEY (teamId) 
+REFERENCES lahman.dim_team (id) ON DELETE NO ACTION;
+
+
+
+ALTER TABLE lahman.dim_franchise ALTER COLUMN id int NOT NULL;
+
+ALTER TABLE lahman.dim_franchise
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.dim_team ALTER COLUMN franchiseId int NOT NULL;
+
+ALTER TABLE lahman.dim_team WITH CHECK ADD
+CONSTRAINT FK_franchise FOREIGN KEY (franchiseId) 
+REFERENCES lahman.dim_franchise (id) ON DELETE NO ACTION;
+
+
+
+ALTER TABLE lahman.fact ALTER COLUMN id int NOT NULL;
+
+ALTER TABLE lahman.fact
+ADD PRIMARY KEY (id);
+
+
+ALTER TABLE lahman.dim_apperance ALTER COLUMN factId int NOT NULL;
+
+ALTER TABLE lahman.dim_apperance WITH CHECK ADD
+CONSTRAINT FK_fact FOREIGN KEY (factId) 
+REFERENCES lahman.fact (id) ON DELETE NO ACTION;
+
+ALTER TABLE lahman.dim_batting ALTER COLUMN factId int NOT NULL;
+
+ALTER TABLE lahman.dim_batting WITH CHECK ADD
+CONSTRAINT FK_fact1 FOREIGN KEY (factId) 
+REFERENCES lahman.fact (id) ON DELETE NO ACTION;
+
+ALTER TABLE lahman.dim_fielding ALTER COLUMN factId int NOT NULL;
+
+ALTER TABLE lahman.dim_fielding WITH CHECK ADD
+CONSTRAINT FK_fact2 FOREIGN KEY (factId) 
+REFERENCES lahman.fact (id) ON DELETE NO ACTION;
+
+ALTER TABLE lahman.dim_pitching ALTER COLUMN factId int NOT NULL;
+
+ALTER TABLE lahman.dim_pitching WITH CHECK ADD
+CONSTRAINT FK_fact3 FOREIGN KEY (factId) 
+REFERENCES lahman.fact (id) ON DELETE NO ACTION;
+
+
+ALTER TABLE lahman.dim_apperance ALTER COLUMN id int NOT NULL;
+ALTER TABLE lahman.dim_apperance
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.dim_batting ALTER COLUMN id int NOT NULL;
+ALTER TABLE lahman.dim_batting
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.dim_fielding ALTER COLUMN id int NOT NULL;
+ALTER TABLE lahman.dim_fielding
+ADD PRIMARY KEY (id);
+
+ALTER TABLE lahman.dim_pitching ALTER COLUMN id int NOT NULL;
+ALTER TABLE lahman.dim_pitching
+ADD PRIMARY KEY (id);
+
+alter table lahman.dim_player add name nvarchar(255)
+
+update lahman.dim_player set name = nameFirst + ' ' + nameLast

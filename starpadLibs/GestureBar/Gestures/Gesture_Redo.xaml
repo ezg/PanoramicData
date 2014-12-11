@@ -1,0 +1,44 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="starPadSDK.GestureBarLib.Gesture_Redo"
+	x:Name="UserControl"
+	Width="176" Height="164">
+
+	<Grid x:Name="LayoutRoot">
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" HorizontalAlignment="Left" Margin="12.5,37.501,0,0" VerticalAlignment="Top" Width="45" Height="4.999" Data="M13,39 C27.754445,41.318556 41.934751,42 57,42 46.95321,34.823721 25.761335,39.622504 13,39 z"/>
+		<Canvas x:Name="DetailsLayer" Margin="0,0,71.25,79">
+			<Rectangle Stroke="#FF000000" RadiusX="4.5" RadiusY="4.5" Width="30.115" Height="15.5" x:Name="BackgroundRectangle" Canvas.Top="48.765" Canvas.Left="32.834">
+				<Rectangle.BitmapEffect>
+					<BitmapEffectGroup>
+						<BevelBitmapEffect BevelWidth="2"/>
+					</BitmapEffectGroup>
+				</Rectangle.BitmapEffect>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.5,-0.373" StartPoint="0.5,1.373">
+						<GradientStop Color="#FF6BD2FE" Offset="0"/>
+						<GradientStop Color="#FFFFFFFF" Offset="1"/>
+						<GradientStop Color="#FFCEF0FF" Offset="0.51"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="6.42" Height="6.677" Canvas.Left="53.963" Canvas.Top="44.439" Data="M44.25,50 L39,44.75 41.75,41.75 32.75,41 33.5,50 36,47.25 41.75,53 z">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="47.143"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Path.RenderTransform>
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.854,0.16" StartPoint="0.146,0.84">
+						<GradientStop Color="#FFFF0000" Offset="1"/>
+						<GradientStop Color="#FFFFA0A0" Offset="0"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<TextBlock Width="95.75" Height="35.25" Canvas.Left="37.084" Canvas.Top="51.765" FontSize="6" Text="Reverse" TextWrapping="Wrap"/>
+		</Canvas>
+	</Grid>
+</UserControl>

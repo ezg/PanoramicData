@@ -1,0 +1,56 @@
+
+create view baseball.main
+as
+select 
+	*
+from
+(
+	select 
+		isnull(ppost.playerId, isnull(fpost.playerId, isnull(bpost.playerId, isnull(p.playerId, isnull(b.playerId, f.playerId))))) as playerId,
+		isnull(ppost.yearId, isnull(fpost.yearId, isnull(bpost.yearId, isnull(p.yearId, isnull(b.yearId, f.yearId))))) as yearId,
+		isnull(ppost.teamId, isnull(fpost.teamId, isnull(bpost.teamId, isnull(p.teamId, isnull(b.teamId, f.teamId))))) as teamId
+	from
+	(
+		(select playerId, yearId, teamId from baseball.batting) b
+
+		full outer join
+
+		(select playerId, yearId, teamId from baseball.fielding) f on 
+			b.playerId = f.playerId and 
+			b.yearId = f.yearId and
+			b.teamId = f.teamId
+
+		full outer join
+
+		(select playerId, yearId, teamId from baseball.pitching) p on 
+			isnull(b.playerId, f.playerId) = p.playerId and 
+			isnull(b.yearId, f.yearId) = p.yearId and
+			isnull(b.teamId, f.teamId) = p.teamId
+
+		full outer join
+
+		(select playerId, yearId, teamId from baseball.batting_post) bpost on 
+			isnull(p.playerId, isnull(b.playerId, f.playerId)) = bpost.playerId and 
+			isnull(p.yearId, isnull(b.yearId, f.yearId)) = bpost.yearId and
+			isnull(p.teamId, isnull(b.teamId, f.teamId)) = bpost.teamId
+
+		full outer join
+
+		(select playerId, yearId, teamId from baseball.fielding_post) fpost on 
+			isnull(bpost.playerId, isnull(p.playerId, isnull(b.playerId, f.playerId))) = fpost.playerId and 
+			isnull(bpost.yearId, isnull(p.yearId, isnull(b.yearId, f.yearId))) = fpost.yearId and
+			isnull(bpost.teamId, isnull(p.teamId, isnull(b.teamId, f.teamId))) = fpost.teamId
+
+		full outer join
+
+		(select playerId, yearId, teamId from baseball.pitching_post) ppost on 
+			isnull(fpost.playerId, isnull(bpost.playerId, isnull(p.playerId, isnull(b.playerId, f.playerId)))) = ppost.playerId and 
+			isnull(fpost.yearId, isnull(bpost.yearId,isnull(p.yearId, isnull(b.yearId, f.yearId)))) = ppost.yearId and
+			isnull(fpost.teamId, isnull(bpost.teamId,isnull(p.teamId, isnull(b.teamId, f.teamId)))) = ppost.teamId
+	) 
+) as t
+group by 
+	t.playerId, t.yearId, t.teamId
+	
+	
+select * into baseball.main_t from baseball.main

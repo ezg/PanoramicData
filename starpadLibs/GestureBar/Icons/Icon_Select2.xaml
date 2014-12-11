@@ -1,0 +1,60 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="starPadSDK.GestureBarLib.Icon_Select2"
+	x:Name="UserControl"
+	Width="32" Height="23" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+	<UserControl.RenderTransform>
+		<TransformGroup>
+			<ScaleTransform ScaleX="1" ScaleY="1"/>
+			<SkewTransform AngleX="0" AngleY="0"/>
+			<RotateTransform Angle="0"/>
+			<TranslateTransform X="0" Y="0"/>
+		</TransformGroup>
+	</UserControl.RenderTransform>
+
+	<Grid x:Name="LayoutRoot" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+		<Rectangle Stroke="#FF000000" Height="7.375" HorizontalAlignment="Left" Margin="4.958,8.042,0,0" VerticalAlignment="Top" Width="15.669">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FF008626" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<Ellipse Stroke="#FF000000" Width="4.334" Height="4.334" HorizontalAlignment="Left" Margin="3.625,6.791,0,0" VerticalAlignment="Top">
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Width="4.334" Height="4.334" HorizontalAlignment="Left" Margin="3.625,12.795,0,0" VerticalAlignment="Top">
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Height="4.334" Margin="17.792,12.795,21.874,0" VerticalAlignment="Top">
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Height="4.334" Margin="17.792,6.791,21.874,0" VerticalAlignment="Top">
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="2" Margin="0.072,-0.042,0,0" VerticalAlignment="Top" Height="22.942" Data="M12.833333,1.5 C9.8034617,0.61628745 9.8514715,1.1050651 6.6666667,2.1666667 3.6117699,3.1849656 2.4521876,3.1447905 2,7.6666667 1.8689367,8.9773 2.0044955,10.202631 2.1666667,11.5 2.3665911,13.099395 2.3225529,14.326146 3.8333333,15.333333 6.6670037,17.222447 8.7148543,18.391278 12.333333,19.166667 17.656789,20.307407 18.235996,20.009336 23,16.833333 26.926806,14.215463 26.822744,13.238027 26.166667,7.3333333 25.672838,2.8888759 19.606157,0.66666667&#xd;&#xa;13.333333,0.66666667 17.396334,3.104467 28.499425,-0.055779116 33.499927,-1.1670017" HorizontalAlignment="Left" Width="32" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+	</Grid>
+</UserControl>

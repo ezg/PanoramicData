@@ -1,0 +1,55 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.SurfaceLib.PalmCustomize"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" xmlns:Custom="http://schemas.microsoft.com/surface/2008">
+	<UserControl.Resources>
+		<Storyboard x:Key="SlideIn">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="-74"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="Dismiss">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="{x:Null}" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.5000000" Value="{x:Static Visibility.Collapsed}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+	</UserControl.Triggers>
+
+	<Canvas x:Name="LayoutRoot" RenderTransformOrigin="0.5,0.5">
+		<Canvas.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Canvas.RenderTransform>
+		<Rectangle Width="417" Height="324" Stroke="#FF000000" StrokeThickness="1" RadiusX="13.5" RadiusY="13.5" Opacity="1">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.891,0.958" StartPoint="0.13,0.017">
+					<GradientStop Color="#FFFFFFFF" Offset="0"/>
+					<GradientStop Color="#FF789BAF" Offset="1"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<TextBlock Canvas.Left="8" Canvas.Top="8" FontSize="24" Text="Customize" TextWrapping="Wrap" Foreground="#FF000000"/>
+		<Custom:SurfaceButton Width="43" Height="40" Content="ˣ" Canvas.Left="364" Canvas.Top="8" FontSize="24" Foreground="#FFFFFFFF" Background="#9CFF0039" x:Name="btnClose"/>
+		<Canvas Width="399" Height="263" Canvas.Left="8" Canvas.Top="48" x:Name="ChildPlaceholder"/>
+	</Canvas>
+</UserControl>

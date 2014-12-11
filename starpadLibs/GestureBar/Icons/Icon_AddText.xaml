@@ -1,0 +1,82 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="starPadSDK.GestureBarLib.Icon_AddText"
+	x:Name="UserControl"
+	Width="57" Height="55">
+
+	<Grid x:Name="LayoutRoot">
+		<TextBlock FontSize="24" FontWeight="Bold" Foreground="#FF0084FF" Text="A" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Margin="-5.25,-4,0,26" Width="30">
+			<TextBlock.BitmapEffect>
+				<BevelBitmapEffect BevelWidth="2" Relief="0.19"/>
+			</TextBlock.BitmapEffect>
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+		<TextBlock FontSize="24" FontWeight="Bold" Foreground="#FF008FFF" Text="B" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" Margin="5.5,-4,21.5,26">
+			<TextBlock.BitmapEffect>
+				<BevelBitmapEffect BevelWidth="2" Relief="0.07"/>
+			</TextBlock.BitmapEffect>
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+		<TextBlock FontSize="24" FontWeight="Bold" Foreground="#FF00B3FF" Text="C" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" Margin="15.875,-4,11.125,26">
+			<TextBlock.BitmapEffect>
+				<BevelBitmapEffect BevelWidth="2" Relief="0.07"/>
+			</TextBlock.BitmapEffect>
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" HorizontalAlignment="Left" Margin="3.625,20,0,0" VerticalAlignment="Top" Width="2.25" Height="4.125" Data="M12.625,19.75 L10.125,26.25"/>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" HorizontalAlignment="Left" Margin="14.625,20.875,0,0" VerticalAlignment="Top" Width="1.375" Height="4.375" Data="M22,20.125 L22.375,27.25"/>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" HorizontalAlignment="Left" Margin="25,20.5,0,0" VerticalAlignment="Top" Width="3.5" Height="3.625" Data="M32.75,21 L37.125,26.125"/>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" Width="2.25" Height="4.125" Data="M12.625,19.75 L10.125,26.25" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Margin="3.625,1.375,0,0" VerticalAlignment="Top">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="-49.067"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" Width="1.375" Height="4.375" Data="M22,20.125 L22.375,27.25" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Margin="14.625,0.5,0,0" VerticalAlignment="Top">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="4.661"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+		<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFAA00" Height="3.625" Data="M32.75,21 L37.125,26.125" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Margin="25,1.5,0,0" VerticalAlignment="Top" Width="3.5">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="74.019"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+	</Grid>
+</UserControl>

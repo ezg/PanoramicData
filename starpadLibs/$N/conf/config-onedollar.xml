@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Experiment 
+GestureSet="gesture" 
+SamplesDirectory="..\..\samples" 
+SearchMethod="GSS"
+RotationInvariant="true" 
+ProcessUnistrokes="false"
+Include1D="true"
+Include2D="true"
+TestFor1D="false"
+UseUniformScaling="false"
+MatchSameNumberOfStrokes="false" 
+DoStartAngleComparison="false" 
+StartAngleIndex="0" 
+StartAngleThreshold="0"
+NumResamplePoints="64"
+>
+</Experiment>
+

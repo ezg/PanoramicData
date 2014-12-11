@@ -1,0 +1,9 @@
+﻿<s:SurfaceUserControl x:Class="starPadSDK.SurfaceLib.PalmPrintCustomize"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008" Height="307" Width="394">
+    <Canvas x:Name="LayoutRoot">
+		<s:SurfaceButton Height="33" Content="Customize" x:Name="btnCustomize" Background="#8C389CD3" Width="76" Canvas.Left="-137" Canvas.Top="83" Click="btnCustomize_Click" ContactUp="btnCustomize_ContactUp" />
+            
+	</Canvas>
+</s:SurfaceUserControl>

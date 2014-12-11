@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="equal~32~17~0" Subject="32" NumPts="23">
+	<Stroke index="1">
+		<Point X="547" Y="117" T="-1" />
+		<Point X="550" Y="117" T="-1" />
+		<Point X="552" Y="117" T="-1" />
+		<Point X="554" Y="117" T="-1" />
+		<Point X="556" Y="117" T="-1" />
+		<Point X="558" Y="118" T="-1" />
+		<Point X="560" Y="118" T="-1" />
+		<Point X="561" Y="118" T="-1" />
+		<Point X="562" Y="118" T="-1" />
+		<Point X="563" Y="119" T="-1" />
+	</Stroke>
+	<Stroke index="2">
+		<Point X="552" Y="137" T="-1" />
+		<Point X="554" Y="137" T="-1" />
+		<Point X="556" Y="137" T="-1" />
+		<Point X="558" Y="137" T="-1" />
+		<Point X="560" Y="137" T="-1" />
+		<Point X="562" Y="137" T="-1" />
+		<Point X="567" Y="137" T="-1" />
+		<Point X="568" Y="137" T="-1" />
+		<Point X="569" Y="137" T="-1" />
+		<Point X="570" Y="137" T="-1" />
+		<Point X="571" Y="137" T="-1" />
+		<Point X="572" Y="137" T="-1" />
+		<Point X="573" Y="137" T="-1" />
+	</Stroke>
+</Gesture>

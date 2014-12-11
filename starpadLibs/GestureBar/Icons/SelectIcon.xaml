@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="starPadSDK.GestureBarLib.SelectIcon"
+	x:Name="UserControl"
+	Width="28" Height="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignWidth="27.875" d:DesignHeight="27.75">
+
+	<Canvas HorizontalAlignment="Stretch" x:Name="LayoutRoot" VerticalAlignment="Stretch">
+		<Canvas Width="32" Height="32">
+			<Path Stretch="Fill" Stroke="#FF000000" Data="M15.847233,24.829809 L12.333667,11.666333 22.819267,16.999469 19.873184,19.276307 23.676018,24.013765 22.000182,25.666358 17.873284,20.942787 z" Width="28" Height="28">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+						<GradientStop Color="#FF93EEFF" Offset="0"/>
+						<GradientStop Color="#FFFFFFFF" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+		</Canvas>
+	</Canvas>
+</UserControl>

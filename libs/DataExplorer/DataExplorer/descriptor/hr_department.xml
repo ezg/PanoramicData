@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableDescriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TableName>hr_department</TableName>
+  <TableLabel>Department</TableLabel>
+  <Fields>
+    <TableFieldDescriptor>
+      <FieldName>id</FieldName>
+      <FieldLabel />
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>create_uid</FieldName>
+      <FieldLabel />
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>create_date</FieldName>
+      <FieldLabel />
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>write_date</FieldName>
+      <FieldLabel />
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>write_uid</FieldName>
+      <FieldLabel />
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>note</FieldName>
+      <FieldLabel>Note</FieldLabel>
+      <Visible>false</Visible>
+      <OrderNumber>20</OrderNumber>
+      <DataType>Text</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>parent_id</FieldName>
+      <FieldLabel>Parent Department</FieldLabel>
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>name</FieldName>
+      <FieldLabel>Department Name</FieldLabel>
+      <Visible>true</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Text</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>company_id</FieldName>
+      <FieldLabel>Company</FieldLabel>
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Unspecified</DataType>
+    </TableFieldDescriptor>
+    <TableFieldDescriptor>
+      <FieldName>manager_id</FieldName>
+      <FieldLabel>Manager</FieldLabel>
+      <Visible>false</Visible>
+      <OrderNumber>2147483647</OrderNumber>
+      <DataType>Text</DataType>
+    </TableFieldDescriptor>
+  </Fields>
+  <Dependencies>
+    <TableDependencyDescriptor>
+      <FromColumnName>manager_id</FromColumnName>
+      <ToColumnName>id</ToColumnName>
+      <OrderNumber>2147483647</OrderNumber>
+      <Conversion>$1</Conversion>
+      <ConversionFieldNames />
+      <TableDescriptor>
+        <TableName>hr_employee</TableName>
+        <TableLabel>Manager</TableLabel>
+        <Fields>
+          <TableFieldDescriptor>
+            <FieldName>id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>address_id</FieldName>
+            <FieldLabel>Working Address</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>mobile_phone</FieldName>
+            <FieldLabel>Work Mobile</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>coach_id</FieldName>
+            <FieldLabel>Coach</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>resource_id</FieldName>
+            <FieldLabel>Resource</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>color</FieldName>
+            <FieldLabel>Color Index</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>photo</FieldName>
+            <FieldLabel>Photo</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>otherid</FieldName>
+            <FieldLabel>Other Id</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>marital</FieldName>
+            <FieldLabel>Marital Status</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>birthday</FieldName>
+            <FieldLabel>Date of Birth</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>sinid</FieldName>
+            <FieldLabel>SIN No</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>identification_id</FieldName>
+            <FieldLabel>Identification No</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>bank_account_id</FieldName>
+            <FieldLabel>Bank Account Number</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>work_location</FieldName>
+            <FieldLabel>Office Location</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>job_id</FieldName>
+            <FieldLabel>Job</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>work_phone</FieldName>
+            <FieldLabel>Work Phone</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>work_email</FieldName>
+            <FieldLabel>Work E-mail</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>ssnid</FieldName>
+            <FieldLabel>SSN No</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>country_id</FieldName>
+            <FieldLabel>Nationality</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>address_home_id</FieldName>
+            <FieldLabel>Home Address</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>parent_id</FieldName>
+            <FieldLabel>Manager</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>notes</FieldName>
+            <FieldLabel>Notes</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>gender</FieldName>
+            <FieldLabel>Gender</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>passport_id</FieldName>
+            <FieldLabel>Passport No</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>department_id</FieldName>
+            <FieldLabel>Department</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+        </Fields>
+        <Dependencies />
+      </TableDescriptor>
+      <VisualRepresentation>HIDE</VisualRepresentation>
+      <DataType>Text</DataType>
+    </TableDependencyDescriptor>
+    <TableDependencyDescriptor>
+      <FromColumnName>company_id</FromColumnName>
+      <ToColumnName>id</ToColumnName>
+      <OrderNumber>2147483647</OrderNumber>
+      <ConversionFieldNames />
+      <TableDescriptor>
+        <TableName>res_company</TableName>
+        <TableLabel>Company</TableLabel>
+        <Fields>
+          <TableFieldDescriptor>
+            <FieldName>id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>parent_id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>rml_header</FieldName>
+            <FieldLabel>RML Header</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>rml_footer1</FieldName>
+            <FieldLabel>General Information Footer</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>paper_format</FieldName>
+            <FieldLabel>Paper Format</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>currency_id</FieldName>
+            <FieldLabel>Currency</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>rml_header2</FieldName>
+            <FieldLabel>RML Internal Header</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>rml_header3</FieldName>
+            <FieldLabel>RML Internal Header</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>rml_header1</FieldName>
+            <FieldLabel>Report Header / Company Slogan</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>logo</FieldName>
+            <FieldLabel>Logo</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>partner_id</FieldName>
+            <FieldLabel>Partner</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>account_no</FieldName>
+            <FieldLabel>Account No.</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>company_registry</FieldName>
+            <FieldLabel>Company Registry</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>name</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+        </Fields>
+        <Dependencies />
+      </TableDescriptor>
+      <VisualRepresentation>HIDE</VisualRepresentation>
+      <DataType>Unspecified</DataType>
+    </TableDependencyDescriptor>
+    <TableDependencyDescriptor>
+      <FromColumnName>parent_id</FromColumnName>
+      <ToColumnName>id</ToColumnName>
+      <OrderNumber>2147483647</OrderNumber>
+      <ConversionFieldNames />
+      <TableDescriptor>
+        <TableName>hr_department</TableName>
+        <TableLabel>Parent Department</TableLabel>
+        <Fields>
+          <TableFieldDescriptor>
+            <FieldName>id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>note</FieldName>
+            <FieldLabel>Note</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>parent_id</FieldName>
+            <FieldLabel>Parent Department</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>name</FieldName>
+            <FieldLabel>Department Name</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>company_id</FieldName>
+            <FieldLabel>Company</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>manager_id</FieldName>
+            <FieldLabel>Manager</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+        </Fields>
+        <Dependencies />
+      </TableDescriptor>
+      <VisualRepresentation>HIDE</VisualRepresentation>
+      <DataType>Unspecified</DataType>
+    </TableDependencyDescriptor>
+    <TableDependencyDescriptor>
+      <FromColumnName>write_uid</FromColumnName>
+      <ToColumnName>id</ToColumnName>
+      <OrderNumber>2147483647</OrderNumber>
+      <ConversionFieldNames />
+      <TableDescriptor>
+        <TableName>res_users</TableName>
+        <Fields>
+          <TableFieldDescriptor>
+            <FieldName>id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>name</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>active</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>login</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>password</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>email</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_tz</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>signature</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_lang</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>company_id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>menu_id</FieldName>
+            <FieldLabel>Menu Action</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>menu_tips</FieldName>
+            <FieldLabel>Menu Tips</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>date</FieldName>
+            <FieldLabel>Latest Connection</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>action_id</FieldName>
+            <FieldLabel>Home Action</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>user_email</FieldName>
+            <FieldLabel>Email</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_department_id</FieldName>
+            <FieldLabel>Departments</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+        </Fields>
+        <Dependencies />
+      </TableDescriptor>
+      <VisualRepresentation>HIDE</VisualRepresentation>
+      <DataType>Unspecified</DataType>
+    </TableDependencyDescriptor>
+    <TableDependencyDescriptor>
+      <FromColumnName>create_uid</FromColumnName>
+      <ToColumnName>id</ToColumnName>
+      <OrderNumber>2147483647</OrderNumber>
+      <ConversionFieldNames />
+      <TableDescriptor>
+        <TableName>res_users</TableName>
+        <Fields>
+          <TableFieldDescriptor>
+            <FieldName>id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>name</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>active</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>login</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>password</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>email</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_tz</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>signature</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_lang</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>company_id</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>create_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_date</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>write_uid</FieldName>
+            <FieldLabel />
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>menu_id</FieldName>
+            <FieldLabel>Menu Action</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>menu_tips</FieldName>
+            <FieldLabel>Menu Tips</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>date</FieldName>
+            <FieldLabel>Latest Connection</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>action_id</FieldName>
+            <FieldLabel>Home Action</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>user_email</FieldName>
+            <FieldLabel>Email</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+          <TableFieldDescriptor>
+            <FieldName>context_department_id</FieldName>
+            <FieldLabel>Departments</FieldLabel>
+            <Visible>true</Visible>
+            <OrderNumber>2147483647</OrderNumber>
+            <DataType>Unspecified</DataType>
+          </TableFieldDescriptor>
+        </Fields>
+        <Dependencies />
+      </TableDescriptor>
+      <VisualRepresentation>HIDE</VisualRepresentation>
+      <DataType>Unspecified</DataType>
+    </TableDependencyDescriptor>
+  </Dependencies>
+</TableDescriptor>

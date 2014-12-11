@@ -1,0 +1,230 @@
+\hypertarget{index_a}{}\section{\-Types and Modes}\label{index_a}
+\-The \-Brown\-Recognition \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I} supports different types and modes of recognition. \-The following sections give an overview of how they can be used.\hypertarget{index_aa}{}\subsection{\-Shape Recognition}\label{index_aa}
+\-Shape recognition is intended to create a shape from one or more user input strokes. \-The provided methods will return a \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Recognition\-Common.\-Brown\-Shape} (or null) that has an attached shape type (see \hyperlink{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{\-Brown\-Recognition\-Common.\-Shape\-Type}) and a list of points that make up the clean version of this shape. \par
+ \par
+ \-Example of how to use the one stroke shape recognition\-: 
+\begin{DoxyCode}
+ // whatever the calling application uses as its stroke representation. 
+ ApplicationStroke appStroke; 
+ 
+ // create a BrownInputStroke
+ BrownInputStroke brownStroke = new BrownInputStroke(appStroke.ToPointArray(), 
+      appStroke);
+ 
+ // call the recognizer
+ BrownShape brownShape = BrownRecognitionAPI.API.RecognizeBrownShape(
+      brownStroke);
+ if (brownShape != null) {
+     // once a shape has been recognized, the application probably
+     // wants to remove their stroke from the UI.
+     foreach (BrownInputStroke bis in brownShape.BrownInputStrokes) {
+         UI.remove((ApplicationStroke) bis.Data);
+     }
+     
+     // add a corresponding shape to the UI.
+     if (brownShape.ShapeType == ShapeType.Rect) {
+         UI.add(new Rectangle(brownShape.ShapePoints));
+     }
+     else if (brownShape.ShapeType == ShapeType.Circle) {
+         ...
+     }
+     ...
+ }
+\end{DoxyCode}
+
+
+\par
+ \-Example of how to use the multi stroke shape recognition\-: 
+\begin{DoxyCode}
+ // List of all lines that could be part of a new shape
+ List<BrownShape> lineShapes = new List<BrownShape>();
+ 
+ // Add whatever makes sense to the lineShapes list, i.e. already recognized
+ // shapes, new input strokes etc. 
+ foreach (UIShape s in UI.Lines) {
+     BrownShape brownShape = s.ConvertToBrownShape();
+     // make sure that the underlying BrownInputStroke is set and that 
+     // the Data propery has a value that allows you to backtrack to the
+       UIShape. 
+     brownShape.BrownInputStrokes[0].Data = s;
+     lineShapes.Add(brownShape);
+ }
+ foreach (ApplicationStroke s in UI.Strokes) {
+     // either convert an application stroke yourself or call
+       RecognizeBrownShape()
+     // as in the example above.
+     BrownShape brownShape = s.ConvertToBrownShape();
+     lineShapes.Add(brownShape);
+ }
+ 
+ // call the recognizer
+ BrownShape brownShape = BrownRecognitionAPI.API.RecognizeBrownShape(lineShapes
+      );
+ if (brownShape != null) {
+     // once a shape has been recognized, the application probably
+     // wants to remove their stroke from the UI.
+     foreach(BrownInputStroke bis in brownShape.BrownInputStrokes) {
+         if (bis.Data is ApplicationStroke) {
+             UI.remove((ApplicationStroke) bis.Data);
+         }
+         else if (bis.Data is UIShape) {
+             UI.remove((UIShape) bis.Data);
+         }
+     }
+     
+     // add a corresponding shape to the UI.
+     if (brownShape.ShapeType == ShapeType.Rect) {
+         UI.add(new Rectangle(brownShape.ShapePoints));
+     }
+     else if (brownShape.ShapeType == ShapeType.Circle) {
+         ...
+     }
+     ...
+ }
+\end{DoxyCode}
+\hypertarget{index_ab}{}\subsection{\-Template Recognition with Feedback}\label{index_ab}
+\-This mode can be used to give the user some intermediate feedback while he is drawing a template. \-In order to do that, the \-Application needs to trigger the template recognition after every new stroke and needs to keep track of what previous strokes have been recognized as. \par
+ \par
+ \-Example of how to use template recognition with feedback\-: 
+\begin{DoxyCode}
+ // List of all shapes that could be part of a template
+ List<BrownShape> brownShapes = new List<BrownShape>();
+ 
+ // Add whatever makes sense to the brownShapes list, i.e. already recognized
+ // shapes, already cleaned up template shapes, new input strokes etc. 
+ foreach (UIShape s in UI.Shapes) {
+     BrownShape brownShape = s.ConvertToBrownShape();
+     // make sure that the underlying BrownInputStroke is set and that 
+     // the Data propery has a value that allows you to backtrack to the
+       UIShape. 
+     brownShape.BrownInputStrokes[0].Data = s;
+     brownShapes.Add(brownShape);
+ }
+ foreach (ApplicationStroke s in UI.Strokes) {
+     // either convert an application stroke yourself or call
+       RecognizeBrownShape()
+     // as in the example above.
+     BrownShape brownShape = s.ConvertToBrownShape();
+     brownShapes.Add(brownShape);
+ }
+ 
+ // call the recognizer
+ List<BrownTemplate> recognizedTemplates = BrownRecognitionAPI.API.
+      RecognizeBrownTemplate(brownShapes);
+ 
+ // for feedback: update your UI according to what templates have been
+       recognized.
+ // e.g. color shapes that are part of a template, etc. 
+ UI.Feedback(recognizedTemplates);
+\end{DoxyCode}
+\hypertarget{index_ac}{}\subsection{\-Template Recognition without Feedback}\label{index_ac}
+\-This mode can be used if template recognition is triggered by the user (e.\-g. with a button). \-This \-This method will be slower than the feedback one, since every input stroke will first be passed to the shape recognizer. \-It is not intended to be called on every new stroke. \par
+ \par
+ \-Example of how to use template recognition without feedback\-: 
+\begin{DoxyCode}
+ // List of all input strokes that could be part of a template
+ List<BrownInputStroke> brownInputStrokes = new List<BrownInputStroke>();
+ 
+ // Add whatever makes sense to the brownInputStrokes list, i.e. already
+       recognized
+ // shapes, already cleaned up template shapes, new input strokes etc. 
+ foreach (UIShape s in UI.Shapes) {
+     BrownInputStroke brownStroke = s.ConvertToBrownInputStroke();
+     // make sure that the Data propery has a value that allows you to
+       backtrack to the UIShape. 
+     brownStroke.Data = s;
+     brownInputStrokes.Add(brownShape);
+ }
+ foreach (ApplicationStroke s in UI.Strokes) {
+     BrownInputStroke brownStroke = new BrownInputStroke(s.ToPointArray(), s);
+     brownInputStrokes.Add(brownStroke);
+ }
+ 
+ // call the recognizer
+ List<BrownTemplate> recognizedTemplates = BrownRecognitionAPI.API.
+      RecognizeBrownTemplate(brownInputStrokes);
+\end{DoxyCode}
+\hypertarget{index_ad}{}\subsection{\-Template Clean-\/up}\label{index_ad}
+\-After a template got recognized, the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I} provides a method to get a set of clean shapes building the corresponding template. \par
+ \par
+ \-Example of how to use template clean-\/up\-: 
+\begin{DoxyCode}
+ // the template you want to clean up
+ BrownTemplate template; 
+ 
+ // call the API to get a list of clean shapes. 
+ List<BrownShape> elements = BrownRecognitionAPI.API.GetCleanTemplateShapes(
+      template);
+ 
+ foreach (BrownShape element in elements) {
+     // once we have clean shapes we want to remove everything that was used
+     // to create a clean shape from the UI. 
+     foreach (BrownInputStroke bis in element.BrownInputStrokes) {
+         if (bis.Data is ApplicationStroke) {
+             UI.remove((ApplicationStroke) bis.Data);
+         }
+         else if (bis.Data is UIShape) {
+             UI.remove((UIShape) bis.Data);
+         }
+     }
+     
+     // add a corresponding shape to the UI.
+     if (element.ShapeType == ShapeType.Rect) {
+         UI.add(new Rectangle(brownShape.ShapePoints));
+     }
+     else if (element.ShapeType == ShapeType.Circle) {
+         ...
+     }
+     ...
+ }
+\end{DoxyCode}
+\hypertarget{index_b}{}\section{\-Calling from C++}\label{index_b}
+\-To call the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I} from unmanged \-C++ code, a bridge \-C++ file must created and compiled as managed code. \-Other unmanaged \-C++ code will then be able to call functions in that file. \-Inside the unmanged file, the same logic as in the examples above can be applied with slightly differnet syntax. \par
+ \par
+ \-Example of how to call the \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I} in \-C++\-: 
+\begin{DoxyCode}
+ // Shape Recognition
+ BrownRecognitionCommon::BrownInputStroke^ stroke = gcnew 
+      BrownRecognitionCommon::BrownInputStroke(pts, backtrackObject);
+ BrownRecognitionCommon::BrownShape^ brownShape = 
+      BrownRecognitionAPI::API::RecognizeBrownShape(stroke);
+ 
+ // Template Recognition
+ List<BrownRecognitionCommon::BrownInputStroke^>^ inputStrokes = gcnew 
+      List<BrownRecognitionCommon::BrownInputStroke^>();
+ inputStrokes->Add(stroke);
+ List<BrownRecognitionCommon::BrownTemplate^>^ templates = 
+      BrownRecognitionAPI::API::RecognizeBrownTemplate(inputStrokes);
+ 
+ // Settings
+ System::String^ settings = 
+      BrownRecognitionAPI::API::GetBrownRecognitionSettings();
+ BrownRecognitionAPI::API::SetBrownRecognitionSettings(settings);
+\end{DoxyCode}
+\hypertarget{index_c}{}\section{\-Settings}\label{index_c}
+\-The \hyperlink{class_brown_recognition_a_p_i_1_1_a_p_i}{\-A\-P\-I} overs methods to get and set the settings using \-X\-M\-L. \-See \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings} for further details on what the settings mean. \-A typical \-X\-M\-L looks like this\-: 
+\begin{DoxyCode}
+ <?xml version="1.0" encoding="utf-16"?>
+ <BrownRecognitionSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance
+      " xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <OrgChartBlockConnectorDistanceThreshold>25</
+      OrgChartBlockConnectorDistanceThreshold>
+   <OrgChartWidthPolicy>AverageOnChart</OrgChartWidthPolicy>
+   <OrgChartHeightPolicy>AverageOnChart</OrgChartHeightPolicy>
+   <OrgChartHorizontalSpacingPolicy>StickToConstant</
+      OrgChartHorizontalSpacingPolicy>
+   <OrgChartVerticalSpacingPolicy>StickToConstant</
+      OrgChartVerticalSpacingPolicy>
+   <OrgChartConstantHorizontalSpacing>30</OrgChartConstantHorizontalSpacing>
+   <OrgChartConstantVerticalSpacing>30</OrgChartConstantVerticalSpacing>
+   <PieChartMinimumLengthOfLinesInPercentOfCircleRadius>0.2</
+      PieChartMinimumLengthOfLinesInPercentOfCircleRadius>
+   <TableDiagramContainsThreshold>25</TableDiagramContainsThreshold>
+   <TableDiagramAlignmentThreshold>10</TableDiagramAlignmentThreshold>
+   <TableDiagramVerticalLineToleranceInPercentOfLength>0.3</
+      TableDiagramVerticalLineToleranceInPercentOfLength>
+   <TableDiagramHorizontalLineToleranceInPercentOfLength>0.3</
+      TableDiagramHorizontalLineToleranceInPercentOfLength>
+ </BrownRecognitionSettings>
+\end{DoxyCode}
+ 

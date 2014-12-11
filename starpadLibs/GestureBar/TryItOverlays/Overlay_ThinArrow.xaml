@@ -1,0 +1,15 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Overlay_ThinArrow"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Width="136" Height="150">
+
+	<Grid x:Name="LayoutRoot">
+		<Path Margin="30,67,41,0" Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Data="M15,70 C36.519643,73.310714 58.165147,75.281557 79,76" StrokeThickness="3" Opacity="0.25" VerticalAlignment="Top" Height="7"/>
+		<Path Margin="0,57,32,61" Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="3" Data="M56,63 C63.399828,66.699914 75.372648,71.279486 83,77 75.90092,84.09908 66.066165,87.466917 57,92" Opacity="0.25" HorizontalAlignment="Right" Width="30"/>
+	</Grid>
+</UserControl>

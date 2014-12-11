@@ -1,0 +1,14 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Icon_MathMode"
+	x:Name="UserControl" Width="27" Height="27">
+
+	<Canvas x:Name="LayoutRoot">
+		<Path Height="15.875" Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Data="M18.375,9.75 L9.5,9.625 14.75,16.625 9,24.5 18.5,24.5" StrokeThickness="2" Width="10.5" Canvas.Left="0.25" Canvas.Top="0.125"/>
+		<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="2" Data="M36.375,30.125 L36.5,31.625 37.25,32.625 38.125,32.875 39.25,32.25 39.375,31 39.375,12.875 39.625,10.875 40.25,10.125 41.125,9.5 41.875,9.875 42.875,10.375 43.125,11.25 43.125,12.375" Width="8.75" Height="25.375" Canvas.Left="17.875" Canvas.Top="2.125"/>
+	</Canvas>
+</UserControl>

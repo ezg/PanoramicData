@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="left-paren~32~17~0" Subject="32" NumPts="22">
+	<Stroke index="1">
+		<Point X="187" Y="91" T="-1" />
+		<Point X="185" Y="96" T="-1" />
+		<Point X="183" Y="102" T="-1" />
+		<Point X="182" Y="107" T="-1" />
+		<Point X="181" Y="113" T="-1" />
+		<Point X="181" Y="118" T="-1" />
+		<Point X="181" Y="123" T="-1" />
+		<Point X="182" Y="129" T="-1" />
+		<Point X="183" Y="134" T="-1" />
+		<Point X="184" Y="138" T="-1" />
+		<Point X="186" Y="143" T="-1" />
+		<Point X="188" Y="147" T="-1" />
+		<Point X="190" Y="150" T="-1" />
+		<Point X="191" Y="153" T="-1" />
+		<Point X="193" Y="156" T="-1" />
+		<Point X="195" Y="158" T="-1" />
+		<Point X="197" Y="160" T="-1" />
+		<Point X="198" Y="161" T="-1" />
+		<Point X="200" Y="162" T="-1" />
+		<Point X="201" Y="162" T="-1" />
+		<Point X="202" Y="161" T="-1" />
+		<Point X="203" Y="160" T="-1" />
+	</Stroke>
+</Gesture>

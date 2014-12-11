@@ -1,0 +1,11 @@
+﻿<Window x:Class="DataLoaderStocks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Canvas>
+        <Button Click="OpenConnection_Click" Content="Create DB" Width="80" Height="25"/>
+        <Button Click="LoadSymbols_Click" Content="Load Stocks" Width="80" Height="25" Canvas.Top="30"/>
+        <Button Click="LoadPrices_Click" Content="Load Prices" Width="80" Height="25" Canvas.Top="60"/>
+        <Button Click="Test_Click" Content="Test" Width="80" Height="25" Canvas.Top="90"/>
+    </Canvas>
+</Window>

@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="starPadSDK.Inq.ButtonGestureDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="47"
+             Height="30" MinWidth="70">
+    <Grid x:Name="LayoutRoot">
+        <Border x:Name="BackgroundRect" CornerRadius="3" Background="#FF767676" Padding="10" ></Border>
+        <TextBlock 
+            VerticalAlignment="Center" HorizontalAlignment="Stretch"
+            FontFamily="Segoe WP"
+            FontSize="12" TextWrapping="Wrap" Foreground="White" Margin="5,5" x:Name="LabelText"><Run Text="Default" /></TextBlock>
+    </Grid>
+</UserControl>

@@ -1,0 +1,157 @@
+\hypertarget{class_brown_recognition_common_1_1_brown_shape}{
+\section{\-Brown\-Recognition\-Common.\-Brown\-Shape \-Class \-Reference}
+\label{class_brown_recognition_common_1_1_brown_shape}\index{\-Brown\-Recognition\-Common.\-Brown\-Shape@{\-Brown\-Recognition\-Common.\-Brown\-Shape}}
+}
+
+
+\-Encapsulates a recognized shape.  
+
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_brown_recognition_common_1_1_brown_shape_a11bb94ec786da30563f148b3b7383a17}{\-Brown\-Shape} (\hyperlink{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{\-Shape\-Type} shape\-Type, \-Point\mbox{[}$\,$\mbox{]} shape\-Points, \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke} brown\-Input\-Stroke)
+\begin{DoxyCompactList}\small\item\em \-The constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_brown_recognition_common_1_1_brown_shape_a49afba9e4b61fd9de308a65a48302ab2}{\-Brown\-Shape} (\hyperlink{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{\-Shape\-Type} shape\-Type, \-Point\mbox{[}$\,$\mbox{]} shape\-Points)
+\begin{DoxyCompactList}\small\item\em \-The constructor. \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_a7392e1ad819495147e6f96b995309138}{\-Template\-Building\-Blocks} \hyperlink{class_brown_recognition_common_1_1_brown_shape_a5d4cdc9617b5c82cd9fd1212dfc61ce6}{\-Get\-Template\-Building\-Block} (\hyperlink{namespace_brown_recognition_common_a08ddb81441b8ac27fc140488e6dbb160}{\-Template\-Type} template\-Type)
+\begin{DoxyCompactList}\small\item\em \-If this shape is part of a \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Recognition\-Common.\-Brown\-Template}, this method returns the corresponding \-Brown\-Recognition\-Common.\-Template\-Building\-Block type of it. \end{DoxyCompactList}\item 
+void \hyperlink{class_brown_recognition_common_1_1_brown_shape_a8ee6024907fd2e673060bc01e9e5e74a}{\-Set\-Template\-Building\-Block} (\hyperlink{namespace_brown_recognition_common_a08ddb81441b8ac27fc140488e6dbb160}{\-Template\-Type} template\-Type, \hyperlink{namespace_brown_recognition_common_a7392e1ad819495147e6f96b995309138}{\-Template\-Building\-Blocks} tbb)
+\begin{DoxyCompactList}\small\item\em \-Sets the \-Brown\-Recognition\-Common.\-Template\-Building\-Block type of this shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-List$<$ \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke} $>$ \hyperlink{class_brown_recognition_common_1_1_brown_shape_aeebcf1af8e0ca904c82e1de618880d60}{\-Brown\-Input\-Strokes} = new \-List$<$\hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke}$>$()
+\begin{DoxyCompactList}\small\item\em \-Input strokes that are used to make up this shape. \end{DoxyCompactList}\item 
+\-Point\mbox{[}$\,$\mbox{]} \hyperlink{class_brown_recognition_common_1_1_brown_shape_aabc4ccbd5ed1ba21c301b35d9f9d9fc9}{\-Shape\-Points}
+\begin{DoxyCompactList}\small\item\em \-Clean version of the shape. \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{\-Shape\-Type} \hyperlink{class_brown_recognition_common_1_1_brown_shape_ac8d0e1108308d8e197d5c2b3bc248d7f}{\-Shape\-Type}
+\begin{DoxyCompactList}\small\item\em \-The type of the recognized shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Encapsulates a recognized shape. 
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_a11bb94ec786da30563f148b3b7383a17}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Brown\-Shape@{\-Brown\-Shape}}
+\index{\-Brown\-Shape@{\-Brown\-Shape}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Brown\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}\-Brown\-Recognition\-Common.\-Brown\-Shape.\-Brown\-Shape (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Shape\-Type}}]{shape\-Type, }
+\item[{\-Point\mbox{[}$\,$\mbox{]}}]{shape\-Points, }
+\item[{{\bf \-Brown\-Input\-Stroke}}]{brown\-Input\-Stroke}
+\end{DoxyParamCaption}
+)}}
+\label{class_brown_recognition_common_1_1_brown_shape_a11bb94ec786da30563f148b3b7383a17}
+
+
+\-The constructor. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em shape\-Type} & \-Recognized shape type.\\
+\hline
+{\em shape\-Points} & \-The clean shape points. \\
+\hline
+{\em brown\-Input\-Stroke} & \-The input stroke (only useful if this shape has only one)\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_a49afba9e4b61fd9de308a65a48302ab2}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Brown\-Shape@{\-Brown\-Shape}}
+\index{\-Brown\-Shape@{\-Brown\-Shape}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Brown\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}\-Brown\-Recognition\-Common.\-Brown\-Shape.\-Brown\-Shape (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Shape\-Type}}]{shape\-Type, }
+\item[{\-Point\mbox{[}$\,$\mbox{]}}]{shape\-Points}
+\end{DoxyParamCaption}
+)}}
+\label{class_brown_recognition_common_1_1_brown_shape_a49afba9e4b61fd9de308a65a48302ab2}
+
+
+\-The constructor. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em shape\-Type} & \-Recognized shape type.\\
+\hline
+{\em shape\-Points} & \-The clean shape points. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_a5d4cdc9617b5c82cd9fd1212dfc61ce6}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Get\-Template\-Building\-Block@{\-Get\-Template\-Building\-Block}}
+\index{\-Get\-Template\-Building\-Block@{\-Get\-Template\-Building\-Block}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Get\-Template\-Building\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Template\-Building\-Blocks} \-Brown\-Recognition\-Common.\-Brown\-Shape.\-Get\-Template\-Building\-Block (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Template\-Type}}]{template\-Type}
+\end{DoxyParamCaption}
+)}}
+\label{class_brown_recognition_common_1_1_brown_shape_a5d4cdc9617b5c82cd9fd1212dfc61ce6}
+
+
+\-If this shape is part of a \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Recognition\-Common.\-Brown\-Template}, this method returns the corresponding \-Brown\-Recognition\-Common.\-Template\-Building\-Block type of it. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em template\-Type} & \-The template type.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The corresponding building block type.
+\end{DoxyReturn}
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_a8ee6024907fd2e673060bc01e9e5e74a}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Set\-Template\-Building\-Block@{\-Set\-Template\-Building\-Block}}
+\index{\-Set\-Template\-Building\-Block@{\-Set\-Template\-Building\-Block}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Set\-Template\-Building\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void \-Brown\-Recognition\-Common.\-Brown\-Shape.\-Set\-Template\-Building\-Block (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Template\-Type}}]{template\-Type, }
+\item[{{\bf \-Template\-Building\-Blocks}}]{tbb}
+\end{DoxyParamCaption}
+)}}
+\label{class_brown_recognition_common_1_1_brown_shape_a8ee6024907fd2e673060bc01e9e5e74a}
+
+
+\-Sets the \-Brown\-Recognition\-Common.\-Template\-Building\-Block type of this shape. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em template\-Type} & \-The template type.\\
+\hline
+{\em tbb} & \-The corresponding building block type.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_aeebcf1af8e0ca904c82e1de618880d60}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Brown\-Input\-Strokes@{\-Brown\-Input\-Strokes}}
+\index{\-Brown\-Input\-Strokes@{\-Brown\-Input\-Strokes}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Brown\-Input\-Strokes}]{\setlength{\rightskip}{0pt plus 5cm}\-List$<${\bf \-Brown\-Input\-Stroke}$>$ {\bf \-Brown\-Recognition\-Common.\-Brown\-Shape.\-Brown\-Input\-Strokes} = new \-List$<${\bf \-Brown\-Input\-Stroke}$>$()}}
+\label{class_brown_recognition_common_1_1_brown_shape_aeebcf1af8e0ca904c82e1de618880d60}
+
+
+\-Input strokes that are used to make up this shape. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_aabc4ccbd5ed1ba21c301b35d9f9d9fc9}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Shape\-Points@{\-Shape\-Points}}
+\index{\-Shape\-Points@{\-Shape\-Points}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Shape\-Points}]{\setlength{\rightskip}{0pt plus 5cm}\-Point \mbox{[}$\,$\mbox{]} {\bf \-Brown\-Recognition\-Common.\-Brown\-Shape.\-Shape\-Points}}}
+\label{class_brown_recognition_common_1_1_brown_shape_aabc4ccbd5ed1ba21c301b35d9f9d9fc9}
+
+
+\-Clean version of the shape. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_shape_ac8d0e1108308d8e197d5c2b3bc248d7f}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Shape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}!\-Shape\-Type@{\-Shape\-Type}}
+\index{\-Shape\-Type@{\-Shape\-Type}!BrownRecognitionCommon::BrownShape@{\-Brown\-Recognition\-Common\-::\-Brown\-Shape}}
+\subsubsection[{\-Shape\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Shape\-Type} {\bf \-Brown\-Recognition\-Common.\-Brown\-Shape.\-Shape\-Type}}}
+\label{class_brown_recognition_common_1_1_brown_shape_ac8d0e1108308d8e197d5c2b3bc248d7f}
+
+
+\-The type of the recognized shape. 
+

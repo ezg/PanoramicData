@@ -1,0 +1,77 @@
+﻿<r:RibbonWindow  x:Class="SharpShapes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+        Title="SharpShapes Demo v1.0" Height="467" Width="617" 
+        xmlns:my="clr-namespace:SharpShapes">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <r:Ribbon x:Name="ribbon">
+            <r:Ribbon.ApplicationMenu>
+                <r:RibbonApplicationMenu SmallImageSource="images/kmenuedit.png">
+                    <r:RibbonApplicationMenuItem
+                        Name="btnOpen"
+                        Header="Open" ImageSource="images/fileopen.png"
+                        Command="my:SharpShapesCommands.OpenCommand"/>
+                    <r:RibbonApplicationMenuItem 
+                        Name="btnSave"
+                        Header="Save" ImageSource="images/filesave.png"
+                        Command="my:SharpShapesCommands.SaveCommand"/>
+
+
+                    <!--
+                    <r:RibbonApplicationMenu.AuxiliaryPaneContent>
+                    </r:RibbonApplicationMenu.AuxiliaryPaneContent>
+                    
+                    <r:RibbonApplicationMenu.FooterPaneContent>
+                        <r:RibbonButton Label="Exit"/>
+                    </r:RibbonApplicationMenu.FooterPaneContent>
+                    -->
+                </r:RibbonApplicationMenu>
+            </r:Ribbon.ApplicationMenu>
+
+            <r:RibbonTab Header="Options">
+                <r:RibbonGroup Name="grpOptions" Header="General">
+                    <r:RibbonButton 
+                        Name="btnMode"
+                        Label="Switch Modes" LargeImageSource="images/package_system.png"
+                        Command="my:SharpShapesCommands.SwitchModeCommand"/>
+                    
+                    <r:RibbonButton 
+                        Name="btnClear"
+                        Label="Clear Canvas" LargeImageSource="images/stop.png"
+                        Command="my:SharpShapesCommands.ClearCommand"/>
+                </r:RibbonGroup>
+
+                <r:RibbonGroup Name="grpMode" Header="Shape Recognition">
+                   <r:RibbonButton 
+                        Name="btnRecognize"
+                        Label="Recognize" LargeImageSource="images/wizard.png"
+                        Command="my:SharpShapesCommands.RecognizeCommand"/>
+                    <r:RibbonButton 
+                        Name="btnUndo"
+                        Label="Undo Template Clean-Up" LargeImageSource="images/undo.png"
+                        Command="my:SharpShapesCommands.UndoCommand"/>
+                    <r:RibbonMenuButton
+                        Name="btnCleanUp" 
+                        Label="Clean-Up" LargeImageSource="images/apply.png"
+                        DropDownOpened="btnCleanUp_DropDownOpened"
+                        IsEnabled="False">
+                        <r:RibbonMenuButton.Items>
+                            <r:RibbonMenuItem/>
+                        </r:RibbonMenuButton.Items>
+                    </r:RibbonMenuButton>
+                </r:RibbonGroup>
+            </r:RibbonTab>
+            
+        </r:Ribbon>
+        
+        <my:ShapeCanvas Grid.Row="1" HorizontalAlignment="Stretch" x:Name="shapeCanvas" VerticalAlignment="Stretch" />
+    </Grid>
+
+</r:RibbonWindow>

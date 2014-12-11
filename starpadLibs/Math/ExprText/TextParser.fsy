@@ -1,0 +1,114 @@
+﻿%{
+// *****Note! This is all inside a "module starPadSDK.MathExpr.TextInternals.Parser" set by command-line option. That, as well as using fslex
+//             and fsyacc on TextLexer.fsl as well as this file, happen because I hand-made changes to the ExprText.fsproj file to:
+//       1. change the reference to the file name (<Content Include="TextLexer.fsl" />) for instance to FsLex and FsYacc rather than Content.
+//       2. add a subelement Module inside the FsYacc entry to set the module name.
+//       3. add a subelement Open inside the FsYacc entry to get the .fsi file as well to open starPadSDK.MathExpr
+//       4. change the <Import ... /> line to import FSharp.PowerPack.Targets rather than (I think) Microsoft.FSharp.Targets.
+open System
+open starPadSDK.MathExpr
+
+let makeplus args =
+    if List.length args > 1 then new CompositeExpr(WellKnownSym.plus, Array.ofList args) :> Expr else args.[0]
+let maketimes args =
+    if List.length args > 1 then new CompositeExpr(WellKnownSym.times, Array.ofList args) :> Expr else args.[0]
+%}
+
+%start expr
+
+%token <float> DOUBLE
+%token <string> INTEGER
+%token <string> TOKEN
+%token LETTERSYM GROUPEDLETTERSYM WORDSYM NULL
+%token <string> WKS
+%token <string> ID
+%token LE GE NE PM MP ERRS ERRE LSB RSB US LT GT COMMA LP RP LCB RCB EQ FACT PLUS MINUS TIMES DIVIDE POW VB LLT GGT
+%token EOF
+
+%type <Expr> expr
+
+%%
+
+expr : relnexpr { $1 }
+
+relnexpr : plusexpr { makeplus $1 }
+	| relnexpr EQ relnexpr { new CompositeExpr(WellKnownSym.equals, [|$1; $3|]) :> Expr }
+	| relnexpr LT relnexpr { new CompositeExpr(WellKnownSym.lessthan, [|$1; $3|]) :> Expr }
+	| relnexpr GT relnexpr { new CompositeExpr(WellKnownSym.greaterthan, [|$1; $3|]) :> Expr }
+	| relnexpr LE relnexpr { new CompositeExpr(WellKnownSym.lessequals, [|$1; $3|]) :> Expr }
+	| relnexpr GE relnexpr { new CompositeExpr(WellKnownSym.greaterequals, [|$1; $3|]) :> Expr }
+	| relnexpr NE relnexpr { new CompositeExpr(WellKnownSym.notequals, [|$1; $3|]) :> Expr }
+
+plusexpr : timesexpr	{ [maketimes $1] }
+	| plusexpr PLUS timesexpr	{ $1 @ [maketimes $3] }
+	| plusexpr MINUS timesexpr	{ $1 @ [(new CompositeExpr(WellKnownSym.minus, [|maketimes($3)|]) :> Expr)] }
+	| plusexpr PM timesexpr	{ $1 @ [(new CompositeExpr(WellKnownSym.plusminus, [|maketimes($3)|]) :> Expr)] }
+	| plusexpr MP timesexpr	{ $1 @ [(new CompositeExpr(WellKnownSym.minusplus, [|maketimes($3)|]) :> Expr)] }
+
+timesexpr : powerexpr	{ [$1] }
+	| timesexpr TIMES powerexpr	{ $1 @ [$3] }
+	| timesexpr nonpfxpowerexpr	{ $1 @ [$2] }
+	| timesexpr DIVIDE powerexpr	{ $1 @ [(new CompositeExpr(WellKnownSym.divide, [|$3|]) :> Expr)] }
+
+powerexpr : prefixexpr	{ $1 }
+	| prefixexpr POW powerexpr	{ new CompositeExpr(WellKnownSym.power, [|$1; $3|]) :> Expr }
+
+nonpfxpowerexpr : postfixexpr	{ $1 }
+	| postfixexpr POW nonpfxpowerexpr	{ new CompositeExpr(WellKnownSym.power, [|$1; $3|]) :> Expr }
+
+prefixexpr : postfixexpr	{ $1 }
+	| MINUS prefixexpr	{ match $2 with :? DoubleNumber as dn -> new DoubleNumber(-dn.Num) :> Expr | _ -> new CompositeExpr(WellKnownSym.minus, [|$2|]) :> Expr }
+	| PLUS prefixexpr	{ $2 }
+
+postfixexpr : primaryexpr	{ $1 }
+	| postfixexpr LSB arglist RSB	{ new CompositeExpr($1, Array.ofList $3) :> Expr }
+	| postfixexpr FACT { new CompositeExpr(WellKnownSym.factorial, [|$1|]) :> Expr }
+
+primaryexpr : primaryexprnovb { $1}
+	| VB primaryexprnovb VB { new CompositeExpr(WellKnownSym.magnitude, [|$2|]) :> Expr }
+
+primaryexprnovb : sym	{ $1 }
+	| number	{ $1 }
+	| LP expr RP	{ $2 }
+	| LCB arglist RCB { new ArrayExpr(Array.ofList $2) :> Expr }
+	| LCB arrlist RCB { new ArrayExpr($2) :> Expr }
+	| ERRS ID ERRE { new ErrorMsgExpr($2) :> Expr }
+	| NULL { new NullExpr() :> Expr }
+
+arrlist : LSB arglist RSB { Array2D.init 1 $2.Length (fun i j -> $2.[j]) }
+	| arrlist LSB arglist RSB { Array2D.init (1 + Array2D.length1 $1) (Array2D.length2 $1) (fun i j -> if i < Array2D.length1 $1 then $1.[i,j] else $3.[j]) }
+
+arglist :	{ [] }
+	| expr	{ [$1] }
+	| arglist COMMA expr { $1 @ [$3] }
+
+sym : lettersym	{ $1 :> Expr }
+	| groupedlettersym	{ $1 :> Expr }
+	| wordsym	{ $1 :> Expr }
+	| wellknownsym	{ $1 :> Expr }
+	| ID { if($1.Length <> 1) then new WordSym($1) :> Expr else new LetterSym($1.[0]) :> Expr }
+
+number : realnumber { $1 :> Expr }
+	| complexnumber	{ $1 :> Expr }
+
+realnumber : doublenumber { $1 :> RealNumber }
+	| integernumber { $1 :> RealNumber }
+
+doublenumber : DOUBLE	{ new DoubleNumber($1) }
+
+integernumber : INTEGER { new IntegerNumber(new BigInt($1)) }
+
+complexnumber : LLT realnumber COMMA realnumber GGT	{ new ComplexNumber($2, $4) }
+
+lettersym : LETTERSYM LSB ID RSB	{ new LetterSym($3.[0]) }
+	| LETTERSYM LSB ID COMMA expr RSB	{ let ls = new LetterSym($3.[0]) in ls.Subscript <- $5; ls }
+
+groupedlettersym : GROUPEDLETTERSYM LSB lettersymlist RSB	{ new GroupedLetterSym(Array.ofList $3) }
+
+lettersymlist : lettersym	{ [$1] }
+	| lettersym COMMA lettersymlist	{ [$1] @ $3 }
+
+wordsym : WORDSYM LSB ID RSB	{ new WordSym($3) }
+	| WORDSYM LSB ID COMMA expr RSB	{ let ws = new WordSym($3) in ws.Subscript <- $5; ws }
+
+wellknownsym : WKS	{ new WellKnownSym(Enum.Parse(typeof<WKSID>, $1) :?> WKSID) }

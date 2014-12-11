@@ -1,0 +1,179 @@
+\hypertarget{namespace_brown_recognition_common}{
+\section{\-Package \-Brown\-Recognition\-Common}
+\label{namespace_brown_recognition_common}\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}}
+}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_brown_recognition_common_1_1_brown_input_stroke}{\-Brown\-Input\-Stroke}
+\begin{DoxyCompactList}\small\item\em \-Encapsulates an input stroke. \end{DoxyCompactList}\item 
+class {\bfseries \-Brown\-Line}
+\item 
+class \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Settings}
+\begin{DoxyCompactList}\small\item\em \-Singelton that encapsulates all the settings used in the \-Brown\-Recognition \-A\-P\-I. \end{DoxyCompactList}\item 
+class \hyperlink{class_brown_recognition_common_1_1_brown_shape}{\-Brown\-Shape}
+\begin{DoxyCompactList}\small\item\em \-Encapsulates a recognized shape. \end{DoxyCompactList}\item 
+class {\bfseries \-Brown\-Shape\-Renderer}
+\item 
+class \hyperlink{class_brown_recognition_common_1_1_brown_template}{\-Brown\-Template}
+\begin{DoxyCompactList}\small\item\em \-Encapsulates a recognized template. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}{\-Org\-Chart\-Height\-Policies} \{ \*
+{\bfseries \-Keep\-Original}, 
+{\bfseries \-Average\-On\-Same\-Level}, 
+{\bfseries \-Greates\-On\-Same\-Level}, 
+{\bfseries \-Average\-On\-Chart}, 
+\*
+{\bfseries \-Greatest\-On\-Chart}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of different height policies for blocks in an \-Org\-Chart. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}{\-Org\-Chart\-Horizontal\-Spacing\-Policies} \{ {\bfseries \-Average\-On\-Same\-Level}, 
+{\bfseries \-Greates\-On\-Same\-Level}, 
+{\bfseries \-Stick\-To\-Constant}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of different horizontal spacing policies between blocks in an \-Org\-Chart. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}{\-Org\-Chart\-Vertical\-Spacing\-Policies} \{ {\bfseries \-Average\-On\-Same\-Level}, 
+{\bfseries \-Greates\-On\-Same\-Level}, 
+{\bfseries \-Stick\-To\-Constant}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of different vertical spacing policies between blocks in an \-Org\-Chart. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}{\-Org\-Chart\-Width\-Policies} \{ \*
+{\bfseries \-Keep\-Original}, 
+{\bfseries \-Average\-On\-Same\-Level}, 
+{\bfseries \-Greates\-On\-Same\-Level}, 
+{\bfseries \-Average\-On\-Chart}, 
+\*
+{\bfseries \-Greatest\-On\-Chart}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of different width policies for blocks in an \-Org\-Chart. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{\-Shape\-Type} \{ \*
+{\bfseries \-None}, 
+{\bfseries \-Scribble}, 
+{\bfseries \-Polyline}, 
+{\bfseries \-Straight\-Line}, 
+\*
+{\bfseries \-Triangle}, 
+{\bfseries \-Right\-Triangle}, 
+{\bfseries \-Isosceles\-Triangle}, 
+{\bfseries \-Rounded\-Rect}, 
+\*
+{\bfseries \-Rect}, 
+{\bfseries \-Square}, 
+{\bfseries \-Parallelogram}, 
+{\bfseries \-Circle}, 
+\*
+{\bfseries \-Trapezoid}, 
+{\bfseries \-Ellipse}, 
+{\bfseries \-Diamond}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of all the differnet shape types supported by the \-Brown\-Recognition \-A\-P\-I. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_a7392e1ad819495147e6f96b995309138}{\-Template\-Building\-Blocks} \{ {\bfseries \-None}, 
+{\bfseries \-Connector}, 
+{\bfseries \-Block}, 
+{\bfseries \-Divider}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of different template building blocks. \-A shape that is used in a template will have one of those assigned. \end{DoxyCompactList}\item 
+enum \hyperlink{namespace_brown_recognition_common_a08ddb81441b8ac27fc140488e6dbb160}{\-Template\-Type} \{ \*
+{\bfseries \-All}, 
+{\bfseries \-None}, 
+{\bfseries \-Org\-Chart}, 
+{\bfseries \-Venn\-Diagram}, 
+\*
+{\bfseries \-Pie\-Chart}, 
+{\bfseries \-Table\-Diagram}, 
+{\bfseries \-Bulls\-Eye}, 
+{\bfseries \-Pyramid\-Diagram}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of all the differnet template types supported by the \-Brown\-Recognition \-A\-P\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Org\-Chart\-Height\-Policies@{\-Org\-Chart\-Height\-Policies}}
+\index{\-Org\-Chart\-Height\-Policies@{\-Org\-Chart\-Height\-Policies}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Org\-Chart\-Height\-Policies}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Org\-Chart\-Height\-Policies}}}
+\label{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}
+
+
+\-Enumeration of different height policies for blocks in an \-Org\-Chart. 
+
+
+\begin{DoxyItemize}
+\item \-Keep\-Original\-: \-Height will be roughly same as the input block.
+\item \-Average\-On\-Same\-Level\-: \-Height will be averaged over all input blocks on the same level.
+\item \-Greates\-On\-Same\-Level\-: \-Height will be the maximum height of all input blocks on the same level.
+\item \-Average\-On\-Chart\-: \-Height will be averaged over all input blocks in the chart.
+\item \-Greatest\-On\-Chart\-: \-Height will be the maximum height of all input blocks in the chart. 
+\end{DoxyItemize}\hypertarget{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Org\-Chart\-Horizontal\-Spacing\-Policies@{\-Org\-Chart\-Horizontal\-Spacing\-Policies}}
+\index{\-Org\-Chart\-Horizontal\-Spacing\-Policies@{\-Org\-Chart\-Horizontal\-Spacing\-Policies}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Org\-Chart\-Horizontal\-Spacing\-Policies}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Org\-Chart\-Horizontal\-Spacing\-Policies}}}
+\label{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}
+
+
+\-Enumeration of different horizontal spacing policies between blocks in an \-Org\-Chart. 
+
+
+\begin{DoxyItemize}
+\item \-Average\-On\-Same\-Level\-: \-Spacing will be averaged over all input blocks on the same level.
+\item \-Greates\-On\-Same\-Level\-: \-Spacing will be the maximum space of all blocks on the same level.
+\item \-Stick\-To\-Constant\-: \-Spacing will be a constant value (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). 
+\end{DoxyItemize}\hypertarget{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Org\-Chart\-Vertical\-Spacing\-Policies@{\-Org\-Chart\-Vertical\-Spacing\-Policies}}
+\index{\-Org\-Chart\-Vertical\-Spacing\-Policies@{\-Org\-Chart\-Vertical\-Spacing\-Policies}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Org\-Chart\-Vertical\-Spacing\-Policies}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Org\-Chart\-Vertical\-Spacing\-Policies}}}
+\label{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}
+
+
+\-Enumeration of different vertical spacing policies between blocks in an \-Org\-Chart. 
+
+
+\begin{DoxyItemize}
+\item \-Average\-On\-Same\-Level\-: \-Spacing will be averaged over all input blocks on the same level.
+\item \-Greates\-On\-Same\-Level\-: \-Spacing will be the maximum space of all blocks on the same level.
+\item \-Stick\-To\-Constant\-: \-Spacing will be a constant value (see \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}). 
+\end{DoxyItemize}\hypertarget{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Org\-Chart\-Width\-Policies@{\-Org\-Chart\-Width\-Policies}}
+\index{\-Org\-Chart\-Width\-Policies@{\-Org\-Chart\-Width\-Policies}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Org\-Chart\-Width\-Policies}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Org\-Chart\-Width\-Policies}}}
+\label{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}
+
+
+\-Enumeration of different width policies for blocks in an \-Org\-Chart. 
+
+
+\begin{DoxyItemize}
+\item \-Keep\-Original\-: \-Width will be roughly same as the input block.
+\item \-Average\-On\-Same\-Level\-: \-Width will be averaged over all input blocks on the same level.
+\item \-Greates\-On\-Same\-Level\-: \-Width will be the maximum width of all input blocks on the same level.
+\item \-Average\-On\-Chart\-: \-Width will be averaged over all input blocks in the chart.
+\item \-Greatest\-On\-Chart\-: \-Width will be the maximum width of all input blocks in the chart. 
+\end{DoxyItemize}\hypertarget{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Shape\-Type@{\-Shape\-Type}}
+\index{\-Shape\-Type@{\-Shape\-Type}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Shape\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Shape\-Type}}}
+\label{namespace_brown_recognition_common_a86340ddb3d90188573ed7b4484046ec3}
+
+
+\-Enumeration of all the differnet shape types supported by the \-Brown\-Recognition \-A\-P\-I. 
+
+\hypertarget{namespace_brown_recognition_common_a7392e1ad819495147e6f96b995309138}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Template\-Building\-Blocks@{\-Template\-Building\-Blocks}}
+\index{\-Template\-Building\-Blocks@{\-Template\-Building\-Blocks}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Template\-Building\-Blocks}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Template\-Building\-Blocks}}}
+\label{namespace_brown_recognition_common_a7392e1ad819495147e6f96b995309138}
+
+
+\-Enumeration of different template building blocks. \-A shape that is used in a template will have one of those assigned. 
+
+\hypertarget{namespace_brown_recognition_common_a08ddb81441b8ac27fc140488e6dbb160}{
+\index{\-Brown\-Recognition\-Common@{\-Brown\-Recognition\-Common}!\-Template\-Type@{\-Template\-Type}}
+\index{\-Template\-Type@{\-Template\-Type}!BrownRecognitionCommon@{\-Brown\-Recognition\-Common}}
+\subsubsection[{\-Template\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf \-Brown\-Recognition\-Common\-::\-Template\-Type}}}
+\label{namespace_brown_recognition_common_a08ddb81441b8ac27fc140488e6dbb160}
+
+
+\-Enumeration of all the differnet template types supported by the \-Brown\-Recognition \-A\-P\-I. 
+

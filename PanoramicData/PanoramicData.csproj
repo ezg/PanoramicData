@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <_ResolveReferenceDependencies>true</_ResolveReferenceDependencies>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6949B4C5-DAD5-4CF1-B8CB-FB5966559B81}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PanoramicData</RootNamespace>
+    <AssemblyName>PanoramicData</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <PublishUrl>C:\Users\LADS\Desktop\test\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>9849EA6E7A0080E692DBE64FB9121D471FDC32C0</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>PanoramicData_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>packages\Facebook.6.0.20\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="GeoAPI">
+      <HintPath>..\..\Libs\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="IACore">
+      <HintPath>..\starpadLibs\IACore.dll</HintPath>
+    </Reference>
+    <Reference Include="IALoader">
+      <HintPath>..\AnApp\IALoader.dll</HintPath>
+    </Reference>
+    <Reference Include="IAWinFX">
+      <HintPath>..\..\Libs\IAWinFX.dll</HintPath>
+    </Reference>
+    <Reference Include="InTheHand.Net.Personal, Version=3.5.605.0, Culture=neutral, PublicKeyToken=ea38caa273134499, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\32feet\InTheHand.Net.Personal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Ink, Version=6.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC_64\Microsoft.Ink\6.1.0.0__31bf3856ad364e35\Microsoft.Ink.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Maps.MapControl.WPF">
+      <HintPath>..\..\Libs\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\..\Libs\NCalc.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\..\Libs\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Common">
+      <HintPath>..\..\Libs\PixelLab.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Core">
+      <HintPath>..\..\Libs\PixelLab.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Wpf">
+      <HintPath>..\..\Libs\PixelLab.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerCollections">
+      <HintPath>..\starpadLibs\PowerCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\..\Libs\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="controller\data\FilterQueryGenerator.cs" />
+    <Compile Include="controller\data\QueryGenerator.cs" />
+    <Compile Include="controller\data\QueryItemsProvider.cs" />
+    <Compile Include="controller\math\MathManager.cs" />
+    <Compile Include="model\view\FilteringType.cs" />
+    <Compile Include="model\view\FilterRendererType.cs" />
+    <Compile Include="utils\Helpers.cs" />
+    <Compile Include="utils\inq\FormulaEvaluator.cs" />
+    <Compile Include="utils\inq\InkTableContent.cs" />
+    <Compile Include="utils\inq\InkTableSegmenter.cs" />
+    <Compile Include="utils\inq\InqAnalyzer.cs" />
+    <Compile Include="utils\inq\Label.cs" />
+    <Compile Include="utils\inq\StroqCache.cs" />
+    <Compile Include="utils\inq\StroqListener.cs" />
+    <Compile Include="view\filter\Back.xaml.cs">
+      <DependentUpon>Back.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\view\CalculatedColumnDescriptor.cs" />
+    <Compile Include="model\view\CalculatedColumnDescriptorInfo.cs" />
+    <Compile Include="view\filter\CombinedFilterHolder.xaml.cs">
+      <DependentUpon>CombinedFilterHolder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\Colorer.xaml.cs">
+      <DependentUpon>Colorer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\Styler.xaml.cs">
+      <DependentUpon>Styler.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controller\filter\FilterExpressionEvaluator.cs" />
+    <Compile Include="view\filter\Front.xaml.cs">
+      <DependentUpon>Front.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\MovableElement.cs" />
+    <Compile Include="model\view\NamedFilterModelColumnDescriptor.cs" />
+    <Compile Include="view\inq\InkableCanvas.cs" />
+    <Compile Include="view\inq\InkableScene.cs" />
+    <Compile Include="view\math\RecognitionResultRenderer.xaml.cs">
+      <DependentUpon>RecognitionResultRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\table\TableFilterRenderer.cs" />
+    <Compile Include="view\vis\PivotFilterItemRenderer.xaml.cs">
+      <DependentUpon>PivotFilterItemRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\PivotFilterRenderer.xaml.cs">
+      <DependentUpon>PivotFilterRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\PlotFilterRenderer4.xaml.cs">
+      <DependentUpon>PlotFilterRenderer4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\SliderFilterRenderer.xaml.cs">
+      <DependentUpon>SliderFilterRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\MapFilterRenderer2.xaml.cs">
+      <DependentUpon>MapFilterRenderer2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\FilterRendererResources.cs" />
+    <Compile Include="view\vis\HistogramFilterRenderer2.xaml.cs">
+      <DependentUpon>HistogramFilterRenderer2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\PieFilterRenderer2.xaml.cs">
+      <DependentUpon>PieFilterRenderer2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\Resizer.xaml.cs">
+      <DependentUpon>Resizer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\SimpleMapPushpin.xaml.cs">
+      <DependentUpon>SimpleMapPushpin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\Grouper.xaml.cs">
+      <DependentUpon>Grouper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\view\OrgData.cs" />
+    <Compile Include="view\other\AxisFeedback.xaml.cs">
+      <DependentUpon>AxisFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\schema\ColumnTree.cs" />
+    <Compile Include="view\schema\ColumnTreeView.xaml.cs">
+      <DependentUpon>ColumnTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\math\MathEditor.xaml.cs">
+      <DependentUpon>MathEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controller\sql\SqlExprEvaluator.cs" />
+    <Compile Include="view\schema\SchemaViewer.xaml.cs">
+      <DependentUpon>SchemaViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\other\TableFeedback.xaml.cs">
+      <DependentUpon>TableFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\other\SliderFeedback.xaml.cs">
+      <DependentUpon>SliderFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\other\CustomDateTimeAxis.cs" />
+    <Compile Include="view\other\CustomLabelAxis.cs" />
+    <Compile Include="controller\data\ModelHelpers.cs" />
+    <Compile Include="view\utils\NonEmptyStringToVisibleConverter.cs" />
+    <Compile Include="view\other\RadialControl.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RadialControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\other\SimpleACommandSet.cs" />
+    <Compile Include="view\filter\FilterHolder.xaml.cs">
+      <DependentUpon>FilterHolder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\filter\FilterModelAttachment.cs" />
+    <Compile Include="view\other\SimpleAPage.cs" />
+    <Compile Include="view\filter\Filter.xaml.cs">
+      <DependentUpon>Filter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\view\FilterModel.cs" />
+    <Compile Include="view\filter\FilterRenderer.cs" />
+    <Compile Include="view\utils\GridViewColumnResizeBehavior.cs" />
+    <Compile Include="model\view\FilterHolderViewModel.cs" />
+    <Compile Include="view\table\SimpleDataGridDragFeedback.xaml.cs">
+      <DependentUpon>SimpleDataGridDragFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\view\TableModel.cs" />
+    <Compile Include="view\table\SimpleDataGrid.xaml.cs">
+      <DependentUpon>SimpleDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\table\SimpleGridViewColumnHeader.xaml.cs">
+      <DependentUpon>SimpleGridViewColumnHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\table\SimpleGridViewColumnHeaderPlaceholder.xaml.cs">
+      <DependentUpon>SimpleGridViewColumnHeaderPlaceholder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controller\data\AsyncVirtualizingCollection.cs" />
+    <Compile Include="controller\data\DataPage.cs" />
+    <Compile Include="controller\data\DataWrapper.cs" />
+    <Compile Include="controller\data\IItemsProvider.cs" />
+    <Compile Include="controller\data\VirtualizingCollection.cs" />
+    <Compile Include="PanoramicDataCommands.cs" />
+    <Compile Include="controller\physics\PhysicsManager.cs" />
+    <Compile Include="Service References\BingMapService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="view\menu\SlideMenuItem.xaml.cs">
+      <DependentUpon>SlideMenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\menu\SlideMenu.xaml.cs">
+      <DependentUpon>SlideMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\physics\WPFDebugView.cs" />
+    <Page Include="view\filter\Back.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\filter\CombinedFilterHolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\filter\Colorer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\filter\Styler.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\filter\FilterHolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\filter\Front.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\math\RecognitionResultRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\vis\PivotFilterItemRenderer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\PivotFilterRenderer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\PlotFilterRenderer4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\SliderFilterRenderer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\MapFilterRenderer2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\HistogramFilterRenderer2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\vis\PieFilterRenderer2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\filter\Resizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\vis\SimpleMapPushpin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\filter\Filter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\filter\Grouper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\other\AxisFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\schema\ColumnTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\math\MathEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\schema\SchemaViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\other\TableFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\other\SliderFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\other\RadialControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\table\SimpleDataGridDragFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\table\SimpleDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\table\SimpleGridViewColumnHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\table\SimpleGridViewColumnHeaderPlaceholder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\menu\SlideMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="ACommandSet.cs" />
+    <Compile Include="APage.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="view\menu\SlideMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\c_label.png" />
+    <None Include="Resources\c_location.png" />
+    <None Include="Resources\c_segement_size.png" />
+    <None Include="Resources\c_series.png" />
+    <None Include="Resources\c_series_2.png" />
+    <None Include="Resources\c_x.png" />
+    <None Include="Resources\c_y.png" />
+    <Resource Include="Resources\bing.png" />
+    <None Include="Service References\BingMapService\dev.wsdl" />
+    <None Include="Service References\BingMapService\dev.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\dev1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\dev2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.GeocodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.ImageryMetadataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.MajorRoutesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.MapUriResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.RouteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\PanoramicData.BingMapService.SearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BingMapService\ImageryService.wsdl" />
+    <None Include="Service References\BingMapService\ImageryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\imageryservice1.wsdl" />
+    <None Include="Service References\BingMapService\ImageryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\ImageryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\ImageryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\ImageryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\ImageryService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BingMapService\configuration.svcinfo" />
+    <None Include="Service References\BingMapService\configuration91.svcinfo" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Resources\ez_sample.font" />
+    <None Include="Service References\BingMapService\GeocodeService.wsdl" />
+    <None Include="Service References\BingMapService\GeocodeService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\GeocodeService1.wsdl" />
+    <None Include="Service References\BingMapService\GeocodeService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\GeocodeService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\GeocodeService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\GeocodeService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\RouteService.wsdl" />
+    <None Include="Service References\BingMapService\routeservice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\routeservice1.wsdl" />
+    <None Include="Service References\BingMapService\routeservice1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\routeservice2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\routeservice3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\schemas.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\schemas1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BingMapService\SearchService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libs\PanoramicDataService\PanoramicDataDBConnector\PanoramicDataDBConnector.csproj">
+      <Project>{4508eb8e-5ddc-4122-9cae-b3a82848cc09}</Project>
+      <Name>PanoramicDataDBConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\PanoramicDataService\PanoramicDataModel\PanoramicDataModel.csproj">
+      <Project>{34b328d4-255f-499e-851c-1b7407b68d65}</Project>
+      <Name>PanoramicDataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\SharpShapes\BrownRecognitionAPI\BrownRecognitionAPI.csproj">
+      <Project>{35b7bcb3-e4a0-4c24-afcf-9cb6595db31a}</Project>
+      <Name>BrownRecognitionAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\SharpShapes\BrownRecognitionCommon\BrownRecognitionCommon.csproj">
+      <Project>{76ead062-c55c-4e5f-8c0c-1e85fbb5dd5d}</Project>
+      <Name>BrownRecognitionCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\SharpShapes\ShapeRecognizer\ShapeRecognizer.csproj">
+      <Project>{71a5c84b-bd8e-4152-86d6-d6dea59d80e8}</Project>
+      <Name>ShapeRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\%24N\NDollar.csproj">
+      <Project>{f04d5438-2904-45ff-960b-10e1989cf573}</Project>
+      <Name>NDollar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\AppLib\AppLib.csproj">
+      <Project>{958e03dc-94f4-4175-adb0-26ddae87c0e3}</Project>
+      <Name>AppLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\CombinedInputAPI\CombinedInputAPI.csproj">
+      <Project>{eafdd97a-c8a2-4263-85ff-7300778d9111}</Project>
+      <Name>CombinedInputAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\DynamicDataDisplay0.3\DynamicDataDisplay.csproj">
+      <Project>{10809524-8302-43da-a2a6-825b33f1f364}</Project>
+      <Name>DynamicDataDisplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Farseer Physics Engine 3.3.1\Farseer Physics.csproj">
+      <Project>{a4610e4c-dd34-428b-babb-779ca0b5993a}</Project>
+      <Name>Farseer Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Geom\Geom.csproj">
+      <Project>{25c89864-6c12-4aac-864c-d52174926b1f}</Project>
+      <Name>Geom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\InputFrameworkBase\InputFrameworkBase.csproj">
+      <Project>{133fbae4-1213-41c7-b7a8-04e3d015a1b0}</Project>
+      <Name>InputFrameworkBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\InputFramework\InputFramework.csproj">
+      <Project>{9903115a-ee67-4170-b717-acaea00c6b14}</Project>
+      <Name>InputFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\InqUtils\InqUtils.csproj">
+      <Project>{6a89aca9-0b5e-4e30-a887-fe1a2ed19731}</Project>
+      <Name>InqUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Inq\Inq.csproj">
+      <Project>{f3d6d741-d9fa-4d76-a2d8-ae4ce3baa31a}</Project>
+      <Name>Inq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Math\CharRecognizer\CharRecognizer.csproj">
+      <Project>{aa0998d1-6ea3-4786-b7de-6e7f260369b0}</Project>
+      <Name>CharRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Math\ExprWPF\ExprWPF.csproj">
+      <Project>{84cdb161-2547-4296-b563-16c1c92b50ff}</Project>
+      <Name>ExprWPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Math\Expr\Expr.csproj">
+      <Project>{286f313d-c4ea-468a-8afd-25c80b0b7af8}</Project>
+      <Name>Expr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Math\MathRecognizer\MathRecognizer.csproj">
+      <Project>{24aa44f0-ab63-42d9-be8c-84eee87b1e66}</Project>
+      <Name>MathRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\MoveResizeRotate\MoveResizeRotate.csproj">
+      <Project>{ef0b4258-89e8-423f-a38d-c1e8af9fd5c3}</Project>
+      <Name>MoveResizeRotate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\OxyPlot\OxyPlot.Wpf\OxyPlot.Wpf.csproj">
+      <Project>{698ccd8e-adcc-4565-8517-5edd36f07155}</Project>
+      <Name>OxyPlot.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\OxyPlot\OxyPlot\OxyPlot.csproj">
+      <Project>{7a0b35c0-dd17-4964-8e9a-44d6cecdc692}</Project>
+      <Name>OxyPlot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Serialization\Serialization.csproj">
+      <Project>{af53ff4f-2329-475c-9bcb-007062656e95}</Project>
+      <Name>Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
+      <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
+      <Name>SharpGL.SceneGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL.WPF\SharpGL.WPF.csproj">
+      <Project>{53e67055-13d2-4467-bb57-79589afac2cd}</Project>
+      <Name>SharpGL.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL\SharpGL.csproj">
+      <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
+      <Name>SharpGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Starlight.Controls\Starlight.Controls.csproj">
+      <Project>{f1ab5077-a811-4e2d-a8ba-400e50822f88}</Project>
+      <Name>Starlight.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\Utils\Utils\Utils.csproj">
+      <Project>{9718dc62-88f9-4b67-a000-b2185ca2c15f}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\starpadLibs\WPFHelp\WPFHelp.csproj">
+      <Project>{97cf00db-14a2-4d4a-87f4-b0933cf2c650}</Project>
+      <Name>WPFHelp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clear.png" />
+    <Resource Include="Resources\down.png" />
+    <Resource Include="Resources\exit.png" />
+    <Resource Include="Resources\home.png" />
+    <Resource Include="Resources\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\fluidsheet_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\axis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pie.png" />
+    <Resource Include="Resources\sale.png" />
+    <Resource Include="Resources\wikipedia.png" />
+    <Resource Include="Resources\wolfram_alpha.png" />
+    <Resource Include="Resources\youtube.png" />
+    <Resource Include="Resources\facebook.png" />
+    <Resource Include="Resources\bing.jpg" />
+    <Resource Include="Resources\businessman.png" />
+    <Resource Include="Resources\flickr.png" />
+    <Resource Include="Resources\google.png" />
+    <None Include="Resources\map.png" />
+    <Resource Include="Resources\bar.png" />
+    <Resource Include="Resources\line.png" />
+    <Resource Include="Resources\data_base.png" />
+    <None Include="Resources\documents.png" />
+    <None Include="Resources\folder.png" />
+    <Resource Include="Resources\empty_filter.png" />
+    <Resource Include="Resources\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BingMapService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="view\style\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoramicDataService", "PanoramicDataService\PanoramicDataService.csproj", "{CC3E92E8-D227-4B1C-9A4F-9BFD2356C40C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoramicDataModel", "PanoramicDataModel\PanoramicDataModel.csproj", "{6CB31FED-BF57-4A0B-A45B-EFC19B3A0651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoramicDataServiceTest", "PanoramicDataServiceTest\PanoramicDataServiceTest.csproj", "{1E344BAB-0AD6-45A3-A55F-04C1A9C63C41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoramicDataDBConnector", "PanoramicDataDBConnector\PanoramicDataDBConnector.csproj", "{A6CC4D41-EB13-4FE1-BC7B-EED337E0CD43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC3E92E8-D227-4B1C-9A4F-9BFD2356C40C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3E92E8-D227-4B1C-9A4F-9BFD2356C40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3E92E8-D227-4B1C-9A4F-9BFD2356C40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3E92E8-D227-4B1C-9A4F-9BFD2356C40C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB31FED-BF57-4A0B-A45B-EFC19B3A0651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB31FED-BF57-4A0B-A45B-EFC19B3A0651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB31FED-BF57-4A0B-A45B-EFC19B3A0651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB31FED-BF57-4A0B-A45B-EFC19B3A0651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E344BAB-0AD6-45A3-A55F-04C1A9C63C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E344BAB-0AD6-45A3-A55F-04C1A9C63C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E344BAB-0AD6-45A3-A55F-04C1A9C63C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E344BAB-0AD6-45A3-A55F-04C1A9C63C41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6CC4D41-EB13-4FE1-BC7B-EED337E0CD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6CC4D41-EB13-4FE1-BC7B-EED337E0CD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6CC4D41-EB13-4FE1-BC7B-EED337E0CD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6CC4D41-EB13-4FE1-BC7B-EED337E0CD43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

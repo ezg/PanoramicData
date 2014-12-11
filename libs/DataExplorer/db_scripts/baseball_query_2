@@ -1,0 +1,248 @@
+select 
+	ROW_NUMBER() OVER (ORDER BY m.playerId) as id,
+	m.playerId as main_playerId,
+	m.yearId as main_yearId,
+	m.teamId as main_teamId,
+
+	b.playerID as batting_playerID,
+	b.yearID as batting_yearID,
+	b.teamID as batting_teamID,
+	b.lgID as batting_lgID,
+	b.G as batting_G,
+	b.G_batting as batting_G_batting,
+	b.AB as batting_AB,
+	b.R as batting_R,
+	b.H as batting_H,
+	b.f_2B as batting_f_2B,
+	b.f_3B as batting_f_3B,
+	b.HR as batting_HR,
+	b.RBI as batting_RBI,
+	b.SB as batting_SB,
+	b.CS as batting_CS,
+	b.BB as batting_BB,
+	b.SO as batting_SO,
+	b.IBB as batting_IBB,
+	b.HBP as batting_HBP,
+	b.SH as batting_SH,
+	b.SF as batting_SF,
+	b.GIDP as batting_GIDP,
+	b.G_old as batting_G_old,
+
+	bpost.id as batting_post_id,
+	bpost.yearID as batting_post_yearID,
+	bpost.playerID as batting_post_playerID,
+	bpost.teamID as batting_post_teamID,
+	bpost.lgID as batting_post_lgID,
+	bpost.G as batting_post_G,
+	bpost.AB as batting_post_AB,
+	bpost.R as batting_post_R,
+	bpost.H as batting_post_H,
+	bpost.f_2B as batting_post_f_2B,
+	bpost.f_3B as batting_post_f_3B,
+	bpost.HR as batting_post_HR,
+	bpost.RBI as batting_post_RBI,
+	bpost.SB as batting_post_SB,
+	bpost.CS as batting_post_CS,
+	bpost.BB as batting_post_BB,
+	bpost.SO as batting_post_SO,
+	bpost.IBB as batting_post_IBB,
+	bpost.HBP as batting_post_HBP,
+	bpost.SH as batting_post_SH,
+	bpost.SF as batting_post_SF,
+	bpost.GIDP as batting_post_GIDP,
+
+	f.playerId as fielding_playerId,
+	f.yearId as fielding_yearId,
+	f.teamId as fielding_teamId,
+	f.lgID as fielding_lgID,
+	f.G as fielding_G,
+	f.GS as fielding_GS,
+	f.InnOuts as fielding_InnOuts,
+	f.PO as fielding_PO,
+	f.A as fielding_A,
+	f.E as fielding_E,
+	f.DP as fielding_DP,
+	f.PB as fielding_PB,
+	f.WP as fielding_WP,
+	f.SB as fielding_SB,
+	f.CS as fielding_CS,
+	f.ZR as fielding_ZR,
+
+	fpost.playerId as fielding_post_playerId,
+	fpost.yearId as fielding_post_yearId,
+	fpost.teamId as fielding_post_teamId,
+	fpost.lgID as fielding_post_lgID,
+	fpost.round as fielding_post_round,
+	fpost.G as fielding_post_G,
+	fpost.GS as fielding_post_GS,
+	fpost.InnOuts as fielding_post_InnOuts,
+	fpost.PO as fielding_post_PO,
+	fpost.A as fielding_post_A,
+	fpost.E as fielding_post_E,
+	fpost.DP as fielding_post_DP,
+	fpost.TP as fielding_post_TP,
+	fpost.PB as fielding_post_PB,
+	fpost.SB as fielding_post_SB,
+	fpost.CS as fielding_post_CS,
+
+	p.playerID as pitching_playerID,
+	p.yearID as pitching_yearID,
+	p.teamID as pitching_teamID,
+	p.lgID as pitching_lgID,
+	p.W as pitching_W,
+	p.L as pitching_L,
+	p.G as pitching_G,
+	p.GS as pitching_GS,
+	p.CG as pitching_CG,
+	p.SHO as pitching_SHO,
+	p.SV as pitching_SV,
+	p.IPouts as pitching_IPouts,
+	p.H as pitching_H,
+	p.ER as pitching_ER,
+	p.HR as pitching_HR,
+	p.BB as pitching_BB,
+	p.SO as pitching_SO,
+	p.BAOpp as pitching_BAOpp,
+	p.ERA as pitching_ERA,
+	p.IBB as pitching_IBB,
+	p.WP as pitching_WP,
+	p.HBP as pitching_HBP,
+	p.BK as pitching_BK,
+	p.BFP as pitching_BFP,
+	p.GF as pitching_GF,
+	p.R as pitching_R,
+	p.SH as pitching_SH,
+	p.SF as pitching_SF,
+	p.GIDP as pitching_GIDP,
+
+	ppost.playerID as pitching_post_playerID,
+	ppost.yearID as pitching_post_yearID,
+	ppost.teamID as pitching_post_teamID,
+	ppost.lgID as pitching_post_lgID,
+	ppost.W as pitching_post_W,
+	ppost.L as pitching_post_L,
+	ppost.G as pitching_post_G,
+	ppost.GS as pitching_post_GS,
+	ppost.CG as pitching_post_CG,
+	ppost.SHO as pitching_post_SHO,
+	ppost.SV as pitching_post_SV,
+	ppost.IPouts as pitching_post_IPouts,
+	ppost.H as pitching_post_H,
+	ppost.ER as pitching_post_ER,
+	ppost.HR as pitching_post_HR,
+	ppost.BB as pitching_post_BB,
+	ppost.SO as pitching_post_SO,
+	ppost.BAOpp as pitching_post_BAOpp,
+	ppost.ERA as pitching_post_ERA,
+	ppost.IBB as pitching_post_IBB,
+	ppost.WP as pitching_post_WP,
+	ppost.HBP as pitching_post_HBP,
+	ppost.BK as pitching_post_BK,
+	ppost.BFP as pitching_post_BFP,
+	ppost.GF as pitching_post_GF,
+	ppost.R as pitching_post_R,
+	ppost.SH as pitching_post_SH,
+	ppost.SF as pitching_post_SF,
+	ppost.GIDP as pitching_post_GIDP,
+	
+	app.id as apperances_id,
+	app.yearID as apperances_yearID,
+	app.teamID as apperances_teamID,
+	app.lgID as apperances_lgID,
+	app.playerID as apperances_playerID,
+	app.G_all as apperances_G_all,
+	app.GS as apperances_GS,
+	app.G_batting as apperances_G_batting,
+	app.G_defense as apperances_G_defense,
+	app.G_p as apperances_G_p,
+	app.G_c as apperances_G_c,
+	app.G_1b as apperances_G_1b,
+	app.G_2b as apperances_G_2b,
+	app.G_3b as apperances_G_3b,
+	app.G_ss as apperances_G_ss,
+	app.G_lf as apperances_G_lf,
+	app.G_cf as apperances_G_cf,
+	app.G_rf as apperances_G_rf,
+	app.G_of as apperances_G_of,
+	app.G_dh as apperances_G_dh,
+	app.G_ph as apperances_G_ph,
+	app.G_pr as apperances_G_pr,
+	
+	sal.id as salaries_id,
+	sal.yearID as salaries_yearID,
+	sal.teamID as salaries_teamID,
+	sal.lgID as salaries_lgID,
+	sal.playerID as salaries_playerID,
+	sal.salary as salaries_salary
+into 
+	baseball.baseball_main
+from
+	(
+		baseball.main_t m
+
+		left outer join	
+
+		baseball.batting_t b on 
+		m.playerId	= b.playerId and
+		m.yearId	= b.yearId and
+		m.teamId	= b.teamId
+
+		left outer join 
+
+		baseball.batting_post_t bpost on 
+		m.playerId	= bpost.playerId and
+		m.yearId	= bpost.yearId and
+		m.teamId	= bpost.teamId
+
+		left outer join 
+
+		baseball.fielding_t f on
+		m.playerId	= f.playerId and
+		m.yearId	= f.yearId and
+		m.teamId	= f.teamId
+
+		left outer join 
+
+		baseball.fielding_post_t fpost on
+		m.playerId	= fpost.playerId and
+		m.yearId	= fpost.yearId and
+		m.teamId	= fpost.teamId
+
+		left outer join 
+
+		baseball.pitching_t p on
+		m.playerId	= p.playerId and
+		m.yearId	= p.yearId and
+		m.teamId	= p.teamId
+		
+		left outer join 
+
+		baseball.pitching_post_t ppost on
+		m.playerId	= ppost.playerId and
+		m.yearId	= ppost.yearId and
+		m.teamId	= ppost.teamId
+		
+		left outer join 
+
+		baseball.apperances app on
+		m.playerId	= app.playerId and
+		m.yearId	= app.yearId and
+		m.teamId	= app.teamId	
+		
+		left outer join 
+
+		baseball.salaries sal on
+		m.playerId	= sal.playerId and
+		m.yearId	= sal.yearId and
+		m.teamId	= sal.teamId
+	)
+	
+	
+select 
+	main_playerId, main_yearId, main_teamId, count(main_yearid)
+from 
+	baseball.baseball_main
+group by
+	main_playerId, main_yearId, main_teamId
+having 
+	count(main_yearid) > 1

@@ -1,0 +1,243 @@
+﻿<UserControl x:Class="PanoramicData.view.filter.Resizer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lib="clr-namespace:PixelLab.Wpf.Transitions;assembly=PixelLab.Wpf"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:PanoramicData.model.view"
+             xmlns:util="clr-namespace:PanoramicData.view.schema"
+             xmlns:filter="clr-namespace:PanoramicData.view.filter"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="400">
+    
+    <d:DesignProperties.DataContext>
+        <local:FilterHolderViewModel>
+            <local:FilterHolderViewModel.Color>Blue</local:FilterHolderViewModel.Color>
+            <local:FilterHolderViewModel.Margin>0</local:FilterHolderViewModel.Margin>
+            <local:FilterHolderViewModel.Label>Test gLabel</local:FilterHolderViewModel.Label>
+            <local:FilterHolderViewModel.NoChrome>False</local:FilterHolderViewModel.NoChrome>
+        </local:FilterHolderViewModel>
+    </d:DesignProperties.DataContext>
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <Grid Name="mainGrid">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Column="1" Name="recommendDisplayOuterGrid" Visibility="Collapsed" Background="White">
+                    <Border BorderBrush="{Binding Brush}" BorderThickness="0, 2, 2, 2" Grid.RowSpan="1" Grid.Row="0"
+                            Margin="0,0,0,0"
+                        Name="recommendDisplayBorder">
+                        <Grid 
+                            Margin="{Binding Margin}"
+                            Grid.Row="1" 
+                            Name="recommendDisplayGrid"
+                            HorizontalAlignment="Right">
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Column="1" Margin="0,0,0,0" Name="treeViewOuterGrid" Visibility="Collapsed" Background="White">
+                    <!--"<Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>-->
+                    <Border BorderBrush="{Binding Brush}" BorderThickness="0, 2, 2, 2" Name="treeViewDisplayBorder">
+                        <Grid>
+                            <util:ColumnTreeView x:Name="tree" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+                            
+                            <Canvas 
+                                Name="plusCanvas"
+                                Background="{Binding Brush}" Width="28" Height="28"
+                                   HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Line X1="5" X2="23" Y1="14" Y2="14" Stroke="White" StrokeThickness="3"/>
+                                <Line X1="14" X2="14" Y1="5" Y2="23" Stroke="White" StrokeThickness="3"/>
+                            </Canvas>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Column="0">
+                    <Border 
+                            Name="headerBorder" 
+                            BorderBrush="{Binding Brush}" 
+                            BorderThickness="2" Grid.RowSpan="1" Grid.Row="0"
+                            CornerRadius="0,0,0,0"
+                            ClipToBounds="True"
+                            Background="{Binding Brush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28" Name="headerRowDefinition"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid 
+                                Background="#01000000"
+                                Name="headerGrid" 
+                                Row="0" 
+                                Margin="-1">
+
+                                <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Grid 
+                                        Grid.Column="0"
+                                        Margin="0,0,5,0"
+                                        Name="recommendGrid"
+                                        Background="#01ffffff"
+                                        Width="20" Height="20">
+                                        <Canvas Width="20" Height="20">
+                                            <Path Name="starPath" Fill="White" Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0">
+                                                <Path.LayoutTransform>
+                                                    <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                                                </Path.LayoutTransform>
+                                            </Path>
+                                        </Canvas>
+                                    </Grid>
+
+                                    <Grid
+                                        Grid.Column="1"
+                                        Name="expandGrid"
+                                        Visibility="Collapsed"
+                                        Margin="5,1,0,0" Background="#01ffffff">
+                                        <Canvas Name="expandCanvas" Width="20" Height="20">
+                                            <Polygon Points="0,9 18,0, 18,18" RenderTransformOrigin="0.5, 0.5">
+                                                <Polygon.Fill>
+                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.8"/>
+                                                    </LinearGradientBrush>
+                                                </Polygon.Fill>
+                                                <Polygon.RenderTransform>
+                                                    <ScaleTransform ScaleX="-0.9" ScaleY="0.9" />
+                                                </Polygon.RenderTransform>
+                                            </Polygon>
+                                        </Canvas>
+                                        <Canvas Name="collapseCanvas" Width="20" Height="20" Visibility="Hidden">
+                                            <Polygon Points="0,9 18,0, 18,18" RenderTransformOrigin="0.5, 0.5">
+                                                <Polygon.Fill>
+                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.8"/>
+                                                    </LinearGradientBrush>
+                                                </Polygon.Fill>
+                                                <Polygon.RenderTransform>
+                                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
+                                                </Polygon.RenderTransform>
+                                            </Polygon>
+                                        </Canvas>
+                                    </Grid>
+                                </Grid>
+
+                                <Label Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"
+                                   Foreground="White"
+                                   Name="lblLabel"
+                                   Content="{Binding Label}" FontWeight="Bold"/>
+
+                                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                                    <Grid
+                                        Name="dotGrid" Margin="5,1,0,0" Background="#01ffffff">
+                                        <Grid Name="frontGrid">
+                                            <Path 
+                                                Fill="White"
+                                                Data="m 0,0 c -7.8723333,0 -15.744667,0 -23.617,0 0,7.8723333 0,15.744667 0,23.617 7.361333,0 14.7226667,0 22.084,0 1.34566667,1.256667 2.6913333,2.513333 4.037,3.77 -9.9633333,0 -19.926667,0 -29.89,0 0,-10.385333 0,-20.7706667 0,-31.156 10.385333,0 20.7706667,0 31.156,0 0,6.5343333 0,13.0686667 0,19.603 C 2.5133333,14.540667 1.2566667,13.247333 0,11.954 0,7.9693333 0,3.9846667 0,0 z m 8.0952002,26.538096 c -0.5576403,1.04939 -3.7642412,0.843438 -3.1140017,-0.21881 1.1306672,-1.120063 2.2613345,-2.240127 3.3920017,-3.36019 0.861907,1.063288 0.6926532,2.640896 -0.278,3.579 z M -9.4311991,8.155296 c 0.515,-0.5103333 1.03,-1.0206667 1.545,-1.531 5.1376667,5.099333 10.2753333,10.198667 15.413,15.298 -0.515,0.512 -1.03,1.024 -1.545,1.536 -5.13766667,-5.101 -10.2753333,-10.202 -15.413,-15.303 z M 3.6122961,25.810097 c -5.1373334,-5.100667 -10.2746667,-10.201333 -15.4120001,-15.302 0.514667,-0.5106668 1.029333,-1.0213335 1.544,-1.5320003 5.1373334,5.0993333 10.27466673,10.1986673 15.4120001,15.2980003 -0.5146667,0.512 -1.0293333,1.024 -1.544,1.536 z M -8.921399,5.8978961 c -0.015209,9.445e-4 0.047286,-0.036745 0,0 z m -0.0015,-3.996e-4 c -1.226805,1.215481 -2.516187,2.5093843 -3.704,3.676 -1.013333,-2.2416667 -2.026667,-4.4833333 -3.04,-6.725 2.248,1.0163333 4.496,2.0326667 6.744,3.049 z">
+                                                <Path.RenderTransform>
+                                                    <MatrixTransform>
+                                                        <MatrixTransform.Matrix >
+                                                            <Matrix M11="0.6" M12="0" M21="0" M22="-0.6" OffsetX="17" OffsetY="20">
+                                                            </Matrix>
+                                                        </MatrixTransform.Matrix >
+                                                    </MatrixTransform>
+                                                </Path.RenderTransform>
+                                            </Path>
+
+                                        </Grid>
+                                        <Canvas Name="backCanvas" Width="20" Height="20">
+                                            <Polygon Points="0,9 18,0, 18,18">
+                                                <Polygon.Fill>
+                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.6"/>
+                                                        <GradientStop Color="White" Offset="0.8"/>
+                                                    </LinearGradientBrush>
+                                                </Polygon.Fill>
+                                            </Polygon>
+                                        </Canvas>
+                                    </Grid>
+
+                                    <Grid Width="32" Height="25"
+                                            Margin="4,0,0,0"
+                                            Name="optionGrid" Background="#01ffffff">
+                                        <Grid>
+                                            <Path 
+                                                Fill="White"
+                                                Data="m 28.102919,16.863124 c -0.279059,1.729223 -3.087194,1.686845 -3.301379,-0.07168 -0.334662,-1.532134 1.771491,-2.789204 2.858883,-1.571266 0.41272,0.424108 0.606707,1.067311 0.442496,1.642946 z m 2.367251,-0.694738 c -0.360645,-1.001805 1.737042,-2.48306 -0.108377,-2.996422 -0.952207,0.289423 -2.056779,0.218204 -1.895462,-1.101861 -0.296832,-1.708317 -2.001101,-0.546841 -2.40828,0.39691 -0.947378,0.09271 -2.052076,-1.628615 -2.730447,-0.139705 0.09696,0.998382 0.253789,2.354915 -1.22036,2.15897 -1.601663,0.42223 -0.371858,1.975423 0.467127,2.489785 0.017,0.938406 -1.639974,2.025043 -0.191491,2.725718 0.940698,-0.07866 2.29309,-0.301904 2.093816,1.123478 0.195281,1.503293 1.807984,0.805798 2.21755,-0.190787 1.000218,-0.703713 2.345131,1.721251 2.962883,-0.175072 -0.383556,-1.065857 0.02523,-2.284114 1.34851,-2.068054 1.301481,-0.541662 0.502523,-1.835145 -0.535469,-2.22296 z M 11.352042,14.624528 C 8.8895131,14.761564 6.9047401,11.841697 8.0715891,9.6225113 9.0377341,7.4824038 12.190542,6.8668338 13.856737,8.5522228 c 1.624391,1.4699332 1.390889,4.4275442 -0.558073,5.5137072 -0.579484,0.363248 -1.262115,0.562496 -1.946622,0.558598 z m 8.156725,-1.003509 c 0.958209,-0.646883 2.782039,-0.513984 3.087719,-1.82593 0,-0.652176 0,-1.304351 0,-1.9565277 C 21.512111,8.9709593 19.493798,9.2667783 19.100345,7.6366918 18.658732,6.3286808 20.471406,5.2444771 19.940706,3.9283626 19.422535,3.4391024 18.91275,2.9305369 18.402334,2.428035 17.063477,2.5410041 15.889478,4.0289364 14.524644,3.3712093 13.043512,2.9971997 13.624006,0.85223859 12.411328,0.17411469 11.641963,0.04874059 10.846446,0.14020469 10.065492,0.11224539 9.1644691,1.1761213 9.4569521,3.2153851 7.7684321,3.5446195 6.4729541,3.9374187 5.440212,2.2928212 4.135782,2.6386376 3.5546661,3.1143902 3.0491921,3.6862843 2.5005791,4.2034735 2.6256431,5.5933842 4.304522,6.8099888 3.3538301,8.2474168 2.7089711,9.4225263 0.82000695,8.9445573 0.13960895,10.100086 c -0.06752,0.746848 -0.01571,1.507325 -0.03201,2.260114 1.03301615,0.887851 2.98551315,0.593534 3.44101315,2.096507 0.6326739,1.320975 -1.278034,2.399988 -0.84006,3.734246 0.496717,0.553729 1.0657659,1.050007 1.5931979,1.579773 1.342022,-0.07722 2.5097561,-1.620151 3.8658251,-0.92798 1.459735,0.406441 0.895167,2.536601 2.1213289,3.208576 0.771043,0.123322 1.567408,0.03348 2.349689,0.06092 0.904918,-1.06416 0.593595,-3.131417 2.300013,-3.440451 1.290353,-0.376255 2.311094,1.250114 3.606846,0.913371 0.587188,-0.485943 1.101841,-1.064316 1.658053,-1.589879 -0.06309,-1.305205 -1.66233,-2.399487 -0.960674,-3.745689 0.08865,-0.209526 0.177292,-0.419053 0.265938,-0.628579 z">
+                                                <Path.RenderTransform>
+                                                    <MatrixTransform>
+                                                        <MatrixTransform.Matrix >
+                                                            <Matrix M11="0.9" M12="0" M21="0" M22="0.9" OffsetX="0" OffsetY="1">
+                                                            </Matrix>
+                                                        </MatrixTransform.Matrix >
+                                                    </MatrixTransform>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid
+                                Grid.Row="1" Background="White">
+                                <Grid 
+                                    Name="contentGrid" Background="White">
+                                    <ContentPresenter/>
+                                </Grid>
+                            </Grid>
+                            
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Row="1" Name="groupGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                          Height="40" >
+                        <StackPanel Orientation="Horizontal">
+                            <filter:Grouper Name="grouper" VerticalAlignment="Top"/>
+                            <filter:Colorer Name="colorer" VerticalAlignment="Top"/>
+                            <filter:Styler Name="styler" VerticalAlignment="Top"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Border Grid.Row="1"
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="45">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Name="lblRowCount" 
+                            Margin="0,0,20,0"
+                            Foreground="#bb000000"
+                            FontSize="10"/>
+                    </Border>
+
+                    <Grid Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="bottom">
+                        <Polygon Name="resizeGrid" Points="0,30 30,0, 30,30"
+                                 Fill="{Binding Brush}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

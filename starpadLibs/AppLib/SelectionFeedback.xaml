@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.AppLib.SelectionFeedback"
+	x:Name="FeedbackCanvas"
+	d:DesignWidth="640" d:DesignHeight="480">
+
+	<Grid x:Name="LayoutRoot">
+		<Canvas x:Name="Handles" Margin="0,0,0,0" Width="1" Height="1" Background="{x:Null}" Opacity="0.5" VerticalAlignment="Top" HorizontalAlignment="Left">
+			<Ellipse Width="18" Height="18" Fill="#FFFFFFFF" Stroke="#FF000000" StrokeThickness="1" Canvas.Top="0" Canvas.Left="0" x:Name="TopLeft"/>
+			<Ellipse Width="18" Height="18" Fill="#FFFFFFFF" Stroke="#FF000000" StrokeThickness="1" Canvas.Top="1" Canvas.Left="1" x:Name="BotRight"/>
+			<Ellipse Width="18" Height="18" Fill="#FFFFFFFF" Stroke="#FF000000" StrokeThickness="1" Canvas.Left="1" Canvas.Top="0" x:Name="TopRight"/>
+			<Ellipse Width="18" Height="18" Fill="#FFFFFFFF" Stroke="#FF000000" StrokeThickness="1" Canvas.Top="1" Canvas.Left="0" x:Name="BotLeft"/>
+			<Ellipse Width="18" Height="18" Fill="#FFEEE52D" Stroke="#FF000000" Canvas.Left="0.5" Canvas.Top="0" x:Name="RotHdl"/>
+		</Canvas>
+	</Grid>
+</UserControl>

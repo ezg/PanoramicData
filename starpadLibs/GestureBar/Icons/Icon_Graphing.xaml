@@ -1,0 +1,26 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="starPadSDK.GestureBarLib.Icon_Graphing"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Width="32" Height="28">
+
+	<Grid x:Name="LayoutRoot" Background="{x:Null}">
+		<Canvas x:Name="GraphingCanvas" Width="32" Height="28">
+			<Path Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF000000" Width="32.125" Height="1.25" Data="M7.5,16.5 L38.625,16.25" Canvas.Top="13.5" Canvas.Left="-0.25"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" Width="1.5" Height="27.5" Data="M24.5,2.5 L25,30.12766" Canvas.Left="15.375"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="0.5" Height="4.25" Data="M8.875,15.5 L8.875,18.384615" Canvas.Top="12" Canvas.Left="25.125"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="0.5" Data="M41.625,15.596154 L41.625,18.480769" Height="4.25" Canvas.Top="12" Canvas.Left="8.375"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="0.5" Data="M18.75,15.596154 L18.75,18.480769" Height="4.25" Canvas.Top="12" Canvas.Left="31.5"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Width="0.5" Data="M34,15.5 L34,18.384615" Height="4.25" Canvas.Top="12" Canvas.Left="-0.25"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Data="M27.5,5.5480774 L24,5.5480778" Width="4" Height="0.5" Canvas.Top="20.625" Canvas.Left="14.5"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Data="M51,31.798077 L47.5,31.798078" Height="0.5" Width="4" Canvas.Left="13.875" Canvas.Top="7.875"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Data="M51.25,31.798077 L47.75,31.798078" Height="0.5" Width="4" Canvas.Top="0.5" Canvas.Left="14"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="0.5" Data="M52,31.798077 L48.5,31.798078" Height="0.5" Width="4" Canvas.Top="26.875" Canvas.Left="14.5"/>
+			<Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF1E58D8" StrokeStartLineCap="Round" StrokeThickness="2" x:Name="curve" Width="29.375" Height="23" Data="M10.785942,-0.26472818 C10.785942,18.235272 21.951929,21.970836 25.451929,21.970836 28.951929,21.970836 37.629816,17.073718 39.462833,0.52939913" Canvas.Left="2.625" StrokeEndLineCap="Round" Canvas.Top="-0.625"/>
+		</Canvas>
+	</Grid>
+</UserControl>

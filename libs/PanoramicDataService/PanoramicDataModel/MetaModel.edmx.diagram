@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d17eb840f1884838bc110b3c563dbce9" Name="Diagram1">
+        <EntityTypeShape EntityType="PanoramicDataModel.FieldAlias" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PanoramicDataModel.FieldInfo" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="PanoramicDataModel.TableAlias" Width="1.5" PointX="3.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="PanoramicDataModel.TableDependency" Width="1.5" PointX="6.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PanoramicDataModel.TableInfo" Width="2.5" PointX="0.5" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_field_alias_table_info" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_field_info_table_info" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_dependency_from_field" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_dependency_to_field" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_alias_table_info" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_dependency_from_table" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_dependency_to_table" ManuallyRouted="false" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_info_pk_field_info" />
+        <AssociationConnector Association="PanoramicDataModel.FK_meta_table_info_identifier_field_id" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

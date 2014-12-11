@@ -1,0 +1,257 @@
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings}{
+\section{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings \-Class \-Reference}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings}\index{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings}}
+}
+
+
+\-Singelton that encapsulates all the settings used in the \-Brown\-Recognition \-A\-P\-I.  
+
+
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a8c983624c8e0ac5ae928038fe46173e6}{\-Deserialize\-From\-X\-M\-L} (string xml)
+\begin{DoxyCompactList}\small\item\em \-Deserializes settings from \-X\-M\-L. \end{DoxyCompactList}\item 
+static string \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a2095bf7d5e101813fb61f5386ce9a716}{\-Serialize\-To\-X\-M\-L} ()
+\begin{DoxyCompactList}\small\item\em \-Serializes all settings to \-X\-M\-L. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_afb1494bf5bc116f8ae985c4505363610}{\-Org\-Chart\-Block\-Connector\-Distance\-Threshold} = 25
+\begin{DoxyCompactList}\small\item\em \-Threshold in pixels of when a connector (line) is close to a block (used in \-Org\-Chart recognition). \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_ac6a25e18980dbe6b3317e7402b716e73}{\-Org\-Chart\-Constant\-Horizontal\-Spacing} = 30
+\begin{DoxyCompactList}\small\item\em \-If \-Org\-Chart\-Horizontal\-Spacing\-Policies is set to \-Stick\-To\-Constant, this value will be used. \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_ae738ae766d57146daa5860d449980be8}{\-Org\-Chart\-Constant\-Vertical\-Spacing} = 30
+\begin{DoxyCompactList}\small\item\em \-If \-Org\-Chart\-Vertical\-Spacing\-Policies is set to \-Stick\-To\-Constant, this value will be used. \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}{\-Org\-Chart\-Height\-Policies} \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a0bf36fd3829ccf9bc8a3a1f2b89e394d}{\-Org\-Chart\-Height\-Policy} = \-Org\-Chart\-Height\-Policies.\-Average\-On\-Chart
+\begin{DoxyCompactList}\small\item\em \-Height policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Height\-Policies}). \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}{\-Org\-Chart\-Horizontal\-Spacing\-Policies} \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_ae7204143c981a3b876b8f448e9d09f68}{\-Org\-Chart\-Horizontal\-Spacing\-Policy} = \-Org\-Chart\-Horizontal\-Spacing\-Policies.\-Stick\-To\-Constant
+\begin{DoxyCompactList}\small\item\em \-Horizontal spacing policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Horizontal\-Spacing\-Policies}). \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}{\-Org\-Chart\-Vertical\-Spacing\-Policies} \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a29ff8c34c5e364b7056b2ed2dbfaa168}{\-Org\-Chart\-Vertical\-Spacing\-Policy} = \-Org\-Chart\-Vertical\-Spacing\-Policies.\-Stick\-To\-Constant
+\begin{DoxyCompactList}\small\item\em \-Vertical spacing policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Vertical\-Spacing\-Policies}). \end{DoxyCompactList}\item 
+\hyperlink{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}{\-Org\-Chart\-Width\-Policies} \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a87fcc23a39461e192c45c40e6a8bb349}{\-Org\-Chart\-Width\-Policy} = \-Org\-Chart\-Width\-Policies.\-Average\-On\-Chart
+\begin{DoxyCompactList}\small\item\em \-Width policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Width\-Policies}). \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a7dc0caa3bfece8c6a17a64e2cf519e0d}{\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius} = 0.\-2
+\begin{DoxyCompactList}\small\item\em \-Minimum length of divider lines in percentage of the circle radius (used for recognition). \-Should be in the interval of \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\item 
+int \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a280bfefaddf7e6549e13715ead005853}{\-Pyramid\-Diagram\-Alignment\-Threshold} = 10
+\begin{DoxyCompactList}\small\item\em \-Threshold in pixels of when a divider (line) should snap to another divider line (used in \-Pyramid\-Diagram clean-\/up). \end{DoxyCompactList}\item 
+int \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a9d5220bd3119b66c88738645ee926141}{\-Pyramid\-Diagram\-Contains\-Threshold} = 25
+\begin{DoxyCompactList}\small\item\em \-Threshold in pixels of when a divider (line) is still inside a triangle (used in \-Table\-Diagram recognition). \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_aea26506fd91b091ccb489054aaee7aa2}{\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3
+\begin{DoxyCompactList}\small\item\em \-Tolerance, in percentage of the total line length, of when a line gets recognized as a horizontal line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a30fd2b7a66d09e018016781720e5070b}{\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3
+\begin{DoxyCompactList}\small\item\em \-Tolerance, in percentage of the total line length, of when a line gets recognized as a vertical line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\item 
+int \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_afe4e9f0ca9dbb24dec2af592f5cddbc6}{\-Table\-Diagram\-Alignment\-Threshold} = 10
+\begin{DoxyCompactList}\small\item\em \-Threshold in pixels of when a divider (line) should snap to another divider line (used in \-Table\-Diagram clean-\/up). \end{DoxyCompactList}\item 
+int \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a57bb48bd1047135f656b981478c8c24a}{\-Table\-Diagram\-Contains\-Threshold} = 25
+\begin{DoxyCompactList}\small\item\em \-Threshold in pixels of when a divider (line) is still inside a rectangle (used in \-Table\-Diagram recognition). \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_adac31ced9ed90b1f404bcf6a4a8340b0}{\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3
+\begin{DoxyCompactList}\small\item\em \-Tolerance, in percentage of the total line length, of when a line gets recognized as a horizontal line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\item 
+double \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_af48d8590132bda5c1a512ee5d59927bf}{\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3
+\begin{DoxyCompactList}\small\item\em \-Tolerance, in percentage of the total line length, of when a line gets recognized as a vertical line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings}{\-Brown\-Recognition\-Settings} \hyperlink{class_brown_recognition_common_1_1_brown_recognition_settings_a86b3f25a8b13cce61cb05a1f51b0feaa}{\-Instance}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \-Returns the current instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Singelton that encapsulates all the settings used in the \-Brown\-Recognition \-A\-P\-I. 
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a8c983624c8e0ac5ae928038fe46173e6}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Deserialize\-From\-X\-M\-L@{\-Deserialize\-From\-X\-M\-L}}
+\index{\-Deserialize\-From\-X\-M\-L@{\-Deserialize\-From\-X\-M\-L}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Deserialize\-From\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}static void \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Deserialize\-From\-X\-M\-L (
+\begin{DoxyParamCaption}
+\item[{string}]{xml}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a8c983624c8e0ac5ae928038fe46173e6}
+
+
+\-Deserializes settings from \-X\-M\-L. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em xml} & \-X\-M\-L string containing all the setting values.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a2095bf7d5e101813fb61f5386ce9a716}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Serialize\-To\-X\-M\-L@{\-Serialize\-To\-X\-M\-L}}
+\index{\-Serialize\-To\-X\-M\-L@{\-Serialize\-To\-X\-M\-L}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Serialize\-To\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}static string \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Serialize\-To\-X\-M\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a2095bf7d5e101813fb61f5386ce9a716}
+
+
+\-Serializes all settings to \-X\-M\-L. 
+
+\begin{DoxyReturn}{\-Returns}
+\-X\-M\-L string containing all the current setting values.
+\end{DoxyReturn}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_afb1494bf5bc116f8ae985c4505363610}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Block\-Connector\-Distance\-Threshold@{\-Org\-Chart\-Block\-Connector\-Distance\-Threshold}}
+\index{\-Org\-Chart\-Block\-Connector\-Distance\-Threshold@{\-Org\-Chart\-Block\-Connector\-Distance\-Threshold}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Block\-Connector\-Distance\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Block\-Connector\-Distance\-Threshold} = 25}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_afb1494bf5bc116f8ae985c4505363610}
+
+
+\-Threshold in pixels of when a connector (line) is close to a block (used in \-Org\-Chart recognition). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_ac6a25e18980dbe6b3317e7402b716e73}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Constant\-Horizontal\-Spacing@{\-Org\-Chart\-Constant\-Horizontal\-Spacing}}
+\index{\-Org\-Chart\-Constant\-Horizontal\-Spacing@{\-Org\-Chart\-Constant\-Horizontal\-Spacing}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Constant\-Horizontal\-Spacing}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Constant\-Horizontal\-Spacing} = 30}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_ac6a25e18980dbe6b3317e7402b716e73}
+
+
+\-If \-Org\-Chart\-Horizontal\-Spacing\-Policies is set to \-Stick\-To\-Constant, this value will be used. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_ae738ae766d57146daa5860d449980be8}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Constant\-Vertical\-Spacing@{\-Org\-Chart\-Constant\-Vertical\-Spacing}}
+\index{\-Org\-Chart\-Constant\-Vertical\-Spacing@{\-Org\-Chart\-Constant\-Vertical\-Spacing}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Constant\-Vertical\-Spacing}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Constant\-Vertical\-Spacing} = 30}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_ae738ae766d57146daa5860d449980be8}
+
+
+\-If \-Org\-Chart\-Vertical\-Spacing\-Policies is set to \-Stick\-To\-Constant, this value will be used. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a0bf36fd3829ccf9bc8a3a1f2b89e394d}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Height\-Policy@{\-Org\-Chart\-Height\-Policy}}
+\index{\-Org\-Chart\-Height\-Policy@{\-Org\-Chart\-Height\-Policy}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Height\-Policy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Org\-Chart\-Height\-Policies} {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Height\-Policy} = \-Org\-Chart\-Height\-Policies.\-Average\-On\-Chart}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a0bf36fd3829ccf9bc8a3a1f2b89e394d}
+
+
+\-Height policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_ad4408ca473997d3ec1b071e5f5c4573f}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Height\-Policies}). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_ae7204143c981a3b876b8f448e9d09f68}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Horizontal\-Spacing\-Policy@{\-Org\-Chart\-Horizontal\-Spacing\-Policy}}
+\index{\-Org\-Chart\-Horizontal\-Spacing\-Policy@{\-Org\-Chart\-Horizontal\-Spacing\-Policy}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Horizontal\-Spacing\-Policy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Org\-Chart\-Horizontal\-Spacing\-Policies} {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Horizontal\-Spacing\-Policy} = \-Org\-Chart\-Horizontal\-Spacing\-Policies.\-Stick\-To\-Constant}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_ae7204143c981a3b876b8f448e9d09f68}
+
+
+\-Horizontal spacing policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_ac84ab02b07772204f06e83ed86500823}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Horizontal\-Spacing\-Policies}). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a29ff8c34c5e364b7056b2ed2dbfaa168}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Vertical\-Spacing\-Policy@{\-Org\-Chart\-Vertical\-Spacing\-Policy}}
+\index{\-Org\-Chart\-Vertical\-Spacing\-Policy@{\-Org\-Chart\-Vertical\-Spacing\-Policy}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Vertical\-Spacing\-Policy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Org\-Chart\-Vertical\-Spacing\-Policies} {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Vertical\-Spacing\-Policy} = \-Org\-Chart\-Vertical\-Spacing\-Policies.\-Stick\-To\-Constant}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a29ff8c34c5e364b7056b2ed2dbfaa168}
+
+
+\-Vertical spacing policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_a1396f230cbda4b33de9ba5d56c9790c7}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Vertical\-Spacing\-Policies}). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a87fcc23a39461e192c45c40e6a8bb349}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Org\-Chart\-Width\-Policy@{\-Org\-Chart\-Width\-Policy}}
+\index{\-Org\-Chart\-Width\-Policy@{\-Org\-Chart\-Width\-Policy}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Org\-Chart\-Width\-Policy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Org\-Chart\-Width\-Policies} {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Org\-Chart\-Width\-Policy} = \-Org\-Chart\-Width\-Policies.\-Average\-On\-Chart}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a87fcc23a39461e192c45c40e6a8bb349}
+
+
+\-Width policy for \-Org\-Chart (see \hyperlink{namespace_brown_recognition_common_a8e1f3265a68d8df8c7cc278d6c116a7d}{\-Brown\-Recognition\-Common.\-Org\-Chart\-Width\-Policies}). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a7dc0caa3bfece8c6a17a64e2cf519e0d}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius@{\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius}}
+\index{\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius@{\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Pie\-Chart\-Minimum\-Length\-Of\-Lines\-In\-Percent\-Of\-Circle\-Radius} = 0.\-2}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a7dc0caa3bfece8c6a17a64e2cf519e0d}
+
+
+\-Minimum length of divider lines in percentage of the circle radius (used for recognition). \-Should be in the interval of \mbox{[}0, 1\mbox{]}. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a280bfefaddf7e6549e13715ead005853}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Pyramid\-Diagram\-Alignment\-Threshold@{\-Pyramid\-Diagram\-Alignment\-Threshold}}
+\index{\-Pyramid\-Diagram\-Alignment\-Threshold@{\-Pyramid\-Diagram\-Alignment\-Threshold}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Pyramid\-Diagram\-Alignment\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Pyramid\-Diagram\-Alignment\-Threshold} = 10}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a280bfefaddf7e6549e13715ead005853}
+
+
+\-Threshold in pixels of when a divider (line) should snap to another divider line (used in \-Pyramid\-Diagram clean-\/up). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a9d5220bd3119b66c88738645ee926141}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Pyramid\-Diagram\-Contains\-Threshold@{\-Pyramid\-Diagram\-Contains\-Threshold}}
+\index{\-Pyramid\-Diagram\-Contains\-Threshold@{\-Pyramid\-Diagram\-Contains\-Threshold}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Pyramid\-Diagram\-Contains\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Pyramid\-Diagram\-Contains\-Threshold} = 25}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a9d5220bd3119b66c88738645ee926141}
+
+
+\-Threshold in pixels of when a divider (line) is still inside a triangle (used in \-Table\-Diagram recognition). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_aea26506fd91b091ccb489054aaee7aa2}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}}
+\index{\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Pyramid\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_aea26506fd91b091ccb489054aaee7aa2}
+
+
+\-Tolerance, in percentage of the total line length, of when a line gets recognized as a horizontal line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a30fd2b7a66d09e018016781720e5070b}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}}
+\index{\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Pyramid\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a30fd2b7a66d09e018016781720e5070b}
+
+
+\-Tolerance, in percentage of the total line length, of when a line gets recognized as a vertical line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_afe4e9f0ca9dbb24dec2af592f5cddbc6}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Table\-Diagram\-Alignment\-Threshold@{\-Table\-Diagram\-Alignment\-Threshold}}
+\index{\-Table\-Diagram\-Alignment\-Threshold@{\-Table\-Diagram\-Alignment\-Threshold}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Table\-Diagram\-Alignment\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Table\-Diagram\-Alignment\-Threshold} = 10}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_afe4e9f0ca9dbb24dec2af592f5cddbc6}
+
+
+\-Threshold in pixels of when a divider (line) should snap to another divider line (used in \-Table\-Diagram clean-\/up). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a57bb48bd1047135f656b981478c8c24a}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Table\-Diagram\-Contains\-Threshold@{\-Table\-Diagram\-Contains\-Threshold}}
+\index{\-Table\-Diagram\-Contains\-Threshold@{\-Table\-Diagram\-Contains\-Threshold}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Table\-Diagram\-Contains\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Table\-Diagram\-Contains\-Threshold} = 25}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a57bb48bd1047135f656b981478c8c24a}
+
+
+\-Threshold in pixels of when a divider (line) is still inside a rectangle (used in \-Table\-Diagram recognition). 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_adac31ced9ed90b1f404bcf6a4a8340b0}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}}
+\index{\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Table\-Diagram\-Horizontal\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_adac31ced9ed90b1f404bcf6a4a8340b0}
+
+
+\-Tolerance, in percentage of the total line length, of when a line gets recognized as a horizontal line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. 
+
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_af48d8590132bda5c1a512ee5d59927bf}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}}
+\index{\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length@{\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Table\-Diagram\-Vertical\-Line\-Tolerance\-In\-Percent\-Of\-Length} = 0.\-3}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_af48d8590132bda5c1a512ee5d59927bf}
+
+
+\-Tolerance, in percentage of the total line length, of when a line gets recognized as a vertical line. \-Should be in the interval of \mbox{[}0, 1\mbox{]}. 
+
+
+
+\subsection{\-Property \-Documentation}
+\hypertarget{class_brown_recognition_common_1_1_brown_recognition_settings_a86b3f25a8b13cce61cb05a1f51b0feaa}{
+\index{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}!\-Instance@{\-Instance}}
+\index{\-Instance@{\-Instance}!BrownRecognitionCommon::BrownRecognitionSettings@{\-Brown\-Recognition\-Common\-::\-Brown\-Recognition\-Settings}}
+\subsubsection[{\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Brown\-Recognition\-Settings} \-Brown\-Recognition\-Common.\-Brown\-Recognition\-Settings.\-Instance\hspace{0.3cm}{\ttfamily  \mbox{[}static, get\mbox{]}}}}
+\label{class_brown_recognition_common_1_1_brown_recognition_settings_a86b3f25a8b13cce61cb05a1f51b0feaa}
+
+
+\-Returns the current instance. 
+

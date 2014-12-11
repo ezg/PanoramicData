@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="1_1" NumPts="23" Millseconds="220" AppName="DollarRecognizer" AppVer="1.0.0.0" Date="Wednesday, August 20, 2008" TimeOfDay="10:42:29 AM">
+  <Point X="160" Y="46" T="0" />
+  <Point X="160" Y="46" T="10" />
+  <Point X="160" Y="46" T="20" />
+  <Point X="160" Y="46" T="30" />
+  <Point X="159" Y="47" T="40" />
+  <Point X="159" Y="48" T="50" />
+  <Point X="159" Y="50" T="60" />
+  <Point X="158" Y="52" T="70" />
+  <Point X="158" Y="55" T="80" />
+  <Point X="158" Y="59" T="90" />
+  <Point X="157" Y="63" T="100" />
+  <Point X="156" Y="68" T="110" />
+  <Point X="156" Y="73" T="120" />
+  <Point X="155" Y="78" T="130" />
+  <Point X="154" Y="84" T="140" />
+  <Point X="154" Y="89" T="150" />
+  <Point X="153" Y="93" T="160" />
+  <Point X="153" Y="97" T="170" />
+  <Point X="153" Y="101" T="180" />
+  <Point X="153" Y="103" T="190" />
+  <Point X="153" Y="105" T="200" />
+  <Point X="154" Y="105" T="210" />
+  <Point X="154" Y="105" T="220" />
+</Gesture>

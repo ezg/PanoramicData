@@ -1,0 +1,152 @@
+
+select 
+yearid, playerid, teamid, lgID,
+sum(W) as W,
+sum(L) as L,
+sum(G) as G,
+sum(GS) as GS,
+sum(CG) as CG,
+sum(SHO) as SHO,
+sum(SV) as SV,
+sum(IPouts) as IPouts,
+sum(H) as H,
+sum(ER) as ER,
+sum(HR) as HR,
+sum(BB) as BB,
+sum(SO) as SO,
+sum(BAOpp) as BAOpp,
+sum(ERA) as ERA,
+sum(IBB) as IBB,
+sum(WP) as WP,
+sum(HBP) as HBP,
+sum(BK) as BK,
+sum(BFP) as BFP,
+sum(GF) as GF,
+sum(R) as R,
+sum(SH) as SH,
+sum(SF) as SF,
+sum(GIDP) as GIDP
+into baseball.pitching_post_t
+from baseball.pitching_post
+group by
+playerid, yearid, teamid, lgID
+
+select 
+yearid, playerid, teamid, lgID, 
+sum(id) as id,
+sum(G) as G,
+sum(AB) as AB,
+sum(R) as R,
+sum(H) as H,
+sum(f_2B) as f_2B,
+sum(f_3B) as f_3B,
+sum(HR) as HR,
+sum(RBI) as RBI,
+sum(SB) as SB,
+sum(CS) as CS,
+sum(BB) as BB,
+sum(SO) as SO,
+sum(IBB) as IBB,
+sum(HBP) as HBP,
+sum(SH) as SH,
+sum(SF) as SF,
+sum(GIDP) as GIDP
+into
+baseball.batting_post_t
+from baseball.batting_post
+group by
+playerid, yearid, teamid, lgID
+
+
+
+select 
+yearid, playerid, teamid, lgID, 
+sum(G) as G,
+sum(G_batting) as G_batting,
+sum(AB) as AB,
+sum(R) as R,
+sum(H) as H,
+sum(f_2B) as f_2B,
+sum(f_3B) as f_3B,
+sum(HR) as HR,
+sum(RBI) as RBI,
+sum(SB) as SB,
+sum(CS) as CS,
+sum(BB) as BB,
+sum(SO) as SO,
+sum(IBB) as IBB,
+sum(HBP) as HBP,
+sum(SH) as SH,
+sum(SF) as SF,
+sum(GIDP) as GIDP,
+sum(G_old) as G_old
+into
+baseball.batting_t
+from baseball.batting
+group by
+playerid, yearid, teamid, lgID
+
+ALTER TABLE baseball.pitching
+ALTER COLUMN GIDP int
+
+select 
+yearid, playerid, teamid, lgID, 
+sum(W) as W,
+sum(L) as L,
+sum(G) as G,
+sum(GS) as GS,
+sum(CG) as CG,
+sum(SHO) as SHO,
+sum(SV) as SV,
+sum(IPouts) as IPouts,
+sum(H) as H,
+sum(ER) as ER,
+sum(HR) as HR,
+sum(BB) as BB,
+sum(SO) as SO,
+sum(BAOpp) as BAOpp,
+sum(ERA) as ERA,
+sum(IBB) as IBB,
+sum(WP) as WP,
+sum(HBP) as HBP,
+sum(BK) as BK,
+sum(BFP) as BFP,
+sum(GF) as GF,
+sum(R) as R,
+sum(SH) as SH,
+sum(SF) as SF,
+sum(GIDP) as GIDP
+into
+baseball.pitching_t
+from baseball.pitching
+group by
+playerid, yearid, teamid, lgID
+
+
+select 
+	playerId, yearId, teamId,
+	max(lgId) as lgID, max("round") as "round", sum(G) as G, 
+	sum(GS) as GS, sum(InnOuts) as InnOuts, sum(PO) as PO, 
+	sum(A) as A, sum(E) as E, sum(DP) as DP, sum(TP) as TP, 
+	sum(PB) as PB, sum(SB) as SB, sum(CS) as CS
+into
+	baseball.fielding_post_t
+from 
+	baseball.fielding_post
+group by
+	playerId, yearId, teamId
+	
+	
+select 
+	playerId, yearId, teamId,
+	max(lgId) as lgID, sum(G) as G, 
+	sum(GS) as GS, sum(InnOuts) as InnOuts, sum(PO) as PO, 
+	sum(A) as A, sum(E) as E, sum(DP) as DP,
+	sum(PB) as PB, sum(SB) as SB, sum(CS) as CS, sum(WP) as WP,
+	sum(ZR) as ZR
+into
+	baseball.fielding_t
+from 
+	baseball.fielding
+group by
+	playerId, yearId, teamId

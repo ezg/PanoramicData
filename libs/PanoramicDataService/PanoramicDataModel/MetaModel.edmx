@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PanoramicDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="PanoramicDataModelStoreContainer">
+          <EntitySet Name="field_alias" EntityType="PanoramicDataModel.Store.field_alias" store:Type="Tables" store:Schema="meta" store:Name="field_alias">
+            <DefiningQuery>SELECT 
+      [field_alias].[id] AS [id], 
+      [field_alias].[priority] AS [priority], 
+      [field_alias].[alias] AS [alias], 
+      [field_alias].[field_id] AS [field_id]
+      FROM [meta].[field_alias] AS [field_alias]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="field_info" EntityType="PanoramicDataModel.Store.field_info" store:Type="Tables" store:Schema="meta" store:Name="field_info">
+            <DefiningQuery>SELECT 
+      [field_info].[id] AS [id], 
+      [field_info].[name] AS [name], 
+      [field_info].[visible] AS [visible], 
+      [field_info].[data_type] AS [data_type], 
+      [field_info].[table_id] AS [table_id], 
+      [field_info].[visualization_type] AS [visualization_type], 
+      [field_info].[max_value] AS [max_value], 
+      [field_info].[min_value] AS [min_value], 
+      [field_info].[bin_size] AS [bin_size]
+      FROM [meta].[field_info] AS [field_info]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="table_alias" EntityType="PanoramicDataModel.Store.table_alias" store:Type="Tables" store:Schema="meta" store:Name="table_alias">
+            <DefiningQuery>SELECT 
+      [table_alias].[id] AS [id], 
+      [table_alias].[priority] AS [priority], 
+      [table_alias].[alias] AS [alias], 
+      [table_alias].[table_id] AS [table_id]
+      FROM [meta].[table_alias] AS [table_alias]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="table_dependency" EntityType="PanoramicDataModel.Store.table_dependency" store:Type="Tables" store:Schema="meta" store:Name="table_dependency">
+            <DefiningQuery>SELECT 
+      [table_dependency].[id] AS [id], 
+      [table_dependency].[from_table_id] AS [from_table_id], 
+      [table_dependency].[to_table_id] AS [to_table_id], 
+      [table_dependency].[from_field_id] AS [from_field_id], 
+      [table_dependency].[to_field_id] AS [to_field_id], 
+      [table_dependency].[cardinality] AS [cardinality], 
+      [table_dependency].[relationship_name] AS [relationship_name]
+      FROM [meta].[table_dependency] AS [table_dependency]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="table_info" EntityType="PanoramicDataModel.Store.table_info" store:Type="Tables" store:Schema="meta" store:Name="table_info">
+            <DefiningQuery>SELECT 
+      [table_info].[id] AS [id], 
+      [table_info].[name] AS [name], 
+      [table_info].[schema_name] AS [schema_name], 
+      [table_info].[pk_field_info] AS [pk_field_info], 
+      [table_info].[identifier_field_id] AS [identifier_field_id]
+      FROM [meta].[table_info] AS [table_info]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'PanoramicData.meta.field_alias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="field_alias">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="priority" Type="int" Nullable="false" />
+          <Property Name="alias" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="field_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'PanoramicData.meta.field_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="field_info">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="visible" Type="bit" Nullable="false" />
+          <Property Name="data_type" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="table_id" Type="int" Nullable="false" />
+          <Property Name="visualization_type" Type="nvarchar" MaxLength="255" />
+          <Property Name="max_value" Type="float" />
+          <Property Name="min_value" Type="float" />
+          <Property Name="bin_size" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'PanoramicData.meta.table_alias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="table_alias">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="priority" Type="int" Nullable="false" />
+          <Property Name="alias" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="table_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'PanoramicData.meta.table_dependency' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="table_dependency">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="from_table_id" Type="int" Nullable="false" />
+          <Property Name="to_table_id" Type="int" Nullable="false" />
+          <Property Name="from_field_id" Type="int" Nullable="false" />
+          <Property Name="to_field_id" Type="int" Nullable="false" />
+          <Property Name="cardinality" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="relationship_name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'PanoramicData.meta.table_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="table_info">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="schema_name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="pk_field_info" Type="int" Nullable="false" />
+          <Property Name="identifier_field_id" Type="int" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PanoramicDataModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="panoramicdataEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="FieldAlias" EntityType="PanoramicDataModel.FieldAlias" />
+          <EntitySet Name="FieldInfoes" EntityType="PanoramicDataModel.FieldInfo" />
+          <EntitySet Name="TableAlias" EntityType="PanoramicDataModel.TableAlias" />
+          <EntitySet Name="TableDependencies" EntityType="PanoramicDataModel.TableDependency" />
+          <EntitySet Name="TableInfoes" EntityType="PanoramicDataModel.TableInfo" />
+          <AssociationSet Name="FK_meta_field_alias_table_info" Association="PanoramicDataModel.FK_meta_field_alias_table_info">
+            <End Role="field_info" EntitySet="FieldInfoes" />
+            <End Role="field_alias" EntitySet="FieldAlias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_field_info_table_info" Association="PanoramicDataModel.FK_meta_field_info_table_info">
+            <End Role="table_info" EntitySet="TableInfoes" />
+            <End Role="field_info" EntitySet="FieldInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_dependency_from_field" Association="PanoramicDataModel.FK_meta_table_dependency_from_field">
+            <End Role="field_info" EntitySet="FieldInfoes" />
+            <End Role="table_dependency" EntitySet="TableDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_dependency_to_field" Association="PanoramicDataModel.FK_meta_table_dependency_to_field">
+            <End Role="field_info" EntitySet="FieldInfoes" />
+            <End Role="table_dependency" EntitySet="TableDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_alias_table_info" Association="PanoramicDataModel.FK_meta_table_alias_table_info">
+            <End Role="table_info" EntitySet="TableInfoes" />
+            <End Role="table_alias" EntitySet="TableAlias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_dependency_from_table" Association="PanoramicDataModel.FK_meta_table_dependency_from_table">
+            <End Role="table_info" EntitySet="TableInfoes" />
+            <End Role="table_dependency" EntitySet="TableDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_dependency_to_table" Association="PanoramicDataModel.FK_meta_table_dependency_to_table">
+            <End Role="table_info" EntitySet="TableInfoes" />
+            <End Role="table_dependency" EntitySet="TableDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_info_pk_field_info" Association="PanoramicDataModel.FK_meta_table_info_pk_field_info">
+            <End Role="FieldInfo" EntitySet="FieldInfoes" />
+            <End Role="TableInfo" EntitySet="TableInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meta_table_info_identifier_field_id" Association="PanoramicDataModel.FK_meta_table_info_identifier_field_id">
+            <End Role="FieldInfo" EntitySet="FieldInfoes" />
+            <End Role="TableInfo" EntitySet="TableInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FieldAlias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="field_id" Nullable="false" Type="Int32" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+          <NavigationProperty Name="FieldInfo" Relationship="PanoramicDataModel.FK_meta_field_alias_table_info" FromRole="field_alias" ToRole="field_info" />
+        </EntityType>
+        <EntityType Name="FieldInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="DataType" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="table_id" Nullable="false" Type="Int32" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+          <NavigationProperty Name="FieldAliases" Relationship="PanoramicDataModel.FK_meta_field_alias_table_info" FromRole="field_info" ToRole="field_alias" />
+          <NavigationProperty Name="TableInfo" Relationship="PanoramicDataModel.FK_meta_field_info_table_info" FromRole="field_info" ToRole="table_info" />
+          <NavigationProperty Name="FromTableDependencies" Relationship="PanoramicDataModel.FK_meta_table_dependency_from_field" FromRole="field_info" ToRole="table_dependency" />
+          <NavigationProperty Name="ToTableDependencies" Relationship="PanoramicDataModel.FK_meta_table_dependency_to_field" FromRole="field_info" ToRole="table_dependency" />
+          <NavigationProperty Name="PrimaryKeyTableInfos" Relationship="PanoramicDataModel.FK_meta_table_info_pk_field_info" FromRole="FieldInfo" ToRole="TableInfo" />
+          <Property Type="String" Name="VisualizationType" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MaxValue" />
+          <Property Type="Double" Name="MinValue" />
+          <Property Type="Double" Name="BinSize" />
+          <NavigationProperty Name="table_info1" Relationship="PanoramicDataModel.FK_meta_table_info_identifier_field_id" FromRole="FieldInfo" ToRole="TableInfo" />
+        </EntityType>
+        <EntityType Name="TableAlias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="table_id" Nullable="false" Type="Int32" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+          <NavigationProperty Name="TableInfo" Relationship="PanoramicDataModel.FK_meta_table_alias_table_info" FromRole="table_alias" ToRole="table_info" />
+        </EntityType>
+        <EntityType Name="TableDependency">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="from_table_id" Nullable="false" Type="Int32" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="to_table_id" Nullable="false" Type="Int32" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="from_field_id" Nullable="false" Type="Int32" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="to_field_id" Nullable="false" Type="Int32" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="Cardinality" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="RelationshipName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="FromFieldInfo" Relationship="PanoramicDataModel.FK_meta_table_dependency_from_field" FromRole="table_dependency" ToRole="field_info" />
+          <NavigationProperty Name="ToFieldInfo" Relationship="PanoramicDataModel.FK_meta_table_dependency_to_field" FromRole="table_dependency" ToRole="field_info" />
+          <NavigationProperty Name="FromTableInfo" Relationship="PanoramicDataModel.FK_meta_table_dependency_from_table" FromRole="table_dependency" ToRole="table_info" />
+          <NavigationProperty Name="ToTableInfo" Relationship="PanoramicDataModel.FK_meta_table_dependency_to_table" FromRole="table_dependency" ToRole="table_info" />
+        </EntityType>
+        <EntityType Name="TableInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="FieldInfos" Relationship="PanoramicDataModel.FK_meta_field_info_table_info" FromRole="table_info" ToRole="field_info" />
+          <NavigationProperty Name="TableAliases" Relationship="PanoramicDataModel.FK_meta_table_alias_table_info" FromRole="table_info" ToRole="table_alias" />
+          <NavigationProperty Name="FromTableDependencies" Relationship="PanoramicDataModel.FK_meta_table_dependency_from_table" FromRole="table_info" ToRole="table_dependency" />
+          <NavigationProperty Name="ToTableDependencies" Relationship="PanoramicDataModel.FK_meta_table_dependency_to_table" FromRole="table_info" ToRole="table_dependency" />
+          <Property Type="Int32" Name="pk_field_info" Nullable="false" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <NavigationProperty Name="PrimaryKeyFieldInfo" Relationship="PanoramicDataModel.FK_meta_table_info_pk_field_info" FromRole="TableInfo" ToRole="FieldInfo" />
+          <Property Type="String" Name="SchemaName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="identifier_field_id" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+          <NavigationProperty Name="IdentifierFieldInfo" Relationship="PanoramicDataModel.FK_meta_table_info_identifier_field_id" FromRole="TableInfo" ToRole="FieldInfo" />
+        </EntityType>
+        <Association Name="FK_meta_field_alias_table_info">
+          <End Role="field_info" Type="PanoramicDataModel.FieldInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="field_alias" Type="PanoramicDataModel.FieldAlias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="field_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="field_alias">
+              <PropertyRef Name="field_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_field_info_table_info">
+          <End Role="table_info" Type="PanoramicDataModel.TableInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="field_info" Type="PanoramicDataModel.FieldInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="field_info">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_dependency_from_field">
+          <End Role="field_info" Type="PanoramicDataModel.FieldInfo" Multiplicity="1" />
+          <End Role="table_dependency" Type="PanoramicDataModel.TableDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="field_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="table_dependency">
+              <PropertyRef Name="from_field_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_dependency_to_field">
+          <End Role="field_info" Type="PanoramicDataModel.FieldInfo" Multiplicity="1" />
+          <End Role="table_dependency" Type="PanoramicDataModel.TableDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="field_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="table_dependency">
+              <PropertyRef Name="to_field_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_alias_table_info">
+          <End Role="table_info" Type="PanoramicDataModel.TableInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="table_alias" Type="PanoramicDataModel.TableAlias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="table_alias">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_dependency_from_table">
+          <End Role="table_info" Type="PanoramicDataModel.TableInfo" Multiplicity="1" />
+          <End Role="table_dependency" Type="PanoramicDataModel.TableDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="table_dependency">
+              <PropertyRef Name="from_table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_dependency_to_table">
+          <End Role="table_info" Type="PanoramicDataModel.TableInfo" Multiplicity="1" />
+          <End Role="table_dependency" Type="PanoramicDataModel.TableDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="table_info">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="table_dependency">
+              <PropertyRef Name="to_table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_info_pk_field_info">
+          <End Type="PanoramicDataModel.FieldInfo" Role="FieldInfo" Multiplicity="1" />
+          <End Type="PanoramicDataModel.TableInfo" Role="TableInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TableInfo">
+              <PropertyRef Name="pk_field_info" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meta_table_info_identifier_field_id">
+          <End Type="PanoramicDataModel.FieldInfo" Role="FieldInfo" Multiplicity="0..1" />
+          <End Type="PanoramicDataModel.TableInfo" Role="TableInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FieldInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TableInfo">
+              <PropertyRef Name="identifier_field_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PanoramicDataModelStoreContainer" CdmEntityContainer="panoramicdataEntities">
+          <EntitySetMapping Name="FieldAlias">
+            <EntityTypeMapping TypeName="PanoramicDataModel.FieldAlias">
+              <MappingFragment StoreEntitySet="field_alias">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Priority" ColumnName="priority" />
+                <ScalarProperty Name="Alias" ColumnName="alias" />
+                <ScalarProperty Name="field_id" ColumnName="field_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FieldInfoes">
+            <EntityTypeMapping TypeName="PanoramicDataModel.FieldInfo">
+              <MappingFragment StoreEntitySet="field_info">
+                <ScalarProperty Name="BinSize" ColumnName="bin_size" />
+                <ScalarProperty Name="MinValue" ColumnName="min_value" />
+                <ScalarProperty Name="MaxValue" ColumnName="max_value" />
+                <ScalarProperty Name="VisualizationType" ColumnName="visualization_type" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Visible" ColumnName="visible" />
+                <ScalarProperty Name="DataType" ColumnName="data_type" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableAlias">
+            <EntityTypeMapping TypeName="PanoramicDataModel.TableAlias">
+              <MappingFragment StoreEntitySet="table_alias">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Priority" ColumnName="priority" />
+                <ScalarProperty Name="Alias" ColumnName="alias" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableDependencies">
+            <EntityTypeMapping TypeName="PanoramicDataModel.TableDependency">
+              <MappingFragment StoreEntitySet="table_dependency">
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="from_table_id" ColumnName="from_table_id" />
+                <ScalarProperty Name="to_table_id" ColumnName="to_table_id" />
+                <ScalarProperty Name="from_field_id" ColumnName="from_field_id" />
+                <ScalarProperty Name="to_field_id" ColumnName="to_field_id" />
+                <ScalarProperty Name="Cardinality" ColumnName="cardinality" />
+                <ScalarProperty Name="RelationshipName" ColumnName="relationship_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableInfoes">
+            <EntityTypeMapping TypeName="PanoramicDataModel.TableInfo">
+              <MappingFragment StoreEntitySet="table_info">
+                <ScalarProperty Name="identifier_field_id" ColumnName="identifier_field_id" />
+                <ScalarProperty Name="SchemaName" ColumnName="schema_name" />
+                <ScalarProperty Name="pk_field_info" ColumnName="pk_field_info" />
+                <ScalarProperty Name="Id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

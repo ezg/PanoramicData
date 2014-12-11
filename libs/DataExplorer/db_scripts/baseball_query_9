@@ -1,0 +1,30 @@
+select 
+	ROW_NUMBER() OVER (ORDER BY m.main_playerId) as id,
+	f.id as factId,
+
+	apperances_G_all,
+	apperances_GS,
+	apperances_G_batting,
+	apperances_G_defense,
+	apperances_G_p,
+	apperances_G_c,
+	apperances_G_1b,
+	apperances_G_2b,
+	apperances_G_3b,
+	apperances_G_ss,
+	apperances_G_lf,
+	apperances_G_cf,
+	apperances_G_rf,
+	apperances_G_of,
+	apperances_G_dh,
+	apperances_G_ph,
+	apperances_G_pr
+into 
+	lahman.dim_apperance
+from 
+	lahman.fact as f,
+	baseball.baseball_main as m
+where 
+	f.playerLahmanId = m.main_playerId and
+	f.teamLahmanId = m.main_teamId and
+	f.year = m.main_yearId

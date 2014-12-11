@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharpWin32App", "SharpWin32App.vcxproj", "{170F29F7-CAB2-4761-A3FA-374492E7EEF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{170F29F7-CAB2-4761-A3FA-374492E7EEF3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{170F29F7-CAB2-4761-A3FA-374492E7EEF3}.Debug|Win32.Build.0 = Debug|Win32
+		{170F29F7-CAB2-4761-A3FA-374492E7EEF3}.Release|Win32.ActiveCfg = Release|Win32
+		{170F29F7-CAB2-4761-A3FA-374492E7EEF3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

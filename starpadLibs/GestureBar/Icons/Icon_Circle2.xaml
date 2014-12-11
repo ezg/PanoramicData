@@ -1,0 +1,82 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="starPadSDK.GestureBarLib.Icon_Circle2"
+	x:Name="UserControl"
+	Width="48" Height="54">
+
+	<Grid x:Name="LayoutRoot">
+		<Ellipse Stroke="#FF000000" Height="16.167" Margin="3.25,3.25,19.049,0" VerticalAlignment="Top">
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF7B00" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Height="5.667" HorizontalAlignment="Left" Margin="12.417,0,0,0" VerticalAlignment="Top" Width="5.667" RenderTransformOrigin="0.5,0.5">
+			<Ellipse.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Ellipse.RenderTransform>
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Width="5.667" Height="5.667" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+			<Ellipse.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Ellipse.RenderTransform>
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Height="5.667" HorizontalAlignment="Left" Margin="12.417,16.333,0,0" VerticalAlignment="Top" Width="5.667" RenderTransformOrigin="0.5,0.5">
+			<Ellipse.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Ellipse.RenderTransform>
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+		<Ellipse Stroke="#FF000000" Height="5.667" HorizontalAlignment="Right" Margin="0,8,16,0" VerticalAlignment="Top" Width="5.667" RenderTransformOrigin="0.5,0.5">
+			<Ellipse.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Ellipse.RenderTransform>
+			<Ellipse.Fill>
+				<LinearGradientBrush EndPoint="0.146,0.146" StartPoint="0.854,0.854">
+					<GradientStop Color="#FFFF0000" Offset="0"/>
+					<GradientStop Color="#FFFFFFFF" Offset="1"/>
+				</LinearGradientBrush>
+			</Ellipse.Fill>
+		</Ellipse>
+	</Grid>
+</UserControl>

@@ -1,0 +1,1001 @@
+|	{{NyseSymbol|MMM}}	||	[[3M Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MMM&action=getcompany reports]	||	Industrials     ||     [[St Paul, Minnesota]]  
+|-
+|	{{NyseSymbol|ACE}}	||	[[ACE Limited]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ACE&action=getcompany reports]	||	Financials     ||     [[Zurich, Switzerland]]
+|-
+|	{{NyseSymbol|ABT}}	||	[[Abbott Laboratories]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ABT&action=getcompany reports]	||	Health Care     ||     [[North Chicago, Illinois]]
+|-
+|	{{NyseSymbol|ANF}}	||	[[Abercrombie & Fitch Company A]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ANF&action=getcompany reports]	||	Consumer Discretionary     ||     [[New Albany, Ohio]]
+|-
+|	{{NyseSymbol|ACN}}	||	[[Accenture]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ACN&action=getcompany reports]	||	Information Technology || [[Dublin, Ireland]] 
+|-
+|	{{NasdaqSymbol|ADBE}}	||	[[Adobe Systems Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ADBE&action=getcompany reports]	||	Information Technology     ||     [[San Jose, California]]
+|-
+|	{{NyseSymbol|AMD}}	||	[[Advanced Micro Devices]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMD&action=getcompany reports]	||	Information Technology     ||     [[Sunnyvale, California]]
+|-
+|	{{NyseSymbol|AES}}	||	[[AES Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AES&action=getcompany reports]	||	Utilities     ||     [[Arlington, Virginia]] 
+|-
+|	{{NyseSymbol|AET}}	||	[[Aetna Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AET&action=getcompany reports]	||	Health Care     ||     [[Hartford, Connecticut]] 
+|-
+|	{{NyseSymbol|AFL}}	||	[[AFLAC Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AFL&action=getcompany reports]	||	Financials     ||     [[Columbus, Georgia]]
+|-
+|	{{NyseSymbol|A}}	||	[[Agilent Technologies Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=A&action=getcompany reports]	||	Health Care     ||     [[Santa Clara, California]] 
+|-
+|	{{NyseSymbol|GAS}}	||	[[AGL Resources Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GAS&action=getcompany reports]	||	Utilities || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|APD}}	||	[[Air Products & Chemicals Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=APD&action=getcompany reports]	||	Materials     ||     [[Allentown, Pennsylvania]] 
+|-
+|	{{NyseSymbol|ARG}}	||	[[Airgas Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ARG&action=getcompany reports]	||	Materials     ||     [[Radnor Township, Pennsylvania]] 
+|-
+|	{{NasdaqSymbol|AKAM}}	||	[[Akamai Technologies Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AKAM&action=getcompany reports]	||	Information Technology     ||     [[Cambridge, Massachusetts]]
+|-
+|	{{NyseSymbol|AA}}	||	[[Alcoa Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AA&action=getcompany reports]	||	Materials     ||    [[Pittsburgh, Pennsylvania]]
+|-
+|	{{NyseSymbol|ATI}}	||	[[Allegheny Technologies Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ATI&action=getcompany reports]	||	Materials     ||     [[Pittsburgh, Pennsylvania]]    
+|-
+|	{{NyseSymbol|AGN}}	||	[[Allergan Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AGN&action=getcompany reports]	||	Health Care     ||     [[Irvine, California]]
+|-
+|	{{NyseSymbol|ALL}}	||	[[Allstate Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ALL&action=getcompany reports]	||	Financials     ||     [[Northfield Township, Illinois]]
+|-
+|       {{NyseSymbol|ANR}}      ||      [[Alpha Natural Resources]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=ANR&action=getcompany reports]	||	Energy || [[Abingdon, Virginia]] 
+|-
+|	{{NasdaqSymbol|ALTR}}	||	[[Altera Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ALTR&action=getcompany reports]	||	Information Technology     ||     [[San Jose, California]]
+|-
+|	{{NyseSymbol|MO}}	||	[[Altria Group Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MO&action=getcompany reports]	||	Consumer Staples     ||     [[Richmond, Virginia]]
+|-
+|	{{NasdaqSymbol|AMZN}}	||	[[Amazon.com Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMZN&action=getcompany reports]	||	Consumer Discretionary     ||     [[Seattle, Washington]]
+|-
+|	{{NyseSymbol|AEE}}	||	[[Ameren Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AEE&action=getcompany reports]	||	Utilities     ||     [[St. Louis, Missouri]]
+|-
+|	{{NyseSymbol|AEP}}	||	[[American Electric Power]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AEP&action=getcompany reports]	||	Utilities     ||     [[Columbus, Ohio]]
+|-
+|	{{NyseSymbol|AXP}}	||	[[American Express Co]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AXP&action=getcompany reports]	||	Financials     ||     [[New York, New York]]
+|-
+|	{{NyseSymbol|AIG}}	||	[[American Intl Group Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AIG&action=getcompany reports]	||	Financials     ||     [[New York, New York]]
+|-
+|	{{NyseSymbol|AMT}}	||	[[American Tower Corp A]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMT&action=getcompany reports]	||	Financials     ||     [[Boston, Massachusetts]]
+|-
+|	{{NyseSymbol|AMP}}	||	[[Ameriprise Financial]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMP&action=getcompany reports]	||	Financials     ||     [[Minneapolis, Minnesota]]
+|-
+|	{{NyseSymbol|ABC}}	||	[[AmerisourceBergen Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ABC&action=getcompany reports]	||	Health Care     ||     [[Chesterbrook, Pennsylvania]]
+|-
+|	{{NasdaqSymbol|AMGN}}	||	[[Amgen Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMGN&action=getcompany reports]	||	Health Care     ||     [[Thousand Oaks, California]]
+|-
+|	{{NasdaqSymbol|APH}}	||	[[Amphenol Corp A]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=APH&action=getcompany reports]	||	Industrials     ||     [[Wallingford, Connecticut]]
+|-
+|	{{NyseSymbol|APC}}	||	[[Anadarko Petroleum Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=APC&action=getcompany reports]	||	Energy     ||     [[The Woodlands, Texas]]
+|-
+|	{{NyseSymbol|ADI}}	||	[[Analog Devices Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ADI&action=getcompany reports]	||	Information Technology     ||     [[Norwood, Massachusetts]]
+|-
+|	{{NyseSymbol|AON}}	||	[[Aon plc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AON&action=getcompany reports]	||	Financials     ||     [[London]], [[United Kingdom]]
+|-
+|	{{NyseSymbol|APA}}	||	[[Apache Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=APA&action=getcompany reports]	||	Energy     ||     [[Houston, Texas]]
+|-
+|	{{NyseSymbol|AIV}}	||	[[Apartment Investment & Mgmt]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AIV&action=getcompany reports]	||	Financials     ||     [[Denver, Colorado]]
+|-
+|	{{NasdaqSymbol|APOL}}	||	[[Apollo Group Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=APOL&action=getcompany reports]	||	Consumer Discretionary     ||     [[Phoenix, Arizona]]
+|-
+|	{{NasdaqSymbol|AAPL}}	||	[[Apple Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AAPL&action=getcompany reports]	||	Information Technology     ||     [[Cupertino, California]]
+|-
+|	{{NasdaqSymbol|AMAT}}	||	[[Applied Materials Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AMAT&action=getcompany reports]	||	Information Technology     ||     [[Santa Clara, California]] 
+|-
+|	{{NyseSymbol|ADM}}	||	[[Archer-Daniels-Midland Co]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ADM&action=getcompany reports]	||	Consumer Staples     ||     [[Decatur, Illinois]]
+|-
+|	{{NyseSymbol|AIZ}}	||	[[Assurant Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AIZ&action=getcompany reports]	||	Financials     ||     [[New York, New York]]
+|-
+|	{{NyseSymbol|T}}	||	[[AT&T Inc]]	||	[http://sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000732717&owner=include&count=40 reports]	||	Telecommunications Services     ||     [[Dallas, Texas]]
+|-
+|	{{NasdaqSymbol|ADSK}}	||	[[Autodesk Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ADSK&action=getcompany reports]	||	Information Technology     ||     [[San Rafael, California]]
+|-
+|	{{NasdaqSymbol|ADP}}	||	[[Automatic Data Processing]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ADP&action=getcompany reports]	||	Information Technology     ||     [[Roseland, New Jersey]]
+|-
+|	{{NyseSymbol|AN}}	||	[[AutoNation Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AN&action=getcompany reports]	||	Consumer Discretionary     ||     [[Fort Lauderdale, Florida]] 
+|-
+|	{{NyseSymbol|AZO}}	||	[[AutoZone Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AZO&action=getcompany reports]	||	Consumer Discretionary     ||     [[Memphis, Tennessee]] 
+|-
+|	{{NyseSymbol|AVB}}	||	[[AvalonBay Communities, Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AVB&action=getcompany reports]	||	Financials     ||     [[Arlington, Virginia]]<ref>{{cite web|url=http://www.avalonbay.com/avalon/site/pages/index.html;jsessionid=E5CC67F688C3C8943020584BBA6CD0B2?code=r.ourcompany.home |title=Our Company |publisher=AvalonBay |date=1994-12-31 |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|AVY}}	||	[[Avery Dennison Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AVY&action=getcompany reports]	||	Industrials     ||     [[Pasadena, California]]
+|-
+|	{{NyseSymbol|AVP}}	||	[[Avon Products]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=AVP&action=getcompany reports]	||	Consumer Staples     ||     [[New York, New York]]
+|-
+|	{{NyseSymbol|BHI}}	||	[[Baker Hughes Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BHI&action=getcompany reports]	||	Energy     ||     [[Houston, Texas]]
+|-
+|	{{NyseSymbol|BLL}}	||	[[Ball Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BLL&action=getcompany reports]	||	Materials     ||     [[Broomfield, Colorado]]
+|-
+|	{{NyseSymbol|BAC}}	||	[[Bank of America Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BAC&action=getcompany reports]	||	Financials     ||     [[Charlotte, North Carolina]]
+|-
+|	{{NyseSymbol|BK}}	||	[[The Bank of New York Mellon Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BK&action=getcompany reports]	||	Financials     ||     [[New York, New York]]
+|-
+|       {{NyseSymbol|BCR}}      ||      [[Bard (C.R.) Inc.]]            ||      [http://www.sec.gov/cgi-bin/browse-edgar?CIK=BCR&action=getcompany reports]     ||      Health Care     ||     [[Murray Hill, New Jersey]]
+|-
+|	{{NyseSymbol|BAX}}	||	[[Baxter International Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BAX&action=getcompany reports]	||	Health Care     ||    [[Deerfield, Illinois]]
+|-
+|	{{NyseSymbol|BBT}}	||	[[BB&T Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BBT&action=getcompany reports]	||	Financials     ||     [[Winston-Salem, North Carolina]]
+|-
+|	{{NyseSymbol|BEAM}}	||	[[Beam Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BEAM&action=getcompany reports]	||	Consumer Discretionary || [[Deerfield, Illinois]] 
+|-
+|	{{NyseSymbol|BDX}}	||	[[Becton Dickinson]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BDX&action=getcompany reports]	||	Health Care     ||     [[Franklin Lakes, New Jersey]]
+|-
+|	{{NasdaqSymbol|BBBY}}	||	[[Bed Bath & Beyond]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BBBY&action=getcompany reports]	||	Consumer Discretionary     ||     [[Union Township, Union County, New Jersey|Union, New Jersey]]
+|-
+|	{{NyseSymbol|BMS}}	||	[[Bemis Company]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BMS&action=getcompany reports]	||	Materials     ||     [[Neenah, Wisconsin]] 
+|-
+|	{{NyseSymbol|BRK.B}}	||	[[Berkshire Hathaway ]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=0001067983&action=getcompany reports]	||	Financials     ||     [[Omaha, Nebraska]] 
+|-
+|	{{NyseSymbol|BBY}}	||	[[Best Buy Co. Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BBY&action=getcompany reports]	||	Consumer Discretionary     ||     [[Richfield, Minnesota]]
+|-
+|	{{NyseSymbol|BIG}}	||	[[Big Lots Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BIG&action=getcompany reports]	||	Consumer Discretionary     ||     [[Columbus, Ohio]]
+|-
+|	{{NasdaqSymbol|BIIB}}	||	[[BIOGEN IDEC Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BIIB&action=getcompany reports]	||	Health Care     ||     [[Weston, Massachusetts]]
+|-
+|	{{NyseSymbol|BLK}}	||	[[BlackRock]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BLK&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|HRB}}	||	[[Block H&R]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HRB&action=getcompany reports]	||	Consumer Discretionary     ||     [[Kansas City, Missouri]]
+|-
+|	{{NyseSymbol|BMC}}	||	[[BMC Software]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BMC&action=getcompany reports]	||	Information Technology     ||     [[Houston, Texas]]
+|-
+|	{{NyseSymbol|BA}}	||	[[Boeing Company]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BA&action=getcompany reports]	||	Industrials     ||     [[Chicago, Illinois]]
+|-
+|	{{NyseSymbol|BWA}}	||	[[BorgWarner]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BWA&action=getcompany reports]	||	    Consumer Discretionary ||     [[Auburn Hills, Michigan]]
+|-
+|	{{NyseSymbol|BXP}}	||	[[Boston Properties]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BXP&action=getcompany reports]	||	Financials     ||     [[Boston, Massachusetts]]
+|-
+|	{{NyseSymbol|BSX}}	||	[[Boston Scientific]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BSX&action=getcompany reports]	||	Health Care     ||     [[Natick, Massachusetts]]
+|-
+|	{{NyseSymbol|BMY}}	||	[[Bristol-Myers Squibb]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BMY&action=getcompany reports]	||	Health Care     ||     [[New York, New York]]
+|-
+|	{{NasdaqSymbol|BRCM}}	||	[[Broadcom Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BRCM&action=getcompany reports]	||	Information Technology     ||     [[Irvine, California]]
+|-
+|	{{NyseSymbol|BFB}}	||	[[Brown-Forman Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BFB&action=getcompany reports]	||	Consumer Staples     ||     [[Louisville, Kentucky]]
+|-
+|	{{NasdaqSymbol|CHRW}}	||	[[C. H. Robinson Worldwide]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CHRW&action=getcompany reports]	||	Industrials     ||     [[Eden Prairie, Minnesota]]
+|-
+|	{{NasdaqSymbol|CA}}	||	[[CA, Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CA&action=getcompany reports]	||	Information Technology     ||     [[Islandia, New York]]
+|-
+|	{{NasdaqSymbol|CVC}}	||	[[Cablevision|Cablevision Systems Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CVC&action=getcompany reports]	||	Consumer Discretionary ||  [[Bethpage, New York]]
+|-
+|       {{NyseSymbol|COG}}     ||       [[Cabot Oil & Gas]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=COG&action=getcompany reports]	||	Energy     ||     [[Houston, Texas]]
+|-
+|       {{NyseSymbol|CAM}}     ||       [[Cameron International Corp.]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=CAM&action=getcompany reports]	||	Energy     ||     [[Houston, Texas]]
+|-
+|	{{NyseSymbol|CPB}}	||	[[Campbell Soup]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CPB&action=getcompany reports]	||	Consumer Staples     ||     [[Camden, New Jersey]]
+|-
+|	{{NyseSymbol|COF}}	||	[[Capital One Financial]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COF&action=getcompany reports]	||	Financials     ||     [[Tysons Corner, Virginia]]
+|-
+|	{{NyseSymbol|CAH}}	||	[[Cardinal Health Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CAH&action=getcompany reports]	||	Health Care     ||     [[Dublin, Ohio]]
+|-
+|	{{NyseSymbol|CFN}}	||	[[Carefusion]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CFN&action=getcompany reports]	||	Health Care     ||     [[San Diego, California]]<ref>{{cite news|last=Sisario |first=Ben |url=http://topics.nytimes.com/topics/news/business/companies/carefusion-corporation/index.html |title=CareFusion Corporation News - Company Information - The New York Times |publisher=Topics.nytimes.com |date= |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|KMX}}	||	[[Carmax Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KMX&action=getcompany reports]	||	Consumer Discretionary     ||     [[Richmond, Virginia]]
+|-
+|	{{NyseSymbol|CCL}}	||	[[Carnival Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CCL&action=getcompany reports]	||	Consumer Discretionary     ||     [[Miami, Florida]]
+|-
+|	{{NyseSymbol|CAT}}	||	[[Caterpillar Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CAT&action=getcompany reports]	||	Industrials     ||     [[Peoria, Illinois]]
+|-
+|	{{NyseSymbol|CBG}}	||	[[CBRE Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CBG&action=getcompany reports]	||	Financials     ||     [[Los Angeles, California]]
+|-
+|	{{NyseSymbol|CBS}}	||	[[CBS Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CBS&action=getcompany reports]	||	Consumer Discretionary     ||     [[New York, New York]]
+|-
+|	{{NasdaqSymbol|CELG}}	||	[[Celgene Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CELG&action=getcompany reports]	||	Health Care     ||     [[Summit, New Jersey]]
+|-
+|	{{NyseSymbol|CNP}}	||	[[CenterPoint Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CNP&action=getcompany reports]	||	Utilities     ||     [[Houston, Texas]]
+|-
+|	{{NyseSymbol|CTL}}	||	[[CenturyLink Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CTL&action=getcompany reports]	||	Telecommunications Services     ||     [[Monroe, Louisiana]] 
+|-
+|	{{NasdaqSymbol|CERN}}	||	[[Cerner]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CERN&action=getcompany reports]	||	Health Care     ||     [[North Kansas City, Missouri]] 
+|-
+|	{{NyseSymbol|CF}}	||	[[CF Industries Holdings Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CF&action=getcompany reports]	||	Materials     ||     [[Deerfield, Illinois]]
+|-
+|	{{NyseSymbol|SCHW}}	||	[[Charles Schwab]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SCHW&action=getcompany reports]	||	Financials     ||     [[San Francisco, California]]
+|-
+|	{{NyseSymbol|CHK}}	||	[[Chesapeake Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CHK&action=getcompany reports]	||	Energy     ||     [[Oklahoma City, Oklahoma]] 
+|-
+|	{{NyseSymbol|CVX}}	||	[[Chevron Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CVX&action=getcompany reports]	||	Energy     ||     [[San Ramon, California]] 
+|-
+|	{{NyseSymbol|CB}}	||	[[Chubb Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CB&action=getcompany reports]	||	Financials     ||     [[Warren, New Jersey]] 
+|-
+|	{{NyseSymbol|CI}}	||	[[CIGNA Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CI&action=getcompany reports]	||	Health Care     ||     [[Philadelphia, Pennsylvania]] 
+|-
+|	{{NasdaqSymbol|CINF}}	||	[[Cincinnati Financial]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CINF&action=getcompany reports]	||	Financials     ||     [[Fairfield, Ohio]] 
+|-
+|	{{NasdaqSymbol|CTAS}}	||	[[Cintas Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CTAS&action=getcompany reports]	||	Industrials     ||     [[Mason, Ohio]]
+|-
+|	{{NasdaqSymbol|CSCO}}	||	[[Cisco Systems]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CSCO&action=getcompany reports]	||	Information Technology     ||     [[San Jose, California]] 
+|-
+|	{{NyseSymbol|C}}	||	[[Citigroup Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=C&action=getcompany reports]	||	Financials     ||     [[New York, New York]] 
+|-
+|	{{NasdaqSymbol|CTXS}}	||	[[Citrix Systems]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CTXS&action=getcompany reports]	||	Information Technology     ||     [[Fort Lauderdale, Florida]] 
+|-
+|	{{NyseSymbol|CLF}}	||	[[Cliffs Natural Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CLF&action=getcompany reports]	||	Materials     ||     [[Cleveland, Ohio]]
+|-
+|	{{NyseSymbol|CLX}}	||	[[Clorox Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CLX&action=getcompany reports]	||	Consumer Staples     ||     [[Oakland, California]] 
+|-
+|	{{NasdaqSymbol|CME}}	||	[[CME Group Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CME&action=getcompany reports]	||	Financials     ||     [[Chicago, Illinois]] 
+|-
+|	{{NyseSymbol|CMS}}	||	[[CMS Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CMS&action=getcompany reports]	||	Utilities     ||     [[Jackson, Michigan]] 
+|-
+|	{{NyseSymbol|COH}}	||	[[Coach Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COH&action=getcompany reports]	||	Consumer Discretionary     ||     [[New York, New York]] 
+|-
+|	{{NyseSymbol|KO}}	||	[[Coca Cola Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KO&action=getcompany reports]	||	Consumer Staples     ||     [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|CCE}}	||	[[Coca-Cola Enterprises]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CCE&action=getcompany reports]	||	Consumer Staples     ||     [[Atlanta, Georgia]]
+|-
+|	{{NasdaqSymbol|CTSH}}	||	[[Cognizant Technology Solutions]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CTSH&action=getcompany reports]	||	Information Technology || [[Teaneck, New Jersey]] 
+|-
+|	{{NyseSymbol|CL}}	||	[[Colgate-Palmolive]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CL&action=getcompany reports]	||	Consumer Staples || [[New York, New York]]
+|-
+|	{{NasdaqSymbol|CMCSA}}	||	[[Comcast Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CMCSA&action=getcompany reports]	||	Consumer Discretionary || [[Philadelphia, Pennsylvania]]
+|-
+|	{{NyseSymbol|CMA}}	||	[[Comerica Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CMA&action=getcompany reports]	||	Financials || [[Dallas, Texas]]
+|-
+|	{{NyseSymbol|CSC}}	||	[[Computer Sciences Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CSC&action=getcompany reports]	||	Information Technology || [[Falls Church, Virginia]]
+|-
+|	{{NyseSymbol|CAG}}	||	[[ConAgra Foods Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CAG&action=getcompany reports]	||	Consumer Staples || [[Omaha, Nebraska]] 
+|-
+|	{{NyseSymbol|COP}}	||	[[ConocoPhillips]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COP&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|CNX}}	||	[[CONSOL Energy Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CNX&action=getcompany reports]	||	Energy || [[Cecil Township, Pennsylvania]] 
+|-
+|	{{NyseSymbol|ED}}	||	[[Consolidated Edison]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ED&action=getcompany reports]	||	Utilities || [[New York, New York]] 
+|-
+|	{{NyseSymbol|STZ}}	||	[[Constellation Brands]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=STZ&action=getcompany reports]	||	Consumer Staples || [[Victor, New York]]
+|-
+|	{{NyseSymbol|GLW}}	||	[[Corning Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GLW&action=getcompany reports]	||	Industrials || [[Corning (city), New York|Corning, New York]] 
+|-
+|	{{NasdaqSymbol|COST}}	||	[[Costco Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COST&action=getcompany reports]	||	Consumer Staples || [[Issaquah, Washington]]
+|-
+|	{{NyseSymbol|CVH}}	||	[[Coventry Health Care Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CVH&action=getcompany reports]	||	Health Care || [[Bethesda, Maryland]] 
+|-
+|	{{NyseSymbol|COV}}	||	[[Covidien plc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COV&action=getcompany reports]	||	Health Care     ||    [[Dublin, Ireland]]
+|-
+|	{{NyseSymbol|CCI}}	||	[[Crown Castle International Corp.]] ||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CCI&action=getcompany reports]	||	Telecommunications Services || [[Houston, Texas]]
+|-
+|	{{NyseSymbol|CSX}}	||	[[CSX Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CSX&action=getcompany reports]	||	Industrials || [[Jacksonville, Florida]] 
+|-
+|	{{NyseSymbol|CMI}}	||	[[Cummins Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CMI&action=getcompany reports]	||	Industrials || [[Columbus, Indiana]] 
+|-
+|	{{NyseSymbol|CVS}}	||	[[CVS Caremark Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CVS&action=getcompany reports]	||	Consumer Staples || [[Woonsocket, Rhode Island]]
+|-
+|	{{NyseSymbol|DHI}}	||	[[D. R. Horton]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DHI&action=getcompany reports]	||	Consumer Discretionary || [[Fort Worth, Texas]]
+|-
+|	{{NyseSymbol|DHR}}	||	[[Danaher Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DHR&action=getcompany reports]	||	Industrials || [[Washington D.C]] 
+|-
+|	{{NyseSymbol|DRI}}	||	[[Darden Restaurants]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DRI&action=getcompany reports]	||	Consumer Discretionary || [[Orlando, Florida]]
+|-
+|       {{NyseSymbol|DVA}}      ||      [[DaVita Inc.]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=DVA&action=getcompany reports]	||	Health Care || [[Denver, Colorado]]
+|-
+|	{{NyseSymbol|DF}}	||	[[Dean Foods]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DF&action=getcompany reports]	||	Consumer Staples || [[Dallas, Texas]] 
+|-
+|	{{NyseSymbol|DE}}	||	[[Deere & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DE&action=getcompany reports]	||	Industrials || [[Moline, Illinois]] 
+|-
+|	{{NasdaqSymbol|DELL}}	||	[[Dell Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DELL&action=getcompany reports]	||	Information Technology || [[Round Rock, Texas]] 
+|-
+|	{{NyseSymbol|DNR}}	||	[[Denbury Resources Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DNR&action=getcompany reports]	||	Energy || [[Plano, Texas]]<ref>{{cite web|url=http://www.denbury.com/index.php?id=7 |title=Denbury Resources :: Operations |publisher=Denbury.com |date= |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|XRAY}}	||	[[Dentsply International]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XRAY&action=getcompany reports]	||	Health Care || [[York, Pennsylvania]] 
+|-
+|	{{NyseSymbol|DVN}}	||	[[Devon Energy Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DVN&action=getcompany reports]	||	Energy || [[Oklahoma City, Oklahoma]] 
+|-
+|	{{NyseSymbol|DV}}	||	[[DeVry, Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DV&action=getcompany reports]	||	Consumer Discretionary || [[Downers Grove, Illinois]]
+|-
+|	{{NyseSymbol|DO}}	||	[[Diamond Offshore Drilling]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DO&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|DTV}}	||	[[DirecTV]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DTV&action=getcompany reports]	||	Consumer Discretionary || [[El Segundo, California]] 
+|-
+|	{{NyseSymbol|DFS}}	||	[[Discover Financial|Discover Financial Services]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DFS&action=getcompany reports]	||	Financials || [[Riverwoods, Illinois]] 
+|-
+|	{{NasdaqSymbol|DISCA}}	||	[[Discovery Communications]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DISCA&action=getcompany reports]	||	Consumer Discretionary || [[Silver Spring, Maryland]] 
+|-
+|	{{NasdaqSymbol|DLTR}}	||	[[Dollar Tree]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DLTR&action=getcompany reports]	||	Consumer Discretionary || [[Chesapeake, Virginia]] 
+|-
+|	{{NyseSymbol|D}}	||	[[Dominion Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=D&action=getcompany reports]	||	Utilities || [[Richmond, Virginia]] 
+|-
+|	{{NyseSymbol|RRD}}	||	[[Donnelley (R.R.) & Sons]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RRD&action=getcompany reports]	||	Industrials || [[Chicago, Illinois]] 
+|-
+|	{{NyseSymbol|DOV}}	||	[[Dover Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DOV&action=getcompany reports]	||	Industrials || [[Downers Grove, Illinois]] 
+|-
+|	{{NyseSymbol|DOW}}	||	[[Dow Chemical]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DOW&action=getcompany reports]	||	Materials || [[Midland, Michigan]] 
+|-
+|	{{NyseSymbol|DPS}}	||	[[Dr Pepper Snapple Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DPS&action=getcompany reports]	||	Consumer Staples || [[Plano, Texas]] 
+|-
+|	{{NyseSymbol|DTE}}	||	[[DTE Energy Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DTE&action=getcompany reports]	||	Utilities || [[Detroit, Michigan]] 
+|-
+|	{{NyseSymbol|DD}}	||	[[Du Pont (E.I.)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DD&action=getcompany reports]	||	Materials || [[Wilmington, Delaware]] 
+|-
+|	{{NyseSymbol|DUK}}	||	[[Duke Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DUK&action=getcompany reports]	||	Utilities || [[Charlotte, North Carolina]] 
+|-
+|	{{NyseSymbol|DNB}}	||	[[Dun & Bradstreet]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DNB&action=getcompany reports]	||	Industrials || [[Short Hills, New Jersey]] 
+|-
+|	{{NasdaqSymbol|ETFC}}	||	[[E-Trade]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ETFC&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|EMN}}	||	[[Eastman Chemical]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EMN&action=getcompany reports]	||	Materials || [[Kingsport, Tennessee]] 
+|-
+|	{{NyseSymbol|ETN}}	||	[[Eaton Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ETN&action=getcompany reports]	||	Industrials || [[Cleveland, Ohio]] 
+|-
+|	{{NasdaqSymbol|EBAY}}	||	[[eBay Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EBAY&action=getcompany reports]	||	Information Technology || [[San Jose, California]] 
+|-
+|	{{NyseSymbol|ECL}}	||	[[Ecolab Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ECL&action=getcompany reports]	||	Materials || [[St. Paul, Minnesota]] 
+|-
+|	{{NyseSymbol|EIX}}	||	[[Edison Int'l]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EIX&action=getcompany reports]	||	Utilities || [[Rosemead, California]] 
+|-
+|	{{NyseSymbol|EW}}	||	[[Edwards Lifesciences]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EW&action=getcompany reports]	||	Health Care || [[Irvine, California]] 
+|-
+|	{{NyseSymbol|EP}}	||	[[El Paso Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EP&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|EA}}	||	[[Electronic Arts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EA&action=getcompany reports]	||	Information Technology || [[Redwood City, California]] 
+|-
+|	{{NyseSymbol|EMC}}	||	[[EMC Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EMC&action=getcompany reports]	||	Information Technology || [[Hopkinton, Massachusetts]] 
+|-
+|	{{NyseSymbol|EMR}}	||	[[Emerson Electric Company|Emerson Electric]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EMR&action=getcompany reports]	||	Industrials || [[Ferguson, Missouri]] 
+|-
+|	{{NyseSymbol|ETR}}	||	[[Entergy Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ETR&action=getcompany reports]	||	Utilities || [[New Orleans, Louisiana]] 
+|-
+|	{{NyseSymbol|EOG}}	||	[[EOG Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EOG&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|EQT}}	||	[[EQT Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RIG&action=getcompany reports]	||	Utilities || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|EFX}}	||	[[Equifax Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EFX&action=getcompany reports]	||	Financials || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|EQR}}	||	[[Equity Residential]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EQR&action=getcompany reports]	||	Financials || [[Chicago, Illinois]] 
+|-
+|	{{NyseSymbol|EL}}	||	[[Estee Lauder Cos.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EL&action=getcompany reports]	||	Consumer Staples || [[New York, New York]] 
+|-
+|	{{NyseSymbol|EXC}}	||	[[Exelon Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EXC&action=getcompany reports]	||	Utilities || [[Chicago, Illinois]] 
+|-
+|	{{NasdaqSymbol|EXPE}}	||	[[Expedia Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EXPE&action=getcompany reports]	||	Consumer Discretionary || [[Bellevue, Washington]]
+|-
+|	{{NasdaqSymbol|EXPD}}	||	[[Expeditors Int'l]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=EXPD&action=getcompany reports]	||	Industrials || [[Seattle, Washington]] 
+|-
+|	{{NasdaqSymbol|ESRX}}	||	[[Express Scripts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ESRX&action=getcompany reports]	||	Health Care || [[Cool Valley, Missouri]] 
+|-
+|	{{NyseSymbol|XOM}}	||	[[Exxon Mobil Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XOM&action=getcompany reports]	||	Energy || [[Irving, Texas]] 
+|-
+|	{{NasdaqSymbol|FFIV}}	||	[[F5 Networks]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FFIV&action=getcompany reports]	||	Information Technology ||	[[Seattle, Washington]]
+|-
+|	{{NyseSymbol|FDO}}	||	[[Family Dollar Stores]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FDO&action=getcompany reports]	||	Consumer Discretionary || [[Matthews, North Carolina]] 
+|-
+|	{{NasdaqSymbol|FAST}}	||	[[Fastenal Co]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FAST&action=getcompany reports]	||	Industrials || [[Winona, Minnesota]] 
+|-
+|	{{NyseSymbol|FII}}	||	[[Federated Investors Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FII&action=getcompany reports]	||	Financials || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|FDX}}	||	[[FedEx Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FDX&action=getcompany reports]	||	Industrials || [[Memphis, Tennessee]] 
+|-
+|	{{NyseSymbol|FIS}}	||	[[Fidelity National Information Services]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FIS&action=getcompany reports]	||	Information Technology || [[Jacksonville, Florida]] 
+|-
+|	{{NasdaqSymbol|FITB}}	||	[[Fifth Third Bancorp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FITB&action=getcompany reports]	||	Financials || [[Cincinnati, Ohio]] 
+|-
+|	{{NyseSymbol|FHN}}	||	[[First Horizon National]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FHN&action=getcompany reports]	||	Financials || [[Memphis, Tennessee]] 
+|-
+|	{{NyseSymbol|FSLR}}	||	[[First Solar Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FSLR&action=getcompany reports]	||	Industrials || [[Tempe, Arizona]] 
+|-
+|	{{NyseSymbol|FE}}	||	[[FirstEnergy Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FE&action=getcompany reports]	||	Utilities || [[Akron, Ohio]] 
+|-
+|	{{NasdaqSymbol|FISV}}	||	[[Fiserv Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FISV&action=getcompany reports]	||	Information Technology || [[Brookfield, Wisconsin]] 
+|-
+|	{{NyseSymbol|FLIR}}	||	[[FLIR Systems]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FLIR&action=getcompany reports]	||	Information Technology || [[Wilsonville, Oregon]] 
+|-
+|	{{NyseSymbol|FLS}}	||	[[Flowserve Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FLS&action=getcompany reports]	||	Industrials || [[Irving, Texas]] 
+|-
+|	{{NyseSymbol|FLR}}	||	[[Fluor Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FLR&action=getcompany reports]	||	Industrials || [[Irving, Texas]] 
+|-
+|	{{NyseSymbol|FMC}}	||	[[FMC Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FMC&action=getcompany reports]	||	Materials || [[Philadelphia, Pennsylvania]] 
+|-
+|	{{NyseSymbol|FTI}}	||	[[FMC Technologies Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FTI&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|F}}	||	[[Ford Motor]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=F&action=getcompany reports]	||	Consumer Discretionary || [[Dearborn, Michigan]] 
+|-
+|	{{NyseSymbol|FRX}}	||	[[Forest Laboratories]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FRX&action=getcompany reports]	||	Health Care || [[New York, New York]] 
+|-
+|	{{NyseSymbol|FOSL}}	||	[[Fossil, Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FOSL&action=getcompany reports]	||	Consumer Discretionary || [[Richardson, Texas]] 
+|-
+|	{{NyseSymbol|BEN}}	||	[[Franklin Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BEN&action=getcompany reports]	||	Financials || [[San Mateo, California]] 
+|-
+|	{{NyseSymbol|FCX}}	||	[[Freeport-McMoran Cp & Gld]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=FCX&action=getcompany reports]	||	Materials || [[Phoenix, Arizona]] 
+|-
+|       {{NyseSymbol|FTR}}     ||       [[Frontier Communications]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=FTR&action=getcompany reports]	||	Telecommunications Services || [[Stamford, Connecticut]] 
+|-
+|	{{NyseSymbol|GME}}	||	[[GameStop Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GME&action=getcompany reports]	||	Consumer Discretionary || [[Grapevine, Texas]]
+|-
+|	{{NyseSymbol|GCI}}	||	[[Gannett Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GCI&action=getcompany reports]	||	Consumer Discretionary || [[McLean, Virginia]]
+|-
+|	{{NyseSymbol|GPS}}	||	[[Gap (The)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GPS&action=getcompany reports]	||	Consumer Discretionary || [[San Francisco, California]] 
+|-
+|	{{NyseSymbol|GD}}	||	[[General Dynamics]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GD&action=getcompany reports]	||	Industrials || [[Falls Church, Virginia]] 
+|-
+|	{{NyseSymbol|GE}}	||	[[General Electric]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GE&action=getcompany reports]	||	Industrials || [[Fairfield, Connecticut]] 
+|-
+|	{{NyseSymbol|GIS}}	||	[[General Mills]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GIS&action=getcompany reports]	||	Consumer Staples || [[Golden Valley, Minnesota]] 
+|-
+|	{{NyseSymbol|GPC}}	||	[[Genuine Parts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GPC&action=getcompany reports]	||	Consumer Discretionary || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|GNW}}	||	[[Genworth Financial Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GNW&action=getcompany reports]	||	Financials || [[Richmond, Virginia]] 
+|-
+|	{{NasdaqSymbol|GILD}}	||	[[Gilead Sciences]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GILD&action=getcompany reports]	||	Health Care || [[Foster City, California]] 
+|-
+|	{{NyseSymbol|GS}}	||	[[Goldman Sachs Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GS&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|GR}}	||	[[Goodrich Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GR&action=getcompany reports]	||	Industrials || [[Charlotte, North Carolina]] 
+|-
+|	{{NyseSymbol|GT}}	||	[[Goodyear Tire & Rubber]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GT&action=getcompany reports]	||	Consumer Discretionary || [[Akron, Ohio]] 
+|-
+|	{{NasdaqSymbol|GOOG}}	||	[[Google Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GOOG&action=getcompany reports]	||	Information Technology || [[Mountain View, California]] 
+|-
+|	{{NyseSymbol|GWW}}	||	[[Grainger (W.W.) Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=GWW&action=getcompany reports]	||	Industrials || [[Lake Forest, Illinois]] 
+|-
+|	{{NyseSymbol|HAL}}	||	[[Halliburton Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HAL&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|HOG}}	||	[[Harley-Davidson]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HOG&action=getcompany reports]	||	Consumer Discretionary || [[Milwaukee, Wisconsin]] 
+|-
+|	{{NyseSymbol|HAR}}	||	[[Harman Int'l Industries]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HAR&action=getcompany reports]	||	Consumer Discretionary || [[Stamford, Connecticut]] 
+|-
+|	{{NyseSymbol|HRS}}	||	[[Harris Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HRS&action=getcompany reports]	||	Information Technology || [[Melbourne, Florida]] 
+|-
+|	{{NyseSymbol|HIG}}	||	[[Hartford Financial Svc.Gp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HIG&action=getcompany reports]	||	Financials || [[Hartford, Connecticut]] 
+|-
+|	{{NyseSymbol|HAS}}	||	[[Hasbro Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HAS&action=getcompany reports]	||	Consumer Discretionary || [[Pawtucket, Rhode Island]] 
+|-
+|	{{NyseSymbol|HCP}}	||	[[HCP Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HCP&action=getcompany reports]	||	Financials || [[Long Beach, California]] 
+|-
+|	{{NyseSymbol|HCN}}	||	[[Health Care REIT]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HCN&action=getcompany reports]	||	Financials || [[Toledo, Ohio]]<ref>{{cite web|url=http://www.hcreit.com/about-hcn/business-groups-locations |title=Health Care REIT - Business Groups & Locations |publisher=Hcreit.com |date= |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|HNZ}}	||	[[Heinz (H.J.)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HNZ&action=getcompany reports]	||	Consumer Staples || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|HP}}	||	[[Helmerich & Payne]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HP&action=getcompany reports]	||	Energy || [[Tulsa, Oklahoma]]<ref>{{cite web|url=http://www.hpinc.com/hpcntu.htm |title=Helmerich & Payne, Inc |publisher=Hpinc.com |date= |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|HES}}	||	[[Hess Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HES&action=getcompany reports]	||	Energy || [[New York, New York]] 
+|-
+|	{{NyseSymbol|HPQ}}	||	[[Hewlett-Packard]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HPQ&action=getcompany reports]	||	Information Technology || [[Palo Alto, California]] 
+|-
+|	{{NyseSymbol|HD}}	||	[[Home Depot]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HD&action=getcompany reports]	||	Consumer Discretionary || [[Cobb County, Georgia]] 
+|-
+|	{{NyseSymbol|HON}}	||	[[Honeywell Int'l Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HON&action=getcompany reports]	||	Industrials || [[Morristown, New Jersey]] 
+|-
+|	{{NyseSymbol|HRL}}	||	[[Hormel Foods Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HRL&action=getcompany reports]	||	Consumer Staples || [[Austin, Minnesota]] 
+|-
+|	{{NyseSymbol|HSP}}	||	[[Hospira Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HSP&action=getcompany reports]	||	Health Care || [[Lake Forest, Illinois]] 
+|-
+|	{{NyseSymbol|HST}}	||	[[Host Hotels & Resorts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HST&action=getcompany reports]	||	Financials || [[Bethesda, Maryland]] 
+|-
+|	{{NasdaqSymbol|HCBK}}	||	[[Hudson City Bancorp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HCBK&action=getcompany reports]	||	Financials || [[Paramus, New Jersey]] 
+|-
+|	{{NyseSymbol|HUM}}	||	[[Humana Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HUM&action=getcompany reports]	||	Health Care || [[Louisville, Kentucky]] 
+|-
+|	{{NasdaqSymbol|HBAN}}	||	[[Huntington Bancshares]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HBAN&action=getcompany reports]	||	Financials || [[Columbus, Ohio]] 
+|-
+|	{{NyseSymbol|ITW}}	||	[[Illinois Tool Works]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ITW&action=getcompany reports]	||	Industrials || [[Glenview, Illinois]] 
+|-
+|	{{NyseSymbol|TEG}}	||	[[Integrys Energy Group Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TEG&action=getcompany reports]	||	Utilities || [[Chicago, Illinois]] 
+|-
+|	{{NasdaqSymbol|INTC}}	||	[[Intel Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=INTC&action=getcompany reports]	||	Information Technology || [[Santa Clara, California]] 
+|-
+|	{{NyseSymbol|ICE}}	||	[[IntercontinentalExchange Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ICE&action=getcompany reports]	||	Financials || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|IBM}}	||	[[International Bus. Machines]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IBM&action=getcompany reports]	||	Information Technology || [[Armonk, New York]] 
+|-
+|	{{NyseSymbol|IFF}}	||	[[International Flav/Frag]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IFF&action=getcompany reports]	||	Materials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|IGT}}	||	[[International Game Technology]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IGT&action=getcompany reports]	||	Consumer Discretionary || [[Reno, Nevada]] 
+|-
+|	{{NyseSymbol|IP}}	||	[[International Paper]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IP&action=getcompany reports]	||	Materials || [[Memphis, Tennessee]] 
+|-
+|	{{NyseSymbol|IPG}}	||	[[Interpublic Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IPG&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NasdaqSymbol|INTU}}	||	[[Intuit Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=INTU&action=getcompany reports]	||	Information Technology || [[Mountain View, California]] 
+|-
+|       {{NasdaqSymbol|ISRG}}   ||      [[Intuitive Surgical Inc.]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=ISRG&action=getcompany reports]	||	Health Care || [[Sunnyvale, California]] 
+|-
+|	{{NyseSymbol|IVZ}}	||	[[Invesco Ltd.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IVZ&action=getcompany reports]	||	Financials || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|IRM}}	||	[[Iron Mountain Incorporated]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IRM&action=getcompany reports]	||	Industrials || [[Boston, Massachusetts]] 
+|-
+|	{{NyseSymbol|XYL}}	||	[[Xylem Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XYL&action=getcompany reports]	||	Industrials || [[White Plains, New York]] 
+|-
+|	{{NyseSymbol|JBL}}	||	[[Jabil Circuit]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JBL&action=getcompany reports]	||	Information Technology || [[St. Petersburg, Florida]] 
+|-
+|	{{NyseSymbol|JEC}}	||	[[Jacobs Engineering Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JEC&action=getcompany reports]	||	Industrials || [[Pasadena, California]] 
+|-
+|	{{NyseSymbol|CBE}}	||	[[Cooper Industries]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CBE&action=getcompany reports]	||	Industrials || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|JDSU}}	||	[[JDS Uniphase Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JDSU&action=getcompany reports]	||	Information Technology || [[Milpitas, California]] 
+|-
+|	{{NyseSymbol|JNJ}}	||	[[Johnson & Johnson]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JNJ&action=getcompany reports]	||	Health Care || [[New Brunswick, New Jersey]] 
+|-
+|	{{NyseSymbol|JCI}}	||	[[Johnson Controls]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JCI&action=getcompany reports]	||	Consumer Discretionary || [[Milwaukee, Wisconsin]] 
+|-
+|	{{NasdaqSymbol|JOY}}	||	[[Joy Global Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JOY&action=getcompany reports]	||	Industrials ||  [[Milwaukee, Wisconsin]]
+|-
+|	{{NyseSymbol|JPM}}	||	[[JPMorgan Chase & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JPM&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NasdaqSymbol|JNPR}}	||	[[Juniper Networks]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JNPR&action=getcompany reports]	||	Information Technology || [[Sunnyvale, California]] 
+|-
+|	{{NyseSymbol|K}}	||	[[Kellogg Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=K&action=getcompany reports]	||	Consumer Staples || [[Battle Creek, Michigan]] 
+|-
+|	{{NyseSymbol|KEY}}	||	[[KeyCorp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KEY&action=getcompany reports]	||	Financials || [[Cleveland, Ohio]]
+|-
+|	{{NyseSymbol|KMB}}	||	[[Kimberly-Clark]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KMB&action=getcompany reports]	||	Consumer Staples || [[Irving, Texas]] 
+|-
+|	{{NyseSymbol|KIM}}	||	[[Kimco Realty]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KIM&action=getcompany reports]	||	Financials || [[New Hyde Park, New York]] 
+|-
+|	{{NasdaqSymbol|KLAC}}	||	[[KLA-Tencor Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KLAC&action=getcompany reports]	||	Information Technology || [[Milpitas, California]] 
+|-
+|	{{NyseSymbol|KSS}}	||	[[Kohl's Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KSS&action=getcompany reports]	||	Consumer Discretionary || [[Menomonee Falls, Wisconsin]] 
+|-
+|	{{NyseSymbol|KFT}}	||	[[Kraft Foods Inc-A]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KFT&action=getcompany reports]	||	Consumer Staples || [[Northfield, Illinois]] 
+|-
+|	{{NyseSymbol|KR}}	||	[[Kroger Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=KR&action=getcompany reports]	||	Consumer Staples || [[Cincinnati, Ohio]] 
+|-
+|	{{NyseSymbol|LLL}}	||	[[L-3 Communications Holdings]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LLL&action=getcompany reports]	||	Industrials || [[New York, New York]]
+|-
+|	{{NyseSymbol|LH}}	||	[[Laboratory Corp. of America Holding]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LH&action=getcompany reports]	||	Health Care || [[Burlington, North Carolina]] 
+|-
+|	{{NyseSymbol|LM}}	||	[[Legg Mason]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LM&action=getcompany reports]	||	Financials || [[Baltimore, Maryland]] 
+|-
+|	{{NyseSymbol|LEG}}	||	[[Leggett & Platt]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LEG&action=getcompany reports]	||	Consumer Discretionary || [[Carthage, Missouri]] 
+|-
+|	{{NyseSymbol|LEN}}	||	[[Lennar Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LEN&action=getcompany reports]	||	Consumer Discretionary || [[Miami, Florida]] 
+|-
+|	{{NyseSymbol|LUK}}	||	[[Leucadia National Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LUK&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|LXK}}	||	[[Lexmark Int'l Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LXK&action=getcompany reports]	||	Information Technology || [[Lexington, Kentucky]] 
+|-
+|	{{NasdaqSymbol|LIFE}}	||	[[Life Technologies]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ABI&action=getcompany reports]	||	Health Care || [[Carlsbad, California]] 
+|-
+|	{{NyseSymbol|LLY}}	||	[[Lilly (Eli) & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LLY&action=getcompany reports]	||	Health Care || [[Indianapolis, Indiana]] 
+|-
+|	{{NyseSymbol|LTD}}	||	[[Limited Brands Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LTD&action=getcompany reports]	||	Consumer Discretionary || [[Columbus, Ohio]] 
+|-
+|	{{NyseSymbol|LNC}}	||	[[Lincoln National]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LNC&action=getcompany reports]	||	Financials || [[Radnor, Pennsylvania]] 
+|-
+|	{{NasdaqSymbol|LLTC}}	||	[[Linear Technology Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LLTC&action=getcompany reports]	||	Information Technology || [[Milpitas, California]] 
+|-
+|	{{NyseSymbol|LMT}}	||	[[Lockheed Martin Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LMT&action=getcompany reports]	||	Industrials || [[Bethesda, Maryland]] 
+|-
+|	{{NyseSymbol|L}}	||	[[Loews Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=L&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|LO}}	||	[[Lorillard Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LO&action=getcompany reports]	||	Consumer Staples || [[Greensboro, North Carolina]] 
+|-
+|	{{NyseSymbol|LOW}}	||	[[Lowe's Cos.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LOW&action=getcompany reports]	||	Consumer Discretionary || [[North Wilkesboro, North Carolina]] 
+|-
+|	{{NyseSymbol|LSI}}	||	[[LSI Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LSI&action=getcompany reports]	||	Information Technology || [[Milpitas, California]] 
+|-
+|	{{NyseSymbol|MTB}}	||	[[M&T Bank Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MTB&action=getcompany reports]	||	Financials || [[Buffalo, New York]] 
+|-
+|	{{NyseSymbol|M}}	||	[[Macy's Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=M&action=getcompany reports]	||	Consumer Discretionary || [[Cincinnati, Ohio]] 
+|-
+|	{{NyseSymbol|MRO}}	||	[[Marathon Oil Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MRO&action=getcompany reports]	||	Energy || [[Houston, Texas]]
+|-
+|	{{NyseSymbol|MPC}}	||	[[Marathon Petroleum]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=0001510295&action=getcompany reports]	||	Energy || [[Findlay, Ohio]] 
+|-
+|	{{NyseSymbol|MAR}}	||	[[Marriott Int'l.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MAR&action=getcompany reports]	||	Consumer Discretionary || [[Bethesda, Maryland]] 
+|-
+|	{{NyseSymbol|MMC}}	||	[[Marsh & McLennan]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MMC&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|MAS}}	||	[[Masco Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MAS&action=getcompany reports]	||	Industrials || [[Taylor, Michigan]] 
+|-
+|       {{NyseSymbol|MA}}       ||      [[Mastercard Inc.]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=MA&action=getcompany reports]	||	Information Technology || [[Harrison, New York]] 
+|-
+|	{{NyseSymbol|MAT}}	||	[[Mattel Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MAT&action=getcompany reports]	||	Consumer Discretionary || [[El Segundo, California]] 
+|-
+|	{{NyseSymbol|MKC}}	||	[[McCormick & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MKC&action=getcompany reports]	||	Consumer Staples || [[Sparks, Maryland]] 
+|-
+|	{{NyseSymbol|MCD}}	||	[[McDonald's Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MCD&action=getcompany reports]	||	Consumer Discretionary || [[Oak Brook, Illinois]] 
+|-
+|	{{NyseSymbol|MHP}}	||	[[McGraw-Hill]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MHP&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|MCK}}	||	[[McKesson Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MCK&action=getcompany reports]	||	Health Care || [[San Francisco, California]] 
+|-
+|	{{NyseSymbol|MJN}}	||	[[Mead Johnson]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MJN&action=getcompany reports]	||	Consumer Staples || [[Glenview, Illinois]] 
+|-
+|	{{NyseSymbol|MWV}}	||	[[MeadWestvaco Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MWV&action=getcompany reports]	||	Materials || [[Richmond, Virginia]] 
+|-
+|	{{NyseSymbol|MDT}}	||	[[Medtronic Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MDT&action=getcompany reports]	||	Health Care || [[Fridley, Minnesota]] 
+|-
+|	{{NyseSymbol|MRK}}	||	[[Merck & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MRK&action=getcompany reports]	||	Health Care || [[Whitehouse Station, New Jersey]] 
+|-
+|	{{NyseSymbol|MET}}	||	[[MetLife Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MET&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|PCS}}	||	[[MetroPCS Communications Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCS&action=getcompany reports]	||	Telecommunications Services || [[Richardson, Texas]] 
+|-
+|	{{NasdaqSymbol|MCHP}}	||	[[Microchip Technology]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MCHP&action=getcompany reports]	||	Information Technology || [[Chandler, Arizona]] 
+|-
+|	{{NasdaqSymbol|MU}}	||	[[Micron Technology]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MU&action=getcompany reports]	||	Information Technology || [[Boise, Idaho]] 
+|-
+|	{{NasdaqSymbol|MSFT}}	||	[[Microsoft Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MSFT&action=getcompany reports]	||	Information Technology || [[Redmond, Washington]] 
+|-
+|	{{NasdaqSymbol|MOLX}}	||	[[Molex Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MOLX&action=getcompany reports]	||	Information Technology || [[Lisle, Illinois]] 
+|-
+|	{{NyseSymbol|TAP}}	||	[[Molson Coors Brewing Company]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TAP&action=getcompany reports]	||	Consumer Staples || [[Denver, Colorado]] 
+|-
+|	{{NyseSymbol|MON}}	||	[[Monsanto Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MON&action=getcompany reports]	||	Materials || [[Creve Coeur, Missouri]] 
+|-
+|	{{NyseSymbol|MCO}}	||	[[Moody's Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MCO&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|MS}}	||	[[Morgan Stanley]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MS&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|MOS}}	||	[[The Mosaic Company]]  ||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MOS&action=getcompany reports]	||	Materials || [[Plymouth, Minnesota]] 
+|-
+|	{{NyseSymbol|MMI}}	||	[[Motorola Mobility Holdings Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001495569 reports]	||	Information Technology ||  [[Libertyville, Illinois]]
+|-
+|	{{NyseSymbol|MSI}}	||	[[Motorola Solutions Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MSI&action=getcompany reports]	||	Information Technology ||  [[Schaumburg, Illinois]]
+|-
+|	{{NyseSymbol|MUR}}	||	[[Murphy Oil]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MUR&action=getcompany reports]	||	Energy || [[El Dorado, Arkansas]] 
+|-
+|	{{NasdaqSymbol|MYL}}	||	[[Mylan Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=MYL&action=getcompany reports]	||	Health Care || [[Canonsburg, Pennsylvania]]
+|-
+|	{{NyseSymbol|NBR}}	||	[[Nabors Industries Ltd.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NBR&action=getcompany reports]	||	Energy || [[Hamilton, Bermuda]] 
+|-
+|	{{NasdaqSymbol|NDAQ}}	||	[[NASDAQ OMX Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NDAQ&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|NOV}}	||	[[National Oilwell Varco Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NOV&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|NTAP}}	||	[[NetApp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NTAP&action=getcompany reports]	||	Information Technology || [[Sunnyvale, California]] 
+|-
+|	{{NasdaqSymbol|NFLX}}	||	[[NetFlix Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NFLX&action=getcompany reports]	||	Information Technology ||  [[Los Gatos, California]]  
+|-
+|	{{NyseSymbol|NWL}}	||	[[Newell Rubbermaid Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NWL&action=getcompany reports]	||	Consumer Discretionary || [[Sandy Springs, Georgia]]
+|-
+|	{{NyseSymbol|NFX}}	||	[[Newfield Exploration Co]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NFX&action=getcompany reports]	||	Energy ||  [[Houston, Texas]]
+|-
+|	{{NyseSymbol|NEM}}	||	[[Newmont Mining Corp. (Hldg. Co.)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NEM&action=getcompany reports]	||	Materials || [[Denver, Colorado]] 
+|-
+|	{{NasdaqSymbol|NWSA}}	||	[[News Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NWS.A&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|NEE}}	||	[[NextEra Energy Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NEE&action=getcompany reports]	||	Utilities || [[Juno Beach, Florida]] 
+|-
+|	{{NyseSymbol|NKE}}	||	[[NIKE Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NKE&action=getcompany reports]	||	Consumer Discretionary || [[Washington County, Oregon]] 
+|-
+|	{{NyseSymbol|NI}}	||	[[NiSource Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NI&action=getcompany reports]	||	Utilities || [[Merrillville, Indiana]] 
+|-
+|	{{NyseSymbol|NE}}	||	[[Noble Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NE&action=getcompany reports]	||	Energy ||  [[Geneva, Switzerland]]
+|-
+|	{{NyseSymbol|NBL}}	||	[[Noble Energy Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NBL&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|JWN}}	||	[[Nordstrom]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JWN&action=getcompany reports]	||	Consumer Discretionary || [[Seattle, Washington]] 
+|-
+|	{{NyseSymbol|NSC}}	||	[[Norfolk Southern Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NSC&action=getcompany reports]	||	Industrials || [[Norfolk, Virginia]] 
+|-
+|	{{NasdaqSymbol|NTRS}}	||	[[Northern Trust Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NTRS&action=getcompany reports]	||	Financials || [[Chicago, Illinois]] 
+|-
+|	{{NyseSymbol|NOC}}	||	[[Northrop Grumman Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NOC&action=getcompany reports]	||	Industrials || [[West Falls Church, Virginia]] 
+|-
+|	{{NyseSymbol|NU}}	||	[[Northeast Utilities]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NU&action=getcompany reports]	||	Utilities || [[Berlin, Connecticut]] 
+|-
+|	{{NasdaqSymbol|CMG}}	||	[[Chipotle Mexican Grill]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CMG&action=getcompany reports]	||	Consumer Discretionary|| [[Denver, Colorado]] 
+|-
+|	{{NasdaqSymbol|NVLS}}	||	[[Novellus Systems]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NVLS&action=getcompany reports]	||	Information Technology || [[San Jose, California]] 
+|-
+|	{{NyseSymbol|NRG}}	||	[[NRG Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NRG&action=getcompany reports]	||	Utilities || [[West Windsor Township, New Jersey]] 
+|-
+|	{{NyseSymbol|NUE}}	||	[[Nucor Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NUE&action=getcompany reports]	||	Materials || [[Charlotte, North Carolina]] 
+|-
+|	{{NasdaqSymbol|NVDA}}	||	[[Nvidia Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NVDA&action=getcompany reports]	||	Information Technology || [[Santa Clara, California]] 
+|-
+|	{{NyseSymbol|NYX}}	||	[[NYSE Euronext]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=NYX&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NasdaqSymbol|ORLY}}	||	[[O'Reilly Automotive]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ORLY&action=getcompany reports]	||	Consumer Discretionary || [[Springfield, Missouri]] 
+|-
+|	{{NyseSymbol|OXY}}	||	[[Occidental Petroleum]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=OXY&action=getcompany reports]	||	Energy || [[Los Angeles, California]] 
+|-
+|	{{NyseSymbol|OMC}}	||	[[Omnicom Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=OMC&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|OKE}}	||	[[ONEOK]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=OKE&action=getcompany reports]	||	Utilities || [[Tulsa, Oklahoma]] 
+|-
+|	{{NasdaqSymbol|ORCL}}	||	[[Oracle Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ORCL&action=getcompany reports]	||	Information Technology || [[Redwood Shores, California]]
+|-
+|	{{NyseSymbol|OI}}	||	[[Owens-Illinois Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=OI&action=getcompany reports]	||	Materials || [[Perrysburg, Ohio]]
+|-
+|	{{NasdaqSymbol|PCAR}}	||	[[PACCAR Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCAR&action=getcompany reports]	||	Industrials || [[Bellevue, Washington]] 
+|-
+|	{{NyseSymbol|IR}}	||	[[Ingersoll-Rand PLC]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=IR&action=getcompany reports]	||	Industrials || [[Dublin, Ireland]] 
+|-
+|	{{NyseSymbol|PLL}}	||	[[Pall Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PLL&action=getcompany reports]	||	Industrials || [[Port Washington, New York]] 
+|-
+|	{{NyseSymbol|PH}}	||	[[Parker-Hannifin]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PH&action=getcompany reports]	||	Industrials || [[Cleveland, Ohio]]
+|-
+|	{{NasdaqSymbol|PDCO}}	||	[[Patterson Companies]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PDCO&action=getcompany reports]	||	Health Care || [[St. Paul, Minnesota]] 
+|-
+|	{{NasdaqSymbol|PAYX}}	||	[[Paychex Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PAYX&action=getcompany reports]	||	Information Technology || [[Penfield, New York]] 
+|-
+|	{{NyseSymbol|BTU}}	||	[[Peabody Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=BTU&action=getcompany reports]	||	Energy || [[St. Louis, Missouri]] 
+|-
+|	{{NyseSymbol|JCP}}	||	[[Penney (J.C.)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=JCP&action=getcompany reports]	||	Consumer Discretionary || [[Plano, Texas]] 
+|-
+|	{{NasdaqSymbol|PBCT}}	||	[[People's United Bank]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PBCT&action=getcompany reports]	||	Financials || [[Bridgeport, Connecticut]] 
+|-
+|	{{NyseSymbol|POM}}	||	[[Pepco Holdings Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=POM&action=getcompany reports]	||	Utilities || [[Washington D.C]]
+|-
+|	{{NyseSymbol|PEP}}	||	[[PepsiCo Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PEP&action=getcompany reports]	||	Consumer Staples || [[Purchase, New York]] 
+|-
+|	{{NyseSymbol|PKI}}	||	[[PerkinElmer]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PKI&action=getcompany reports]	||	Health Care || [[Waltham, Massachusetts]] 
+|-
+|	{{NyseSymbol|PRGO}}	||	[[Perrigo]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PRGO&action=getcompany reports]	||	Health Care || [[Allegan, Michigan]] 
+
+|-
+|	{{NyseSymbol|PFE}}	||	[[Pfizer Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PFE&action=getcompany reports]	||	Health Care || [[New York, New York]] 
+|-
+|	{{NyseSymbol|PCG}}	||	[[PG&E Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCG&action=getcompany reports]	||	Utilities || [[San Francisco, California]] 
+|-
+|       {{NyseSymbol|PM}}       ||      [[Philip Morris International]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=PM&action=getcompany reports]	||	Consumer Staples || [[New York, New York]] 
+|-
+|	{{NyseSymbol|PSX}}	||	[[Phillips 66]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PSX&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|PNW}}	||	[[Pinnacle West Capital]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PNW&action=getcompany reports]	||	Utilities || [[Phoenix, Arizona]] 
+|-
+|	{{NyseSymbol|PXD}}	||	[[Pioneer Natural Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PXD&action=getcompany reports]	||	Energy || [[Irving, Texas]] 
+|-
+|	{{NyseSymbol|PBI}}	||	[[Pitney-Bowes]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PBI&action=getcompany reports]	||	Industrials || [[Stamford, Connecticut]] 
+|-
+|	{{NyseSymbol|PCL}}	||	[[Plum Creek Timber Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCL&action=getcompany reports]	||	Financials || [[Seattle, Washington]] 
+|-
+|	{{NyseSymbol|PNC}}	||	[[PNC Financial Services]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PNC&action=getcompany reports]	||	Financials || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|RL}}	||	[[Polo Ralph Lauren Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RL&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|PPG}}	||	[[PPG Industries]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PPG&action=getcompany reports]	||	Materials || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|PPL}}	||	[[PPL Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PPL&action=getcompany reports]	||	Utilities || [[Allentown, Pennsylvania]] 
+|-
+|	{{NyseSymbol|PX}}	||	[[Praxair Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PX&action=getcompany reports]	||	Materials || [[Danbury, Connecticut]] 
+|-
+|	{{NyseSymbol|PCP}}	||	[[Precision Castparts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCP&action=getcompany reports]	||	Industrials || [[Portland, Oregon]] 
+|-
+|	{{NasdaqSymbol|PCLN}}	||	[[Priceline.com Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PCLN&action=getcompany reports]	||	Industrials || [[Norwalk, Connecticut]] 
+|-
+|	{{NyseSymbol|PFG}}	||	[[Principal Financial Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PFG&action=getcompany reports]	||	Financials || [[Des Moines, Iowa]] 
+|-
+|	{{NyseSymbol|PG}}	||	[[Procter & Gamble]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PG&action=getcompany reports]	||	Consumer Staples || [[Cincinnati, Ohio]] 
+|-
+|	{{NyseSymbol|PGN}}	||	[[Progress Energy Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PGN&action=getcompany reports]	||	Utilities || [[Raleigh, North Carolina]] 
+|-
+|	{{NyseSymbol|PGR}}	||	[[Progressive Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PGR&action=getcompany reports]	||	Financials || [[Mayfield Village, Ohio]] 
+|-
+|	{{NyseSymbol|PLD}}	||	[[ProLogis]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PLD&action=getcompany reports]	||	Financials || [[Denver, Colorado]] 
+|-
+|	{{NyseSymbol|PRU}}	||	[[Prudential Financial]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PRU&action=getcompany reports]	||	Financials || [[Newark, New Jersey]] 
+|-
+|	{{NyseSymbol|PEG}}	||	[[Public Serv. Enterprise Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PEG&action=getcompany reports]	||	Utilities || [[Newark, New Jersey]] 
+|-
+|	{{NyseSymbol|PSA}}	||	[[Public Storage]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PSA&action=getcompany reports]	||	Financials || [[Glendale, California]] 
+|-
+|	{{NyseSymbol|PHM}}	||	[[Pulte Homes Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PHM&action=getcompany reports]	||	Consumer Discretionary || [[Bloomfield Hills, Michigan]] 
+|-
+|	{{NyseSymbol|QEP}}	||	[[QEP Resources]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=QEP&action=getcompany reports]	||	Utilities || [[Denver, Colorado]]<ref>{{cite web|url=http://www.qepres.com/ |title=QEP Resources, Inc |publisher=Qepres.com |date= |accessdate=2012-02-10}}</ref>
+|-
+|	{{NyseSymbol|PWR}}	||	[[Quanta Services Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=PWR&action=getcompany reports]	||	Industrials || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|QCOM}}	||	[[QUALCOMM Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=QCOM&action=getcompany reports]	||	Information Technology || [[San Diego, California]] 
+|-
+|	{{NyseSymbol|DGX}}	||	[[Quest Diagnostics]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DGX&action=getcompany reports]	||	Health Care || [[Madison, New Jersey]]
+|-
+|	{{NyseSymbol|RRC}}	||	[[Range Resources|Range Resources Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RRC&action=getcompany reports]	||	Energy || [[Fort Worth, Texas]] 
+|-
+|	{{NyseSymbol|RTN}}	||	[[Raytheon Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RTN&action=getcompany reports]	||	Industrials || [[Waltham, Massachusetts]] 
+|-
+|	{{NyseSymbol|RHT}}	||	[[Red Hat Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RHT&action=getcompany reports]	||	Information Technology || [[Raleigh, North Carolina]] 
+|-
+|	{{NyseSymbol|RF}}	||	[[Regions Financial Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RF&action=getcompany reports]	||	Financials || [[Birmingham, Alabama]] 
+|-
+|	{{NyseSymbol|RSG}}	||	[[Republic Services Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RSG&action=getcompany reports]	||	Industrials || [[Phoenix, Arizona]] 
+|-
+|	{{NyseSymbol|RAI}}	||	[[Reynolds American Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RAI&action=getcompany reports]	||	Consumer Staples || [[Winston-Salem, North Carolina]] 
+|-
+|	{{NyseSymbol|RHI}}	||	[[Robert Half International]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RHI&action=getcompany reports]	||	Industrials || [[Menlo Park, California]] 
+|-
+|	{{NyseSymbol|ROK}}	||	[[Rockwell Automation Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ROK&action=getcompany reports]	||	Industrials || [[Milwaukee, Wisconsin]] 
+|-
+|	{{NyseSymbol|COL}}	||	[[Rockwell Collins]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=COL&action=getcompany reports]	||	Industrials || [[Cedar Rapids, Iowa]] 
+|-
+|	{{NyseSymbol|ROP}}	||	[[Roper Industries]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ROP&action=getcompany reports]	||	Industrials || [[Sarasota, Florida]] 
+|-
+|	{{NasdaqSymbol|ROST}}	||	[[Ross Stores Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ROST&action=getcompany reports]	||	Consumer Discretionary || [[Pleasanton, California]] 
+|-
+|	{{NyseSymbol|RDC}}	||	[[Rowan Cos.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=RDC&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|R}}	||	[[Ryder System]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=R&action=getcompany reports]	||	Industrials || [[Miami, Florida]] 
+|-
+|	{{NyseSymbol|SWY}}	||	[[Safeway Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SWY&action=getcompany reports]	||	Consumer Staples || [[Pleasanton, California]]  
+|-
+|	{{NyseSymbol|SAI}}	||	[[Science Applications International Corporation|SAIC]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SAI&action=getcompany reports]	||	Information Technology || [[McLean, Virginia]] 
+|-
+|	{{NyseSymbol|CRM}}	||	[[Salesforce.com]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=CRM&action=getcompany reports]	||	Information Technology || [[San Francisco, California]] 
+|-
+|	{{NasdaqSymbol|SNDK}}	||	[[SanDisk Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SNDK&action=getcompany reports]	||	Information Technology || [[Milpitas, California]] 
+|-
+|	{{NyseSymbol|SLE}}	||	[[Sara Lee Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SLE&action=getcompany reports]	||	Consumer Staples || [[Downers Grove, Illinois]] 
+|-
+|	{{NyseSymbol|SCG}}	||	[[SCANA Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SCG&action=getcompany reports]	||	Utilities || [[Cayce, South Carolina]] 
+|-
+|	{{NyseSymbol|SLB}}	||	[[Schlumberger Ltd.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SLB&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|       {{NyseSymbol|SNI}}      ||      [[Scripps Networks Interactive Inc.]] || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=SNI&action=getcompany reports]	||	Consumer Discretionary || [[Cincinnati, Ohio]] 
+|-
+|	{{NyseSymbol|SEE}}	||	[[Sealed Air Corp.(New)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SEE&action=getcompany reports]	||	Materials || [[Elmwood Park, New Jersey]] 
+|-
+|	{{NasdaqSymbol|SHLD}}	||	[[Sears Holdings Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SHLD&action=getcompany reports]	||	Consumer Discretionary || [[Hoffman Estates, Illinois]] 
+|-
+|	{{NyseSymbol|SRE}}	||	[[Sempra Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SRE&action=getcompany reports]	||	Utilities || [[San Diego, California]] 
+|-
+|	{{NyseSymbol|SHW}}	||	[[Sherwin-Williams]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SHW&action=getcompany reports]	||	Consumer Discretionary || [[Cleveland, Ohio]] 
+|-
+|	{{NasdaqSymbol|SIAL}}	||	[[Sigma-Aldrich]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SIAL&action=getcompany reports]	||	Materials || [[St. Louis, Missouri]] 
+|-
+|	{{NyseSymbol|SPG}}	||	[[Simon Property Group Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SPG&action=getcompany reports]	||	Financials || [[Indianapolis, Indiana]] 
+|-
+|	{{NyseSymbol|SLM}}	||	[[SLM Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SLM&action=getcompany reports]	||	Financials || [[Newark, Delaware]] 
+|-
+|	{{NyseSymbol|SJM}}	||	[[Smucker (J.M.)]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SJM&action=getcompany reports]	||	Consumer Staples || [[Orrville, Ohio]] 
+|-
+|	{{NyseSymbol|SNA}}	||	[[Snap-On Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SNA&action=getcompany reports]	||	Consumer Discretionary || [[Kenosha, Wisconsin]] 
+|-
+|	{{NyseSymbol|SO}}	||	[[Southern Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SO&action=getcompany reports]	||	Utilities || [[Atlanta, Georgia]] 
+|-
+|	{{NyseSymbol|LUV}}	||	[[Southwest Airlines]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=LUV&action=getcompany reports]	||	Industrials || [[Dallas, Texas]] 
+|-
+|       {{NyseSymbol|SWN}}      ||      [[Southwestern Energy]]     || [http://www.sec.gov/cgi-bin/browse-edgar?CIK=SWN&action=getcompany reports]	||      Energy || [[Houston, Texas]]<ref>{{cite web|url=http://www.swn.com/aboutswn/pages/offices.aspx |title=Offices &#124; Southwestern Energy |publisher=Swn.com |date= |accessdate=2012-02-10}}</ref> 
+|-
+|	{{NyseSymbol|SE}}	||	[[Spectra Energy Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SE&action=getcompany reports]	||	Energy || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|S}}	||	[[Sprint Nextel Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=S&action=getcompany reports]	||	Telecommunications Services || [[Overland Park, Kansas]] 
+|-
+|	{{NyseSymbol|STJ}}	||	[[St Jude Medical]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=STJ&action=getcompany reports]	||	Health Care || [[Little Canada, Minnesota]] 
+|-
+|	{{NyseSymbol|SWK}}	||	[[Stanley Black & Decker]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SWK&action=getcompany reports]	||	Consumer Discretionary || [[New Britain, Connecticut]] 
+|-
+|	{{NasdaqSymbol|SPLS}}	||	[[Staples Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SPLS&action=getcompany reports]	||	Consumer Discretionary || [[Framingham, Massachusetts]] 
+|-
+|	{{NasdaqSymbol|SBUX}}	||	[[Starbucks Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SBUX&action=getcompany reports]	||	Consumer Discretionary || [[Seattle, Washington]] 
+|-
+|	{{NyseSymbol|HOT}}	||	[[Starwood Hotels & Resorts]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HOT&action=getcompany reports]	||	Consumer Discretionary || [[White Plains, New York]] 
+|-
+|	{{NyseSymbol|STT}}	||	[[State Street Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=STT&action=getcompany reports]	||	Financials || [[Boston, Massachusetts]] 
+|-
+|	{{NyseSymbol|SRCL}}	||	[[Stericycle Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SRCL&action=getcompany reports]	||	Industrials || [[Lake Forest, Illinois]] 
+|-
+|	{{NyseSymbol|SYK}}	||	[[Stryker Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SYK&action=getcompany reports]	||	Health Care || [[Kalamazoo, Michigan]] 
+|-
+|	{{NyseSymbol|SUN}}	||	[[Sunoco Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SUN&action=getcompany reports]	||	Energy || [[Philadelphia, Pennsylvania]] 
+|-
+|	{{NyseSymbol|STI}}	||	[[SunTrust Banks]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=STI&action=getcompany reports]	||	Financials || [[Atlanta, Georgia]] 
+|-
+|	{{NasdaqSymbol|SYMC}}	||	[[Symantec Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SYMC&action=getcompany reports]	||	Information Technology || [[Mountain View, California]] 
+|-
+|	{{NyseSymbol|SYY}}	||	[[Sysco Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=SYY&action=getcompany reports]	||	Consumer Staples || [[Houston, Texas]] 
+|-
+|	{{NasdaqSymbol|TROW}}	||	[[T. Rowe Price Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TROW&action=getcompany reports]	||	Financials || [[Baltimore, Maryland]] 
+|-
+|	{{NyseSymbol|TGT}}	||	[[Target Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TGT&action=getcompany reports]	||	Consumer Discretionary || [[Minneapolis, Minnesota]] 
+|-
+|	{{NyseSymbol|TEL}}	||	[[TE Connectivity|TE Connectivity Ltd.]] ||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TEL&action=getcompany reports]	||	Information Technology     ||     [[Schaffhausen, Switzerland]]
+|-
+|	{{NyseSymbol|TE}}	||	[[TECO Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TE&action=getcompany reports]	||	Utilities || [[Tampa, Florida]] 
+|-
+|	{{NyseSymbol|THC}}	||	[[Tenet Healthcare Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=THC&action=getcompany reports]	||	Health Care || [[Dallas, Texas]] 
+|-
+|	{{NyseSymbol|TDC}}	||	[[Teradata Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TDC&action=getcompany reports]	||	Information Technology || [[Miamisburg, Ohio]] 
+|-
+|	{{NyseSymbol|TER}}	||	[[Teradyne Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TER&action=getcompany reports]	||	Information Technology || [[North Reading, Massachusetts]] 
+|-
+|	{{NyseSymbol|TSO}}	||	[[Tesoro Petroleum Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TSO&action=getcompany reports]	||	Energy || [[San Antonio, Texas]] 
+|-
+|	{{NasdaqSymbol|TXN}}	||	[[Texas Instruments]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TXN&action=getcompany reports]	||	Information Technology || [[Dallas, Texas]] 
+|-
+|	{{NyseSymbol|TXT}}	||	[[Textron Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TXT&action=getcompany reports]	||	Industrials || [[Providence, Rhode Island]] 
+|-
+|	{{NyseSymbol|HSY}}	||	[[The Hershey Company]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=HSY&action=getcompany reports]	||	Consumer Staples || [[Hershey, Pennsylvania]] 
+|-
+|	{{NyseSymbol|TRV}}	||	[[The Travelers Companies Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TRV&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|TMO}}	||	[[Thermo Fisher Scientific]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TMO&action=getcompany reports]	||	Health Care || [[Waltham, Massachusetts]] 
+|-
+|	{{NyseSymbol|TIF}}	||	[[Tiffany & Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TIF&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|TWX}}	||	[[Time Warner Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TWX&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|TWC}}	||	[[Time Warner Cable Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TWC&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|TIE}}	||	[[Titanium Metals Corp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TIE&action=getcompany reports]	||	Materials || [[Dallas, Texas]] 
+|-
+|	{{NyseSymbol|TJX}}	||	[[TJX Companies Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TJX&action=getcompany reports]	||	Consumer Discretionary || [[Framingham, Massachusetts]] 
+|-
+|	{{NyseSymbol|TMK}}	||	[[Torchmark Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TMK&action=getcompany reports]	||	Financials || [[McKinney, Texas]] 
+|-
+|	{{NyseSymbol|TSS}}	||	[[Total System Services]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TSS&action=getcompany reports]	||	Information Technology || [[Columbus, Georgia]] 
+|-
+|	{{NasdaqSymbol|TRIP}}	||	[[TripAdvisor]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=0001526520&action=getcompany reports]	||	Consumer Discretionary || [[Newton, Massachusetts]] 
+|-
+|	{{NyseSymbol|TSN}}	||	[[Tyson Foods]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TSN&action=getcompany reports]	||	Consumer Staples || [[Springdale, Arkansas]] 
+|-
+|	{{NyseSymbol|TYC}}	||	[[Tyco International]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=TYC&action=getcompany reports]	||	Industrials || [[Princeton, New Jersey]] 
+|-
+|	{{NyseSymbol|USB}}	||	[[U.S. Bancorp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=USB&action=getcompany reports]	||	Financials || [[Minneapolis, Minnesota]] 
+|-
+|	{{NyseSymbol|UNP}}	||	[[Union Pacific]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=UNP&action=getcompany reports]	||	Industrials || [[Omaha, Nebraska]] 
+|-
+|	{{NyseSymbol|UNH}}	||	[[United Health Group Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=UNH&action=getcompany reports]	||	Health Care || [[Minnetonka, Minnesota]] 
+|-
+|	{{NyseSymbol|UPS}}	||	[[United Parcel Service]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=UPS&action=getcompany reports]	||	Industrials || [[Sandy Springs, Georgia]] 
+|-
+|	{{NyseSymbol|X}}	||	[[United States Steel Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=X&action=getcompany reports]	||	Materials || [[Pittsburgh, Pennsylvania]] 
+|-
+|	{{NyseSymbol|UTX}}	||	[[United Technologies]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=UTX&action=getcompany reports]	||	Industrials || [[Hartford, Connecticut]] 
+|-
+|	{{NyseSymbol|UNM}}	||	[[Unum Group]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=UNM&action=getcompany reports]	||	Financials || [[Chattanooga, Tennessee]] 
+|-
+|	{{NasdaqSymbol|URBN}}	||	[[Urban Outfitters]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=URBN&action=getcompany reports]	||	Consumer Discretionary || [[Philadelphia, Pennsylvania]] 
+|-
+|	{{NyseSymbol|VFC}}	||	[[V.F. Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VFC&action=getcompany reports]	||	Consumer Discretionary || [[Greensboro, North Carolina]] 
+|-
+|	{{NyseSymbol|VLO}}	||	[[Valero Energy]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VLO&action=getcompany reports]	||	Energy || [[San Antonio, Texas]] 
+|-
+|	{{NyseSymbol|VAR}}	||	[[Varian Medical Systems]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VAR&action=getcompany reports]	||	Health Care || [[Palo Alto, California]] 
+|-
+|	{{NyseSymbol|VTR}}	||	[[Ventas Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VTR&action=getcompany reports]	||	Financials || [[Chicago, Illinois]]<ref>[http://www.ventasreit.com/contact/ ]{{dead link|date=February 2012}}</ref>
+|-
+|	{{NasdaqSymbol|VRSN}}	||	[[Verisign Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VRSN&action=getcompany reports]	||	Information Technology || [[Dulles, Virginia]] 
+|-
+|	{{NyseSymbol|VZ}}	||	[[Verizon Communications]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VZ&action=getcompany reports]	||	Telecommunications Services || [[New York, New York]] 
+|-
+|	{{NasdaqSymbol|VIAB}}	||	[[Viacom Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VIAB&action=getcompany reports]	||	Consumer Discretionary || [[New York, New York]] 
+|-
+|	{{NyseSymbol|V}}	||	[[Visa Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=V&action=getcompany reports]	||	Information Technology || [[San Francisco, California]] 
+|-
+|	{{NyseSymbol|VNO}}	||	[[Vornado Realty Trust]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VNO&action=getcompany reports]	||	Financials || [[New York, New York]] 
+|-
+|	{{NyseSymbol|VMC}}	||	[[Vulcan Materials]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=VMC&action=getcompany reports]	||	Materials || [[Birmingham, Alabama]] 
+|-
+|	{{NyseSymbol|WMT}}	||	[[Wal-Mart Stores]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WMT&action=getcompany reports]	||	Consumer Staples || [[Bentonville, Arkansas]] 
+|-
+|	{{NyseSymbol|WAG}}	||	[[Walgreen Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WAG&action=getcompany reports]	||	Consumer Staples || [[Deerfield, Illinois]] 
+|-
+|	{{NyseSymbol|DIS}}	||	[[Walt Disney Co.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=DIS&action=getcompany reports]	||	Consumer Discretionary || [[Burbank, California]] 
+|-
+|	{{NyseSymbol|WPO}}	||	[[Washington Post Co B]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WPO&action=getcompany reports]	||	Consumer Discretionary || [[Washington D.C]] 
+|-
+|	{{NyseSymbol|WM}}	||	[[Waste Management Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WM&action=getcompany reports]	||	Industrials || [[Houston, Texas]] 
+|-
+|	{{NyseSymbol|WAT}}	||	[[Waters Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WAT&action=getcompany reports]	||	Health Care || [[Milford, Massachusetts]] 
+|-
+|	{{NyseSymbol|WPI}}	||	[[Watson Pharmaceuticals]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WPI&action=getcompany reports]	||	Health Care || [[Corona, California]] 
+|-
+|	{{NyseSymbol|WLP}}	||	[[WellPoint Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WLP&action=getcompany reports]	||	Health Care || [[Indianapolis, Indiana]] 
+|-
+|	{{NyseSymbol|WFC}}	||	[[Wells Fargo]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WFC&action=getcompany reports]	||	Financials || [[San Francisco, California]] 
+|-
+|	{{NyseSymbol|WDC}}	||	[[Western Digital]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WDC&action=getcompany reports]	||	Information Technology || [[Irvine, California]] 
+|-
+|	{{NyseSymbol|WU}}	||	[[Western Union Co]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WU&action=getcompany reports]	||	Information Technology || [[Englewood, Colorado]] 
+|-
+|	{{NyseSymbol|WY}}	||	[[Weyerhaeuser Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WY&action=getcompany reports]	||	Financials || [[Federal Way, Washington]] 
+|-
+|	{{NyseSymbol|WHR}}	||	[[Whirlpool Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WHR&action=getcompany reports]	||	Consumer Discretionary || [[Benton Harbor, Michigan]] 
+|-
+|	{{NasdaqSymbol|WFM}}	||	[[Whole Foods Market]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WFM&action=getcompany reports]	||	Consumer Staples || [[Austin, Texas]] 
+|-
+|	{{NyseSymbol|WMB}}	||	[[Williams Cos.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WMB&action=getcompany reports]	||	Energy || [[Tulsa, Oklahoma]] 
+|-
+|	{{NyseSymbol|WIN}}	||	[[Windstream Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WIN&action=getcompany reports]	||	Telecommunications Services || [[Little Rock, Arkansas]] 
+|-
+|	{{NyseSymbol|WEC}}	||	[[Wisconsin Energy Corporation]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WEC&action=getcompany reports]	||	Utilities || [[Milwaukee, Wisconsin]]
+|-
+|	{{NyseSymbol|WPX}}	||	[[WPX Energy, Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WPX&action=getcompany reports]	||	Energy || [[Tulsa, OK]] 
+|-
+|	{{NyseSymbol|WYN}}	||	[[Wyndham Worldwide]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WYN&action=getcompany reports]	||	Consumer Discretionary || [[Parsippany-Troy Hills, New Jersey]]
+|-
+|	{{NasdaqSymbol|WYNN}}	||	[[Wynn Resorts Ltd]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=WYNN&action=getcompany reports]	||	Consumer Discretionary || [[Las Vegas, Nevada]] 
+|-
+|	{{NyseSymbol|XEL}}	||	[[Xcel Energy Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XEL&action=getcompany reports]	||	Utilities || [[Minneapolis, Minnesota]] 
+|-
+|	{{NyseSymbol|XRX}}	||	[[Xerox Corp.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XRX&action=getcompany reports]	||	Information Technology || [[Norwalk, Connecticut]] 
+|-
+|	{{NasdaqSymbol|XLNX}}	||	[[Xilinx Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XLNX&action=getcompany reports]	||	Information Technology || [[San Jose, California]] 
+|-
+|	{{NyseSymbol|XL}}	||	[[XL Capital]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=XL&action=getcompany reports]	||	Financials || [[Hamilton, Bermuda]] 
+|-
+|	{{NasdaqSymbol|YHOO}}	||	[[Yahoo Inc.]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=YHOO&action=getcompany reports]	||	Information Technology || [[Sunnyvale, California]] 
+|-
+|	{{NyseSymbol|YUM}}	||	[[Yum! Brands Inc]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=YUM&action=getcompany reports]	||	Consumer Discretionary || [[Louisville, Kentucky]] 
+|-
+|	{{NyseSymbol|ZMH}}	||	[[Zimmer Holdings]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ZMH&action=getcompany reports]	||	Health Care || [[Warsaw, Indiana]] 
+|-
+|	{{NasdaqSymbol|ZION}}	||	[[Zions Bancorp]]	||	[http://www.sec.gov/cgi-bin/browse-edgar?CIK=ZION&action=getcompany reports]	||	Financials || [[Salt Lake City, Utah]] 
+|

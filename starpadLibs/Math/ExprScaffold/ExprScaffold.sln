@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExprScaffold", "ExprScaffold.csproj", "{422C112F-14A5-4E6C-9771-46D8D533468B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expr", "..\Expr\Expr.csproj", "{286F313D-C4EA-468A-8AFD-25C80B0B7AF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicode", "..\..\Utils\Unicode\Unicode.csproj", "{339136BA-87E4-444A-8847-4E1EA846288E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExprBackends", "..\ExprBackends\ExprBackends.csproj", "{352C0DFD-152C-49A2-A8C4-6E95B08462C7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExprMathML", "..\ExprMathML\ExprMathML.fsproj", "{6B077D9D-77DF-4A58-8CCA-F13EBC17B4E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExprStringEngine", "..\ExprStringEngine\ExprStringEngine.csproj", "{34C97A17-A678-4CE9-BBBE-68F7640A4143}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExprText", "..\ExprText\ExprText.fsproj", "{6315FCE6-0989-4389-A618-B3AC0A1A1C8B}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{422C112F-14A5-4E6C-9771-46D8D533468B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422C112F-14A5-4E6C-9771-46D8D533468B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422C112F-14A5-4E6C-9771-46D8D533468B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422C112F-14A5-4E6C-9771-46D8D533468B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{286F313D-C4EA-468A-8AFD-25C80B0B7AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286F313D-C4EA-468A-8AFD-25C80B0B7AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286F313D-C4EA-468A-8AFD-25C80B0B7AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286F313D-C4EA-468A-8AFD-25C80B0B7AF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{339136BA-87E4-444A-8847-4E1EA846288E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{339136BA-87E4-444A-8847-4E1EA846288E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{339136BA-87E4-444A-8847-4E1EA846288E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{339136BA-87E4-444A-8847-4E1EA846288E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352C0DFD-152C-49A2-A8C4-6E95B08462C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352C0DFD-152C-49A2-A8C4-6E95B08462C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352C0DFD-152C-49A2-A8C4-6E95B08462C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352C0DFD-152C-49A2-A8C4-6E95B08462C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B077D9D-77DF-4A58-8CCA-F13EBC17B4E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B077D9D-77DF-4A58-8CCA-F13EBC17B4E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B077D9D-77DF-4A58-8CCA-F13EBC17B4E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B077D9D-77DF-4A58-8CCA-F13EBC17B4E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C97A17-A678-4CE9-BBBE-68F7640A4143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6315FCE6-0989-4389-A618-B3AC0A1A1C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6315FCE6-0989-4389-A618-B3AC0A1A1C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6315FCE6-0989-4389-A618-B3AC0A1A1C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6315FCE6-0989-4389-A618-B3AC0A1A1C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

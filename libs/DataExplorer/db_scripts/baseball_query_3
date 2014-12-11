@@ -1,0 +1,46 @@
+
+select
+	ROW_NUMBER() OVER (ORDER BY mas.playerId) as id,
+	mas.playerID as playerLahmanId,
+	mas.birthYear as birthYear,
+	mas.birthMonth as birthMonth,
+	mas.birthDay as birthDay,
+	mas.birthCountry as birthCountry,
+	mas.birthState as birthState,
+	mas.birthCity as birthCity,
+	mas.deathYear as deathYear,
+	mas.deathMonth as deathMonth,
+	mas.deathDay as deathDay,
+	mas.deathCountry as deathCountry,
+	mas.deathState as deathState,
+	mas.deathCity as deathCity,
+	mas.nameFirst as nameFirst,
+	mas.nameLast as nameLast,
+	mas.nameNote as nameNote,
+	mas.nameGiven as nameGiven,
+	mas.nameNick as nameNick,
+	mas.weight as weight,
+	mas.height as height,
+	mas.bats as bats,
+	mas.throws as throws,
+	mas.debut as debut,
+	mas.finalGame as finalGame,
+	mas.college as college,
+	mas.lahman40ID as lahman40ID,
+	mas.lahman45ID as lahman45ID,
+	mas.retroID as retroID,
+	mas.holtzID as holtzID,
+	mas.bbrefID as bbrefID,
+
+	hof.yearid as hall_of_fame_yearid
+into
+	lahman.dim_player
+from
+	(
+		baseball.master mas
+		left outer join	
+
+		baseball.hall_of_fame hof on 
+		mas.hofId	= hof.hofId and hof.inducted = 'Y'
+	)
+where playerID is not null

@@ -1,0 +1,64 @@
+select 
+	ROW_NUMBER() OVER (ORDER BY m.main_playerId) as id,
+	f.id as factId,
+
+	pitching_W,
+	pitching_L,
+	pitching_G,
+	pitching_GS,
+	pitching_CG,
+	pitching_SHO,
+	pitching_SV,
+	pitching_IPouts,
+	pitching_H,
+	pitching_ER,
+	pitching_HR,
+	pitching_BB,
+	pitching_SO,
+	pitching_BAOpp,
+	pitching_ERA,
+	pitching_IBB,
+	pitching_WP,
+	pitching_HBP,
+	pitching_BK,
+	pitching_BFP,
+	pitching_GF,
+	pitching_R,
+	pitching_SH,
+	pitching_SF,
+	pitching_GIDP,
+
+	pitching_post_W,
+	pitching_post_L,
+	pitching_post_G,
+	pitching_post_GS,
+	pitching_post_CG,
+	pitching_post_SHO,
+	pitching_post_SV,
+	pitching_post_IPouts,
+	pitching_post_H,
+	pitching_post_ER,
+	pitching_post_HR,
+	pitching_post_BB,
+	pitching_post_SO,
+	pitching_post_BAOpp,
+	pitching_post_ERA,
+	pitching_post_IBB,
+	pitching_post_WP,
+	pitching_post_HBP,
+	pitching_post_BK,
+	pitching_post_BFP,
+	pitching_post_GF,
+	pitching_post_R,
+	pitching_post_SH,
+	pitching_post_SF,
+	pitching_post_GIDP
+into 
+	lahman.dim_pitching
+from 
+	lahman.fact as f,
+	baseball.baseball_main as m
+where 
+	f.playerLahmanId = m.main_playerId and
+	f.teamLahmanId = m.main_teamId and
+	f.year = m.main_yearId
