@@ -3015,7 +3015,6 @@ namespace PanoramicData.view.vis
     {
         public PanoramicDataValue DataValue { get; set; }
         public PanoramicDataValue GroupedDataValue { get; set; }
-        public EnumerableDataSource<PlotItem> DataSource { get; set; }
         public MarkerPointsGraph MarkerPointsGraph { get; set; }
         public Brush Color { get; set; }
         public string Label { get; set; }

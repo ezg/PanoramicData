@@ -2,7 +2,6 @@
 using FarseerPhysics.Common;
 using NetTopologySuite.GeometriesGraph;
 using NetTopologySuite.Index.Bintree;
-using OxyPlot.Reporting;
 using PanoramicDataModel;
 using System;
 using System.Collections.Generic;

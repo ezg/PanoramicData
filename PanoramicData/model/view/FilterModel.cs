@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using InTheHand.Net.Mime;
-using OxyPlot;
 using PanoramicDataModel;
 using System;
 using System.Collections.Generic;

@@ -75,9 +75,6 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Facebook">
-      <HintPath>packages\Facebook.6.0.20\lib\net45\Facebook.dll</HintPath>
-    </Reference>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="GeoAPI">
       <HintPath>..\..\Libs\GeoAPI.dll</HintPath>
@@ -242,12 +239,6 @@
       <DependentUpon>MapFilterRenderer2.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\vis\FilterRendererResources.cs" />
-    <Compile Include="view\vis\HistogramFilterRenderer2.xaml.cs">
-      <DependentUpon>HistogramFilterRenderer2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\PieFilterRenderer2.xaml.cs">
-      <DependentUpon>PieFilterRenderer2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\filter\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
@@ -278,8 +269,6 @@
     <Compile Include="view\other\SliderFeedback.xaml.cs">
       <DependentUpon>SliderFeedback.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\other\CustomDateTimeAxis.cs" />
-    <Compile Include="view\other\CustomLabelAxis.cs" />
     <Compile Include="controller\data\ModelHelpers.cs" />
     <Compile Include="view\utils\NonEmptyStringToVisibleConverter.cs" />
     <Compile Include="view\other\RadialControl.xaml.cs">
@@ -376,14 +365,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="view\vis\MapFilterRenderer2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\HistogramFilterRenderer2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\PieFilterRenderer2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -685,14 +666,6 @@
     <ProjectReference Include="..\starpadLibs\MoveResizeRotate\MoveResizeRotate.csproj">
       <Project>{ef0b4258-89e8-423f-a38d-c1e8af9fd5c3}</Project>
       <Name>MoveResizeRotate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\OxyPlot\OxyPlot.Wpf\OxyPlot.Wpf.csproj">
-      <Project>{698ccd8e-adcc-4565-8517-5edd36f07155}</Project>
-      <Name>OxyPlot.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\OxyPlot\OxyPlot\OxyPlot.csproj">
-      <Project>{7a0b35c0-dd17-4964-8e9a-44d6cecdc692}</Project>
-      <Name>OxyPlot</Name>
     </ProjectReference>
     <ProjectReference Include="..\starpadLibs\Serialization\Serialization.csproj">
       <Project>{af53ff4f-2329-475c-9bcb-007062656e95}</Project>

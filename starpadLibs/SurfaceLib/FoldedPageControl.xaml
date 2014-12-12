@@ -1,6 +1,0 @@
-﻿<UserControl x:Class="starPadSDK.SurfaceLib.FoldedPageControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="30">
-    <Canvas Name="canvas" />
-</UserControl>

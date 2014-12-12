@@ -21,7 +21,6 @@ using PanoramicDataDBConnector;
 using starPadSDK.WPFHelp;
 using starPadSDK.AppLib;
 using PixelLab.Common;
-using OxyPlot.Wpf;
 using Path = System.Windows.Shapes.Path;
 using PanoramicData.view.filter;
 using PanoramicData.view.table;
