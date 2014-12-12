@@ -21,6 +21,7 @@ using starPadSDK.WPFHelp;
 using Matrix = System.Windows.Media.Matrix;
 using PanoramicData.view.physics;
 using PanoramicData.view.filter;
+using PanoramicData.controller.view;
 
 namespace PanoramicData.controller.physics
 {
@@ -98,7 +99,7 @@ namespace PanoramicData.controller.physics
             _world.Step((float) (1.0/60.0));
 
             Matrix matrix = new Matrix();
-            Matrix inqSceneMatrix = (InqScene.RenderTransform as MatrixTransform).Matrix;
+            Matrix inqSceneMatrix = (MainViewController.Instance.InkableScene.RenderTransform as MatrixTransform).Matrix;
             matrix.SetIdentity();
             double scaleFactor = Math.Max(_root.ActualWidth/WPFDebugView.WIDTH, _root.ActualHeight/WPFDebugView.HEIGHT);
             matrix.Scale(scaleFactor, scaleFactor);
@@ -134,11 +135,11 @@ namespace PanoramicData.controller.physics
 
             if (_mouseJoints.Keys.Count == 2)
             {
-                if (_mouseJoints.Keys.ToList()[0].IsDescendantOf(InqScene) &&
-                    _mouseJoints.Keys.ToList()[1].IsDescendantOf(InqScene))
+                if (_mouseJoints.Keys.ToList()[0].IsDescendantOf(MainViewController.Instance.InkableScene) &&
+                    _mouseJoints.Keys.ToList()[1].IsDescendantOf(MainViewController.Instance.InkableScene))
                 {
-                    var b1 = _mouseJoints.Keys.ToList()[0].GetBounds(InqScene).GetPolygon();
-                    var b2 = _mouseJoints.Keys.ToList()[1].GetBounds(InqScene).GetPolygon();
+                    var b1 = _mouseJoints.Keys.ToList()[0].GetBounds(MainViewController.Instance.InkableScene).GetPolygon();
+                    var b2 = _mouseJoints.Keys.ToList()[1].GetBounds(MainViewController.Instance.InkableScene).GetPolygon();
 
                     var dist = b1.Distance(b2);
                     Console.WriteLine(dist);
@@ -150,8 +151,6 @@ namespace PanoramicData.controller.physics
         {
             _root = root;
         }
-
-        public static InqScene InqScene { get; set; }
 
         public static PhysicsController Instance
         {

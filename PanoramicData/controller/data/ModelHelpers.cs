@@ -41,15 +41,9 @@ namespace PanoramicData.controller.data
             for (int i = 0; i < pathInfos.Length; i++)
             {
                 PathInfo pathInfo = pathInfos[i];
-                for (int j = 0; j < fields[i].Length; j++)
-                {
-                    tableModel.AddColumnDescriptor(
+                tableModel.AddColumnDescriptor(
                         new DatabaseColumnDescriptor(
-                            DatabaseManager.GetFieldInfo(
-                                pathInfo.TableInfo.SchemaName,
-                                pathInfo.TableInfo.Name,
-                                fields[i][j]), pathInfo));
-                }
+                            pathInfo.TableInfo.PrimaryKeyFieldInfo, pathInfo));
             }
 
             return tableModel;

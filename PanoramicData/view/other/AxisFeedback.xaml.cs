@@ -90,7 +90,7 @@ namespace PanoramicData.view.other
                 {
                     Pt currentPos = this.TranslatePoint(new Point(0, 0), _inqScene);
 
-                    FilterHolder filter = new FilterHolder(_inqScene);
+                    FilterHolder filter = new FilterHolder();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(
                         (PanoramicDataColumnDescriptor)xColumnDescriptor,
                         (PanoramicDataColumnDescriptor)yColumnDescriptor,
@@ -117,7 +117,7 @@ namespace PanoramicData.view.other
                 {
                     Pt currentPos = this.TranslatePoint(new Point(0, 0), _inqScene);
 
-                    FilterHolder filter = new FilterHolder(_inqScene);
+                    FilterHolder filter = new FilterHolder();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefaultPie(
                         (PanoramicDataColumnDescriptor)yColumnDescriptor.Clone(),
                         yTableModel);

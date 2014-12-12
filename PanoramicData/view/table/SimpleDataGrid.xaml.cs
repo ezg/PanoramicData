@@ -659,7 +659,7 @@ namespace PanoramicData.view.table
 
                     MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == header.Column).First();
 
-                    _twoFingerExploreFeedback = new FilterHolder(inqScene);
+                    _twoFingerExploreFeedback = new FilterHolder();
                     FilterHolderViewModel filterHolderViewModel =
                         FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel,
                         FilterRendererType.Plot);
@@ -1166,7 +1166,7 @@ namespace PanoramicData.view.table
                 MappingEntry map = maps.First();
                 InqScene inqScene = this.FindParent<InqScene>();
 
-                _explorerFeedback = new FilterHolder(inqScene);
+                _explorerFeedback = new FilterHolder();
                 _explorerFeedbackColumnDescriptor = map.ColumnDescriptor;
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
                 filterHolderViewModel.Temporary = true;

@@ -53,7 +53,7 @@ namespace PanoramicData.view.filter
         private void OnLeftFilterHolderViewModelChanged(DependencyPropertyChangedEventArgs args)
         {
             left.Children.Clear();
-            FilterHolder filter = new FilterHolder(_inqScene);
+            FilterHolder filter = new FilterHolder();
             filter.Width = FILTER_SMALL_WIDTH;
             filter.Height = FILTER_SMALL_HEIGHT;
             FilterHolderViewModel model = args.NewValue as FilterHolderViewModel;
@@ -88,7 +88,7 @@ namespace PanoramicData.view.filter
         private void OnRightFilterHolderViewModelChanged(DependencyPropertyChangedEventArgs args)
         {
             right.Children.Clear();
-            FilterHolder filter = new FilterHolder(_inqScene);
+            FilterHolder filter = new FilterHolder();
             filter.Width = FILTER_SMALL_WIDTH;
             filter.Height = FILTER_SMALL_HEIGHT;
             FilterHolderViewModel model = args.NewValue as FilterHolderViewModel;
@@ -147,7 +147,7 @@ namespace PanoramicData.view.filter
                 //_filterHolderViewModel.AddXColumnDescriptor(LeftFilterHolderViewModel.YColumnDescriptors[0]);
                 //_filterHolderViewModel.AddYColumnDescriptor(RightFilterHolderViewModel.YColumnDescriptors[0]);
 
-                _centerFilterHolder = new FilterHolder(_inqScene);
+                _centerFilterHolder = new FilterHolder();
                 Vec pos = (LeftFilterHolderViewModel.Center.GetVec() + RightFilterHolderViewModel.Center.GetVec()) / 2.0;
                 Vec size = (LeftFilterHolderViewModel.Dimension + RightFilterHolderViewModel.Dimension) / 2.0;
 

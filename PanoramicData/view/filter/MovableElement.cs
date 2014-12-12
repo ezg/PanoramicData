@@ -10,6 +10,7 @@ using DiagramDesigner;
 using starPadSDK.Geom;
 using starPadSDK.WPFHelp;
 using PanoramicData.controller.physics;
+using PanoramicData.controller.view;
 
 namespace PanoramicData.view.filter
 {
@@ -39,7 +40,7 @@ namespace PanoramicData.view.filter
             this.SetDimension(dim);
 
             PhysicsController.Instance.AddPhysicalObject(this);
-            PhysicsController.InqScene.AddNoUndo(this);
+            MainViewController.Instance.InkableScene.Add(this);
         }
 
         public virtual void SetPosition(Pt pos)

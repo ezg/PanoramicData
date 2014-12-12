@@ -31,7 +31,7 @@ namespace PanoramicData.view.schema
     {
         public static event EventHandler<DatabaseTableEventArgs> DatabaseTableDropped;
 
-        public FilterModel FilterModel { get; set; }
+        public TableModel TableModel { get; set; }
 
         private Point _treeViewStartDrag = new Point(0, 0);
         private Border _treeViewShadow = null;
@@ -47,32 +47,30 @@ namespace PanoramicData.view.schema
             return tree.Items.Count;
         }
 
-        public void InitTree(FilterModel filterModel)
+        public void InitTree(TableModel tableModel)
         {
-            FilterModel = filterModel;
+            TableModel = tableModel;
             tree.Items.Clear();
 
-            DatabaseRootOrgItem databaseRoot = new DatabaseRootOrgItem(FilterModel, "Tables");
+            DatabaseRootOrgItem databaseRoot = new DatabaseRootOrgItem(TableModel, "Tables");
             TreeViewItem item = new TreeViewItem();
             item.Header = databaseRoot;
             item.HeaderTemplate = FindResource("DatabaseRootTemplate") as DataTemplate;
             item.Items.Add(null);
             tree.Items.Add(item);
 
-            if (FilterModel.TableModel.NamedFilterModels.Count > 0)
+            if (TableModel.NamedFilterModels.Count > 0)
             {
-                CustomFieldsRootOrgItem customFieldsRoot = new CustomFieldsRootOrgItem(FilterModel.TableModel,
-                    "Custom Groups");
+                CustomFieldsRootOrgItem customFieldsRoot = new CustomFieldsRootOrgItem(TableModel, "Custom Groups");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
                 item.HeaderTemplate = FindResource("CustomFieldsRootTemplate") as DataTemplate;
                 item.Items.Add(null);
                 tree.Items.Add(item);
             }
-            if (FilterModel.TableModel.CalculatedColumnDescriptorInfos.Count > 0)
+            if (TableModel.CalculatedColumnDescriptorInfos.Count > 0)
             {
-                CaclculatedFieldsRootOrgItem customFieldsRoot = new CaclculatedFieldsRootOrgItem(FilterModel.TableModel,
-                    "Caclculated Fields");
+                CaclculatedFieldsRootOrgItem customFieldsRoot = new CaclculatedFieldsRootOrgItem(TableModel, "Caclculated Fields");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
                 item.HeaderTemplate = FindResource("CalculatedFieldsRootTemplate") as DataTemplate;
@@ -115,7 +113,7 @@ namespace PanoramicData.view.schema
                         DataTemplate template = new DataTemplate();
                         FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, FilterModel);
+                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
@@ -132,7 +130,7 @@ namespace PanoramicData.view.schema
                         DataTemplate template = new DataTemplate();
                         FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, FilterModel);
+                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
@@ -150,7 +148,7 @@ namespace PanoramicData.view.schema
                         DataTemplate template = new DataTemplate();
                         FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, FilterModel);
+                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
                         tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
@@ -244,7 +242,7 @@ namespace PanoramicData.view.schema
                     {
                         Rct bounds = _treeViewShadow.GetBounds(inqScene);
                         DatabaseTableDropped(this, new DatabaseTableEventArgs(bounds,
-                            FilterModel.TableModel, FilterModel, true));
+                            TableModel, null, true));
                     }
 
                     inqScene.Rem(_treeViewShadow);
@@ -266,7 +264,7 @@ namespace PanoramicData.view.schema
                 Point fromInqScene = e.GetTouchPoint(inqScene).Position;
 
                 Vec v = _treeViewStartDrag - fromInqScene;
-                List<PathInfo> pathInfos = FilterModel.TableModel.CalculateRecursivePathInfos();
+                List<PathInfo> pathInfos = TableModel.CalculateRecursivePathInfos();
                 if (v.Length > 10 && _treeViewShadow == null &&
                     pathInfos.Count > 1)
                 {

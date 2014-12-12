@@ -33,38 +33,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Column="1" Name="recommendDisplayOuterGrid" Visibility="Collapsed" Background="White">
-                    <Border BorderBrush="{Binding Brush}" BorderThickness="0, 2, 2, 2" Grid.RowSpan="1" Grid.Row="0"
-                            Margin="0,0,0,0"
-                        Name="recommendDisplayBorder">
-                        <Grid 
-                            Margin="{Binding Margin}"
-                            Grid.Row="1" 
-                            Name="recommendDisplayGrid"
-                            HorizontalAlignment="Right">
-                        </Grid>
-                    </Border>
-                </Grid>
-
-                <Grid Grid.Column="1" Margin="0,0,0,0" Name="treeViewOuterGrid" Visibility="Collapsed" Background="White">
-                    <!--"<Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>-->
-                    <Border BorderBrush="{Binding Brush}" BorderThickness="0, 2, 2, 2" Name="treeViewDisplayBorder">
-                        <Grid>
-                            <util:ColumnTreeView x:Name="tree" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
-                            
-                            <Canvas 
-                                Name="plusCanvas"
-                                Background="{Binding Brush}" Width="28" Height="28"
-                                   HorizontalAlignment="Right" VerticalAlignment="Top">
-                                <Line X1="5" X2="23" Y1="14" Y2="14" Stroke="White" StrokeThickness="3"/>
-                                <Line X1="14" X2="14" Y1="5" Y2="23" Stroke="White" StrokeThickness="3"/>
-                            </Canvas>
-                        </Grid>
-                    </Border>
-                </Grid>
-
                 <Grid Column="0">
                     <Border 
                             Name="headerBorder" 
@@ -84,63 +52,6 @@
                                 Name="headerGrid" 
                                 Row="0" 
                                 Margin="-1">
-
-                                <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    
-                                    <Grid 
-                                        Grid.Column="0"
-                                        Margin="0,0,5,0"
-                                        Name="recommendGrid"
-                                        Background="#01ffffff"
-                                        Width="20" Height="20">
-                                        <Canvas Width="20" Height="20">
-                                            <Path Name="starPath" Fill="White" Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0">
-                                                <Path.LayoutTransform>
-                                                    <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
-                                                </Path.LayoutTransform>
-                                            </Path>
-                                        </Canvas>
-                                    </Grid>
-
-                                    <Grid
-                                        Grid.Column="1"
-                                        Name="expandGrid"
-                                        Visibility="Collapsed"
-                                        Margin="5,1,0,0" Background="#01ffffff">
-                                        <Canvas Name="expandCanvas" Width="20" Height="20">
-                                            <Polygon Points="0,9 18,0, 18,18" RenderTransformOrigin="0.5, 0.5">
-                                                <Polygon.Fill>
-                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                                                        <GradientStop Color="White" Offset="0.6"/>
-                                                        <GradientStop Color="White" Offset="0.6"/>
-                                                        <GradientStop Color="White" Offset="0.8"/>
-                                                    </LinearGradientBrush>
-                                                </Polygon.Fill>
-                                                <Polygon.RenderTransform>
-                                                    <ScaleTransform ScaleX="-0.9" ScaleY="0.9" />
-                                                </Polygon.RenderTransform>
-                                            </Polygon>
-                                        </Canvas>
-                                        <Canvas Name="collapseCanvas" Width="20" Height="20" Visibility="Hidden">
-                                            <Polygon Points="0,9 18,0, 18,18" RenderTransformOrigin="0.5, 0.5">
-                                                <Polygon.Fill>
-                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                                                        <GradientStop Color="White" Offset="0.6"/>
-                                                        <GradientStop Color="White" Offset="0.6"/>
-                                                        <GradientStop Color="White" Offset="0.8"/>
-                                                    </LinearGradientBrush>
-                                                </Polygon.Fill>
-                                                <Polygon.RenderTransform>
-                                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
-                                                </Polygon.RenderTransform>
-                                            </Polygon>
-                                        </Canvas>
-                                    </Grid>
-                                </Grid>
 
                                 <Label Margin="0,0,0,0"
                                    HorizontalAlignment="Center"

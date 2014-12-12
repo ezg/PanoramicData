@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PanoramicData.view.menu.SlideMenuItem"
+﻿<UserControl x:Class="PanoramicData.view.menu.SlideMenuItemTemplate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -30,6 +30,6 @@
                 Grid.Column="0"
                 Grid.Row="1"
                 FontWeight="Bold"
-                Content=""/>
+                Content="{Binding Name}"/>
     </Grid>
 </UserControl>

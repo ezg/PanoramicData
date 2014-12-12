@@ -20,6 +20,9 @@ using PanoramicData.model.view;
 using PanoramicData.view.other;
 using PanoramicData.view.math;
 using PanoramicData.view.filter;
+using System.Reactive.Linq;
+using PanoramicDataModel;
+using PanoramicData.controller.view;
 
 namespace PanoramicData.view.schema
 {
@@ -32,19 +35,7 @@ namespace PanoramicData.view.schema
         private Point _current1 = new Point();
         private TouchDevice _dragDevice1 = null;
         private Delegate _outsidePointDelegate = null;
-
-        private FilterModel _filterModel = null;
-        public FilterModel FilterModel
-        {
-            get
-            {
-                return _filterModel;
-            }
-            set
-            {
-                _filterModel = value;
-            }
-        }
+        private IDisposable _tableModelDisposable = null;
 
         public SchemaViewer()
         {
@@ -54,11 +45,55 @@ namespace PanoramicData.view.schema
             plusCanvas.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(plusCanvas_TouchDownEvent));
             _outsidePointDelegate = new EventHandler<TouchEventArgs>(PointOutsideDownEvent);
             Application.Current.MainWindow.AddHandler(FrameworkElement.TouchDownEvent, _outsidePointDelegate, true);
+
+            this.DataContextChanged += SchemaViewer_DataContextChanged;
+        }
+
+        void SchemaViewer_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != null)
+            {
+                (e.OldValue as SchemaViewModel).PropertyChanged -= SchemaViewer_PropertyChanged;
+                if (_tableModelDisposable != null)
+                {
+                    _tableModelDisposable.Dispose();
+                }
+            }
+            if (e.NewValue != null)
+            {
+                SchemaViewModel model = (e.NewValue as SchemaViewModel);
+                model.PropertyChanged += SchemaViewer_PropertyChanged;                
+                
+                _tableModelDisposable = Observable.FromEventPattern<TableModelUpdatedEventArgs>(
+                    model.TableModel, "TableModelUpdated")
+                    .Where(
+                        arg =>
+                            arg.EventArgs != null && arg.EventArgs.Mode != UpdatedMode.UI &&
+                            arg.EventArgs.Mode != UpdatedMode.FilteredItemsStatus)
+                    .Throttle(TimeSpan.FromMilliseconds(50))
+                    .Subscribe((arg) =>
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
+                        {
+                            if (arg.EventArgs.Mode == UpdatedMode.Database)
+                            {
+                                this.updateRendering();
+                            }
+                        }));
+                    });
+                
+                this.updateRendering();
+            }
         }
         
-        public void Init()
+        void SchemaViewer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            tree.InitTree(_filterModel);
+            this.updateRendering();
+        }
+
+        private void updateRendering()
+        {
+            tree.InitTree((DataContext as SchemaViewModel).TableModel);
         }
 
         void PointOutsideDownEvent(Object sender, TouchEventArgs e)
@@ -71,7 +106,7 @@ namespace PanoramicData.view.schema
 
         void plusCanvas_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            /*InqScene inqScene = this.FindParent<InqScene>();
             Point fromInqScene = e.GetTouchPoint(inqScene).Position;
 
             CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo = new CalculatedColumnDescriptorInfo();
@@ -89,7 +124,7 @@ namespace PanoramicData.view.schema
             if (inqScene != null)
             {
                 //inqScene.Rem(this);
-            }
+            }*/
         }
 
         void headerGrid_TouchDownEvent(Object sender, TouchEventArgs e)
@@ -97,11 +132,10 @@ namespace PanoramicData.view.schema
             if (_dragDevice1 == null)
             {
                 e.Handled = true;
-                InqScene inqScene = this.FindParent<InqScene>();
 
                 e.TouchDevice.Capture(headerGrid);
-                _startDrag1 = e.GetTouchPoint(inqScene).Position;
-                _current1 = e.GetTouchPoint(inqScene).Position;
+                _startDrag1 = e.GetTouchPoint((IInputElement)this.Parent).Position;
+                _current1 = e.GetTouchPoint((IInputElement)this.Parent).Position;
 
                 headerGrid.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(headerGrid_TouchMoveEvent));
                 headerGrid.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(headerGrid_TouchUpEvent));
@@ -126,19 +160,18 @@ namespace PanoramicData.view.schema
         {
             if (e.TouchDevice == _dragDevice1)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point curDrag = e.GetTouchPoint(inqScene).Position;
+                Point curDrag = e.GetTouchPoint((IInputElement)this.Parent).Position;
 
                 Vector vec = curDrag - _startDrag1;
                 Point dragDelta = new Point(vec.X, vec.Y);
 
                 _startDrag1 = curDrag;
-                _current1 = e.GetTouchPoint(inqScene).Position;
+                _current1 = curDrag;
                 e.Handled = true;
 
-                // notify content if needed
-                TranslateTransform tt = this.RenderTransform as TranslateTransform;
-                this.RenderTransform = new TranslateTransform(tt.X + dragDelta.X, tt.Y + dragDelta.Y);
+                (DataContext as SchemaViewModel).Position = new Point(
+                    (DataContext as SchemaViewModel).Position.X + dragDelta.X,
+                    (DataContext as SchemaViewModel).Position.Y + dragDelta.Y);
             }
         }
 
@@ -150,11 +183,10 @@ namespace PanoramicData.view.schema
             if (_dragDevice1 == null)
             {
                 e.Handled = true;
-                InqScene inqScene = this.FindParent<InqScene>();
-
+                
                 e.TouchDevice.Capture(resizeGrid);
-                _startDrag1 = e.GetTouchPoint(inqScene).Position;
-                _current1 = e.GetTouchPoint(inqScene).Position;
+                _startDrag1 = e.GetTouchPoint((IInputElement)this.Parent).Position;
+                _current1 = e.GetTouchPoint((IInputElement)this.Parent).Position;
 
                 resizeGrid.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(resizeGrid_TouchMoveEvent));
                 resizeGrid.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(resizeGrid_TouchUpEvent));
@@ -176,21 +208,24 @@ namespace PanoramicData.view.schema
 
         void resizeGrid_TouchMoveEvent(object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point curDrag = e.GetTouchPoint(inqScene).Position;
+            Point curDrag = e.GetTouchPoint((IInputElement)this.Parent).Position;
 
             if (e.TouchDevice == _dragDevice1)
             {
-                Vec currentSize = new Vec(this.Width, this.Height);
+                Vec currentSize = (DataContext as SchemaViewModel).Size;
                 Vec currentMinSize = new Vec(100, 100);
                 Vec vec = curDrag - _startDrag1;
                 Point dragDelta = new Point(vec.X, vec.Y);
 
                 _startDrag1 = curDrag;
-                _current1 = e.GetTouchPoint(inqScene).Position;
+                _current1 = e.GetTouchPoint((IInputElement)this.Parent).Position;
                 e.Handled = true;
 
                 Vec newSize = new Vec(currentSize.X + dragDelta.X, currentSize.Y + dragDelta.Y);
+
+                (DataContext as SchemaViewModel).Size = new Vec(
+                    Math.Max(newSize.X, currentMinSize.X),
+                    Math.Max(newSize.Y, currentMinSize.Y));
 
                 this.Width = Math.Max(newSize.X, currentMinSize.X);
                 this.Height = Math.Max(newSize.Y, currentMinSize.Y);

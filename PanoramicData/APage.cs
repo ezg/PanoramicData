@@ -101,7 +101,7 @@ namespace PanoramicData
             _schemaViewer.Width = 190;
             _schemaViewer.Height = 425;
         }
-
+        /*
         public void ClearSchemaViewer()
         {
             _schemaViewer.FilterModel.TableModel.Clear();
@@ -140,7 +140,7 @@ namespace PanoramicData
                 _schemaViewer.Init();
             }
         }
-
+        */
         public void ClearInput()
         {
             _dragDevice1 = null;

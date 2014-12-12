@@ -171,7 +171,7 @@ namespace PanoramicData.model.view
         public List<PathInfo> CalculateRecursivePathInfos()
         {
             List<PathInfo> pathInfos = new List<PathInfo>();
-            PanoramicDataGroupDescriptor groupDescriptor = this.ColumnDescriptors.Keys.First();
+             PanoramicDataGroupDescriptor groupDescriptor = this.ColumnDescriptors.Keys.First();
             if (groupDescriptor is PathInfo)
             {
                 PathInfo pi = groupDescriptor as PathInfo;

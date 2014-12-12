@@ -134,7 +134,7 @@ namespace PanoramicData
                 if (startElements.Count == 0 && endElements[0] is FilterHolder)
                 {
                     endModel = ((FilterHolder)endElements[0]).FilterHolderViewModel;
-                    FilterHolder filter = new FilterHolder(_can);
+                    FilterHolder filter = new FilterHolder();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(endModel, true, false);
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();
@@ -145,7 +145,7 @@ namespace PanoramicData
                 else if (endElements.Count == 0 && startElements[0] is FilterHolder)
                 {
                     startModel = ((FilterHolder)startElements[0]).FilterHolderViewModel;
-                    FilterHolder filter = new FilterHolder(_can);
+                    FilterHolder filter = new FilterHolder();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(startModel, true, false);
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();

@@ -5,7 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:util="clr-namespace:PanoramicData.view.schema"
              mc:Ignorable="d" 
+             Width="{Binding Size.X}" Height="{Binding Size.Y}"
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.RenderTransform>
+        <TranslateTransform X="{Binding Position.X}" Y="{Binding Position.Y}"/>
+    </UserControl.RenderTransform>
+
     <Grid Name="mainGrid">
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Grid.Loaded">

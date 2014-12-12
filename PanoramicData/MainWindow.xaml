@@ -6,19 +6,14 @@
     xmlns:PanoramicData="clr-namespace:PanoramicData"
     xmlns:menu="clr-namespace:PanoramicData.view.menu"
     xmlns:inq="clr-namespace:PanoramicData.view.inq"
-    xmlns:controls="http://schemas.taloware.com.au/wpf/controls"
+    xmlns:utils="clr-namespace:PanoramicData.utils"
     Title="PanoramicData"
-    
-    WindowState="Maximized"
-    WindowStyle="None"
     x:Class="PanoramicData.MainWindow"
     KeyDown="layoutRoot_KeyDown"
     MouseWheel="Window_MouseWheel"
     mc:Ignorable="d"
     SizeChanged="Window_SizeChanged_1">
-
-    <!--
-    -->
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,131 +22,74 @@
                 <ResourceDictionary Source="filter/style/FilterStyle.xaml" />
                 <ResourceDictionary Source="filter/style/ScrollBarStyle.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        
-        
+        </ResourceDictionary>       
     </Window.Resources>
 
     <Grid>
-        <controls:DialogPresenter x:Name="DialogPresenter">
-            <Grid Name="mainGrid">
-                <!--<Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush StartPoint="0.0, 0.0" EndPoint="0.0, 1.0">
-                            <GradientStop Color="#ffffff" Offset="0.0" />
-                            <GradientStop Color="#ffffff" Offset="0.4" />
-                            <GradientStop Color="#dddddd" Offset="0.8" />
-                            <GradientStop Color="#bbbbbb" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>-->
+        <Grid.Resources>
+            <utils:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        </Grid.Resources>
+        <Grid Name="mainGrid">
 
-                <Canvas x:Name="layoutRoot" Width="Auto" Height="Auto" Visibility="Visible">
-                    <PanoramicData:APage 
+            <Canvas x:Name="layoutRoot" Width="Auto" Height="Auto" Visibility="Visible">
+                <!--<PanoramicData:APage 
                         x:Name="aPage" 
                         Width="1" Height="1" Canvas.Top="-25000" Canvas.Left="-25000"
                         Background="#ffd5d5d5"
-                        IsDraggable="True"/>
+                        IsDraggable="True"/>-->
 
-                    <inq:InkableScene 
+                <inq:InkableScene 
                         x:Name="inkableScene" 
                         Width="50000" Height="50000" Canvas.Top="-25000" Canvas.Left="-25000"
                         Background="#ffd5d5d5"/>
-                    <!--Background="#ffbdc0c6"-->
 
-                    <menu:SlideMenu x:Name="slideMenu" Visibility="Hidden"/>
-                </Canvas>
+                <menu:SlideMenu x:Name="slideMenu" Visibility="Hidden"/>
+            </Canvas>
 
-                <Grid Name="errorGrid" 
-                      Visibility="Collapsed"
-                      Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                    <TextBlock 
+            <Grid Name="errorGrid" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <Grid.Visibility>
+                    <Binding Converter="{StaticResource StringToVisibilityConverter}" Path="ErrorMessage"/>
+                </Grid.Visibility>
+                
+                <TextBlock 
                         Name="errorMsg"
                         HorizontalAlignment="Left"
-                        Text="ERROR" Foreground="Red" FontWeight="Bold" FontSize="14"/>
-                </Grid>
-                
-                <Image Name="mic" Source="Resources/mic.png" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5">
-                    <Image.Triggers>
-                        <EventTrigger RoutedEvent="Polygon.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                            Storyboard.TargetName="mic" 
-                            Storyboard.TargetProperty="Opacity"
-                            From="1.0" To="0.5" Duration="0:0:0.5" 
-                            AutoReverse="True" RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Image.Triggers>
-                </Image>
+                        Text="{Binding ErrorMessage}" Foreground="Red" FontWeight="Bold" FontSize="14"/>
+            </Grid>
 
-                <Canvas>
-                    <Grid 
-                        Name="upGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Image 
+            <Canvas>
+                <Grid Name="upGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image 
                             Grid.Column="3"
                             Grid.Row="0"
                             Source="Resources/up.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Ellipse 
+                    <Ellipse 
                             Grid.Column="3"
                             Grid.Row="0"
                             Width="50" Height="50" Stroke="Black" StrokeThickness="3"/>
-                        <Label 
+                    <Label 
                             HorizontalAlignment="Center"
                             Grid.Column="0"
                             Grid.Row="1"
                             FontWeight="Bold"
                             Content="Show Menu"/>
-                        <Rectangle 
+                    <Rectangle 
                             Name="up"
                             Grid.Column="3"
                             Grid.RowSpan="2"
                             Grid.Row="0"
                             Fill="#01ffffff"/>
-                    </Grid>
-                </Canvas>
-
-                <Grid Name="debugGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="X Table Segmentation Threshold:"/>
-                    <Slider Width="100" Grid.Row="0" Minimum="0" Maximum="200" Grid.Column="1" Name="xSlider" AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" TickFrequency="1" VerticalAlignment="Center"/>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Y Table Segmentation Threshold:"/>
-                    <Slider Width="100" Grid.Row="1" Minimum="0" Maximum="200" Grid.Column="1" Name="ySlider" AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" TickFrequency="1" VerticalAlignment="Center"/>
-
-                    <Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Left">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Button Name="btnClose" Content="Close" Click="btnClose_Click_1"/>
-                    </Grid>
-
                 </Grid>
-            </Grid>
-        </controls:DialogPresenter>
+            </Canvas>
+        </Grid>
     </Grid>
-
 </Window>
 
 

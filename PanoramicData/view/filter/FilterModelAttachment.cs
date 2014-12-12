@@ -17,12 +17,12 @@ using PanoramicData.model.view;
 using PanoramicData.utils.inq;
 using CombinedInputAPI;
 using System.Windows.Input;
+using PanoramicData.controller.view;
 
 namespace PanoramicData.view.filter
 {
     public class FilterModelAttachment : UserControl, GeometryElement, StroqListener
     {
-        private InqScene _inqScene = null;
         private List<IDisposable> _sourceDisposables = new List<IDisposable>();
         private IDisposable _destinationDisposable = null;
         private double _attachmentRectHalfSize = 15;
@@ -83,9 +83,8 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public FilterModelAttachment(InqScene inqScene, FilteringType filteringType)
+        public FilterModelAttachment(FilteringType filteringType)
         {
-            _inqScene = inqScene;
             _sources.CollectionChanged += _sources_CollectionChanged;
             _filteringType = filteringType;
             this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(TouchDownEvent));
@@ -564,7 +563,7 @@ namespace PanoramicData.view.filter
 
         void TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            IPoint p = e.GetTouchPoint(_inqScene).Position.GetVec().GetCoord().GetPoint();
+            IPoint p = e.GetTouchPoint(MainViewController.Instance.InkableScene).Position.GetVec().GetCoord().GetPoint();
 
             foreach (var filterModel in _filterModelIconGeometries.Keys)
             {
@@ -612,7 +611,7 @@ namespace PanoramicData.view.filter
                     _destination.RemoveIncomingFilter(filterModel, _filteringType);
                 }
             }
-            _inqScene.Rem(s, false);   
+            MainViewController.Instance.InkableScene.Remove(s);   
         }
 
         public void NotifyStroqAdded(starPadSDK.Inq.Stroq s)
@@ -643,7 +642,7 @@ namespace PanoramicData.view.filter
                     }
                 }
             }
-            _inqScene.Rem(s, false);    
+            MainViewController.Instance.InkableScene.Remove(s);   
         }
 
         public void NotifyStroqRemoved(starPadSDK.Inq.Stroq s)

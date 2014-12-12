@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PanoramicData.view.menu"
              mc:Ignorable="d" 
              Height="100"
              d:DesignHeight="100" d:DesignWidth="1400">
@@ -10,12 +11,25 @@
         <Rectangle Fill="#ffd5d5d5"/>
         <Rectangle Fill="#ff333b48" Height="1" VerticalAlignment="Top"/>
 
-        <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
-               FontSize="40"/>
+        <StackPanel Orientation="Horizontal" Visibility="Visible" HorizontalAlignment="Right">
+            <ItemsControl 
+                ItemsSource="{Binding DatasetConfigurations}"
+                Name="propertySliderItemsControl"
+                HorizontalAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:SlideMenuItemTemplate TouchDown="SlideMenuItemTemplate_TouchDown"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Name="contentPanel"  Margin="10">
-
-
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+                
+            <StackPanel Name="contentPanel" Orientation="Horizontal"/>
         </StackPanel>
     </Grid>
 </UserControl>

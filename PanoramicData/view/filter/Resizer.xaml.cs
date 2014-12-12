@@ -38,8 +38,6 @@ namespace PanoramicData.view.filter
         private Grid _contentGrid = null;
         private Grid _dotGrid = null;
         private Grid _optionGrid = null;
-        private Grid _recommendGrid = null;
-        private Grid _recommendDisplayGrid = null;
         private TextBlock _lblRowCount = null;
 
         private Grouper _grouper = null;
@@ -47,15 +45,6 @@ namespace PanoramicData.view.filter
         private Styler _styler = null;
         
         private RowDefinition _headerRowDefinition = null;
-
-        private Grid _treeViewOuterGrid = null;
-        private ColumnTreeView _tree = null;
-        private Grid _recommendDisplayOuterGrid = null;
-
-        private Grid _expandGrid = null;
-        private Canvas _expandCanvas = null;
-        private Canvas _collapseCanvas = null;
-        private Canvas _plusCanvas = null;
 
         private Grid _frontGrid = null;
         private Canvas _backCanvas = null;
@@ -135,27 +124,6 @@ namespace PanoramicData.view.filter
                                  (arg.EventArgs.Sender != this || arg.EventArgs.Sender == null)))
                             {
                                 init();
-                            }
-                        }));
-                    });
-
-                _tableModelDisposable = Observable.FromEventPattern<TableModelUpdatedEventArgs>(
-                    ((FilterModel)args.NewValue).TableModel, "TableModelUpdated")
-                    .Where(
-                        arg =>
-                            arg.EventArgs != null && arg.EventArgs.Mode != UpdatedMode.UI &&
-                            arg.EventArgs.Mode != UpdatedMode.FilteredItemsStatus)
-                    .Throttle(TimeSpan.FromMilliseconds(50))
-                    .Subscribe((arg) =>
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
-                        {
-                            if (arg.EventArgs.Mode == UpdatedMode.Database)
-                            {
-                                if (_tree != null)
-                                {
-                                    _tree.InitTree(FilterModel);
-                                }
                             }
                         }));
                     });
@@ -254,15 +222,6 @@ namespace PanoramicData.view.filter
             _contentGrid = (Grid) GetTemplateChild("contentGrid");
             _dotGrid = (Grid) GetTemplateChild("dotGrid");
             _optionGrid = (Grid)GetTemplateChild("optionGrid");
-            _expandGrid = (Grid) GetTemplateChild("expandGrid");
-            _expandCanvas = (Canvas) GetTemplateChild("expandCanvas");
-            _plusCanvas = (Canvas)GetTemplateChild("plusCanvas");
-            _collapseCanvas = (Canvas) GetTemplateChild("collapseCanvas");
-            _treeViewOuterGrid = (Grid) GetTemplateChild("treeViewOuterGrid");
-            _tree = (ColumnTreeView)GetTemplateChild("tree");
-            _recommendGrid = (Grid) GetTemplateChild("recommendGrid");
-            _recommendDisplayGrid = (Grid) GetTemplateChild("recommendDisplayGrid");
-            _recommendDisplayOuterGrid = (Grid) GetTemplateChild("recommendDisplayOuterGrid");
             _frontGrid = (Grid) GetTemplateChild("frontGrid");
             _backCanvas = (Canvas) GetTemplateChild("backCanvas");
             _headerRowDefinition = (RowDefinition) GetTemplateChild("headerRowDefinition");
@@ -274,7 +233,6 @@ namespace PanoramicData.view.filter
             if (!_isFront || !_showToggle)
             {
                 ((Grid)GetTemplateChild("frontGrid")).Visibility = Visibility.Hidden;
-                _recommendGrid.Visibility = Visibility.Hidden;
             }
             if (_isFront || !_showToggle)
             {
@@ -288,14 +246,12 @@ namespace PanoramicData.view.filter
             else
             {
                 _dotGrid.Visibility = Visibility.Collapsed;
-                _recommendGrid.Visibility = Visibility.Collapsed;
             }
 
             _headerGrid.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(headerGrid_TouchDownEvent));
             _resizeGrid.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(resizeGrid_TouchDownEvent));
             _dotGrid.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(dotGrid_TouchDownEvent));
             _optionGrid.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(optionGrid_TouchDownEvent));
-            _expandGrid.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(expandGrid_TouchDownEvent));
 
             if (Properties.Settings.Default.PanoramicDataEnableStable)
             {
@@ -305,9 +261,6 @@ namespace PanoramicData.view.filter
                 _resizeGrid.RenderTransformOrigin = new Point(1,1);
                 _resizeGrid.RenderTransform = new ScaleTransform(s, s);
 
-                _expandGrid.RenderTransformOrigin = new Point(1, 0.5);
-                _expandGrid.RenderTransform = new ScaleTransform(s, s);
-
                 _optionGrid.RenderTransformOrigin = new Point(0, 0.5);
                 _optionGrid.RenderTransform = new ScaleTransform(s, s);
 
@@ -315,19 +268,6 @@ namespace PanoramicData.view.filter
 
                 ((Label)GetTemplateChild("lblLabel")).FontSize = Properties.Settings.Default.PanoramicDataStableLabelFontSize;
             }
-
-            if (Properties.Settings.Default.PanoramicDataEnableCalculatedFields)
-            {
-                _plusCanvas.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(plusCanvas_TouchDownEvent));
-            }
-            else
-            {
-                _plusCanvas.Visibility = Visibility.Collapsed;
-            }
-
-
-            // always hide recommmendation grid for now
-            _recommendGrid.Visibility = Visibility.Collapsed;
 
             init();
         }
@@ -352,10 +292,6 @@ namespace PanoramicData.view.filter
 
         private void init()
         {
-            if (_tree != null && _tree.ItemsCount() == 0)
-            {
-                _tree.InitTree(FilterModel);
-            }
             if (_grouper != null)
             {
                 _grouper.FilterModel = FilterModel;
@@ -389,8 +325,6 @@ namespace PanoramicData.view.filter
                 (FilterModel.FilterRendererType == FilterRendererType.Pivot || FilterModel.FilterRendererType == FilterRendererType.Frozen))
             {
                 _headerBorder.CornerRadius = new CornerRadius(20, 20, 0, 0);
-                _recommendGrid.Visibility = Visibility.Hidden;
-                _expandGrid.Visibility = Visibility.Hidden;
                 _optionGrid.Visibility = Visibility.Collapsed;
                 _dotGrid.Visibility = Visibility.Collapsed;
             }
@@ -460,84 +394,6 @@ namespace PanoramicData.view.filter
                 };
                 _lblRowCount.SetBinding(TextBlock.TextProperty, binding);
             }
-        }
-
-
-        private void expandGrid_TouchDownEvent(Object sender, TouchEventArgs e)
-        {
-            e.Handled = true;
-            _expandGrid.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(expandGrid_TouchMoveEvent));
-            _expandGrid.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(expandGrid_TouchUpEvent));
-        }
-
-        private void expandGrid_TouchUpEvent(Object sender, TouchEventArgs e)
-        {
-            e.Handled = true;
-            _expandGrid.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(expandGrid_TouchMoveEvent));
-            _expandGrid.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(expandGrid_TouchUpEvent));
-
-            if (!_isTreeViewPanelAnimationRunning)
-            {
-                _isTreeViewPanelAnimationRunning = true;
-                _treeViewOuterGrid.Visibility = Visibility.Visible;
-                _recommendDisplayOuterGrid.Visibility = Visibility.Collapsed;
-
-                MovableElement movableParent = this.FindParent<MovableElement>();
-
-                DoubleAnimation animation1 = new DoubleAnimation();
-                animation1.Duration = TimeSpan.FromSeconds(0.6).Duration();
-                animation1.From = _isTreeViewPanelOut ? 185 : 0;
-                animation1.To = _isTreeViewPanelOut ? 0 : 185;
-                animation1.EasingFunction = new QuinticEase();
-
-                DoubleAnimation animation2 = new DoubleAnimation();
-                animation2.Duration = TimeSpan.FromSeconds(0.6).Duration();
-                animation2.From = movableParent.GetSize().X;
-                animation2.To = _isRecommendationPanelOut
-                    ? movableParent.GetSize().X
-                    : (_isTreeViewPanelOut ? movableParent.GetSize().X - 185 : movableParent.GetSize().X + 185);
-                _isRecommendationPanelOut = false;
-                animation2.EasingFunction = new QuinticEase();
-
-                _treeViewPanelStoryBoard = new Storyboard();
-                _treeViewPanelStoryBoard.Children.Add(animation1);
-                _treeViewPanelStoryBoard.Children.Add(animation2);
-
-                Storyboard.SetTarget(animation1, _treeViewOuterGrid);
-                Storyboard.SetTargetProperty(animation1, new PropertyPath(Grid.WidthProperty));
-
-                Storyboard.SetTarget(animation2, this);
-                Storyboard.SetTargetProperty(animation2, new PropertyPath(Resizer.WidthAnimationProperty));
-
-                if (!_isTreeViewPanelOut)
-                {
-                    _expandCanvas.Visibility = Visibility.Hidden;
-                    _collapseCanvas.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    _expandCanvas.Visibility = Visibility.Visible;
-                    _collapseCanvas.Visibility = Visibility.Hidden;
-                }
-
-                _treeViewPanelStoryBoard.Completed += (o, args) =>
-                {
-                    _isTreeViewPanelAnimationRunning = false;
-                    _isTreeViewPanelOut = !_isTreeViewPanelOut;
-
-                    if (!_isTreeViewPanelOut)
-                    {
-                        _treeViewOuterGrid.Visibility = Visibility.Collapsed;
-                    }
-                };
-
-                _treeViewPanelStoryBoard.Begin();
-            }
-        }
-
-        private void expandGrid_TouchMoveEvent(Object sender, TouchEventArgs e)
-        {
-
         }
 
         void dotGrid_TouchDownEvent(Object sender, TouchEventArgs e)

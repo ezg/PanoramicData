@@ -57,11 +57,7 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_noChrome != value)
-                {
-                    _noChrome = value;
-                    OnPropertyChanged("NoChrome");
-                }
+                this.SetProperty(ref _noChrome, value);
             }
         }
 

@@ -13,6 +13,7 @@ using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.view.vis;
 using PanoramicData.view.table;
+using PanoramicData.controller.view;
 
 namespace PanoramicData.view.filter
 {
@@ -23,7 +24,6 @@ namespace PanoramicData.view.filter
 
         private Resizer _front = new Resizer(true);
         private Resizer _back = new Resizer(false);
-        private InqScene _inqScene = null;
         private bool _isFrontShown = true;
         private IDisposable _filterModelDisposable = null;
 
@@ -70,18 +70,17 @@ namespace PanoramicData.view.filter
             init(null);
         }
 
-        public FilterHolder(InqScene inqScene)
+        public FilterHolder()
         {
             InitializeComponent();
-            _inqScene = inqScene;
             this.Type = MovableElementType.Rect;
             this.HasEnclosedAnchor = false;
 
-            _filterAttachment = new FilterModelAttachment(_inqScene, FilteringType.Filter);
-            _inqScene.AddNoUndoBack(_filterAttachment);
+            _filterAttachment = new FilterModelAttachment(FilteringType.Filter);
+            MainViewController.Instance.InkableScene.Add(_filterAttachment);
 
-            _brushAttachment = new FilterModelAttachment(_inqScene, FilteringType.Brush);
-            _inqScene.AddNoUndoBack(_brushAttachment);
+            _brushAttachment = new FilterModelAttachment(FilteringType.Brush);
+            MainViewController.Instance.InkableScene.Add(_brushAttachment);
         }
 
         ~FilterHolder()
@@ -173,7 +172,7 @@ namespace PanoramicData.view.filter
                     (_front.Content as Front).SetContent(fRenderer);
                     _front.ShowToggle = false;
                     _front.CreateBitmapForInteractions = false;
-                    _inqScene.Rem(_brushAttachment);
+                    MainViewController.Instance.InkableScene.Remove(_brushAttachment);
                 }
                 else if (FilterHolderViewModel.FilterRendererType == FilterRendererType.Slider)
                 {

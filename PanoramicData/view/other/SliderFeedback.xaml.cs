@@ -53,7 +53,7 @@ namespace PanoramicData.view.other
             {
                 if (this.GetBounds(inqScene).IntersectsWith(e.Bounds))
                 {
-                    FilterHolder filter = new FilterHolder(_inqScene);
+                    FilterHolder filter = new FilterHolder();
                     Rct bounds = inkPresenter.Strokes[0].GetBounds();
                     bounds = bounds.Inflate(60, 60);
                     Pt currentPos = this.TranslatePoint(new Point(0, 0), _inqScene);

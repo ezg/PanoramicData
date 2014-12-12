@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PanoramicData.view.menu
 {
     /// <summary>
-    /// Interaction logic for SlideMenuItem.xaml
+    /// Interaction logic for SlideMenuItemTemplate.xaml
     /// </summary>
-    public partial class SlideMenuItem : UserControl
+    public partial class SlideMenuItemTemplate : UserControl
     {
-        public SlideMenuItem()
+        public SlideMenuItemTemplate()
         {
             InitializeComponent();
         }

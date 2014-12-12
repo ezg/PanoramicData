@@ -12,10 +12,11 @@ using starPadSDK.Inq;
 using System.Windows.Controls;
 using PanoramicData.controller.data;
 using PanoramicData.view.filter;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace PanoramicData.model.view
 {
-    public class FilterModel : ViewModelBase
+    public class FilterModel : BindableBase
     {
         private static int _nextColorId = 0;
         /*public static Color[] COLORS = new Color[] {
@@ -34,7 +35,7 @@ namespace PanoramicData.model.view
             Color.FromRgb(102, 51, 102),
             Color.FromRgb(153, 153, 204),
             Color.FromRgb(204, 204, 204),
-            Color.FromRgb(102, 153, 153),
+            Color.FromRgb(1 , 153, 153),
             Color.FromRgb(204, 204, 102),
             Color.FromRgb(204, 102, 0),
             Color.FromRgb(153, 153, 255),
@@ -141,11 +142,7 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_rowCount != value)
-                {
-                    _rowCount = value;
-                    OnPropertyChanged("RowCount");
-                }
+                this.SetProperty(ref _rowCount, value);
             }
         }
 
@@ -158,11 +155,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_filterRendererType != value)
+                this.SetProperty(ref _filterRendererType, value);
+                /*if (_filterRendererType != value)
                 {
                     _filterRendererType = value;
                     fireFilterUpdated(UpdatedMode.UI, SubUpdatedMode.RenderStyle);
-                }
+                }*/
             }
         }
 
@@ -254,11 +252,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_temporary != value)
+                this.SetProperty(ref _temporary, value);
+                /*if (_temporary != value)
                 {
                     _temporary = value;
                     fireFilterUpdated(UpdatedMode.UI);
-                }
+                }*/
             }
         }
 
@@ -271,12 +270,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_label != value)
+                this.SetProperty(ref _label, value);
+                /*if (_label != value)
                 {
                     _label = value;
                     fireFilterUpdated(UpdatedMode.UI);
-                    OnPropertyChanged("Label");
-                }
+                }*/
             }
         }
 
@@ -290,11 +289,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_hasFilteredItems != value)
+                this.SetProperty(ref _hasFilteredItems, value);
+                /*if (_hasFilteredItems != value)
                 {
                     _hasFilteredItems = value;
                     fireFilterUpdated(UpdatedMode.FilteredItemsStatus);
-                }
+                }*/
             }
         }
 
@@ -307,11 +307,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_selected != value)
+                this.SetProperty(ref _selected, value);
+                /*if (_selected != value)
                 {
                     _selected = value;
                     fireFilterUpdated(UpdatedMode.UI);
-                }
+                }*/
             }
         }
 
@@ -324,11 +325,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_margin != value)
+                this.SetProperty(ref _margin, value);
+                /*if (_margin != value)
                 {
                     _margin = value;
                     OnPropertyChanged("Margin");
-                }
+                }*/
             }
         }
 
@@ -343,11 +345,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_brush != value)
+                this.SetProperty(ref _brush, value);
+                /*if (_brush != value)
                 {
                     _brush = value;
                     OnPropertyChanged("Brush");
-                }
+                }*/
             }
         }
 
@@ -360,14 +363,17 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_color != value)
+                this.SetProperty(ref _color, value);
+                Brush = new SolidColorBrush(_color);
+                FaintBrush = new SolidColorBrush(Color.FromArgb(90, Color.R, Color.G, Color.B));
+                /*if (_color != value)
                 {
                     _color = value;
                     Brush = new SolidColorBrush(_color);
                     FaintBrush = new SolidColorBrush(Color.FromArgb(90, Color.R, Color.G, Color.B));
                     OnPropertyChanged("Color");
                     fireFilterUpdated(UpdatedMode.UI, SubUpdatedMode.Color);
-                }
+                }*/
             }
         }
 
@@ -380,11 +386,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_faintBrush != value)
+                this.SetProperty(ref _faintBrush, value);
+                /*if (_faintBrush != value)
                 {
                     _faintBrush = value;
                     OnPropertyChanged("FaintBrush");
-                }
+                }*/
             }
         }
 
@@ -397,11 +404,12 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_nameStroqs != value)
+                this.SetProperty(ref _nameStroqs, value);
+                /*if (_nameStroqs != value)
                 {
                     _nameStroqs = value;
                     OnPropertyChanged("NameStroqs");
-                }
+                }*/
             }
         }
 
@@ -416,11 +424,16 @@ namespace PanoramicData.model.view
             {
                 if (_name != value)
                 {
+                    TableModel.UpdateNamedFilterModel(this);
+                }
+                this.SetProperty(ref _name, value);
+                /*if (_name != value)
+                {
                     _name = value;
                     OnPropertyChanged("Name");
                     TableModel.UpdateNamedFilterModel(this);
                     fireFilterUpdated(UpdatedMode.FilteredItemsChange);
-                }
+                }*/
             }
         }
 
@@ -1152,7 +1165,7 @@ namespace PanoramicData.model.view
         }
     }
 
-    public class Pivot : ViewModelBase
+    public class Pivot : BindableBase
     {
         private string _label = "";
         public string Label
@@ -1163,11 +1176,7 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_label != value)
-                {
-                    _label = value;
-                    OnPropertyChanged("Label");
-                }
+                this.SetProperty(ref _label, value);
             }
         }
 
@@ -1180,11 +1189,7 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_selected != value)
-                {
-                    _selected = value;
-                    OnPropertyChanged("Selected");
-                }
+                this.SetProperty(ref _selected, value);
             }
         }
 
@@ -1197,11 +1202,7 @@ namespace PanoramicData.model.view
             }
             set
             {
-                if (_columnDescriptor != value)
-                {
-                    _columnDescriptor = value;
-                    OnPropertyChanged("ColumnDescriptor");
-                }
+                this.SetProperty(ref _columnDescriptor, value);
             }
         }
     }

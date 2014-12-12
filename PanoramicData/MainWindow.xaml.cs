@@ -33,6 +33,9 @@ using PanoramicData.controller.physics;
 using PanoramicData.Properties;
 using PanoramicData.utils;
 using CombinedInputAPI;
+using PanoramicData.controller.view;
+using starPadSDK.AppLib;
+using System.Diagnostics;
 
 namespace PanoramicData
 {
@@ -41,64 +44,53 @@ namespace PanoramicData
     /// </summary>
     public partial class MainWindow : Window
     {
-        // unused static fields to load assemblies in the begining
-        // instead of when they are actually used the first time.
-        private static InqAnalyzer ia = new InqAnalyzer();
+        private Point _startDrag1 = new Point();
+        private Point _startDrag2 = new Point();
+
+        private Point _current1 = new Point();
+        private Point _current2 = new Point();
+        private double length = 0.0;
+
+        private TouchDevice _dragDevice1 = null;
+        private TouchDevice _dragDevice2 = null;
+
+        private Stopwatch _lastTapTimer = new Stopwatch();
+        private Stopwatch _upTimer = new Stopwatch();
+
         private bool _renderTouchPoints = false;
         private Dictionary<TouchDevice, FrameworkElement> _deviceRenderings = new Dictionary<TouchDevice, FrameworkElement>();
-
-        List<DependencyObject> _columnHeaderEventHandlerHitTestResults = new List<DependencyObject>();
-
-        private bool _animationRunning = false;
-
-        public static MainWindow CurrentInstance = null;
+        private bool _isSlideMenuAnimationRunning = false;
 
         public MainWindow()
         {
-            //Thread.Sleep(1000);
             InitializeComponent();
 
             MouseTouchDevice.RegisterEvents(this);
 
-            CurrentInstance = this;
+            // init view controller
+            MainViewController.CreateInstance(inkableScene, this);
+            DataContext = MainViewController.Instance.MainModel;
 
+            if (Settings.Default.RenderFingers)
+            {
+                this.Cursor = Cursors.None;
+            }
+            
+            // init view titanic dataset;
+            loadTitanicData();
+            //loadHuaData();
+            
             layoutRoot.PreviewTouchDown += layoutRoot_PreviewTouchDown;
             layoutRoot.PreviewTouchMove += layoutRoot_PreviewTouchMove;
             layoutRoot.PreviewTouchUp += layoutRoot_PreviewTouchUp;
+
+            inkableScene.TouchDown += inkableScene_TouchDownEvent;
 
             up.TouchDown += up_TouchDown;
             slideMenu.Down += slideMenu_Down;
             slideMenu.Exit += slideMenu_Exit;
             slideMenu.Clear += slideMenu_Clear;
             slideMenu.Center += slideMenu_Center;
-            slideMenu.Export += slideMenu_Export;
-            slideMenu.NBA += nba_DBSearch;
-            slideMenu.Census += census_DBSearch;
-            slideMenu.CSFaculty += csFaculty_DBSearch;
-            slideMenu.Basball += baseball_DBSearch;
-            slideMenu.Titanic += titanic_DBSearch;
-            slideMenu.Hua1 += hua1_DBSearch;
-            slideMenu.Hua2 += hua2_DBSearch;
-
-            SimpleGridViewColumnHeader.Dropped += SimpleGridViewColumnHeader_Dropped;
-            SimpleGridViewColumnHeader.Moved += SimpleGridViewColumnHeader_Moved;
-            ResizerRadialControlExecution.Dropped += ResizerRadialControlExecution_Dropped;
-            ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
-            Colorer.ColorerDropped += ColorerDropped;
-            DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
-
-            //_speechRecognizer.Activated += _speechRecognizer_Activated;
-            //_speechRecognizer.Deactivated += _speechRecognizer_Deactivated;
-            //_speechRecognizer.Start();
-
-            //FilterManager.Instance.Initialize(aPage);
-
-            debugGrid.Visibility = Visibility.Hidden;
-            mic.Visibility = Visibility.Hidden;
-
-            // init view titanic dataset;
-            loadTitanicData();
-            //loadHuaData();
 
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             Loaded += MainWindow_Loaded;
@@ -107,29 +99,12 @@ namespace PanoramicData
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PhysicsController.SetRootCanvas(mainGrid);
-            PhysicsController.InqScene = this.aPage;
             var d = PhysicsController.Instance; // dummy first call 
         }
 
         void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
             ResourceManager.WriteToFile();
-        }
-
-        void DatabaseManager_ErrorMessageChanged(object sender, string e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
-            {
-                if (e == "")
-                {
-                    errorGrid.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    errorGrid.Visibility = Visibility.Visible;
-                    errorMsg.Text = "Failure in connecting to Database Server:" + " \n=>" + e;
-                }
-            }));
         }
         
         void layoutRoot_PreviewTouchUp(object sender, TouchEventArgs e)
@@ -190,253 +165,156 @@ namespace PanoramicData
             }
         }
 
+
+        void inkableScene_TouchDownEvent(Object sender, TouchEventArgs e)
+        {
+            if ((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus)
+                return;
+
+
+            /*var elements = new List<FrameworkElement>(this.GetIntersectedElements(new Rct(e.GetTouchPoint(this).Position, new Vec(1, 1))).Where((t) => t is
+                FrameworkElement).Select((t) => t as FrameworkElement));
+
+            if (elements.Count > 0)
+                return;
+            */
+            if (_dragDevice1 == null)
+            {
+                _upTimer.Restart();
+                e.Handled = true;
+                e.TouchDevice.Capture(this);
+                _startDrag1 = e.GetTouchPoint((FrameworkElement)this.Parent).Position;
+                _current1 = e.GetTouchPoint((FrameworkElement)this).Position;
+
+                this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchMoveEvent));
+                this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchUpEvent));
+                _dragDevice1 = e.TouchDevice;
+            }
+            else if (_dragDevice2 == null)
+            {
+                e.Handled = true;
+                e.TouchDevice.Capture(this);
+                _dragDevice2 = e.TouchDevice;
+                _current2 = e.GetTouchPoint((FrameworkElement)this).Position;
+            }
+        }
+
+        void inkableScene_TouchUpEvent(object sender, TouchEventArgs e)
+        {
+            if (e.TouchDevice == _dragDevice1)
+            {
+                e.Handled = true;
+                e.TouchDevice.Capture(null);
+                _dragDevice1 = null;
+                length = 0.0;
+
+                if (_dragDevice2 != null)
+                {
+                    _dragDevice1 = _dragDevice2;
+                    _startDrag1 = _startDrag2;
+                    _dragDevice2 = null;
+                }
+                else
+                {
+                    this.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchMoveEvent));
+                    this.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchUpEvent));
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(_upTimer.ElapsedMilliseconds);
+                Console.WriteLine(_lastTapTimer.ElapsedMilliseconds);
+                if (_upTimer.ElapsedMilliseconds < 200 && _lastTapTimer.ElapsedMilliseconds != 0 &&
+                    _lastTapTimer.ElapsedMilliseconds < 300)
+                {
+                    Pt pos = e.GetTouchPoint(inkableScene).Position;
+                    /*_schemaViewer.RenderTransform = new TranslateTransform(
+                        pos.X - _schemaViewer.Width / 2.0,
+                        pos.Y - _schemaViewer.Height / 2.0);
+                    this.AddNoUndo(_schemaViewer);
+                    this.UpdateLayout();
+                    Console.WriteLine((pos));
+                    Console.WriteLine(this.TranslatePoint(pos, _schemaViewer));*/
+                    MainViewController.Instance.ShowSchemaViewer(pos);
+                }
+
+
+                _upTimer.Stop();
+                _lastTapTimer.Restart();
+            }
+            else if (e.TouchDevice == _dragDevice2)
+            {
+                e.Handled = true;
+                e.TouchDevice.Capture(null);
+                _dragDevice2 = null;
+                length = 0.0;
+            }
+
+        }
+
+        void inkableScene_TouchMoveEvent(object sender, TouchEventArgs e)
+        {
+            Point curDrag = e.GetTouchPoint((FrameworkElement)this.Parent).Position;
+
+            if (e.TouchDevice == _dragDevice1)
+            {
+                if (_dragDevice2 == null)
+                {
+                    Vector dragBy = curDrag - _startDrag1;
+                    inkableScene.RenderTransform = new MatrixTransform(((Mat)inkableScene.RenderTransform.Value) * Mat.Translate(dragBy));
+                }
+                _startDrag1 = curDrag;
+                _current1 = e.GetTouchPoint((FrameworkElement)this).Position;
+                e.Handled = true;
+            }
+            else if (e.TouchDevice == _dragDevice2)
+            {
+                _startDrag2 = curDrag;
+                _current2 = e.GetTouchPoint((FrameworkElement)this).Position;
+                e.Handled = true;
+            }
+
+            if (_dragDevice1 != null && _dragDevice2 != null)
+            {
+                double newLength = (_current1.GetVec() - _current2.GetVec()).Length;
+                if (length != 0.0)
+                {
+                    Vector scalePos = (_current1.GetVec() + _current2.GetVec()) / 2.0;
+                    double scale = newLength / length;
+
+                    Matrix m1 = this.RenderTransform.Value;
+                    m1.ScaleAtPrepend(scale, scale, scalePos.X, scalePos.Y);
+
+                    inkableScene.RenderTransform = new MatrixTransform(m1);
+                }
+                length = newLength;
+            }
+        }
+
         protected override void OnManipulationBoundaryFeedback(ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
         }
-
-        void _speechRecognizer_Deactivated(object sender, EventArgs e)
-        {
-            mic.Visibility = Visibility.Hidden;
-        }
-
-        void _speechRecognizer_Activated(object sender, EventArgs e)
-        {
-            mic.Visibility = Visibility.Visible;
-        }
-
-        private HitTestResultBehavior columnHeaderEventHandlerHitTestResult(HitTestResult result)
-        {
-            if (result.VisualHit is ColumnHeaderEventHandler)
-            {
-                _columnHeaderEventHandlerHitTestResults.Add(result.VisualHit);
-            }
-            return HitTestResultBehavior.Continue;
-        }
-
-        private HitTestFilterBehavior columnHeaderEventHandlerHitTestFilter(DependencyObject o)
-        {
-            if (o.GetType() == typeof(ColumnHeaderEventHandler))
-            {
-                return HitTestFilterBehavior.ContinueSkipChildren;
-            }
-            else if (o.GetType() == typeof(Plot))
-            {
-                return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
-            }
-            else if (o.GetType() == typeof(Plotter))
-            {
-                return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
-            } 
-            else
-            {
-                return HitTestFilterBehavior.Continue;
-            }
-        }
-
-        void SimpleGridViewColumnHeader_Moved(object sender, ColumnHeaderEventArgs e)
-        {
-            _columnHeaderEventHandlerHitTestResults.Clear();
-
-            RectangleGeometry rectGeo = new RectangleGeometry(e.Bounds);
-
-            VisualTreeHelper.HitTest(aPage,
-                new HitTestFilterCallback(columnHeaderEventHandlerHitTestFilter),
-                new HitTestResultCallback(columnHeaderEventHandlerHitTestResult),
-                new GeometryHitTestParameters(rectGeo));
-
-            var orderderHits = _columnHeaderEventHandlerHitTestResults.Select(dep => dep as FrameworkElement)
-                .OrderBy(fe => (fe.GetBounds(aPage).Center.GetVec() - e.Bounds.Center.GetVec()).LengthSquared).ToList();
-
-            foreach (var element in aPage.VisualDescendentsOfType<FrameworkElement>())
-            {
-                if (element is ColumnHeaderEventHandler)
-                {
-                    (element as ColumnHeaderEventHandler).ColumnHeaderMoved(
-                        sender as SimpleGridViewColumnHeader, e,
-                        _columnHeaderEventHandlerHitTestResults.Count > 0 ? orderderHits[0] == element : false);
-                }
-            }
-        }
-
-        void SimpleGridViewColumnHeader_Dropped(object sender, ColumnHeaderEventArgs e)
-        {
-            _columnHeaderEventHandlerHitTestResults.Clear();
-
-            RectangleGeometry rectGeo = new RectangleGeometry(e.Bounds);
-
-            VisualTreeHelper.HitTest(aPage,
-                new HitTestFilterCallback(columnHeaderEventHandlerHitTestFilter),
-                new HitTestResultCallback(columnHeaderEventHandlerHitTestResult),
-                new GeometryHitTestParameters(rectGeo));
-
-            PanoramicDataColumnDescriptor columnDescriptor = e.ColumnDescriptor;
-            double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-            double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
-            Pt position = e.Bounds.Center;
-            position.X -= width / 2.0;
-            position.Y -= height / 2.0;
-            TableModel tableModel = e.TableModel;
-            if (tableModel == null)
-            {
-                if (e.FilterModel == null)
-                {
-                    return;
-                }
-                tableModel = e.FilterModel.TableModel;
-            }
-
-            if (_columnHeaderEventHandlerHitTestResults.Count > 0)
-            {
-                var orderderHits = _columnHeaderEventHandlerHitTestResults.Select(dep => dep as FrameworkElement)
-                    .OrderBy(dep => dep is ColumnTreeView)
-                    .ThenBy(fe => (fe.GetBounds(aPage).Center.GetVec() - e.Bounds.Center.GetVec()).LengthSquared).ToList();
-
-                (orderderHits[0] as ColumnHeaderEventHandler).ColumnHeaderDropped(
-                    sender as SimpleGridViewColumnHeader, e);
-            }
-            else
-            {
-                FilterHolder filter = new FilterHolder(aPage);
-                FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(columnDescriptor, tableModel);
-                filterHolderViewModel.Center = new Point();
-                if (e.LinkFromFilterModel != null)
-                {
-                    filterHolderViewModel.AddIncomingFilter(e.LinkFromFilterModel, FilteringType.Filter);
-                }
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(width, height));
-            }
-        }
-
-        private void ColorerDropped(object sender, DatabaseTableEventArgs e)
-        {
-            _columnHeaderEventHandlerHitTestResults.Clear();
-
-            RectangleGeometry rectGeo = new RectangleGeometry(e.Bounds);
-
-            VisualTreeHelper.HitTest(aPage,
-                new HitTestFilterCallback(columnHeaderEventHandlerHitTestFilter),
-                new HitTestResultCallback(columnHeaderEventHandlerHitTestResult),
-                new GeometryHitTestParameters(rectGeo));
-
-            if (_columnHeaderEventHandlerHitTestResults.Count == 0)
-            {
-                double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
-                Pt position = e.Bounds.Center;
-                position.X -= width / 2.0;
-                position.Y -= height / 2.0;
-
-                TableModel tableModel = e.TableModel;
-
-                FilterHolder filter = new FilterHolder(aPage);
-                FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
-                filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
-                filterHolderViewModel.TableModel = tableModel;
-
-                foreach (var colorCd in e.FilterModel.GetColumnDescriptorsForOption(Option.ColorBy))
-                {
-                    filterHolderViewModel.AddOptionColumnDescriptor(Option.X, (PanoramicDataColumnDescriptor)colorCd.SimpleClone());
-                }
-                foreach (var colorCd in e.FilterModel.GetColumnDescriptorsForOption(Option.ColorBy))
-                {
-                    var cd = (PanoramicDataColumnDescriptor)colorCd.Clone();
-                    cd.IsGrouped = true;
-                    filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, cd);
-                }
-
-                filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0,
-                    position.Y + FilterHolder.HEIGHT / 2.0);
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
-
-                filterHolderViewModel.Color = e.FilterModel.Color;
-                e.FilterModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
-            }
-        }
-
-        void Resizer_DatabaseTableDropped(object sender, DatabaseTableEventArgs e)
-        {
-            _columnHeaderEventHandlerHitTestResults.Clear();
-           
-            RectangleGeometry rectGeo = new RectangleGeometry(e.Bounds);
-
-            VisualTreeHelper.HitTest(aPage,
-                new HitTestFilterCallback(columnHeaderEventHandlerHitTestFilter),
-                new HitTestResultCallback(columnHeaderEventHandlerHitTestResult),
-                new GeometryHitTestParameters(rectGeo));
-
-            if (_columnHeaderEventHandlerHitTestResults.Count == 0)
-            {
-                double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
-                Pt position = e.Bounds.Center;
-                position.X -= width / 2.0;
-                position.Y -= height / 2.0;
-
-                TableModel tableModel = e.TableModel;
-
-                FilterHolder filter = new FilterHolder(aPage);
-                FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
-                filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
-                filterHolderViewModel.TableModel = tableModel;
-
-
-                PanoramicDataGroupDescriptor groupDescriptor = tableModel.ColumnDescriptors.Keys.First();
-                if (groupDescriptor is PathInfo)
-                {
-                    PathInfo pi = groupDescriptor as PathInfo;
-                    TableInfo root = pi.TableInfo;
-                    if (pi.Path.Count > 0)
-                    {
-                        root = pi.Path.First().FromTableInfo;
-                    }
-                    List<PathInfo> pathInfos = tableModel.CalculateRecursivePathInfos();
-
-                    foreach (var pp in pathInfos)
-                    {
-                        if (pp.Path.Count > 0)
-                        {
-                            Pivot p = new Pivot();
-                            p.Label = pp.GetLabel();
-                            p.Selected = false;
-                            p.ColumnDescriptor = new DatabaseColumnDescriptor(pp.TableInfo.PrimaryKeyFieldInfo, pp);
-                            filterHolderViewModel.AddPivot(p, this);
-                        }
-                    }
-
-                    filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH/2.0,
-                        position.Y + FilterHolder.HEIGHT/2.0);
-                    filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
-                }
-            }
-        }
-
-        void ResizerRadialControlExecution_Dropped(object sender, ColumnHeaderEventArgs e)
-        {
-            if (e.Command == ColumnHeaderEventArgsCommand.Copy)
-            {
-                FilterHolder filter = new FilterHolder(aPage);
-                FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(e.FilterModel);
-                filterHolderViewModel.Center = new Point();
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));
-            }
-            else if (e.Command == ColumnHeaderEventArgsCommand.Snapshot)
-            {
-                FilterHolder filter = new FilterHolder(aPage);
-                filter.FilterHolderViewModel = (FilterHolderViewModel) e.FilterModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));
-            }
-        }
-
+        
         private void layoutRoot_KeyDown(object sender, KeyEventArgs e)
         {
             if (!Properties.Settings.Default.PanoramicDataEnableKeyboardShortcuts)
             {
                 return;
+            }
+            if (e.Key == Key.F11)
+            {
+                if (WindowState == WindowState.Normal)
+                {
+                    WindowStyle = WindowStyle.None;
+                    WindowState = WindowState.Maximized;
+                    ResizeMode = ResizeMode.NoResize;
+                }
+                else if (WindowState == WindowState.Maximized)
+                {
+                    WindowStyle = WindowStyle.SingleBorderWindow;
+                    WindowState = WindowState.Normal;
+                    ResizeMode = ResizeMode.CanResize;
+                }
             }
 
             if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
@@ -445,7 +323,7 @@ namespace PanoramicData
             }
             if (Key.Z == e.Key)
             {
-                aPage.Background = Brushes.White;
+                MainViewController.Instance.InkableScene.Background = Brushes.White;
             }
             if (Key.D == e.Key)
             {
@@ -506,9 +384,9 @@ namespace PanoramicData
             }
             if (Key.P == e.Key)
             {
-                Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(100, 100), aPage);
+                Pt position = this.TranslatePoint(new Point(100, 100), MainViewController.Instance.InkableScene);
 
-                FilterHolder filter = new FilterHolder(aPage);
+                FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
                
@@ -524,176 +402,176 @@ namespace PanoramicData
 
         private void loadTitanicData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("titanic", "passenger");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("titanic", "passenger");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] {playerPath},
                 new string[][] {new string[] {"name", "passenger_class", "survived", "sex", "age", "home"}});
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadHua1Data()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua", "subject_sessions");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua", "subject_sessions");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "block", "trial" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadHua2Data()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua2", "within_subject_pairs");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua2", "within_subject_pairs");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "block", "trial" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadCoffeeData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("coffee", "coffee_sales");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("coffee", "coffee_sales");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "sales_date", "sales", "profit" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             // filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadCensusData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("census", "census");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("census", "census");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "age", "education", "martial_status" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadFacultyData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("faculty", "cs_faculty");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("faculty", "cs_faculty");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "Rank" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadBaseballData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("lahman", "fact");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("lahman", "fact");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "year" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         private void loadTipData()
         {
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("tip", "tip");
+            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("tip", "tip");
             //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
             //    new string[][] { new string[] { "weight", "weight" } });
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
                 new string[][] { new string[] { "tip", "total_bill", "percentage" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(300, 400), aPage);
+            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
             filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
             filter.FilterHolderViewModel = filterHolderViewModel;
 
             //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
 
         public void loadNbaData()
         {
-            PathInfo gameLogPath = ModelHelpers.GeneratePathInfo("nba", "game_log");
+            /*PathInfo gameLogPath = ModelHelpers.GeneratePathInfo("nba", "game_log");
             PathInfo playerPath = ModelHelpers.GeneratePathInfo("nba", "game_log", "player");
             PathInfo teamPath = ModelHelpers.GeneratePathInfo("nba", "game_log", "team");
             TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { gameLogPath, playerPath },
                 new string[][] { new string[] { "pts", "mp" }, new string[] { "name" } });
 
-            Pt position = MainWindow.CurrentInstance.TranslatePoint(new Point(100, 100), aPage);
+            Pt position = this.TranslatePoint(new Point(100, 100), MainViewController.Instance.InkableScene);
 
-            FilterHolder filter = new FilterHolder(aPage);
+            FilterHolder filter = new FilterHolder();
             FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
 
             //filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
@@ -702,12 +580,12 @@ namespace PanoramicData
 
             //filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
 
-            aPage.SetSchemaViewerFilterModel(filterHolderViewModel);
+            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         void up_TouchDown(object sender, TouchEventArgs e)
         {
-            if (!_animationRunning)
+            if (!_isSlideMenuAnimationRunning)
             {
                 upGrid.RenderTransform = new TranslateTransform(this.ActualWidth - 95, this.ActualHeight - 90);
                 slideMenu.Visibility = Visibility.Visible;
@@ -745,23 +623,23 @@ namespace PanoramicData
                 {
                     upGrid.Visibility = Visibility.Hidden;
                     slideMenu.ShowMenu();
-                    _animationRunning = false;
+                    _isSlideMenuAnimationRunning = false;
                 };
 
-                _animationRunning = true;
+                _isSlideMenuAnimationRunning = true;
                 storyBoard.Begin(this);
             }
         }
 
         void slideMenu_Center(object sender, EventArgs e)
         {
-            aPage.RenderTransform = new MatrixTransform(Matrix.Identity);
-            aPage.ClearInput();
+            MainViewController.Instance.InkableScene.RenderTransform = new MatrixTransform(Matrix.Identity);
+            //MainViewController.Instance.InkableScene.ClearInput();
         }
 
         void slideMenu_Clear(object sender, EventArgs e)
         {
-            aPage.Clear();
+            //MainViewController.Instance.InkableScene.Clear();
             GC.Collect();
             //aPage.ClearSchemaViewer();
         }
@@ -771,93 +649,9 @@ namespace PanoramicData
             Application.Current.Shutdown();
         }
 
-        void titanic_DBSearch(object sender, EventArgs e)
-        {
-            loadTitanicData();
-        }
-
-        void nba_DBSearch(object sender, EventArgs e)
-        {
-            loadNbaData();
-        }
-
-        void hua1_DBSearch(object sender, EventArgs e)
-        {
-            loadHua1Data();
-        }
-
-        void hua2_DBSearch(object sender, EventArgs e)
-        {
-            loadHua2Data();
-        }
-
-        private void csFaculty_DBSearch(object sender, EventArgs e)
-        {
-            loadFacultyData();
-        }
-
-        void census_DBSearch(object sender, EventArgs e)
-        {
-            loadCensusData();
-        }
-
-        void baseball_DBSearch(object sender, EventArgs e)
-        {
-            loadBaseballData();
-        }
-
-        void slideMenu_Export(object sender, EventArgs e)
-        {
-            System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            saveFileDialog1.Filter = "PowerPoint |*.pptx";
-            saveFileDialog1.Title = "Export as PowerPoint";
-            saveFileDialog1.ShowDialog();
-
-            // If the file name is not an empty string open it for saving.
-            if (saveFileDialog1.FileName != "")
-            {
-                // filter stuff (e.g., out of bounds) and calculate scale factor
-                Pt p1 = MainWindow.CurrentInstance.TranslatePoint(new Point(0, 0), aPage);
-                Pt p2 = MainWindow.CurrentInstance.TranslatePoint(new Point(MainWindow.CurrentInstance.ActualWidth, MainWindow.CurrentInstance.ActualHeight), aPage);
-
-                Rct viewPointRct = new Rct(p1, p2);
-                GeoAPI.Geometries.IGeometry geom = viewPointRct.GetPolygon();
-
-                List<Serialization.Model> models = new List<Serialization.Model>();
-
-                foreach (var elem in aPage.Elements)
-                {
-                    List<Pt> pts = new List<Pt>();
-                    pts.Add(elem.TranslatePoint(new System.Windows.Point(0, 0), aPage));
-                    pts.Add(elem.TranslatePoint(new System.Windows.Point(elem.ActualWidth, 0), aPage));
-                    pts.Add(elem.TranslatePoint(new System.Windows.Point(elem.ActualWidth, elem.ActualHeight), aPage));
-                    pts.Add(elem.TranslatePoint(new System.Windows.Point(0, elem.ActualHeight), aPage));
-                   
-                    // check if the element is visible
-                    if (geom.Intersects(pts.GetPolygon()) && (elem is Serialization.Serializable))
-                    {
-                        models.Add((elem as Serialization.Serializable).GetModel());
-                    }
-                }
-
-                try
-                {
-                    Serialization.Serializer.ExportToPowerPoint(
-                        saveFileDialog1.FileName,
-                        @"C:\Temp\test.pptx",
-                        viewPointRct,
-                        models);
-                }
-                catch (Serialization.SerializationException se)
-                {
-                    MessageBox.Show(se.Message);
-                }
-            }
-        }
-
         void slideMenu_Down(object sender, EventArgs e)
         {
-            if (!_animationRunning)
+            if (!_isSlideMenuAnimationRunning)
             {
                 upGrid.Visibility = Visibility.Visible;
                 slideMenu.RenderTransform = new TranslateTransform(0, this.ActualHeight - slideMenu.Height - 10);
@@ -893,83 +687,26 @@ namespace PanoramicData
                 storyBoard.Completed += (object sender1, EventArgs e1) =>
                 {
                     slideMenu.Visibility = Visibility.Hidden;
-                    _animationRunning = false;
+                    _isSlideMenuAnimationRunning = false;
                 };
 
-                _animationRunning = true;
+                _isSlideMenuAnimationRunning = true;
                 storyBoard.Begin(this);
             }
         }
 
-        private string createImageFromWindow()
-        {
-            // Save current canvas transform
-            Transform transform = aPage.LayoutTransform;
-
-            // reset current transform (in case it is scaled or rotated)
-            this.LayoutTransform = null;
-
-            // hide stuff
-            Visibility slideMenuVis = slideMenu.Visibility;
-            slideMenu.Visibility = Visibility.Hidden;
-            Visibility upGridVis = upGrid.Visibility;
-            upGrid.Visibility = Visibility.Hidden;
-
-
-            // Get the size of canvas
-            Size size = new Size(this.Width, this.Height);
-            // Measure and arrange the surface
-            // VERY IMPORTANT
-            this.Measure(size);
-            this.Arrange(new Rect(size));
-
-            // Create a render bitmap and push the surface to it
-            RenderTargetBitmap renderBitmap =
-              new RenderTargetBitmap(
-                (int)size.Width,
-                (int)size.Height,
-                96d,
-                96d,
-                PixelFormats.Pbgra32);
-            renderBitmap.Render(this);
-
-            // Create a file stream for saving image
-            string filename = System.IO.Path.GetTempPath() + "test.png";
-            using (FileStream outStream = new FileStream(filename, FileMode.Create))
-            {
-                // Use png encoder for our data
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                // push the rendered bitmap to it
-                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-                // save the data to the stream
-                encoder.Save(outStream);
-            }
-
-            // Restore previously saved layout
-            this.LayoutTransform = transform;
-            slideMenu.Visibility = slideMenuVis;
-            upGrid.Visibility = upGridVis;
-
-            return filename;
-        }
-
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            System.Windows.Media.Matrix m = ((MatrixTransform)aPage.RenderTransform).Matrix;
+            System.Windows.Media.Matrix m = ((MatrixTransform)MainViewController.Instance.InkableScene.RenderTransform).Matrix;
             double scale = e.Delta > 0 ? 1.05 : 0.95;
-            m.ScaleAtPrepend(scale, scale, e.GetPosition(aPage).X, e.GetPosition(aPage).Y);
-            aPage.RenderTransform = new MatrixTransform(m);
+            m.ScaleAtPrepend(scale, scale, e.GetPosition(MainViewController.Instance.InkableScene).X, e.GetPosition(MainViewController.Instance.InkableScene).Y);
+            MainViewController.Instance.InkableScene.RenderTransform = new MatrixTransform(m);
             e.Handled = true;
         }
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {
             upGrid.RenderTransform = new TranslateTransform(this.ActualWidth - 95, this.ActualHeight - 90);
-        }
-
-        private void btnClose_Click_1(object sender, RoutedEventArgs e)
-        {
-            debugGrid.Visibility = Visibility.Hidden;
         }
     }
 }

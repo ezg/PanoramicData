@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PanoramicData.view.inq
@@ -24,5 +25,21 @@ namespace PanoramicData.view.inq
             _stroqs.Add(e.Stroq);
             _elementCanvas.Children.Add(e.Stroq);
         }
+
+        public void Add(FrameworkElement elem)
+        {
+            _elementCanvas.Children.Add(elem);
+        }
+
+        public void Remove(FrameworkElement elem)
+        {
+            _elementCanvas.Children.Add(elem);
+        }
+        public void Remove(Stroq s)
+        {
+            _stroqs.Remove(s);
+            _elementCanvas.Children.Add(s);
+        }
+
     }
 }

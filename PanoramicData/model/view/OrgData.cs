@@ -153,12 +153,12 @@ namespace PanoramicData.model.view
     public class DatabaseRootOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private FilterModel _filterModel = null;
+        private TableModel _tableModel = null;
 
-        public DatabaseRootOrgItem(FilterModel filterModel, string name)
-            : base(filterModel, name)
+        public DatabaseRootOrgItem(TableModel tableModel, string name)
+            : base(tableModel, name)
         {
-            _filterModel = filterModel;
+            _tableModel = tableModel;
         }
 
         public override IEnumerable<OrgItem> Children
@@ -175,8 +175,8 @@ namespace PanoramicData.model.view
         private IEnumerable<OrgItem> ConstructChildren()
         {
             List<OrgItem> children = new List<OrgItem>();
-            PanoramicDataGroupDescriptor groupDescriptor = _filterModel.TableModel.ColumnDescriptors.Keys.First();
-            OrgItem oi = new TableInfoOrgItem(groupDescriptor, _filterModel, _filterModel.TableModel);
+            PanoramicDataGroupDescriptor groupDescriptor = _tableModel.ColumnDescriptors.Keys.First();
+            OrgItem oi = new TableInfoOrgItem(groupDescriptor, _tableModel);
             children.Add(oi);
             return children;
         }
@@ -185,13 +185,11 @@ namespace PanoramicData.model.view
     public class TableInfoOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private FilterModel _filterModel = null;
         private TableModel _tableModel = null;
 
-        public TableInfoOrgItem(PanoramicDataGroupDescriptor groupDescriptor, FilterModel filterModel, TableModel tableModel)
+        public TableInfoOrgItem(PanoramicDataGroupDescriptor groupDescriptor, TableModel tableModel)
             : base(groupDescriptor, groupDescriptor.GetLabel())
         {
-            _filterModel = filterModel;
             _tableModel = tableModel;
         }
 
@@ -226,10 +224,6 @@ namespace PanoramicData.model.view
 
                     PanoramicDataColumnDescriptor cd = new DatabaseColumnDescriptor(field, pathInfo,
                         field.PrimaryKeyTableInfos.Count != 0);
-                    if (_filterModel.ColumnDescriptors.Contains(cd))
-                    {
-                        oi.IsSelected = true;
-                    }
                 }
                 children = children.OrderBy(item => item.Name).ToList();
 
@@ -242,8 +236,7 @@ namespace PanoramicData.model.view
                             (pathInfo.Path.Last().ToTableInfo != dep.FromTableInfo &&
                              pathInfo.Path.Last().FromTableInfo != dep.ToTableInfo))
                         {
-                            OrgItem oi = new TableInfoOrgItem(new PathInfo(Data as PathInfo, dep), _filterModel,
-                                _tableModel);
+                            OrgItem oi = new TableInfoOrgItem(new PathInfo(Data as PathInfo, dep), _tableModel);
                             oi.Parent = this;
                             tempChildren.Add(oi);
                         }
