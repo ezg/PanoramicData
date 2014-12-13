@@ -12,6 +12,7 @@ namespace PanoramicData.view.inq
     public class InkableScene : InkableCanvas
     {
         private StroqCollection _stroqs = new StroqCollection();
+        private List<FrameworkElement> _elements = new List<FrameworkElement>();
         private Canvas _elementCanvas = new Canvas();
 
         public InkableScene()
@@ -22,23 +23,38 @@ namespace PanoramicData.view.inq
 
         void InkableScene_InkCollectedEvent(object sender, InkCollectedEventArgs e)
         {
-            _stroqs.Add(e.Stroq);
-            _elementCanvas.Children.Add(e.Stroq);
+            if (!_stroqs.Contains(e.Stroq))
+            {
+                _elementCanvas.Children.Add(e.Stroq);
+                _stroqs.Add(e.Stroq);
+            }
         }
 
         public void Add(FrameworkElement elem)
         {
-            _elementCanvas.Children.Add(elem);
+            if (!_elements.Contains(elem))
+            {
+                _elementCanvas.Children.Add(elem);
+                _elements.Add(elem);
+            }
         }
 
         public void Remove(FrameworkElement elem)
         {
-            _elementCanvas.Children.Add(elem);
+            if (_elements.Contains(elem))
+            {
+                _elementCanvas.Children.Remove(elem);
+                _elements.Remove(elem);
+            }
         }
+
         public void Remove(Stroq s)
         {
-            _stroqs.Remove(s);
-            _elementCanvas.Children.Add(s);
+            if (_stroqs.Contains(s))
+            {
+                _elementCanvas.Children.Remove(s);
+                _stroqs.Remove(s);
+            }
         }
 
     }

@@ -244,20 +244,6 @@ namespace PanoramicData
                 }
                 //fh.FilterHolderViewModel.TableModel.RemoveNamedFilterModel(fh.FilterHolderViewModel);
             }
-            else if (e is CombinedFilterHolder)
-            {
-               /* CombinedFilterHolder cfh = e as CombinedFilterHolder;
-                foreach (var fe in this.Elements.Where((t) => t is FilterHolderInEdge))
-                {
-                    FilterHolderInEdge edge = (fe as FilterHolderInEdge);
-                    if (edge.Destination == cfh.FilterHolderViewModel || edge.Source == cfh.FilterHolderViewModel)
-                    {
-                        (fe as FilterHolderInEdge).Destination.RemoveIncomingFilter((fe as FilterHolderInEdge).Source);
-                    }
-                }
-                cfh.FilterHolderViewModel.TableModel.RemoveIncomingFilter(cfh.FilterHolderViewModel);
-                cfh.FilterHolderViewModel.Removed = true;*/
-            }
             else if (e is FilterModelAttachment)
             {
                 (e as FilterModelAttachment).CleanUp();

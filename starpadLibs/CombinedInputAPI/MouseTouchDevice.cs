@@ -164,7 +164,7 @@ namespace CombinedInputAPI
             if (_device != null &&
                 _device.IsActive)
             {
-                try
+                //try
                 {
                     _device.Position = e.GetPosition(null);
                     _device.ReportUp();
@@ -172,7 +172,7 @@ namespace CombinedInputAPI
                     _device._moveTimer.Stop();
                     _device = null;
                 }
-                catch (Exception ee)
+                //catch (Exception ee)
                 {
 
                 }

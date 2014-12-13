@@ -127,7 +127,6 @@ namespace PanoramicData.controller.view
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
             filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
 
             var orderderHits = hits.Select(dep => dep as FrameworkElement)
@@ -148,7 +147,6 @@ namespace PanoramicData.controller.view
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
 
@@ -195,7 +193,6 @@ namespace PanoramicData.controller.view
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
             filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
 
             if (hits.Count == 0)
@@ -238,7 +235,6 @@ namespace PanoramicData.controller.view
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
 

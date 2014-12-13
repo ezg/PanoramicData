@@ -259,34 +259,18 @@ namespace PanoramicData.view.filter
 
         public override void NotifyMove(Pt delta)
         {
-            CombinedFilterHolder combinedFilterHolder = this.FindParent<CombinedFilterHolder>();
-            if (combinedFilterHolder != null && combinedFilterHolder.FilterHolderViewModel == this.FilterHolderViewModel)
-            {
-                combinedFilterHolder.NotifyMove(delta);
-            }
-            else
-            {
-                base.NotifyMove(delta);
+            base.NotifyMove(delta);
 
-                FilterHolderViewModel.Center = this.GetBounds().Center.GetVec().GetWindowsPoint();
-                FilterHolderViewModel.Dimension = new Vec(this.Width, this.Height);
-            }
+            FilterHolderViewModel.Center = this.GetBounds().Center.GetVec().GetWindowsPoint();
+            FilterHolderViewModel.Dimension = new Vec(this.Width, this.Height);
         }
 
         public override void NotifyScale(Vec delta, Vec offset)
         {
-            CombinedFilterHolder combinedFilterHolder = this.FindParent<CombinedFilterHolder>();
-            if (combinedFilterHolder != null && combinedFilterHolder.FilterHolderViewModel == this.FilterHolderViewModel)
-            {
-                combinedFilterHolder.NotifyScale(delta, offset);
-            }
-            else
-            {
-                base.NotifyScale(delta, offset);
+            base.NotifyScale(delta, offset);
 
-                FilterHolderViewModel.Center = this.GetBounds().Center.GetVec().GetWindowsPoint();
-                FilterHolderViewModel.Dimension = new Vec(this.Width, this.Height);
-            }
+            FilterHolderViewModel.Center = this.GetBounds().Center.GetVec().GetWindowsPoint();
+            FilterHolderViewModel.Dimension = new Vec(this.Width, this.Height);
         }
 
         public override void InitPostionAndDimension(Pt pos, Vec dim)

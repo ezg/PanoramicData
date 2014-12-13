@@ -183,10 +183,22 @@
     <Compile Include="controller\input\DatasetConfiguration.cs" />
     <Compile Include="controller\math\MathManager.cs" />
     <Compile Include="controller\view\MainViewController.cs" />
+    <Compile Include="model\data\AttributeModel.cs" />
+    <Compile Include="model\data\AttributeOperationModel.cs" />
+    <Compile Include="model\data\mssql\MSSQLAttributeModel.cs" />
+    <Compile Include="model\data\mssql\MSSQLOriginModel.cs" />
+    <Compile Include="model\data\OriginModel.cs" />
+    <Compile Include="model\data\sim\SimAttributeModel.cs" />
+    <Compile Include="model\data\sim\SimOriginModel.cs" />
+    <Compile Include="model\view_new\AttributeFunction.cs" />
+    <Compile Include="model\view_new\AttributeViewModel.cs" />
     <Compile Include="model\view\FilteringType.cs" />
     <Compile Include="model\view\FilterRendererType.cs" />
+    <Compile Include="model\view_new\LinkViewModel.cs" />
     <Compile Include="model\view\MainModel.cs" />
     <Compile Include="model\view\SchemaViewModel.cs" />
+    <Compile Include="model\view_new\VisualisationViewModelFactory.cs" />
+    <Compile Include="model\view_new\VisualizationViewModel.cs" />
     <Compile Include="utils\Converters.cs" />
     <Compile Include="utils\Helpers.cs" />
     <Compile Include="utils\HitTester.cs" />
@@ -202,9 +214,6 @@
     </Compile>
     <Compile Include="model\view\CalculatedColumnDescriptor.cs" />
     <Compile Include="model\view\CalculatedColumnDescriptorInfo.cs" />
-    <Compile Include="view\filter\CombinedFilterHolder.xaml.cs">
-      <DependentUpon>CombinedFilterHolder.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\filter\Colorer.xaml.cs">
       <DependentUpon>Colorer.xaml</DependentUpon>
     </Compile>
@@ -281,9 +290,6 @@
     </Compile>
     <Compile Include="view\filter\FilterModelAttachment.cs" />
     <Compile Include="view\other\SimpleAPage.cs" />
-    <Compile Include="view\filter\Filter.xaml.cs">
-      <DependentUpon>Filter.xaml</DependentUpon>
-    </Compile>
     <Compile Include="model\view\FilterModel.cs" />
     <Compile Include="view\filter\FilterRenderer.cs" />
     <Compile Include="view\utils\GridViewColumnResizeBehavior.cs" />
@@ -323,10 +329,6 @@
     <Page Include="view\filter\Back.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\filter\CombinedFilterHolder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\filter\Colorer.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -375,10 +377,6 @@
     <Page Include="view\vis\SimpleMapPushpin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\filter\Filter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="view\filter\Grouper.xaml">
       <SubType>Designer</SubType>

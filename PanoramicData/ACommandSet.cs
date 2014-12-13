@@ -24,7 +24,7 @@ namespace PanoramicData
     // gestures be deactivated to avoid conflicts.  So when one of these commands is recognized, InitGestures will get
     // called and it will install an appropriate set of gestures depending on which editing modes have been (de)activated.
     public class ACommandSet : CommandSet, CreateChartCallback,
-        ConnectCallback, CreateVisTableCallback, CombineCallback, CreateSliderCallback, CreatePieChartCallback,
+        ConnectCallback, CreateVisTableCallback, CreateSliderCallback, CreatePieChartCallback,
         ShortcutCallback
     {
 
@@ -84,8 +84,8 @@ namespace PanoramicData
             _gest.Add(bg);
 
             g = new ConnectGesture(_can,
-                new Type[] { typeof(FilterHolder), typeof(CombinedFilterHolder), typeof(FilterModelAttachment) },
-                new Type[] { typeof(FilterHolder), typeof(CombinedFilterHolder), typeof(FilterModelAttachment) }, true,
+                new Type[] { typeof(FilterHolder), typeof(FilterModelAttachment) },
+                new Type[] { typeof(FilterHolder), typeof(FilterModelAttachment) }, true,
                 this);
             _gest.Add(g);
 
@@ -161,18 +161,10 @@ namespace PanoramicData
                 {
                     startModel = ((FilterHolder) startElements[0]).FilterHolderViewModel;
                 }
-                else if (startElements[0] is CombinedFilterHolder)
-                {
-                    startModel = ((CombinedFilterHolder) startElements[0]).FilterHolderViewModel;
-                }
 
                 if (endElements[0] is FilterHolder)
                 {
                     endModel = ((FilterHolder) endElements[0]).FilterHolderViewModel;
-                }
-                else if (endElements[0] is CombinedFilterHolder)
-                {
-                    endModel = ((CombinedFilterHolder) endElements[0]).FilterHolderViewModel;
                 }
                 else if (endElements[0] is FilterModelAttachment)
                 {
@@ -225,22 +217,7 @@ namespace PanoramicData
 
             _can.Rem(s);
         }
-
-        public void CombineExecuteCallback(FrameworkElement e1, FrameworkElement e2)
-        {
-            if (e1 is FilterHolder && e2 is FilterHolder)
-            {
-                CombinedFilterHolder combined = new CombinedFilterHolder(_can);
-
-                combined.RightFilterHolderViewModel = (e1 as FilterHolder).FilterHolderViewModel;
-                combined.LeftFilterHolderViewModel = (e2 as FilterHolder).FilterHolderViewModel;
-                _can.AddNoUndo(combined);
-
-                _can.Rem(e1);
-                _can.Rem(e2);
-            }
-        }
-
+        
         public void CreatePieChartExecuteCallback(BrownRecognitionCommon.BrownShape brownShape, Stroq s)
         {
             if (brownShape.ShapeType == ShapeType.Circle ||

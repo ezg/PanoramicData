@@ -17,6 +17,7 @@ using PanoramicData.view.other;
 using PanoramicData.controller.data;
 using PanoramicData.view.math;
 using CombinedInputAPI;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.table
 {
@@ -49,12 +50,10 @@ namespace PanoramicData.view.table
 
         protected void OnIsInteractiveChanged(DependencyPropertyChangedEventArgs args)
         {
-            this.MouseDown -= SimpleGridViewColumnHeader_MouseDown;
             this.RemoveHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDownEvent));
 
             if ((bool)args.NewValue)
             {
-                this.MouseDown += SimpleGridViewColumnHeader_MouseDown;
                 this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDownEvent));
             }
         }
@@ -245,8 +244,8 @@ namespace PanoramicData.view.table
         {
             if (Moved != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                Rct bounds = shadow.GetBounds(inqScene);
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Rct bounds = shadow.GetBounds(inkableScene);
                 Moved(this, new ColumnHeaderEventArgs(bounds, DataContext as PanoramicDataColumnDescriptor, TableModel, FilterModel, true));
             }
         }
@@ -255,8 +254,8 @@ namespace PanoramicData.view.table
         {
             if (Dropped != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                Rct bounds = shadow.GetBounds(inqScene);
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Rct bounds = shadow.GetBounds(inkableScene);
 
                 Dropped(this, new ColumnHeaderEventArgs(bounds, DataContext as PanoramicDataColumnDescriptor, TableModel, FilterModel, !_boundsChanged, ColumnHeaderEventArgsCommand.None, linkFromFilterModel));
             }
@@ -266,7 +265,7 @@ namespace PanoramicData.view.table
         private SimpleGridViewColumnHeader _shadow = null; 
         private long _manipulationStartTime = 0;
         private Point _startDrag = new Point(0, 0);
-        private Point _currentFromInqScene = new Point(0, 0);
+        private Point _currentFromInkableScene = new Point(0, 0);
         private bool _boundsChanged = false;
 
 
@@ -297,7 +296,6 @@ namespace PanoramicData.view.table
                 mainTB.FontSize = Properties.Settings.Default.PanoramicDataStableLabelFontSize;
                 this.MinHeight = 20 * s;
             }
-            this.MouseDown += SimpleGridViewColumnHeader_MouseDown;
             this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDownEvent));
             SetBinding(MyDataContextProperty, new Binding());
         }
@@ -392,11 +390,11 @@ namespace PanoramicData.view.table
                 {
                     e.Handled = true;
                     e.TouchDevice.Capture(this);
-                    InqScene inqScene = this.FindParent<InqScene>();
-                    Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+                    InkableScene inkableScene = this.FindParent<InkableScene>();
+                    Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
                     _manipulationStartTime = DateTime.Now.Ticks;
-                    _startDrag = fromInqScene;
+                    _startDrag = fromInkableScene;
 
                     this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDragEvent));
                     this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchUpEvent));
@@ -405,29 +403,12 @@ namespace PanoramicData.view.table
             }
         }
 
-        void SimpleGridViewColumnHeader_MouseDown(object sender, MouseButtonEventArgs e)
+        public void ManipulationStart(Point fromInkableScene)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            if (inkableScene != null)
             {
-                e.Handled = true;
-                e.MouseDevice.Capture(this);
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point fromInqScene = e.GetPosition(inqScene);
-
-                _manipulationStartTime = DateTime.Now.Ticks;
-                _startDrag = fromInqScene;
-
-                this.MouseMove += SimpleGridViewColumnHeader_MouseMove;
-                this.MouseUp += SimpleGridViewColumnHeader_MouseUp;
-            }
-        }
-
-        public void ManipulationStart(Point fromInqScene)
-        {
-            InqScene inqScene = this.FindParent<InqScene>();
-            if (inqScene != null)
-            {
-                _currentFromInqScene = fromInqScene;
+                _currentFromInkableScene = fromInkableScene;
                 _shadow = new SimpleGridViewColumnHeader(true);
                 _shadow.DataContext = this.DataContext;
                 //_shadow.Width = this.ActualWidth;
@@ -445,9 +426,9 @@ namespace PanoramicData.view.table
                 _shadow.HeaderBorder.Height = _shadow.DesiredSize.Height;
 
                 _shadow.RenderTransform = new TranslateTransform(
-                    fromInqScene.X - _shadow.Width / 2.0,
-                    fromInqScene.Y - _shadow.Height);
-                inqScene.AddNoUndo(_shadow);
+                    fromInkableScene.X - _shadow.Width / 2.0,
+                    fromInkableScene.Y - _shadow.Height);
+                inkableScene.Add(_shadow);
 
                 FireMoved(_shadow);
             }
@@ -458,44 +439,30 @@ namespace PanoramicData.view.table
             if (e.TouchDevice == _dragDevice1)
             {
                 e.Handled = true;
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
-                Vec v = _startDrag - fromInqScene;
+                Vec v = _startDrag - fromInkableScene;
                 if (v.Length > 10 && _shadow == null)
                 {
-                    ManipulationStart(fromInqScene);
+                    ManipulationStart(fromInkableScene);
                 }
-                ManipulationMove(fromInqScene);
+                ManipulationMove(fromInkableScene);
             }
         }
 
-        void SimpleGridViewColumnHeader_MouseMove(object sender, MouseEventArgs e)
-        {
-            e.Handled = true;
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetPosition(inqScene);
-
-            Vec v = _startDrag - fromInqScene;
-            if (v.Length > 10 && _shadow == null)
-            {
-                ManipulationStart(fromInqScene);
-            }
-            ManipulationMove(fromInqScene);
-        }
-
-        public void ManipulationMove(Point fromInqScene)
+        public void ManipulationMove(Point fromInkableScene)
         {
             if (_shadow != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                _currentFromInqScene = fromInqScene;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                _currentFromInkableScene = fromInkableScene;
                 _shadow.RenderTransform = new TranslateTransform(
-                    fromInqScene.X - _shadow.Width / 2.0,
-                    fromInqScene.Y - _shadow.Height);
-                if (inqScene != null)
+                    fromInkableScene.X - _shadow.Width / 2.0,
+                    fromInkableScene.Y - _shadow.Height);
+                if (inkableScene != null)
                 {
-                    inqScene.AddNoUndo(_shadow);
+                    inkableScene.Add(_shadow);
 
                     FireMoved(_shadow);
                 }
@@ -509,15 +476,15 @@ namespace PanoramicData.view.table
                 e.Handled = true;
                 e.TouchDevice.Capture(null);
                 _dragDevice1 = null;
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
                 if (_shadow == null && 
                     _manipulationStartTime + TimeSpan.FromSeconds(0.5).Ticks > DateTime.Now.Ticks)
                 {
                     if (EnableRadialMenu)
                     {
-                        DisplayRadialControl(fromInqScene);
+                        DisplayRadialControl(fromInkableScene);
                     }
                     else
                     {
@@ -528,17 +495,17 @@ namespace PanoramicData.view.table
                             if (info != null)
                             {
                                 MathEditor me = new MathEditor(
-                                    new SimpleGridViewColumnHeaderMathEditorExecution(inqScene, info), FilterModel,
+                                    new SimpleGridViewColumnHeaderMathEditorExecution(inkableScene, info), FilterModel,
                                     info);
-                                me.SetPosition(fromInqScene.X - RadialControl.SIZE/2,
-                                    fromInqScene.Y - RadialControl.SIZE/2);
-                                inqScene.AddNoUndo(me);
+                                me.SetPosition(fromInkableScene.X - RadialControl.SIZE/2,
+                                    fromInkableScene.Y - RadialControl.SIZE/2);
+                                inkableScene.Add(me);
                             }
                         }
                     }
                 }
 
-                ManipulationEnd(fromInqScene);
+                ManipulationEnd(fromInkableScene);
 
                 _manipulationStartTime = 0;
 
@@ -547,50 +514,29 @@ namespace PanoramicData.view.table
             }
         }
 
-        void SimpleGridViewColumnHeader_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            Mouse.Capture(null);
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetPosition(inqScene);
-
-            if (_shadow == null && 
-                _manipulationStartTime + TimeSpan.FromSeconds(0.5).Ticks > DateTime.Now.Ticks &&
-                EnableRadialMenu)
-            {
-                DisplayRadialControl(fromInqScene);
-            }
-
-            ManipulationEnd(fromInqScene);
-
-            this.MouseMove -= SimpleGridViewColumnHeader_MouseMove;
-            this.MouseUp -= SimpleGridViewColumnHeader_MouseUp;
-            _manipulationStartTime = 0;
-        }
-
-        public void ManipulationEnd(Point fromInqScene)
+        public void ManipulationEnd(Point fromInkableScene)
         {
             if (_shadow != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
+                InkableScene inkableScene = this.FindParent<InkableScene>();
 
                 FireDropped(_shadow);
 
-                inqScene.Rem(_shadow);
+                inkableScene.Remove(_shadow);
                 _shadow = null;
             }
         }
 
-        public void DisplayRadialControl(Point fromInqScene)
+        public void DisplayRadialControl(Point fromInkableScene)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            if (inqScene != null)
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            if (inkableScene != null)
             {
                 RadialControl rc = new RadialControl(setupRadialCommands(DataContext as PanoramicDataColumnDescriptor),
-                    new ColumnHeaderRadialControlExecution(FilterModel, TableModel, inqScene));
-                rc.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
-                    fromInqScene.Y - RadialControl.SIZE / 2);
-                inqScene.AddNoUndo(rc);
+                    new ColumnHeaderRadialControlExecution(FilterModel, TableModel, inkableScene));
+                rc.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
+                    fromInkableScene.Y - RadialControl.SIZE / 2);
+                inkableScene.Add(rc);
             }
         }
 
@@ -1011,13 +957,13 @@ namespace PanoramicData.view.table
     {
         private FilterModel _filterModel = null;
         private TableModel _tableModel = null;
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
 
-        public ColumnHeaderRadialControlExecution(FilterModel filterModel, TableModel tableModel, InqScene inqScene)
+        public ColumnHeaderRadialControlExecution(FilterModel filterModel, TableModel tableModel, InkableScene inkableScene)
         {
             this._filterModel = filterModel;
             this._tableModel = tableModel;
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
         }
 
         public override void Remove(RadialControl sender, RadialMenuCommand cmd)
@@ -1038,9 +984,9 @@ namespace PanoramicData.view.table
         {
             base.Dispose(sender);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                _inkableScene.Remove(sender as FrameworkElement);
             }
         }
 
@@ -1276,12 +1222,12 @@ namespace PanoramicData.view.table
 
     public class SimpleGridViewColumnHeaderMathEditorExecution : MathEditorExecution
     {
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
         private CalculatedColumnDescriptorInfo _calculatedColumnDescriptorInfo = null;
 
-        public SimpleGridViewColumnHeaderMathEditorExecution(InqScene inqScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
+        public SimpleGridViewColumnHeaderMathEditorExecution(InkableScene inkableScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
         {
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
             this._calculatedColumnDescriptorInfo = calculatedColumnDescriptorInfo;
         }
 
@@ -1290,9 +1236,9 @@ namespace PanoramicData.view.table
             base.Dispose(sender);
             _calculatedColumnDescriptorInfo.TableModel.UpdateCalculatedColumnDescriptorInfo(_calculatedColumnDescriptorInfo);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                _inkableScene.Remove(sender as FrameworkElement);
             }
         }
     }
