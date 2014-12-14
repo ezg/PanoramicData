@@ -35,7 +35,7 @@ namespace PanoramicData.view.schema
         private Point _current1 = new Point();
         private TouchDevice _dragDevice1 = null;
         private Delegate _outsidePointDelegate = null;
-        private IDisposable _tableModelDisposable = null;
+        private IDisposable _schemaViewModelDisposable = null;
 
         public SchemaViewer()
         {
@@ -54,31 +54,26 @@ namespace PanoramicData.view.schema
             if (e.OldValue != null)
             {
                 (e.OldValue as SchemaViewModel).PropertyChanged -= SchemaViewer_PropertyChanged;
-                if (_tableModelDisposable != null)
+                if (_schemaViewModelDisposable != null)
                 {
-                    _tableModelDisposable.Dispose();
+                    _schemaViewModelDisposable.Dispose();
                 }
             }
             if (e.NewValue != null)
             {
                 SchemaViewModel model = (e.NewValue as SchemaViewModel);
-                model.PropertyChanged += SchemaViewer_PropertyChanged;                
-                
-                _tableModelDisposable = Observable.FromEventPattern<TableModelUpdatedEventArgs>(
-                    model.TableModel, "TableModelUpdated")
+                model.PropertyChanged += SchemaViewer_PropertyChanged;
+
+                _schemaViewModelDisposable = Observable.FromEventPattern<SchemaViewModelUpdatedEventArgs>(
+                    model, "SchemaViewModelUpdated")
                     .Where(
-                        arg =>
-                            arg.EventArgs != null && arg.EventArgs.Mode != UpdatedMode.UI &&
-                            arg.EventArgs.Mode != UpdatedMode.FilteredItemsStatus)
+                        arg => arg.EventArgs != null)
                     .Throttle(TimeSpan.FromMilliseconds(50))
                     .Subscribe((arg) =>
                     {
                         Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
-                            if (arg.EventArgs.Mode == UpdatedMode.Database)
-                            {
-                                this.updateRendering();
-                            }
+                            this.updateRendering();
                         }));
                     });
                 
@@ -88,12 +83,11 @@ namespace PanoramicData.view.schema
         
         void SchemaViewer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.updateRendering();
         }
 
         private void updateRendering()
         {
-            tree.InitTree((DataContext as SchemaViewModel).TableModel);
+            tree.InitTree((DataContext as SchemaViewModel));
         }
 
         void PointOutsideDownEvent(Object sender, TouchEventArgs e)

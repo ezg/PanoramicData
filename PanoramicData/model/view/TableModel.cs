@@ -93,6 +93,7 @@ namespace PanoramicData.model.view
                 _calculatedColumnDescriptorInfos = value;
             }
         }
+
         public void UpdateCalculatedColumnDescriptorInfo(CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
         {
             if (_calculatedColumnDescriptorInfos.ContainsKey(calculatedColumnDescriptorInfo))

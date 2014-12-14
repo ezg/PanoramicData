@@ -185,9 +185,13 @@
     <Compile Include="controller\view\MainViewController.cs" />
     <Compile Include="model\data\AttributeModel.cs" />
     <Compile Include="model\data\AttributeOperationModel.cs" />
+    <Compile Include="model\data\CalculatedAttributeModel.cs" />
     <Compile Include="model\data\mssql\MSSQLAttributeModel.cs" />
     <Compile Include="model\data\mssql\MSSQLOriginModel.cs" />
+    <Compile Include="model\data\mssql\MSSQLSchemaModel.cs" />
+    <Compile Include="model\data\NamedAttributeModel.cs" />
     <Compile Include="model\data\OriginModel.cs" />
+    <Compile Include="model\data\SchemaModel.cs" />
     <Compile Include="model\data\sim\SimAttributeModel.cs" />
     <Compile Include="model\data\sim\SimOriginModel.cs" />
     <Compile Include="model\view_new\AttributeFunction.cs" />
@@ -278,7 +282,6 @@
     <Compile Include="view\other\SliderFeedback.xaml.cs">
       <DependentUpon>SliderFeedback.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controller\data\ModelHelpers.cs" />
     <Compile Include="view\utils\NonEmptyStringToVisibleConverter.cs" />
     <Compile Include="view\other\RadialControl.xaml.cs">
       <SubType>Code</SubType>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using PanoramicData.model.data;
 using starPadSDK.Geom;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ namespace PanoramicData.model.view
 {
     public class SchemaViewModel : BindableBase
     {
+        public delegate void SchemaViewModelUpdatedHandler(object sender, SchemaViewModelUpdatedEventArgs e);
+        public event SchemaViewModelUpdatedHandler SchemaViewModelUpdated;
+
         private Vec _size = new Vec(180, 100);
 
         public Vec Size
@@ -38,18 +42,34 @@ namespace PanoramicData.model.view
             }
         }
 
-        private TableModel _tableModel;
+        private SchemaModel _schemaModel;
 
-        public TableModel TableModel
+        public SchemaModel SchemaModel
         {
             get
             {
-                return _tableModel;
+                return _schemaModel;
             }
             set
             {
-                this.SetProperty(ref _tableModel, value);
+                this.SetProperty(ref _schemaModel, value);
             }
+        }
+
+        protected void fireTableModelUpdated()
+        {
+            if (SchemaViewModelUpdated != null)
+            {
+                SchemaViewModelUpdated(this, new SchemaViewModelUpdatedEventArgs());
+            }
+        }
+    }
+
+    public class SchemaViewModelUpdatedEventArgs : EventArgs
+    {
+        public SchemaViewModelUpdatedEventArgs()
+            : base()
+        {
         }
     }
 }

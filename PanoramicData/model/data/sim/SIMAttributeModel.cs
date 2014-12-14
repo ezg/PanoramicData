@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PanoramicData.model.data.sim
 {
-    class SimAttributeModel
+    public class SimAttributeModel
     {
     }
 }

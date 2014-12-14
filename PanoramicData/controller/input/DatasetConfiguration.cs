@@ -50,6 +50,19 @@ namespace PanoramicData.controller.input
             }
         }
 
+        private string _backend;
+        public string Backend
+        {
+            get
+            {
+                return _backend;
+            }
+            set
+            {
+                this.SetProperty(ref _backend, value);
+            }
+        }
+
         public static DatasetConfiguration FromFile(string fileName)
         {
             try
@@ -76,6 +89,10 @@ namespace PanoramicData.controller.input
                     else if (parts[0] == "Table")
                     {
                         config.Table = parts[1];
+                    }
+                    else if (parts[0] == "Backend")
+                    {
+                        config.Backend = parts[1];
                     }
                 }
 

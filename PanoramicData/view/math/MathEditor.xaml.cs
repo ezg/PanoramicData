@@ -116,7 +116,7 @@ namespace PanoramicData.view.math
             r1.StrokeThickness = 3;
             canvasMain.Children.Add(r1);
 
-            tree.InitTree(_filterModel.TableModel);
+            tree.InitTree(null);//_filterModel.TableModel);
         }
 
         void _calculatedColumnDescriptorInfo_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

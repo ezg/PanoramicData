@@ -3,6 +3,7 @@ using System.Linq;
 using PixelLab.Common;
 using starPadSDK.Inq;
 using PanoramicDataModel;
+using PanoramicData.model.data;
 
 namespace PanoramicData.model.view
 
@@ -63,15 +64,15 @@ namespace PanoramicData.model.view
         }
     }
 
-    public class CustomFieldsRootOrgItem : OrgItem
+    public class NamedAttributeRootOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private TableModel _tableModel = null;
+        private SchemaModel _schemaModel = null;
 
-        public CustomFieldsRootOrgItem(TableModel tableModel, string name)
-            : base(tableModel, name)
+        public NamedAttributeRootOrgItem(SchemaModel schemaModel, string name)
+            : base(schemaModel, name)
         {
-            _tableModel = tableModel;
+            _schemaModel = schemaModel;
         }
 
         public override IEnumerable<OrgItem> Children
@@ -89,24 +90,24 @@ namespace PanoramicData.model.view
         private IEnumerable<OrgItem> ConstructChildren()
         {
             List<OrgItem> children = new List<OrgItem>();
-            foreach (var key in _tableModel.NamedFilterModels.Keys)
+            foreach (var key in _schemaModel.NamedAttributeModels.Keys)
             {
-                OrgItem oi = new CustomFieldOrgItem(key, _tableModel.NamedFilterModels[key]);
+                OrgItem oi = new AttributeOrgItem(key);
                 children.Add(oi);
             }
             return children;
         }
     }
 
-    public class CaclculatedFieldsRootOrgItem : OrgItem
+    public class CaclculatedAttributeRootOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private TableModel _tableModel = null;
+        private SchemaModel _schemaModel = null;
 
-        public CaclculatedFieldsRootOrgItem(TableModel tableModel, string name)
-            : base(tableModel, name)
+        public CaclculatedAttributeRootOrgItem(SchemaModel schemaModel, string name)
+            : base(schemaModel, name)
         {
-            _tableModel = tableModel;
+            _schemaModel = schemaModel;
         }
 
         public override IEnumerable<OrgItem> Children
@@ -124,28 +125,12 @@ namespace PanoramicData.model.view
         private IEnumerable<OrgItem> ConstructChildren()
         {
             List<OrgItem> children = new List<OrgItem>();
-            foreach (var key in _tableModel.CalculatedColumnDescriptorInfos.Keys)
+            foreach (var key in _schemaModel.CalculatedAttributeModels.Keys)
             {
-                OrgItem oi = new CalculatedFieldOrgItem(key, _tableModel.CalculatedColumnDescriptorInfos[key]);
+                OrgItem oi = new AttributeOrgItem(key);
                 children.Add(oi);
             }
             return children;
-        }
-    }
-
-    public class CustomFieldOrgItem : OrgItem
-    {
-        public CustomFieldOrgItem(FilterModel filterModel, string name)
-            : base(filterModel, name)
-        {
-        }
-    }
-
-    public class CalculatedFieldOrgItem : OrgItem
-    {
-        public CalculatedFieldOrgItem(CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo, string name)
-            : base(calculatedColumnDescriptorInfo, name)
-        {
         }
     }
 
@@ -153,12 +138,12 @@ namespace PanoramicData.model.view
     public class DatabaseRootOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private TableModel _tableModel = null;
+        private SchemaModel _schemaModel = null;
 
-        public DatabaseRootOrgItem(TableModel tableModel, string name)
-            : base(tableModel, name)
+        public DatabaseRootOrgItem(SchemaModel schemaModel, string name)
+            : base(schemaModel, name)
         {
-            _tableModel = tableModel;
+            _schemaModel = schemaModel;
         }
 
         public override IEnumerable<OrgItem> Children
@@ -175,85 +160,59 @@ namespace PanoramicData.model.view
         private IEnumerable<OrgItem> ConstructChildren()
         {
             List<OrgItem> children = new List<OrgItem>();
-            PanoramicDataGroupDescriptor groupDescriptor = _tableModel.ColumnDescriptors.Keys.First();
-            OrgItem oi = new TableInfoOrgItem(groupDescriptor, _tableModel);
-            children.Add(oi);
+            foreach (var originModel in _schemaModel.OriginModels)
+            {
+                OrgItem oi = new OriginOrgItem(originModel, _schemaModel);
+                children.Add(oi);
+            }
             return children;
         }
     }
 
-    public class TableInfoOrgItem : OrgItem
+    public class OriginOrgItem : OrgItem
     {
         private IEnumerable<OrgItem> _children = null;
-        private TableModel _tableModel = null;
+        private SchemaModel _schemaModel = null;
 
-        public TableInfoOrgItem(PanoramicDataGroupDescriptor groupDescriptor, TableModel tableModel)
-            : base(groupDescriptor, groupDescriptor.GetLabel())
+        public OriginOrgItem(OriginModel originModel, SchemaModel schemaModel)
+            : base(originModel, originModel.Name)
         {
-            _tableModel = tableModel;
+            _schemaModel = schemaModel;
         }
 
         public override IEnumerable<OrgItem> Children
         {
-            get {
+            get 
+            {
                 if (_children == null)
                 {
-                    _children = ConstructChildren(Data as PanoramicDataGroupDescriptor);
+                    _children = ConstructChildren(Data as OriginModel);
                 }
                 return _children;
             }
         }
 
-        private IEnumerable<OrgItem> ConstructChildren(PanoramicDataGroupDescriptor groupDescriptor)
+        private IEnumerable<OrgItem> ConstructChildren(OriginModel originModel)
         {
             List<OrgItem> children = new List<OrgItem>();
-
-            if (groupDescriptor is PathInfo)
+            foreach (var childOriginModel in originModel.OriginModels)
             {
-                PathInfo pathInfo = groupDescriptor as PathInfo;
-                foreach (var field in pathInfo.TableInfo.FieldInfos)
-                {
-                    if (pathInfo.TableInfo.PrimaryKeyFieldInfo == field ||
-                        !field.Visible)
-                    {
-                        continue;
-                    }
-                    OrgItem oi = new FieldInfoOrgItem(field);
-                    oi.Parent = this;
-                    children.Add(oi);
-
-                    PanoramicDataColumnDescriptor cd = new DatabaseColumnDescriptor(field, pathInfo,
-                        field.PrimaryKeyTableInfos.Count != 0);
-                }
-                children = children.OrderBy(item => item.Name).ToList();
-
-                List<OrgItem> tempChildren = new List<OrgItem>();
-                foreach (var dep in pathInfo.TableInfo.FromTableDependencies)
-                {
-                    if (!pathInfo.Path.Contains(dep))
-                    {
-                        if (pathInfo.Path.Count == 0 ||
-                            (pathInfo.Path.Last().ToTableInfo != dep.FromTableInfo &&
-                             pathInfo.Path.Last().FromTableInfo != dep.ToTableInfo))
-                        {
-                            OrgItem oi = new TableInfoOrgItem(new PathInfo(Data as PathInfo, dep), _tableModel);
-                            oi.Parent = this;
-                            tempChildren.Add(oi);
-                        }
-                    }
-                }
-                tempChildren = tempChildren.OrderBy(item => item.Name).ToList();
-
-                children = children.Union(tempChildren).ToList();
+                OrgItem oi = new OriginOrgItem(childOriginModel, _schemaModel);
+                children.Add(oi);
+            }
+            foreach (var attributeModel in originModel.AttributeModels)
+            {
+                OrgItem oi = new AttributeOrgItem(attributeModel);
+                children.Add(oi);
             }
             return children;
         }
     }
 
-    public class FieldInfoOrgItem : OrgItem
+    public class AttributeOrgItem : OrgItem
     {
-        public FieldInfoOrgItem(FieldInfo fieldInfo)
-            : base(fieldInfo, fieldInfo.Name)
+        public AttributeOrgItem(AttributeModel attributeModel)
+            : base(attributeModel, attributeModel.Name)
         {
         }
     }

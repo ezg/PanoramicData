@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,19 +7,24 @@ using System.Threading.Tasks;
 
 namespace PanoramicData.model.data
 {
-    public class AttributeModel
+    public abstract class AttributeModel : BindableBase
     {
-        private AttributeModel _attributeDataModel = null;
-        public AttributeModel AttributeDataModel
+        private OriginModel _originModel = null;
+        public OriginModel OriginModel
         {
             get
             {
-                return _attributeDataModel;
+                return _originModel;
             }
             set
             {
-                this.SetProperty(ref _attributeDataModel, value);
+                this.SetProperty(ref _originModel, value);
             }
+        }
+
+        public abstract string Name
+        {
+            get;
         }
     }
 }

@@ -21,6 +21,7 @@ using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
 using PanoramicData.view.filter;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.schema
 {
@@ -31,7 +32,7 @@ namespace PanoramicData.view.schema
     {
         public static event EventHandler<DatabaseTableEventArgs> DatabaseTableDropped;
 
-        public TableModel TableModel { get; set; }
+        public SchemaViewModel SchemaViewModel { get; set; }
 
         private Point _treeViewStartDrag = new Point(0, 0);
         private Border _treeViewShadow = null;
@@ -47,30 +48,30 @@ namespace PanoramicData.view.schema
             return tree.Items.Count;
         }
 
-        public void InitTree(TableModel tableModel)
+        public void InitTree(SchemaViewModel schemaViewModel)
         {
-            TableModel = tableModel;
+            SchemaViewModel = schemaViewModel;
             tree.Items.Clear();
 
-            DatabaseRootOrgItem databaseRoot = new DatabaseRootOrgItem(TableModel, "Tables");
+            DatabaseRootOrgItem databaseRoot = new DatabaseRootOrgItem(SchemaViewModel.SchemaModel, "Tables");
             TreeViewItem item = new TreeViewItem();
             item.Header = databaseRoot;
             item.HeaderTemplate = FindResource("DatabaseRootTemplate") as DataTemplate;
             item.Items.Add(null);
             tree.Items.Add(item);
 
-            if (TableModel.NamedFilterModels.Count > 0)
+            if (SchemaViewModel.SchemaModel.NamedAttributeModels.Count > 0)
             {
-                CustomFieldsRootOrgItem customFieldsRoot = new CustomFieldsRootOrgItem(TableModel, "Custom Groups");
+                NamedAttributeRootOrgItem customFieldsRoot = new NamedAttributeRootOrgItem(SchemaViewModel.SchemaModel, "Custom Groups");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
                 item.HeaderTemplate = FindResource("CustomFieldsRootTemplate") as DataTemplate;
                 item.Items.Add(null);
                 tree.Items.Add(item);
             }
-            if (TableModel.CalculatedColumnDescriptorInfos.Count > 0)
+            if (SchemaViewModel.SchemaModel.CalculatedAttributeModels.Count > 0)
             {
-                CaclculatedFieldsRootOrgItem customFieldsRoot = new CaclculatedFieldsRootOrgItem(TableModel, "Caclculated Fields");
+                CaclculatedAttributeRootOrgItem customFieldsRoot = new CaclculatedAttributeRootOrgItem(SchemaViewModel.SchemaModel, "Caclculated Fields");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
                 item.HeaderTemplate = FindResource("CalculatedFieldsRootTemplate") as DataTemplate;
@@ -99,47 +100,12 @@ namespace PanoramicData.view.schema
                 {
                     TreeViewItem subItem = new TreeViewItem();
                     subItem.Header = oi;
-                    if (oi is TableInfoOrgItem)
+                    if (oi is OriginOrgItem)
                     {
                         subItem.HeaderTemplate = FindResource("TableInfoTemplate") as DataTemplate;
                         subItem.Items.Add(null);
                     }
-                    if (oi is CustomFieldOrgItem)
-                    {
-                        FilterModel filterModel = (FilterModel)oi.Data;
-                        TableModel tableModel = filterModel.TableModel;
-                        PanoramicDataColumnDescriptor cd = new NamedFilterModelColumnDescriptor(tableModel, filterModel);
-
-                        DataTemplate template = new DataTemplate();
-                        FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableRadialMenuProperty, false);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableMoveByPenProperty, true);
-                        template.VisualTree = tbFactory;
-                        subItem.HeaderTemplate = template;
-                    }
-                    if (oi is CalculatedFieldOrgItem)
-                    {
-                        CalculatedColumnDescriptorInfo descriptorInfo = (CalculatedColumnDescriptorInfo)oi.Data;
-                        PanoramicDataColumnDescriptor cd = new CalculatedColumnDescriptor(descriptorInfo.TableModel, descriptorInfo);
-
-                        DataTemplate template = new DataTemplate();
-                        FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableRadialMenuProperty, false);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableMoveByPenProperty, true);
-                        template.VisualTree = tbFactory;
-                        subItem.HeaderTemplate = template;
-                    }
-                    else if (oi is FieldInfoOrgItem)
+                    else if (oi is AttributeOrgItem)
                     {
                         FieldInfo fieldInfo = (FieldInfo)oi.Data;
                         PathInfo pathInfo = oi.Parent.Data as PathInfo;
@@ -202,7 +168,7 @@ namespace PanoramicData.view.schema
             var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
             if (treeViewItem != null)
             {
-                if (treeViewItem.Header is DatabaseRootOrgItem || treeViewItem.Header is TableInfoOrgItem)
+                if (treeViewItem.Header is DatabaseRootOrgItem || treeViewItem.Header is OriginOrgItem)
                 {
                     var element = (FrameworkElement)sender;
                     e.TouchDevice.Capture(element);
@@ -225,7 +191,7 @@ namespace PanoramicData.view.schema
         {
             var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
             if (treeViewItem != null &&
-                (treeViewItem.Header is DatabaseRootOrgItem || treeViewItem.Header is TableInfoOrgItem))
+                (treeViewItem.Header is DatabaseRootOrgItem || treeViewItem.Header is OriginOrgItem))
             {
                 var element = (FrameworkElement)sender;
                 e.Handled = true;
@@ -236,16 +202,16 @@ namespace PanoramicData.view.schema
 
                 if (_treeViewShadow != null)
                 {
-                    InqScene inqScene = this.FindParent<InqScene>();
-
+                    InkableScene inkableScene = this.FindParent<InkableScene>();
+                    /*
                     if (DatabaseTableDropped != null)
                     {
                         Rct bounds = _treeViewShadow.GetBounds(inqScene);
                         DatabaseTableDropped(this, new DatabaseTableEventArgs(bounds,
-                            TableModel, null, true));
+                            SchemaViewModel, null, true));
                     }
-
-                    inqScene.Rem(_treeViewShadow);
+                    */
+                    inkableScene.Remove(_treeViewShadow);
                     _treeViewShadow = null;
                 }
                 else
@@ -260,24 +226,24 @@ namespace PanoramicData.view.schema
             var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
             if (treeViewItem != null && treeViewItem.Header is DatabaseRootOrgItem)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
-                Vec v = _treeViewStartDrag - fromInqScene;
-                List<PathInfo> pathInfos = TableModel.CalculateRecursivePathInfos();
+                /*Vec v = _treeViewStartDrag - fromInkableScene;
+                List<PathInfo> pathInfos = SchemaViewModel.OriginModel.CalculateRecursivePathInfos();
                 if (v.Length > 10 && _treeViewShadow == null &&
                     pathInfos.Count > 1)
                 {
-                    ManipulationStart(fromInqScene);
+                    ManipulationStart(fromInkableScene);
                 }
-                ManipulationMove(fromInqScene);
+                ManipulationMove(fromInkableScene);*/
             }
         }
 
         public void ManipulationStart(Point fromInqScene)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            if (inqScene != null)
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            if (inkableScene != null)
             {
                 _treeViewStartDrag = fromInqScene;
                 _treeViewShadow = new Border();
@@ -295,7 +261,7 @@ namespace PanoramicData.view.schema
                 _treeViewShadow.RenderTransform = new TranslateTransform(
                     fromInqScene.X - _treeViewShadow.Width / 2.0,
                     fromInqScene.Y - _treeViewShadow.Height);
-                inqScene.AddNoUndo(_treeViewShadow);
+                inkableScene.Add(_treeViewShadow);
             }
         }
 

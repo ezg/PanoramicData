@@ -20,6 +20,8 @@ using PixelLab.Common;
 using PanoramicData.controller.data;
 using System.IO;
 using PanoramicData.controller.input;
+using PanoramicData.model.data;
+using PanoramicData.model.data.mssql;
 
 namespace PanoramicData.controller.view
 {
@@ -92,13 +94,16 @@ namespace PanoramicData.controller.view
         public void LoadData(DatasetConfiguration datasetConfiguration)
         {
             SchemaViewModel schemaViewModel = new SchemaViewModel();
+            SchemaModel schemaModel = null;
 
-            PathInfo pathInfo = ModelHelpers.GeneratePathInfo(datasetConfiguration.Schema, datasetConfiguration.Table);
-            TableModel tableModel = ModelHelpers.GenerateTableModel(
-                new PathInfo[] { pathInfo },
-                new string[][] { new string[] {  } });
+            if (datasetConfiguration.Backend == "MSSQL")
+            {
+                schemaModel = new MSSQLSchemaModel(datasetConfiguration);
+            }
 
-            schemaViewModel.TableModel = tableModel;
+            schemaViewModel.SchemaModel = schemaModel;
+
+            
             _schemaViewer.DataContext = schemaViewModel;
         }
 
