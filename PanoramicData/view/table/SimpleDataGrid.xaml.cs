@@ -28,13 +28,14 @@ using PanoramicData.controller.data;
 using PanoramicData.utils.inq;
 using PanoramicData.view.utils;
 using PanoramicData.view.vis;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.table
 {
     /// <summary>
     /// Interaction logic for SimpleDataGrid.xaml
     /// </summary>
-    public partial class SimpleDataGrid : ColumnHeaderEventHandler, StroqListener
+    public partial class SimpleDataGrid : AttributeViewModelEventHandler, StroqListener
     {
         public static readonly DependencyProperty TestProperty =
             DependencyProperty.Register("Test", typeof(bool), typeof(SimpleDataGrid),
@@ -347,11 +348,11 @@ namespace PanoramicData.view.table
             GridViewColumn gvc = new GridViewColumn();
 
             DataTemplate template = new DataTemplate();
-            FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
-            tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, columnDescriptor);
-            tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, false);
-            tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, _filterModel);
-            tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, _tableModel);
+            FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
+            tbFactory.SetValue(AttributeView.DataContextProperty, columnDescriptor);
+            /*tbFactory.SetValue(AttributeView.IsInteractiveProperty, false);
+            tbFactory.SetValue(AttributeView.FilterModelProperty, _filterModel);
+            tbFactory.SetValue(AttributeView.TableModelProperty, _tableModel);*/
 
             template.VisualTree = tbFactory;
             gvc.HeaderTemplate = template;
@@ -814,9 +815,9 @@ namespace PanoramicData.view.table
                 {
                     Point trans = header.TranslatePoint(curDrag, inqScene);
 
-                    if (header.VisualDescendentsOfType<SimpleGridViewColumnHeader>().Count() > 0)
+                    if (header.VisualDescendentsOfType<AttributeView>().Count() > 0)
                     {
-                        SimpleGridViewColumnHeader simpleGridViewColumnHeader = header.VisualDescendentsOfType<SimpleGridViewColumnHeader>().First();
+                        AttributeView simpleGridViewColumnHeader = header.VisualDescendentsOfType<AttributeView>().First();
 
                         // create drag feedback
                         if (vec.Length > 10 && !_isSimpleGridViewColumnHeaderMoveFeedbackShown)
@@ -895,9 +896,9 @@ namespace PanoramicData.view.table
             Point fromInqScene = header.TranslatePoint(curDrag, inqScene);
             Point fromThis = header.TranslatePoint(curDrag, this);
 
-            if (header.VisualDescendentsOfType<SimpleGridViewColumnHeader>().Count() > 0)
+            if (header.VisualDescendentsOfType<AttributeView>().Count() > 0)
             {
-                SimpleGridViewColumnHeader simpleGridViewColumnHeader = header.VisualDescendentsOfType<SimpleGridViewColumnHeader>().First();
+                AttributeView simpleGridViewColumnHeader = header.VisualDescendentsOfType<AttributeView>().First();
 
                 if (_isSimpleGridViewColumnHeaderMoveFeedbackShown)
                 {
@@ -934,9 +935,9 @@ namespace PanoramicData.view.table
             _manipulationStartTime = 0;
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
-            SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
+            /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
             InqScene inqScene = this.FindParent<InqScene>();
          
             // hide cloumn header reorder drop highlights 
@@ -957,12 +958,12 @@ namespace PanoramicData.view.table
                     highlight = closestHeader.FirstVisualDescendentByName("dragHighlight");
                     highlight.Visibility = System.Windows.Visibility.Visible;
                 }
-            }
+            }*/
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
+            /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
 
             if (_filterModel != null && _filterModel.GetColumnDescriptorsForOption(Option.X).Count == 0)
             {
@@ -1092,7 +1093,7 @@ namespace PanoramicData.view.table
                         _filterModel.AddOptionColumnDescriptor(Option.X, clone);
                     }
                 }
-            }
+            }*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

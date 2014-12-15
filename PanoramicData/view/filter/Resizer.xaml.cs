@@ -24,6 +24,7 @@ using PanoramicData.view.math;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
 using CombinedInputAPI;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.filter
 {
@@ -815,7 +816,7 @@ namespace PanoramicData.view.filter
         private Resizer _resizer = null;
         private InqScene _inqScene = null;
 
-        public static event EventHandler<ColumnHeaderEventArgs> Dropped;
+        public static event EventHandler<AttributeViewModelEventArgs> Dropped;
 
         public ResizerRadialControlExecution(FilterModel filterModel, TableModel tableModel, MovableElement movableElement, Resizer resizer, InqScene inqScene)
         {
@@ -871,15 +872,15 @@ namespace PanoramicData.view.filter
                     frozenModel.Color = _filterModel.Color;
                     frozenModel.FilterRendererType = FilterRendererType.Frozen;
                     frozenModel.FrozenImage = _resizer.CreateImage();
-                    Dropped(this,
-                        new ColumnHeaderEventArgs(bounds, null, _tableModel,
-                            frozenModel, false, ColumnHeaderEventArgsCommand.Snapshot));
+                    /*Dropped(this,
+                        new AttributeViewModelEventArgs(bounds, null, _tableModel,
+                            frozenModel, false, AttributeViewModelEventArgType.Snapshot));*/
                 }
                 else if (cmd.Name == "Create\nCopy")
                 {
-                    Dropped(this,
-                        new ColumnHeaderEventArgs(bounds, null, _tableModel,
-                            _filterModel, false, ColumnHeaderEventArgsCommand.Copy));
+                    /*Dropped(this,
+                        new AttributeViewModelEventArgs(bounds, null, _tableModel,
+                            _filterModel, false, AttributeViewModelEventArgType.Copy));*/
                 }
             }
         }

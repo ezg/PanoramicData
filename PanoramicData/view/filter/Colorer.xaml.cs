@@ -22,13 +22,14 @@ using PanoramicData.view.other;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
 using CombinedInputAPI;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.filter
 {
     /// <summary>
     /// Interaction logic for Colorer.xaml
     /// </summary>
-    public partial class Colorer : UserControl, ColumnHeaderEventHandler
+    public partial class Colorer : UserControl, AttributeViewModelEventHandler
     {
         public static event EventHandler<DatabaseTableEventArgs> ColorerDropped;
 
@@ -261,7 +262,7 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
             if (overElement)
             {
@@ -276,11 +277,11 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
+            /*var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
             togglecoloring(clone);
-            colorGridRectangle.Visibility = Visibility.Collapsed;
+            colorGridRectangle.Visibility = Visibility.Collapsed;*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

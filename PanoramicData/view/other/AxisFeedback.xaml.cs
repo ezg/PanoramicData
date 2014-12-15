@@ -11,13 +11,14 @@ using starPadSDK.WPFHelp;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
 using PanoramicData.view.filter;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.other
 {
     /// <summary>
     /// Interaction logic for SimpleDataGridDragFeedback.xaml
     /// </summary>
-    public partial class AxisFeedback : UserControl, ColumnHeaderEventHandler
+    public partial class AxisFeedback : UserControl, AttributeViewModelEventHandler
     {
         private InqScene _inqScene = null;
         private TableModel xTableModel = null;
@@ -44,7 +45,7 @@ namespace PanoramicData.view.other
             inkPresenter.Strokes.Add(stroq.BackingStroke);
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
             xBorder.BorderThickness = new Thickness(1);
             yBorder.BorderThickness = new Thickness(1);
@@ -63,9 +64,9 @@ namespace PanoramicData.view.other
             }
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            xBorder.BorderThickness = new Thickness(1);
+           /* xBorder.BorderThickness = new Thickness(1);
             yBorder.BorderThickness = new Thickness(1);
 
             InqScene inqScene = this.FindParent<InqScene>();
@@ -128,7 +129,7 @@ namespace PanoramicData.view.other
 
                     _inqScene.Rem(this);
                 }
-            }
+            }*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

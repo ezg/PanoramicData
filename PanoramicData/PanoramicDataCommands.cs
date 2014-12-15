@@ -279,7 +279,7 @@ namespace PanoramicData
         public override bool Test(Stroq stroq, object device)
         { 
             // check if start of the gesture is over an element
-            List<SimpleGridViewColumnHeader> elements = _inqScene.GetIntersectedTypesRecursive<SimpleGridViewColumnHeader>(stroq).Select((t) => t as SimpleGridViewColumnHeader).ToList();
+            List<AttributeView> elements = _inqScene.GetIntersectedTypesRecursive<AttributeView>(stroq).Select((t) => t as AttributeView).ToList();
             if (elements.Count > 0)
             {
                 // recognize the stroq
@@ -308,7 +308,7 @@ namespace PanoramicData
 
             if (passed != null)
             {
-                _callback.ShortcutExecuteCallback((List<SimpleGridViewColumnHeader>)passed[0], (string)passed[1]);
+                _callback.ShortcutExecuteCallback((List<AttributeView>)passed[0], (string)passed[1]);
             }
         }
     }
@@ -423,7 +423,7 @@ namespace PanoramicData
 
     public interface ShortcutCallback
     {
-        void ShortcutExecuteCallback(List<SimpleGridViewColumnHeader> startElements, string recog);
+        void ShortcutExecuteCallback(List<AttributeView> startElements, string recog);
     }
 
     public interface CombineCallback

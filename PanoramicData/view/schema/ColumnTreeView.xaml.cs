@@ -22,13 +22,15 @@ using PanoramicData.model.view;
 using PanoramicData.view.table;
 using PanoramicData.view.filter;
 using PanoramicData.view.inq;
+using PanoramicData.model.data;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.schema
 {
     /// <summary>
     /// Interaction logic for ColumnTreeView.xaml
     /// </summary>
-    public partial class ColumnTreeView : UserControl, ColumnHeaderEventHandler
+    public partial class ColumnTreeView : UserControl, AttributeViewModelEventHandler
     {
         public static event EventHandler<DatabaseTableEventArgs> DatabaseTableDropped;
 
@@ -65,7 +67,7 @@ namespace PanoramicData.view.schema
                 NamedAttributeRootOrgItem customFieldsRoot = new NamedAttributeRootOrgItem(SchemaViewModel.SchemaModel, "Custom Groups");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
-                item.HeaderTemplate = FindResource("CustomFieldsRootTemplate") as DataTemplate;
+                item.HeaderTemplate = FindResource("NamedAttributeRootTemplate") as DataTemplate;
                 item.Items.Add(null);
                 tree.Items.Add(item);
             }
@@ -74,7 +76,7 @@ namespace PanoramicData.view.schema
                 CaclculatedAttributeRootOrgItem customFieldsRoot = new CaclculatedAttributeRootOrgItem(SchemaViewModel.SchemaModel, "Caclculated Fields");
                 item = new TreeViewItem();
                 item.Header = customFieldsRoot;
-                item.HeaderTemplate = FindResource("CalculatedFieldsRootTemplate") as DataTemplate;
+                item.HeaderTemplate = FindResource("CaclculatedAttributeRootTemplate") as DataTemplate;
                 item.Items.Add(null);
                 tree.Items.Add(item);
             }
@@ -102,24 +104,20 @@ namespace PanoramicData.view.schema
                     subItem.Header = oi;
                     if (oi is OriginOrgItem)
                     {
-                        subItem.HeaderTemplate = FindResource("TableInfoTemplate") as DataTemplate;
+                        subItem.HeaderTemplate = FindResource("OriginTemplate") as DataTemplate;
                         subItem.Items.Add(null);
                     }
                     else if (oi is AttributeOrgItem)
                     {
-                        FieldInfo fieldInfo = (FieldInfo)oi.Data;
-                        PathInfo pathInfo = oi.Parent.Data as PathInfo;
-                        PanoramicDataColumnDescriptor cd = new DatabaseColumnDescriptor(fieldInfo, pathInfo);
+                        AttributeModel attributeModel = (AttributeModel)oi.Data;
+                        AttributeViewModel attributeViewModel = new AttributeViewModel(attributeModel, new AttributeOperationModel());
+                        attributeViewModel.IsNoChrome = true;
+                        attributeViewModel.IsMenuEnabled = false;
+                        attributeViewModel.IsDraggableByPen = true;
 
                         DataTemplate template = new DataTemplate();
-                        FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(SimpleGridViewColumnHeader));
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsInteractiveProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.FilterModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.TableModelProperty, null);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.DataContextProperty, cd);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.IsSimpleRenderingProperty, true);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableRadialMenuProperty, false);
-                        tbFactory.SetValue(SimpleGridViewColumnHeader.EnableMoveByPenProperty, true);
+                        FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
+                        tbFactory.SetValue(AttributeView.DataContextProperty, attributeViewModel);
                         template.VisualTree = tbFactory;
                         subItem.HeaderTemplate = template;
 
@@ -130,11 +128,11 @@ namespace PanoramicData.view.schema
             }
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
         }
 

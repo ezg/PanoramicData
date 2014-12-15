@@ -15,4 +15,28 @@ namespace PanoramicData.utils
             return (input == null || input == "") ? Visibility.Collapsed : Visibility.Visible;
         }
     }
+
+    public class BooleanToVisibilityConverter : SimpleValueConverter<bool, Visibility>
+    {
+        protected override Visibility ConvertBase(bool input)
+        {
+            return input ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+    
+    public class InverseBooleanToVisibilityConverter : SimpleValueConverter<bool, Visibility>
+    {
+        protected override Visibility ConvertBase(bool input)
+        {
+            return input ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
+
+    public class NullToVisibilityConverter : SimpleValueConverter<object, Visibility>
+    {
+        protected override Visibility ConvertBase(object input)
+        {
+            return input == null ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
 }

@@ -83,16 +83,16 @@
 
 
                 <Grid Grid.Column="1" Grid.Row="1">
-                    <util:SimpleGridViewColumnHeaderPlaceholder x:Name="xPlaceHolder" HorizontalAlignment="Center"/>
+                    <util:AttributePlaceholderview x:Name="xPlaceHolder" HorizontalAlignment="Center"/>
                     
                 </Grid>
 
                 <Grid Grid.Column="0" Grid.Row="0">
-                    <util:SimpleGridViewColumnHeaderPlaceholder x:Name="yPlaceHolder" VerticalAlignment="Center">
-                        <util:SimpleGridViewColumnHeaderPlaceholder.LayoutTransform>
+                    <util:AttributePlaceholderview x:Name="yPlaceHolder" VerticalAlignment="Center">
+                        <util:AttributePlaceholderview.LayoutTransform>
                             <RotateTransform Angle="270"/>
-                        </util:SimpleGridViewColumnHeaderPlaceholder.LayoutTransform>
-                    </util:SimpleGridViewColumnHeaderPlaceholder>
+                        </util:AttributePlaceholderview.LayoutTransform>
+                    </util:AttributePlaceholderview>
                 </Grid>
 
                 <sharpGL:OpenGLControl 

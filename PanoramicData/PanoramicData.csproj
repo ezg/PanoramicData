@@ -282,7 +282,6 @@
     <Compile Include="view\other\SliderFeedback.xaml.cs">
       <DependentUpon>SliderFeedback.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\utils\NonEmptyStringToVisibleConverter.cs" />
     <Compile Include="view\other\RadialControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>RadialControl.xaml</DependentUpon>
@@ -304,11 +303,11 @@
     <Compile Include="view\table\SimpleDataGrid.xaml.cs">
       <DependentUpon>SimpleDataGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\table\SimpleGridViewColumnHeader.xaml.cs">
-      <DependentUpon>SimpleGridViewColumnHeader.xaml</DependentUpon>
+    <Compile Include="view\table\AttributeView.xaml.cs">
+      <DependentUpon>AttributeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\table\SimpleGridViewColumnHeaderPlaceholder.xaml.cs">
-      <DependentUpon>SimpleGridViewColumnHeaderPlaceholder.xaml</DependentUpon>
+    <Compile Include="view\table\AttributePlaceholderview.xaml.cs">
+      <DependentUpon>AttributePlaceholderview.xaml</DependentUpon>
     </Compile>
     <Compile Include="controller\data\AsyncVirtualizingCollection.cs" />
     <Compile Include="controller\data\DataPage.cs" />
@@ -421,11 +420,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\table\SimpleGridViewColumnHeader.xaml">
+    <Page Include="view\table\AttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\table\SimpleGridViewColumnHeaderPlaceholder.xaml">
+    <Page Include="view\table\AttributePlaceholderview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

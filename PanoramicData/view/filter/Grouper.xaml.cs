@@ -23,13 +23,14 @@ using starPadSDK.Inq;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.filter
 {
     /// <summary>
     /// Interaction logic for Grouper.xaml
     /// </summary>
-    public partial class Grouper : UserControl, ColumnHeaderEventHandler
+    public partial class Grouper : UserControl, AttributeViewModelEventHandler
     {
         public FilterModel FilterModel { get; set; }
 
@@ -241,7 +242,7 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
             if (overElement)
             {
@@ -256,12 +257,12 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
+            /*var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
             clone.IsGrouped = true;
             addGrouping(clone);
-            groupGridRectangle.Visibility = Visibility.Collapsed;
+            groupGridRectangle.Visibility = Visibility.Collapsed;*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

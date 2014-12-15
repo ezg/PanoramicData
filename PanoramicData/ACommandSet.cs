@@ -242,9 +242,9 @@ namespace PanoramicData
             }
         }
 
-        public void ShortcutExecuteCallback(List<SimpleGridViewColumnHeader> startElements, string recog)
+        public void ShortcutExecuteCallback(List<AttributeView> startElements, string recog)
         {
-            startElements[0].ShortcutGesture(recog);
+            //startElements[0].ShortcutGesture(recog);
         }
     }
 }

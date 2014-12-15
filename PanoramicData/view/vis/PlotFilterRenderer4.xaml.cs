@@ -41,6 +41,7 @@ using PanoramicData.view.table;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
 using PanoramicData.view.other;
 using CombinedInputAPI;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.vis
 {
@@ -154,16 +155,16 @@ namespace PanoramicData.view.vis
             yPlaceHolder.Changed += YPlaceHolderOnChanged;
         }
 
-        private void YPlaceHolderOnChanged(object sender, ColumnHeaderEventArgs e)
+        private void YPlaceHolderOnChanged(object sender, AttributeViewModelEventArgs e)
         {
             FilterModel.RemoveOptionColumnDescriptor(Option.Y, FilterModel.GetColumnDescriptorsForOption(Option.Y)[0]);
-            FilterModel.AddOptionColumnDescriptor(Option.Y, (PanoramicDataColumnDescriptor) e.ColumnDescriptor.Clone());
+            //FilterModel.AddOptionColumnDescriptor(Option.Y, (PanoramicDataColumnDescriptor) e.ColumnDescriptor.Clone());
         }
 
-        private void XPlaceHolderOnChanged(object sender, ColumnHeaderEventArgs e)
+        private void XPlaceHolderOnChanged(object sender, AttributeViewModelEventArgs e)
         {
             FilterModel.RemoveOptionColumnDescriptor(Option.X, FilterModel.GetColumnDescriptorsForOption(Option.X)[0]);
-            FilterModel.AddOptionColumnDescriptor(Option.X, (PanoramicDataColumnDescriptor)e.ColumnDescriptor.Clone());
+            //FilterModel.AddOptionColumnDescriptor(Option.X, (PanoramicDataColumnDescriptor)e.ColumnDescriptor.Clone());
         }
 
         public override byte[] CreateImage()
@@ -2102,10 +2103,10 @@ namespace PanoramicData.view.vis
                 xPlaceHolder.Visibility = Visibility.Visible;
                 yPlaceHolder.Visibility = Visibility.Visible;
 
-                xPlaceHolder.Init(FilterModel, FilterModel.GetColumnDescriptorsForOption(Option.X)[0],
+                /*xPlaceHolder.Init(FilterModel, FilterModel.GetColumnDescriptorsForOption(Option.X)[0],
                     _xDataType == DataTypeConstants.FLOAT || _xDataType == DataTypeConstants.INT);
                 yPlaceHolder.Init(FilterModel, FilterModel.GetColumnDescriptorsForOption(Option.Y)[0],
-                    _yDataType == DataTypeConstants.FLOAT || _yDataType == DataTypeConstants.INT);
+                    _yDataType == DataTypeConstants.FLOAT || _yDataType == DataTypeConstants.INT);*/
                 xPlaceHolder.ErrorMessage = null;
                 yPlaceHolder.ErrorMessage = null;
                 //xLabel.Content = FilterModel.GetColumnDescriptorsForOption(Option.X)[0].GetSimpleLabel();
@@ -2113,7 +2114,7 @@ namespace PanoramicData.view.vis
             }
             else
             {
-                yPlaceHolder.Visibility = Visibility.Visible;
+                /*yPlaceHolder.Visibility = Visibility.Visible;
                 yPlaceHolder.Init(FilterModel, FilterModel.GetColumnDescriptorsForOption(Option.Y)[0],
                     _yDataType == DataTypeConstants.FLOAT || _yDataType == DataTypeConstants.INT);
                 yPlaceHolder.ErrorMessage = null;
@@ -2122,7 +2123,7 @@ namespace PanoramicData.view.vis
                 xPlaceHolder.Visibility = Visibility.Collapsed;
                 xPlaceHolder.Init(FilterModel, FilterModel.GetColumnDescriptorsForOption(Option.X)[0],
                     _xDataType == DataTypeConstants.FLOAT || _xDataType == DataTypeConstants.INT);
-                xPlaceHolder.ErrorMessage = null;
+                xPlaceHolder.ErrorMessage = null;*/
             }
 
             QueryItemsProvider queryItemsProvider = new QueryItemsProvider(new FilterQueryGenerator(FilterModel));

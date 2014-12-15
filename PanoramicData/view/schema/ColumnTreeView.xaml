@@ -11,25 +11,19 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
-        <DataTemplate x:Key="TableInfoTemplate">
+        <DataTemplate x:Key="OriginTemplate">
             <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
         </DataTemplate>
         <DataTemplate x:Key="DatabaseRootTemplate">
             <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
         </DataTemplate>
-        <DataTemplate x:Key="CustomFieldsRootTemplate">
+        <DataTemplate x:Key="NamedAttributeRootTemplate">
             <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
         </DataTemplate>
-        <DataTemplate x:Key="CustomFieldTemplate">
-            <TextBlock Text="{Binding Path=Name}"/>
-        </DataTemplate>
-        <DataTemplate x:Key="CalculatedFieldsRootTemplate">
+        <DataTemplate x:Key="CaclculatedAttributeRootTemplate">
             <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
         </DataTemplate>
-        <DataTemplate x:Key="CalculatedFieldTemplate">
-            <TextBlock Text="{Binding Path=Name}"/>
-        </DataTemplate>
-
+        
         <Style TargetType="{x:Type util:ColumnTree}">
             <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
             <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling"/>

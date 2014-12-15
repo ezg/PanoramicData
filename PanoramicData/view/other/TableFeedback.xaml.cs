@@ -10,13 +10,14 @@ using starPadSDK.WPFHelp;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
 using PanoramicData.view.filter;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.other
 {
     /// <summary>
     /// Interaction logic for SimpleDataGridDragFeedback.xaml
     /// </summary>
-    public partial class TableFeedback : UserControl, ColumnHeaderEventHandler
+    public partial class TableFeedback : UserControl, AttributeViewModelEventHandler
     {
         private InqScene _inqScene = null;
         private TableModel _tableModel = null;
@@ -33,7 +34,7 @@ namespace PanoramicData.view.other
             inkPresenter.Strokes.Add(stroq.BackingStroke);
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
             inkPresenter.Strokes[0].DrawingAttributes.Color = Color.FromArgb(0x88, 0x00, 0x8D, 0xff);
 
@@ -44,9 +45,9 @@ namespace PanoramicData.view.other
             }
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            inkPresenter.Strokes[0].DrawingAttributes.Color = Color.FromArgb(0x88, 0x00, 0x8D, 0xff);
+           /* inkPresenter.Strokes[0].DrawingAttributes.Color = Color.FromArgb(0x88, 0x00, 0x8D, 0xff);
 
             InqScene inqScene = this.FindParent<InqScene>();
             if (inqScene != null)
@@ -74,7 +75,7 @@ namespace PanoramicData.view.other
 
                     _inqScene.Rem(this);
                 }
-            }
+            }*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

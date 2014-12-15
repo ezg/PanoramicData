@@ -20,13 +20,14 @@ using PanoramicData.view.other;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
 using PanoramicData.controller.math;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.math
 {
     /// <summary>
     /// Interaction logic for MathEditor.xaml
     /// </summary>
-    public partial class MathEditor : UserControl, ColumnHeaderEventHandler
+    public partial class MathEditor : UserControl, AttributeViewModelEventHandler
     {
         public MathManager MathManager = null;
         public StroqCollection Stroqs = new StroqCollection();
@@ -74,7 +75,7 @@ namespace PanoramicData.view.math
             {
                 Rct bounds = label.InkTableContents.GetStroqs().GetBounds();
 
-                SimpleGridViewColumnHeader headerView = new SimpleGridViewColumnHeader(false, true);
+                /*AttributeView headerView = new AttributeView(false, true);
                 headerView.DataContext = _calculatedColumnDescriptorInfo.ProvidedLabels[label];
                 headerView.TableModel = _filterModel.TableModel;
                 headerView.Measure(new Size(double.PositiveInfinity,
@@ -88,7 +89,7 @@ namespace PanoramicData.view.math
                 headerView.RenderTransform = new TranslateTransform(
                     bounds.Left,
                     bounds.Top);
-                aPage.AddNoUndo(headerView);
+                aPage.AddNoUndo(headerView);*/
             }
 
 
@@ -121,7 +122,7 @@ namespace PanoramicData.view.math
 
         void _calculatedColumnDescriptorInfo_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            foreach (var elem in aPage.Elements.Where(s => s is SimpleGridViewColumnHeader))
+            foreach (var elem in aPage.Elements.Where(s => s is AttributeView))
             {
                 var tmp = elem.DataContext;
                 elem.DataContext = null;
@@ -204,14 +205,14 @@ namespace PanoramicData.view.math
             }
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
         {
             
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
         {
-            if (e.ColumnDescriptor is CalculatedColumnDescriptor &&
+            /*if (e.ColumnDescriptor is CalculatedColumnDescriptor &&
                 (e.ColumnDescriptor as CalculatedColumnDescriptor).CalculatedColumnDescriptorInfo.Equals(
                     _calculatedColumnDescriptorInfo))
             {
@@ -231,7 +232,7 @@ namespace PanoramicData.view.math
             aPage.AddNoUndo(s);
 
             // create the header representation 
-            SimpleGridViewColumnHeader headerView = new SimpleGridViewColumnHeader(false, true);
+            AttributeView headerView = new AttributeView(false, true);
             headerView.DataContext = cd;
             headerView.TableModel = e.FilterModel.TableModel;
             headerView.Measure(new Size(double.PositiveInfinity,
@@ -245,7 +246,7 @@ namespace PanoramicData.view.math
             headerView.RenderTransform = new TranslateTransform(
                 bounds.Left,
                 bounds.Top);
-            aPage.AddNoUndo(headerView);
+            aPage.AddNoUndo(headerView);*/
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

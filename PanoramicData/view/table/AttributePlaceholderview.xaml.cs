@@ -7,20 +7,22 @@ using PixelLab.Common;
 using starPadSDK.AppLib;
 using PanoramicDataModel;
 using PanoramicData.model.view;
+using PanoramicData.model.view_new;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.table
 {
     /// <summary>
-    /// Interaction logic for SimpleGridViewColumnHeaderPlaceholder.xaml
+    /// Interaction logic for AttributePlaceholderview.xaml
     /// </summary>
-    public partial class SimpleGridViewColumnHeaderPlaceholder : UserControl, ColumnHeaderEventHandler
+    public partial class AttributePlaceholderview : UserControl, AttributeViewModelEventHandler
     {
-        public delegate void ChangedHandler(object sender, ColumnHeaderEventArgs e);
+        public delegate void ChangedHandler(object sender, AttributeViewModelEventArgs e);
         public event ChangedHandler Changed;
 
         public static readonly DependencyProperty LabelTextProperty =
             DependencyProperty.Register("LabelText", typeof(string),
-            typeof(SimpleGridViewColumnHeaderPlaceholder),
+            typeof(AttributePlaceholderview),
             new PropertyMetadata("Default Label:"));
 
         public string LabelText
@@ -37,7 +39,7 @@ namespace PanoramicData.view.table
 
         public static readonly DependencyProperty ErrorMessageProperty =
             DependencyProperty.Register("ErrorMessage", typeof(string),
-            typeof(SimpleGridViewColumnHeaderPlaceholder),
+            typeof(AttributePlaceholderview),
             new PropertyMetadata("Default Error Message"));
 
         public string ErrorMessage
@@ -52,37 +54,22 @@ namespace PanoramicData.view.table
             }
         }
 
-        public void Init(FilterModel filterModel, PanoramicDataColumnDescriptor descriptor, bool enableScaleFunction)
-        {
-            gridContent.Children.Clear();
-            if (descriptor != null)
-            {
-                SimpleGridViewColumnHeader ch = new SimpleGridViewColumnHeader();
-                ch.IsSimpleRendering = true;
-                ch.EnableRemoveOptionInRadialMenu = false;
-                ch.IsInteractive = true;
-                ch.DataContext = descriptor;
-                ch.FilterModel = filterModel;
-                ch.EnableScaleFunctionInRadialMenu = enableScaleFunction;
-                gridContent.Children.Add(ch);
-            }
-        }
-
-        public SimpleGridViewColumnHeaderPlaceholder()
+        public AttributePlaceholderview()
         {
             InitializeComponent();
         }
 
-        public void ColumnHeaderMoved(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e, bool overElement)
+
+        public  void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
             borderHighlight.Visibility = Visibility.Collapsed;
 
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             if (overElement)
             {
                 try
                 {
-                    if (gridContent.GetBounds(inqScene).IntersectsWith(e.Bounds))
+                    if (gridContent.GetBounds(inkableScene).IntersectsWith(e.Bounds))
                     {
                         borderHighlight.Visibility = Visibility.Visible;
                     }
@@ -93,14 +80,14 @@ namespace PanoramicData.view.table
             }
         }
 
-        public void ColumnHeaderDropped(SimpleGridViewColumnHeader sender, ColumnHeaderEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
             borderHighlight.Visibility = Visibility.Collapsed;
 
-            InqScene inqScene = this.FindParent<InqScene>();
-            if (inqScene != null)
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            if (inkableScene != null)
             {
-                if (gridContent.GetBounds(inqScene).IntersectsWith(e.Bounds))
+                if (gridContent.GetBounds(inkableScene).IntersectsWith(e.Bounds))
                 {
                     if (Changed != null)
                     {

@@ -22,6 +22,7 @@ using System.IO;
 using PanoramicData.controller.input;
 using PanoramicData.model.data;
 using PanoramicData.model.data.mssql;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.controller.view
 {
@@ -40,8 +41,8 @@ namespace PanoramicData.controller.view
             }
             LoadData(_mainModel.DatasetConfigurations[0]);
 
-            SimpleGridViewColumnHeader.Dropped += SimpleGridViewColumnHeader_Dropped;
-            SimpleGridViewColumnHeader.Moved += SimpleGridViewColumnHeader_Moved;
+            AttributeViewModel.AttributeViewModelDropped += AttributeViewModelDropped;
+            AttributeViewModel.AttributeViewModelMoved += AttributeViewModelMoved;
             ResizerRadialControlExecution.Dropped += ResizerRadialControlExecution_Dropped;
             ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
             Colorer.ColorerDropped += ColorerDropped;
@@ -127,33 +128,33 @@ namespace PanoramicData.controller.view
         }
 
         
-        void SimpleGridViewColumnHeader_Moved(object sender, ColumnHeaderEventArgs e)
+        void AttributeViewModelMoved(object sender, AttributeViewModelEventArgs e)
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
+            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
+            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
 
             var orderderHits = hits.Select(dep => dep as FrameworkElement)
                 .OrderBy(fe => (fe.GetBounds(InkableScene).Center.GetVec() - e.Bounds.Center.GetVec()).LengthSquared).ToList();
 
             foreach (var element in InkableScene.VisualDescendentsOfType<FrameworkElement>())
             {
-                if (element is ColumnHeaderEventHandler)
+                if (element is AttributeViewModelEventHandler)
                 {
-                    (element as ColumnHeaderEventHandler).ColumnHeaderMoved(
-                        sender as SimpleGridViewColumnHeader, e,
+                    (element as AttributeViewModelEventHandler).AttributeViewModelMoved(
+                        sender as AttributeViewModel, e,
                         hits.Count > 0 ? orderderHits[0] == element : false);
                 }
             }
         }
 
-        void SimpleGridViewColumnHeader_Dropped(object sender, ColumnHeaderEventArgs e)
+        void AttributeViewModelDropped(object sender, AttributeViewModelEventArgs e)
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
+            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
+            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
 
             PanoramicDataColumnDescriptor columnDescriptor = e.ColumnDescriptor;
             double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
@@ -177,8 +178,8 @@ namespace PanoramicData.controller.view
                     .OrderBy(dep => dep is ColumnTreeView)
                     .ThenBy(fe => (fe.GetBounds(InkableScene).Center.GetVec() - e.Bounds.Center.GetVec()).LengthSquared).ToList();
 
-                (orderderHits[0] as ColumnHeaderEventHandler).ColumnHeaderDropped(
-                    sender as SimpleGridViewColumnHeader, e);
+                (orderderHits[0] as AttributeViewModelEventHandler).AttributeViewModelDropped(
+                    sender as AttributeViewModel, e);
             }
             else
             {
@@ -197,8 +198,8 @@ namespace PanoramicData.controller.view
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
+            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
+            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
 
             if (hits.Count == 0)
             {
@@ -240,8 +241,8 @@ namespace PanoramicData.controller.view
         {
             HitTester hitTester = new HitTester();
             Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(ColumnHeaderEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(ColumnHeaderEventHandler) }.ToList(), filters);
+            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
+            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
 
             if (hits.Count == 0)
             {
@@ -290,21 +291,21 @@ namespace PanoramicData.controller.view
             }
         }
 
-        void ResizerRadialControlExecution_Dropped(object sender, ColumnHeaderEventArgs e)
+        void ResizerRadialControlExecution_Dropped(object sender, AttributeViewModelEventArgs e)
         {
-            if (e.Command == ColumnHeaderEventArgsCommand.Copy)
+            if (e.Type == AttributeViewModelEventArgType.Copy)
             {
-                FilterHolder filter = new FilterHolder();
+                /*FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(e.FilterModel);
                 filterHolderViewModel.Center = new Point();
                 filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));
+                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));*/
             }
-            else if (e.Command == ColumnHeaderEventArgsCommand.Snapshot)
+            else if (e.Type == AttributeViewModelEventArgType.Snapshot)
             {
-                FilterHolder filter = new FilterHolder();
+                /*FilterHolder filter = new FilterHolder();
                 filter.FilterHolderViewModel = (FilterHolderViewModel)e.FilterModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));
+                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));*/
             }
         }
     }
