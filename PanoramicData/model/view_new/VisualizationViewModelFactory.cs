@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PanoramicData.model.view_new
 {
-    class VisualisationViewModelFactory
+    class VisualizationViewModelFactory
     {
     }
 }

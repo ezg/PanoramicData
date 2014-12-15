@@ -11,7 +11,7 @@ namespace PanoramicData.model.view
     {
         public FilterHolderViewModel()
         {
-            Dimension = new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT);
+            Dimension = new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT);
         }
 
         private Point _center = new Point();

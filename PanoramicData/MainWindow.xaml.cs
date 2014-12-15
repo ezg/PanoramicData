@@ -385,13 +385,13 @@ namespace PanoramicData
             {
                 Pt position = this.TranslatePoint(new Point(100, 100), MainViewController.Instance.InkableScene);
 
-                FilterHolder filter = new FilterHolder();
+                VisualizationContainerView filter = new VisualizationContainerView();
                 FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
                
-                filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0, position.Y + VisualizationContainerView.HEIGHT / 2.0);
+                //filter.FilterHolderViewModel = filterHolderViewModel;
+                filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
             }
             if (Key.N == e.Key)
             {

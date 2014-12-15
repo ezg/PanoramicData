@@ -201,7 +201,7 @@
     <Compile Include="model\view_new\LinkViewModel.cs" />
     <Compile Include="model\view\MainModel.cs" />
     <Compile Include="model\view\SchemaViewModel.cs" />
-    <Compile Include="model\view_new\VisualisationViewModelFactory.cs" />
+    <Compile Include="model\view_new\VisualizationViewModelFactory.cs" />
     <Compile Include="model\view_new\VisualizationViewModel.cs" />
     <Compile Include="utils\Converters.cs" />
     <Compile Include="utils\Helpers.cs" />
@@ -287,8 +287,8 @@
       <DependentUpon>RadialControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\other\SimpleACommandSet.cs" />
-    <Compile Include="view\filter\FilterHolder.xaml.cs">
-      <DependentUpon>FilterHolder.xaml</DependentUpon>
+    <Compile Include="view\filter\VisualizationContainerView.xaml.cs">
+      <DependentUpon>VisualizationContainerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\filter\FilterModelAttachment.cs" />
     <Compile Include="view\other\SimpleAPage.cs" />
@@ -340,7 +340,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\filter\FilterHolder.xaml">
+    <Page Include="view\filter\VisualizationContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

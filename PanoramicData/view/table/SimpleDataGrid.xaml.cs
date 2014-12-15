@@ -71,8 +71,8 @@ namespace PanoramicData.view.table
 
         private bool _isResizing = false;
         private bool _isTwoFingerExploringGraphs = true;
-        private FilterHolder _twoFingerExploreFeedback = null;
-        private FilterHolder _explorerFeedback = null;
+        private VisualizationContainerView _twoFingerExploreFeedback = null;
+        private VisualizationContainerView _explorerFeedback = null;
         private PanoramicDataColumnDescriptor _explorerFeedbackColumnDescriptor = null;
         private SimpleDataGridDragFeedback _cellDragFeedback = null;
         private bool _isSimpleGridViewColumnHeaderMoveFeedbackShown = false;
@@ -660,16 +660,16 @@ namespace PanoramicData.view.table
 
                     MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == header.Column).First();
 
-                    _twoFingerExploreFeedback = new FilterHolder();
+                    _twoFingerExploreFeedback = new VisualizationContainerView();
                     FilterHolderViewModel filterHolderViewModel =
                         FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel,
                         FilterRendererType.Plot);
                     _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
                     filterHolderViewModel.Temporary = true;
-                    _twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
+                    //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
 
-                    _twoFingerExploreFeedback.SetPosition(new Pt(transInqScene.X - FilterHolder.WIDTH / 2.0, thisOffset.Y - FilterHolder.HEIGHT)); 
-                    _twoFingerExploreFeedback.SetDimension(new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                    _twoFingerExploreFeedback.SetPosition(new Pt(transInqScene.X - VisualizationContainerView.WIDTH / 2.0, thisOffset.Y - VisualizationContainerView.HEIGHT)); 
+                    //_twoFingerExploreFeedback.SetDimension(new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
 
                     inqScene.AddNoUndo(_twoFingerExploreFeedback);
                 }
@@ -719,12 +719,12 @@ namespace PanoramicData.view.table
                 e.TouchDevice.Capture(null);
                 _dragDevice2 = null;
 
-                if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
+                //if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
                 {
                     InqScene inqScene = this.FindParent<InqScene>();
                     inqScene.Rem(_twoFingerExploreFeedback);
                 }
-                else
+                //else
                 {
                     //_twoFingerExploreFeedback.FilterHolderViewModel.TableModel.AddIncomingFilter(_twoFingerExploreFeedback.FilterHolderViewModel);
                     _twoFingerExploreFeedback.InitPostionAndDimension(_twoFingerExploreFeedback.GetPosition(), _twoFingerExploreFeedback.GetSize());
@@ -742,13 +742,13 @@ namespace PanoramicData.view.table
             if (((double)_twoFingerExploreFeedback.GetValue(Canvas.TopProperty)) - trans.Y > -200 ||
                 ((double)_twoFingerExploreFeedback.GetValue(Canvas.TopProperty)) - trans.Y < -460)
             {
-                _twoFingerExploreFeedback.FilterHolderViewModel.Temporary = false;
+                //_twoFingerExploreFeedback.FilterHolderViewModel.Temporary = false;
             }
 
-            if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
+            //if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
             {
                 // move filter
-                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - FilterHolder.WIDTH / 2.0);
+                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
 
                 GridViewColumnHeader overHeader = findOverColumnHeader(trans);
 
@@ -763,15 +763,15 @@ namespace PanoramicData.view.table
                         FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel, FilterRendererType.Plot);
                         _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
                         filterHolderViewModel.Temporary = true;
-                        _twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
+                        //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
                     }
                 }
             }
-            else
+            //else
             {
-                _twoFingerExploreFeedback.SetValue(Canvas.TopProperty, trans.Y - FilterHolder.HEIGHT);
-                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - FilterHolder.WIDTH / 2.0);
-                _twoFingerExploreFeedback.FilterHolderViewModel.Center = new Point((trans.X - FilterHolder.WIDTH / 2.0) + FilterHolder.WIDTH / 2.0, (trans.Y - FilterHolder.HEIGHT) + FilterHolder.HEIGHT / 2.0);
+                _twoFingerExploreFeedback.SetValue(Canvas.TopProperty, trans.Y - VisualizationContainerView.HEIGHT);
+                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
+                //_twoFingerExploreFeedback.FilterHolderViewModel.Center = new Point((trans.X - VisualizationContainerView.WIDTH / 2.0) + VisualizationContainerView.WIDTH / 2.0, (trans.Y - VisualizationContainerView.HEIGHT) + VisualizationContainerView.HEIGHT / 2.0);
             }
         }
 
@@ -852,17 +852,17 @@ namespace PanoramicData.view.table
                         if (((double)_explorerFeedback.GetValue(Canvas.TopProperty)) - trans.Y > -200 ||
                             ((double)_explorerFeedback.GetValue(Canvas.TopProperty)) - trans.Y < -460)
                         {
-                            _explorerFeedback.FilterHolderViewModel.Temporary = false;
+                            //_explorerFeedback.FilterHolderViewModel.Temporary = false;
                         }
 
-                        if (_explorerFeedback.FilterHolderViewModel.Temporary)
+                       // if (_explorerFeedback.FilterHolderViewModel.Temporary)
                         {
                             // move filter
-                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - FilterHolder.WIDTH / 2.0);
-                            _explorerFeedback.SetValue(Canvas.TopProperty, thisOffset.Y - FilterHolder.HEIGHT);
+                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
+                            _explorerFeedback.SetValue(Canvas.TopProperty, thisOffset.Y - VisualizationContainerView.HEIGHT);
 
 
-                            Console.WriteLine((trans.X - FilterHolder.WIDTH / 2.0) + " " + (thisOffset.Y - FilterHolder.HEIGHT));
+                            Console.WriteLine((trans.X - VisualizationContainerView.WIDTH / 2.0) + " " + (thisOffset.Y - VisualizationContainerView.HEIGHT));
                             GridViewColumnHeader overHeader = findOverColumnHeader(trans);
 
                             if (overHeader != null && overHeader.Column != null && (overHeader.Column.Header as string) != "")
@@ -872,18 +872,18 @@ namespace PanoramicData.view.table
                                 {
                                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(fieldMapping.ColumnDescriptor, _filterModel.TableModel);
                                     filterHolderViewModel.Temporary = true;
-                                    filterHolderViewModel.Color = _explorerFeedback.FilterHolderViewModel.Color;
+                                    //filterHolderViewModel.Color = _explorerFeedback.FilterHolderViewModel.Color;
 
-                                    _explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
+                                    //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
                                     _explorerFeedbackColumnDescriptor = fieldMapping.ColumnDescriptor;
                                 }
                             }
                         }
-                        else
+                        //else
                         {
-                            _explorerFeedback.SetValue(Canvas.TopProperty, trans.Y - FilterHolder.HEIGHT);
-                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - FilterHolder.WIDTH / 2.0);
-                            _explorerFeedback.FilterHolderViewModel.Center = new Point((trans.X - FilterHolder.WIDTH / 2.0) + FilterHolder.WIDTH / 2.0, (trans.Y - FilterHolder.HEIGHT) + FilterHolder.HEIGHT / 2.0);
+                            _explorerFeedback.SetValue(Canvas.TopProperty, trans.Y - VisualizationContainerView.HEIGHT);
+                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
+                            //_explorerFeedback.FilterHolderViewModel.Center = new Point((trans.X - VisualizationContainerView.WIDTH / 2.0) + VisualizationContainerView.WIDTH / 2.0, (trans.Y - VisualizationContainerView.HEIGHT) + VisualizationContainerView.HEIGHT / 2.0);
                         }
                     }
                 }
@@ -907,11 +907,11 @@ namespace PanoramicData.view.table
                 }
                 else if (_explorerFeedback != null)
                 {
-                    if (_explorerFeedback.FilterHolderViewModel.Temporary)
+                   // if (_explorerFeedback.FilterHolderViewModel.Temporary)
                     {
                         inqScene.Rem(_explorerFeedback);
                     }
-                    else
+                    //else
                     {
                         //_explorerFeedback.FilterHolderViewModel.TableModel.AddIncomingFilter(_explorerFeedback.FilterHolderViewModel);
                         _explorerFeedback.InitPostionAndDimension(_explorerFeedback.GetPosition(), _explorerFeedback.GetSize());
@@ -935,7 +935,7 @@ namespace PanoramicData.view.table
             _manipulationStartTime = 0;
         }
 
-        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
             /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
             InqScene inqScene = this.FindParent<InqScene>();
@@ -961,7 +961,7 @@ namespace PanoramicData.view.table
             }*/
         }
 
-        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
             /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
 
@@ -1167,13 +1167,13 @@ namespace PanoramicData.view.table
                 MappingEntry map = maps.First();
                 InqScene inqScene = this.FindParent<InqScene>();
 
-                _explorerFeedback = new FilterHolder();
+                _explorerFeedback = new VisualizationContainerView();
                 _explorerFeedbackColumnDescriptor = map.ColumnDescriptor;
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
                 filterHolderViewModel.Temporary = true;
 
-                _explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
-                _explorerFeedback.SetDimension(new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
+                //_explorerFeedback.SetDimension(new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                 //filterHolderViewModel.AddIncomingFilter(_filterModel, FilteringType.Filter);
                 //_explorerFeedback.InitPostionAndDimension(offset, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
                 

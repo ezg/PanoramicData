@@ -266,6 +266,8 @@ namespace PanoramicData.model.view_new
         public Rct Bounds { get; set; }
         public AttributeViewModel AttributeViewModel { get; set; }
         public AttributeViewModelEventArgType Type { get; set; }
+        public bool UseDefaultSize { get; set; }
+        public VisualizationViewModel CreateLinkFrom { get; set; }
 
         public AttributeViewModelEventArgs() { }
         public AttributeViewModelEventArgs(AttributeViewModel attributeViewModel, Rct bounds, AttributeViewModelEventArgType type)

@@ -59,7 +59,7 @@ namespace PanoramicData
             //t.Add(typeof(InkTable));
             OneStrokeGesture g = null;
             g = new ConnectGesture(_can, 
-                new Type[] { typeof(FilterHolder) },
+                new Type[] { typeof(VisualizationContainerView) },
                 new Type[] { typeof(FilterModelAttachment) }, false,
                 this);
             _gest.Add(g);
@@ -84,8 +84,8 @@ namespace PanoramicData
             _gest.Add(bg);
 
             g = new ConnectGesture(_can,
-                new Type[] { typeof(FilterHolder), typeof(FilterModelAttachment) },
-                new Type[] { typeof(FilterHolder), typeof(FilterModelAttachment) }, true,
+                new Type[] { typeof(VisualizationContainerView), typeof(FilterModelAttachment) },
+                new Type[] { typeof(VisualizationContainerView), typeof(FilterModelAttachment) }, true,
                 this);
             _gest.Add(g);
 
@@ -131,40 +131,40 @@ namespace PanoramicData
             // partial connect
             if (startElements.Count == 0 || endElements.Count == 0)
             {
-                if (startElements.Count == 0 && endElements[0] is FilterHolder)
+                if (startElements.Count == 0 && endElements[0] is VisualizationContainerView)
                 {
-                    endModel = ((FilterHolder)endElements[0]).FilterHolderViewModel;
-                    FilterHolder filter = new FilterHolder();
+                    //endModel = ((VisualizationContainerView)endElements[0]).FilterHolderViewModel;
+                    VisualizationContainerView filter = new VisualizationContainerView();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(endModel, true, false);
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();
-                    filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(new Pt(stroq[0].X - FilterHolder.WIDTH / 2.0, stroq[0].Y - FilterHolder.HEIGHT / 2.0), new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                    //filter.FilterHolderViewModel = filterHolderViewModel;
+                    filter.InitPostionAndDimension(new Pt(stroq[0].X - VisualizationContainerView.WIDTH / 2.0, stroq[0].Y - VisualizationContainerView.HEIGHT / 2.0), new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                     endModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
                 }
-                else if (endElements.Count == 0 && startElements[0] is FilterHolder)
+                else if (endElements.Count == 0 && startElements[0] is VisualizationContainerView)
                 {
-                    startModel = ((FilterHolder)startElements[0]).FilterHolderViewModel;
-                    FilterHolder filter = new FilterHolder();
+                   // startModel = ((VisualizationContainerView)startElements[0]).FilterHolderViewModel;
+                    VisualizationContainerView filter = new VisualizationContainerView();
                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(startModel, true, false);
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();
-                    filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(new Pt(stroq[-1].X - FilterHolder.WIDTH / 2.0, stroq[-1].Y - FilterHolder.HEIGHT / 2.0), new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                    //filter.FilterHolderViewModel = filterHolderViewModel;
+                    filter.InitPostionAndDimension(new Pt(stroq[-1].X - VisualizationContainerView.WIDTH / 2.0, stroq[-1].Y - VisualizationContainerView.HEIGHT / 2.0), new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                     filterHolderViewModel.AddIncomingFilter(startModel, FilteringType.Filter, true);
                 }
             }
 
             else if  (startElements.Count > 0 && endElements.Count > 0)
             {
-                if (startElements[0] is FilterHolder)
+                if (startElements[0] is VisualizationContainerView)
                 {
-                    startModel = ((FilterHolder) startElements[0]).FilterHolderViewModel;
+                    //startModel = ((VisualizationContainerView) startElements[0]).FilterHolderViewModel;
                 }
 
-                if (endElements[0] is FilterHolder)
+                if (endElements[0] is VisualizationContainerView)
                 {
-                    endModel = ((FilterHolder) endElements[0]).FilterHolderViewModel;
+                    //endModel = ((VisualizationContainerView) endElements[0]).FilterHolderViewModel;
                 }
                 else if (endElements[0] is FilterModelAttachment)
                 {

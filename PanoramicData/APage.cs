@@ -223,12 +223,12 @@ namespace PanoramicData
 
         void elementRemovedEvent(FrameworkElement e)
         {
-            if (e is FilterHolder)
+            if (e is VisualizationContainerView)
             {
-                FilterHolder fh = e as FilterHolder;
+                VisualizationContainerView fh = e as VisualizationContainerView;
                 foreach (var fe in this.Elements.Where((t) => t is FilterModelAttachment))
                 {
-                    FilterModelAttachment edge = (fe as FilterModelAttachment);
+                    /*FilterModelAttachment edge = (fe as FilterModelAttachment);
                     if (edge.Destination.GetIncomingFilterModels(FilteringType.Filter).Contains(fh.FilterHolderViewModel))
                     {
                         edge.Destination.RemoveIncomingFilter(fh.FilterHolderViewModel, FilteringType.Filter);
@@ -240,7 +240,7 @@ namespace PanoramicData
                     if (edge.Destination == fh.FilterHolderViewModel)
                     {
                         Rem(edge);
-                    }
+                    }*/
                 }
                 //fh.FilterHolderViewModel.TableModel.RemoveNamedFilterModel(fh.FilterHolderViewModel);
             }

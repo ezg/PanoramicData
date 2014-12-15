@@ -14,7 +14,7 @@ using PanoramicData.controller.view;
 
 namespace PanoramicData.view.filter
 {
-    public class MovableElement : UserControl
+    public abstract class MovableElement : UserControl
     {
         private bool _isUnderInteraction = false;
 
@@ -37,39 +37,20 @@ namespace PanoramicData.view.filter
         public virtual void InitPostionAndDimension(Pt pos, Vec dim)
         {
             this.SetPosition(pos);
-            this.SetDimension(dim);
+            this.SetSize(dim);
 
             PhysicsController.Instance.AddPhysicalObject(this);
             MainViewController.Instance.InkableScene.Add(this);
         }
+        public abstract Pt GetPosition();
 
-        public virtual void SetPosition(Pt pos)
-        {
-            Canvas.SetLeft(this, pos.X);
-            Canvas.SetTop(this, pos.Y);
-        }
+        public abstract void SetPosition(Pt pos);
 
-        public virtual void SetCenter(Pt pos)
-        {
-            Canvas.SetLeft(this, pos.X - this.Width / 2.0);
-            Canvas.SetTop(this, pos.Y - this.Height / 2.0);
-        }
+        public abstract void SetSize(Vec dim);
 
-        public virtual Pt GetPosition()
-        {
-            return new Pt(Canvas.GetLeft(this), Canvas.GetTop(this));
-        }
+        public abstract Vec GetSize();
 
-        public virtual Pt GetCenter()
-        {
-            return new Pt(Canvas.GetLeft(this) + this.Width / 2.0, Canvas.GetTop(this) + this.Height / 2.0);
-        }
-
-        public virtual void SetDimension(Vec dim)
-        {
-            this.Width = dim.X;
-            this.Height = dim.Y;
-        }
+        public abstract Vec GetMinSize();
 
         public virtual void NotifyDragStart(Pt currentPos)
         {
@@ -107,16 +88,6 @@ namespace PanoramicData.view.filter
 
         public virtual void NotifyInteraction()
         {
-        }
-
-        public virtual Vec GetSize()
-        {
-            return new Vec(this.Width, this.Height);
-        }
-
-        public virtual Vec GetMinSize()
-        {
-            return new Vec(this.MinWidth, this.MinHeight);
         }
 
         public virtual void FlipSides()

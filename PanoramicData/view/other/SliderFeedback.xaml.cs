@@ -34,7 +34,7 @@ namespace PanoramicData.view.other
             inkPresenter.Strokes.Add(stroq.BackingStroke);
         }
 
-        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
             inkPresenter.Strokes[0].DrawingAttributes.Color = Color.FromArgb(0x88, 0x00, 0x8D, 0xff);
 
@@ -45,7 +45,7 @@ namespace PanoramicData.view.other
             }
         }
 
-        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
             /*inkPresenter.Strokes[0].DrawingAttributes.Color = Color.FromArgb(0x88, 0x00, 0x8D, 0xff);
 

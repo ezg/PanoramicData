@@ -156,21 +156,9 @@ namespace PanoramicData.controller.view
             filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
             List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
 
-            PanoramicDataColumnDescriptor columnDescriptor = e.ColumnDescriptor;
-            double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-            double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
+            double width = e.UseDefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
+            double height = e.UseDefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
             Pt position = e.Bounds.Center;
-            position.X -= width / 2.0;
-            position.Y -= height / 2.0;
-            TableModel tableModel = e.TableModel;
-            if (tableModel == null)
-            {
-                if (e.FilterModel == null)
-                {
-                    return;
-                }
-                tableModel = e.FilterModel.TableModel;
-            }
 
             if (hits.Count > 0)
             {
@@ -183,7 +171,11 @@ namespace PanoramicData.controller.view
             }
             else
             {
-                FilterHolder filter = new FilterHolder();
+                VisualizationViewModel visualizationViewModel = new VisualizationViewModel();
+                VisualizationContainerView visualizationContainerView = new VisualizationContainerView();
+                visualizationContainerView.DataContext = visualizationViewModel;
+                visualizationContainerView.InitPostionAndDimension(position, new Vec(width, height));
+               /* FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(columnDescriptor, tableModel);
                 filterHolderViewModel.Center = new Point();
                 if (e.LinkFromFilterModel != null)
@@ -191,7 +183,7 @@ namespace PanoramicData.controller.view
                     filterHolderViewModel.AddIncomingFilter(e.LinkFromFilterModel, FilteringType.Filter);
                 }
                 filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(width, height));
+                filter.InitPostionAndDimension(position, new Vec(width, height));*/
             }
         }
         private void ColorerDropped(object sender, DatabaseTableEventArgs e)
@@ -203,15 +195,15 @@ namespace PanoramicData.controller.view
 
             if (hits.Count == 0)
             {
-                double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
+                double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
+                double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
                 Pt position = e.Bounds.Center;
                 position.X -= width / 2.0;
                 position.Y -= height / 2.0;
 
                 TableModel tableModel = e.TableModel;
 
-                FilterHolder filter = new FilterHolder();
+                VisualizationContainerView filter = new VisualizationContainerView();
                 FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                 filterHolderViewModel.TableModel = tableModel;
@@ -227,10 +219,10 @@ namespace PanoramicData.controller.view
                     filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, cd);
                 }
 
-                filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0,
-                    position.Y + FilterHolder.HEIGHT / 2.0);
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
+                    position.Y + VisualizationContainerView.HEIGHT / 2.0);
+                //filter.FilterHolderViewModel = filterHolderViewModel;
+                filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
 
                 filterHolderViewModel.Color = e.FilterModel.Color;
                 e.FilterModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
@@ -246,15 +238,15 @@ namespace PanoramicData.controller.view
 
             if (hits.Count == 0)
             {
-                double width = e.DefaultSize ? FilterHolder.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? FilterHolder.HEIGHT : e.Bounds.Height;
+                double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
+                double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
                 Pt position = e.Bounds.Center;
                 position.X -= width / 2.0;
                 position.Y -= height / 2.0;
 
                 TableModel tableModel = e.TableModel;
 
-                FilterHolder filter = new FilterHolder();
+                VisualizationContainerView filter = new VisualizationContainerView();
                 FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
                 filterHolderViewModel.TableModel = tableModel;
@@ -283,10 +275,10 @@ namespace PanoramicData.controller.view
                         }
                     }
 
-                    filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0,
-                        position.Y + FilterHolder.HEIGHT / 2.0);
-                    filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
+                    filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
+                        position.Y + VisualizationContainerView.HEIGHT / 2.0);
+                   // filter.FilterHolderViewModel = filterHolderViewModel;
+                    filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                 }
             }
         }

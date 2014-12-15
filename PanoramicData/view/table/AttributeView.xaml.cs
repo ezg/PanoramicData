@@ -38,6 +38,7 @@ namespace PanoramicData.view.table
         public AttributeView()
         {
             InitializeComponent();
+            this.TouchDown += AttributeView_TouchDownEvent;
         }
 
        /* public AttributeView(bool isShadow, bool renderDark = false)
@@ -64,7 +65,7 @@ namespace PanoramicData.view.table
                 this.MinHeight = 20 * s;
             }
 
-            this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDownEvent));
+            this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDownEvent));
             SetBinding(MyDataContextProperty, new Binding());
         }*/
         
@@ -149,7 +150,7 @@ namespace PanoramicData.view.table
             }
         }*/
 
-        private void SimpleGridViewColumnHeader_TouchDownEvent(Object sender, TouchEventArgs e)
+        private void AttributeView_TouchDownEvent(Object sender, TouchEventArgs e)
         {
             if (((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus) || (DataContext as AttributeViewModel).IsDraggableByPen)
             {
@@ -163,8 +164,8 @@ namespace PanoramicData.view.table
                     _manipulationStartTime = DateTime.Now.Ticks;
                     _startDrag = fromInkableScene;
 
-                    this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDragEvent));
-                    this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchUpEvent));
+                    this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDragEvent));
+                    this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchUpEvent));
                     _dragDevice1 = e.TouchDevice;
                 }
             }
@@ -198,7 +199,7 @@ namespace PanoramicData.view.table
             }
         }
 
-        private void SimpleGridViewColumnHeader_TouchDragEvent(object sender, TouchEventArgs e)
+        private void AttributeView_TouchDragEvent(object sender, TouchEventArgs e)
         {
             if (e.TouchDevice == _dragDevice1)
             {
@@ -234,7 +235,7 @@ namespace PanoramicData.view.table
             }
         }
 
-        private void SimpleGridViewColumnHeader_TouchUpEvent(object sender, TouchEventArgs e)
+        private void AttributeView_TouchUpEvent(object sender, TouchEventArgs e)
         {
             if (e.TouchDevice == _dragDevice1)
             {
@@ -260,7 +261,7 @@ namespace PanoramicData.view.table
                             if (info != null)
                             {
                                 /*MathEditor me = new MathEditor(
-                                    new SimpleGridViewColumnHeaderMathEditorExecution(inkableScene, info), FilterModel,
+                                    new AttributeViewMathEditorExecution(inkableScene, info), FilterModel,
                                     info);
                                 me.SetPosition(fromInkableScene.X - RadialControl.SIZE/2,
                                     fromInkableScene.Y - RadialControl.SIZE/2);
@@ -274,8 +275,8 @@ namespace PanoramicData.view.table
 
                 _manipulationStartTime = 0;
 
-                this.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchDragEvent));
-                this.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(SimpleGridViewColumnHeader_TouchUpEvent));   
+                this.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDragEvent));
+                this.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchUpEvent));   
             }
         }
 
@@ -750,12 +751,12 @@ namespace PanoramicData.view.table
     }
     
 
-    public class SimpleGridViewColumnHeaderMathEditorExecution : MathEditorExecution
+    public class AttributeViewMathEditorExecution : MathEditorExecution
     {
         private InkableScene _inkableScene = null;
         private CalculatedColumnDescriptorInfo _calculatedColumnDescriptorInfo = null;
 
-        public SimpleGridViewColumnHeaderMathEditorExecution(InkableScene inkableScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
+        public AttributeViewMathEditorExecution(InkableScene inkableScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
         {
             this._inkableScene = inkableScene;
             this._calculatedColumnDescriptorInfo = calculatedColumnDescriptorInfo;

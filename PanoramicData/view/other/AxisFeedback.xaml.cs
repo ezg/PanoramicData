@@ -45,7 +45,7 @@ namespace PanoramicData.view.other
             inkPresenter.Strokes.Add(stroq.BackingStroke);
         }
 
-        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
             xBorder.BorderThickness = new Thickness(1);
             yBorder.BorderThickness = new Thickness(1);
@@ -64,7 +64,7 @@ namespace PanoramicData.view.other
             }
         }
 
-        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
            /* xBorder.BorderThickness = new Thickness(1);
             yBorder.BorderThickness = new Thickness(1);

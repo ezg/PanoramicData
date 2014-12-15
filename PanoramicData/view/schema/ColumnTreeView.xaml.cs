@@ -128,11 +128,11 @@ namespace PanoramicData.view.schema
             }
         }
 
-        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
         }
 
-        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
         }
 

@@ -293,6 +293,7 @@ namespace PanoramicData.view.filter
 
         private void init()
         {
+            return;
             if (_grouper != null)
             {
                 _grouper.FilterModel = FilterModel;
@@ -835,9 +836,9 @@ namespace PanoramicData.view.filter
             {
                 foreach (var elem in _inqScene.Elements.ToArray())
                 {
-                    if (elem is FilterHolder)
+                    if (elem is VisualizationContainerView)
                     {
-                        if ((elem as FilterHolder).FilterHolderViewModel == _filterModel)
+                        //if ((elem as VisualizationContainerView).FilterHolderViewModel == _filterModel)
                         {
                             _inqScene.Rem(elem);
                             break;

@@ -75,7 +75,7 @@ namespace PanoramicData
         {
             BrownShape brownShape = stroq.GetTag<BrownShape>(ShapeGesture.BROWN_SHAPE_ID);
             var intersectedStroqListener = new List<StroqListener>(_inqScene.GetIntersectedElements(stroq).Where((t) => t is StroqListener).Select((t) => t as StroqListener));
-            var intersectedFilterHolder = new List<FilterHolder>(_inqScene.GetIntersectedElements(stroq).Where((t) => t is FilterHolder).Select((t) => t as FilterHolder));
+            var intersectedFilterHolder = new List<VisualizationContainerView>(_inqScene.GetIntersectedElements(stroq).Where((t) => t is VisualizationContainerView).Select((t) => t as VisualizationContainerView));
             if (brownShape != null && intersectedStroqListener.Count == 0 && intersectedFilterHolder.Count == 0 &&
                 (brownShape.ShapeType == ShapeType.Circle || brownShape.ShapeType == ShapeType.Ellipse))
             {

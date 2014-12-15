@@ -22,6 +22,7 @@ using Matrix = System.Windows.Media.Matrix;
 using PanoramicData.view.physics;
 using PanoramicData.view.filter;
 using PanoramicData.controller.view;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.controller.physics
 {
@@ -125,11 +126,11 @@ namespace PanoramicData.controller.physics
 
             foreach (var element in _physicalObjects.Keys)
             {
-                if (element is FilterHolder && !(element as FilterHolder).FilterHolderViewModel.Temporary)
+                if (element is VisualizationContainerView && !((element as VisualizationContainerView).DataContext as VisualizationViewModel).IsTemporary)
                 {
                     Vector2 vec2 = _physicalObjects[element].OuterBody.Position;
                     Vec newPos = _physics2RealMatrixScale.Transform(new Vector(vec2.X, vec2.Y));
-                    element.SetCenter(new Pt(newPos.X + 25000, newPos.Y + 25000));
+                    element.SetPosition(new Pt(newPos.X + 25000 - element.GetSize().X / 2.0, newPos.Y + 25000 - element.GetSize().Y / 2.0));
                 }
             }
 
@@ -298,7 +299,7 @@ namespace PanoramicData.controller.physics
 
         private PhysicalObject createPhysicalObject(MovableElement element, bool isUnderInteraction = false)
         {
-            Pt center = element.GetCenter();
+            Pt center = element.GetPosition() + element.GetSize() / 2.0;
             center = _real2PhysicsMatrixTranslate.Transform(center);
             center = _real2PhysicsMatrixScale.Transform(center);
             float borderThickness = (float) _real2PhysicsMatrixScale.M11*2.0f;

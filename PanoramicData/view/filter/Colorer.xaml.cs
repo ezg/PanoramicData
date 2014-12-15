@@ -46,6 +46,7 @@ namespace PanoramicData.view.filter
 
         public void Init()
         {
+            return;
             if (FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count == 0 /*&&
                 !FilterModel.TableModel.CalculateRecursivePathInfos().Any(pp => pp.Path.Count > 0)*/)
             {
@@ -262,7 +263,7 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void AttributeViewModelMoved(AttributeView sender, AttributeViewModelEventArgs e, bool overElement)
+        public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
             if (overElement)
             {
@@ -277,7 +278,7 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public void AttributeViewModelDropped(AttributeView sender, AttributeViewModelEventArgs e)
+        public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
             /*var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
             togglecoloring(clone);
