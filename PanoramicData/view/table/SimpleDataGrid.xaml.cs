@@ -58,8 +58,6 @@ namespace PanoramicData.view.table
 
         private TableModel _tableModel = null;
         private FilterModel _filterModel = null;
-        
-        private List<SettingsMapping> _settingsMappings = new List<SettingsMapping>(); 
 
         private Point _startDrag1 = new Point();
         private long _manipulationStartTime = 0;
@@ -106,14 +104,13 @@ namespace PanoramicData.view.table
 
         public void PopulateData(
             AsyncVirtualizingCollection<PanoramicDataRow> dataValues,
-            TableModel tableModel, FilterModel filterModel, bool renderSettings)
+            TableModel tableModel, FilterModel filterModel)
         {
             _dragDevice1 = null;
             _dragDevice2 = null;
 
             _tableModel = tableModel;
             _filterModel = filterModel;
-            _renderSettings = renderSettings;
 
             IList<PanoramicDataColumnDescriptor> columnDescriptors = null;
 
@@ -224,11 +221,6 @@ namespace PanoramicData.view.table
                 _dataValues = dataValues;
                 listView.ItemsSource = _dataValues;
                 _dataValues.PropertyChanged += DataValues_PropertyChanged;
-            }
-
-            if (_renderSettings && _filterModel.OptionCardinalityMappings.Count > 0)
-            {
-                updateSettingsAndOptionPanel();
             }
         }
 
@@ -694,11 +686,6 @@ namespace PanoramicData.view.table
                 {
                     header.Column.Width = Math.Max(35, header.Column.ActualWidth + vec.X);
                     _startDrag1 = curDrag;
-
-                    if (_renderSettings && _filterModel.OptionCardinalityMappings.Count > 0)
-                    {
-                        updateSettingsAndOptionPanel();
-                    }
                 }
                 if ((CanReorder || CanDrag) && _explorerFeedback == null && !_isResizing)
                 {

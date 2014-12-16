@@ -28,7 +28,7 @@ namespace PanoramicData.view.filter
             if (e.NewValue != null)
             {
                 (e.NewValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged += VisualizationViewResultModel_PropertyChanged;
-                this.UpdateRendering();
+                this.UpdateRendering(); 
             }
         }
 

@@ -203,6 +203,7 @@
     <Compile Include="model\view\SchemaViewModel.cs" />
     <Compile Include="model\view_new\VisualizationViewModelFactory.cs" />
     <Compile Include="model\view_new\VisualizationViewModel.cs" />
+    <Compile Include="model\view_new\VisualizationViewResultModel.cs" />
     <Compile Include="utils\Converters.cs" />
     <Compile Include="utils\Helpers.cs" />
     <Compile Include="utils\HitTester.cs" />
@@ -235,7 +236,7 @@
     <Compile Include="view\math\RecognitionResultRenderer.xaml.cs">
       <DependentUpon>RecognitionResultRenderer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\table\TableFilterRenderer.cs" />
+    <Compile Include="view\vis\TableFilterRenderer.cs" />
     <Compile Include="view\vis\PivotFilterItemRenderer.xaml.cs">
       <DependentUpon>PivotFilterItemRenderer.xaml</DependentUpon>
     </Compile>

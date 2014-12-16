@@ -43,7 +43,7 @@ namespace PanoramicData.model.view_new
         public VisualizationViewModel()
         {
             selectColor();
-            _isualizationViewResultModel = new VisualizationViewResultModel();
+            _visualizationViewResultModel = new VisualizationViewResultModel();
         }
 
         private void selectColor()
