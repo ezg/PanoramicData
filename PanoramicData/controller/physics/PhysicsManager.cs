@@ -30,10 +30,11 @@ namespace PanoramicData.controller.physics
     {
         private static PhysicsController _instance;
         private static Grid _root = null;
+        private bool _renderDebugView = false;
 
         private World _world;
-        //private WPFDebugView _wpfDebugView;
-        //private Canvas _worldDebugCanvas;
+        private WPFDebugView _wpfDebugView;
+        private Canvas _worldDebugCanvas;
         private readonly DispatcherTimer _physicsTimer = new DispatcherTimer();
         private Matrix _real2PhysicsMatrixScale = new Matrix();
         private Matrix _real2PhysicsMatrixTranslate = new Matrix();
@@ -56,18 +57,21 @@ namespace PanoramicData.controller.physics
             }
             _world = new World(new Microsoft.Xna.Framework.Vector2(0, 0));
 
-            /*if (_worldDebugCanvas != null)
+            if (_renderDebugView)
             {
-                _root.Children.Remove(_worldDebugCanvas);
+                if (_worldDebugCanvas != null)
+                {
+                    _root.Children.Remove(_worldDebugCanvas);
+                }
+                _worldDebugCanvas = new Canvas();
+                _worldDebugCanvas.HorizontalAlignment = HorizontalAlignment.Stretch;
+                _worldDebugCanvas.VerticalAlignment = VerticalAlignment.Stretch;
+                _worldDebugCanvas.IsHitTestVisible = false;
+
+                _worldDebugCanvas.Background = new SolidColorBrush(Color.FromArgb(10, 255, 0, 0));
+                _root.Children.Add(_worldDebugCanvas);
+                _wpfDebugView = new WPFDebugView(_worldDebugCanvas, _world);
             }
-            _worldDebugCanvas = new Canvas();
-            _worldDebugCanvas.HorizontalAlignment = HorizontalAlignment.Stretch;
-            _worldDebugCanvas.VerticalAlignment = VerticalAlignment.Stretch;
-            _worldDebugCanvas.IsHitTestVisible = false;
-            */
-            //_worldDebugCanvas.Background = new SolidColorBrush(Color.FromArgb(50, 255, 0, 0));
-            //_root.Children.Add(_worldDebugCanvas);
-            //_wpfDebugView = new WPFDebugView(_worldDebugCanvas, _world);
 
             double scaleFactor = Math.Max(_root.ActualWidth / WPFDebugView.WIDTH, _root.ActualHeight / WPFDebugView.HEIGHT);
 
@@ -75,7 +79,10 @@ namespace PanoramicData.controller.physics
             matrix.SetIdentity();
             matrix.Scale(scaleFactor, scaleFactor);
             matrix.Translate(0, 0);
-            //_wpfDebugView.Transform = matrix;
+            if (_renderDebugView)
+            {
+                _wpfDebugView.Transform = matrix;
+            }
 
             _real2PhysicsMatrixScale.SetIdentity();
             _real2PhysicsMatrixScale.Scale(1.0 / scaleFactor, 1.0 / scaleFactor);
@@ -120,9 +127,12 @@ namespace PanoramicData.controller.physics
                 matrix.M22 = matrix.M22 * inqSceneMatrix.M22;
             }
 
-            //_wpfDebugView.Transform = matrix;
-            //_worldDebugCanvas.Children.Clear();
-            //_wpfDebugView.DrawDebugData();
+            if (_renderDebugView)
+            {
+                _wpfDebugView.Transform = matrix;
+                _worldDebugCanvas.Children.Clear();
+                _wpfDebugView.DrawDebugData();
+            }
 
             foreach (var element in _physicalObjects.Keys)
             {

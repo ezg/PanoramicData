@@ -90,7 +90,7 @@ namespace PanoramicData.model.view
         {
             get
             {
-                return DataTypeConstants.BIT;
+                return AttributeDataTypeConstants.BIT;
             }
         }
 
@@ -98,7 +98,7 @@ namespace PanoramicData.model.view
         {
             get
             {
-                return VisualizationTypeConstants.ENUM;
+                return AttributeVisualizationTypeConstants.ENUM;
             }
         }
 

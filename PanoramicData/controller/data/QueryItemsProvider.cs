@@ -110,20 +110,20 @@ namespace PanoramicData.controller.data
 
         public string ToSqlString()
         {
-            if (DataType == DataTypeConstants.NVARCHAR ||
-                DataType == DataTypeConstants.GEOGRAPHY)
+            if (DataType == AttributeDataTypeConstants.NVARCHAR ||
+                DataType == AttributeDataTypeConstants.GEOGRAPHY)
             {
                 return "'" + Value.ToString().Replace("'", "") + "'";
             }
-            else if (DataType == DataTypeConstants.BIT)
+            else if (DataType == AttributeDataTypeConstants.BIT)
             {
                 return "'" + Value.ToString().Replace("'", "") + "'";
             }
-            else if (DataType == DataTypeConstants.DATE)
+            else if (DataType == AttributeDataTypeConstants.DATE)
             {
                 return "convert(datetime, '" + Value.ToString() + "', 20)";
             }
-            else if (DataType == DataTypeConstants.TIME)
+            else if (DataType == AttributeDataTypeConstants.TIME)
             {
                 return "convert(time, '" + Value.ToString() + "', 20)";
             }
@@ -132,8 +132,8 @@ namespace PanoramicData.controller.data
 
         public string ToCompareString()
         {
-            if (DataType == DataTypeConstants.NVARCHAR ||
-                DataType == DataTypeConstants.DATE)
+            if (DataType == AttributeDataTypeConstants.NVARCHAR ||
+                DataType == AttributeDataTypeConstants.DATE)
             {
                 return "'" + Value.ToString().Replace("'", "") + "'";
             }
@@ -222,9 +222,9 @@ namespace PanoramicData.controller.data
         {
             if (this.Predicate == Predicate.GREATER_THAN_EQUAL)
             {
-                if (this.Value.DataType == DataTypeConstants.FLOAT ||
-                    this.Value.DataType == DataTypeConstants.INT ||
-                    this.Value.DataType == DataTypeConstants.BIT)
+                if (this.Value.DataType == AttributeDataTypeConstants.FLOAT ||
+                    this.Value.DataType == AttributeDataTypeConstants.INT ||
+                    this.Value.DataType == AttributeDataTypeConstants.BIT)
                 {
                     double d1 = 0.0;
                     double d2 = 0.0;
@@ -234,7 +234,7 @@ namespace PanoramicData.controller.data
                         return d2 >= d1;
                     }
                 }
-                else if (this.Value.DataType == DataTypeConstants.NVARCHAR)
+                else if (this.Value.DataType == AttributeDataTypeConstants.NVARCHAR)
                 {
                     int cmp = value.StringValue.CompareTo(this.Value.StringValue);
                     if (cmp == 1 || cmp == 0)
@@ -245,9 +245,9 @@ namespace PanoramicData.controller.data
             }
             if (this.Predicate == Predicate.LESS_THAN_EQUAL)
             {
-                if (this.Value.DataType == DataTypeConstants.FLOAT ||
-                    this.Value.DataType == DataTypeConstants.INT ||
-                    this.Value.DataType == DataTypeConstants.BIT)
+                if (this.Value.DataType == AttributeDataTypeConstants.FLOAT ||
+                    this.Value.DataType == AttributeDataTypeConstants.INT ||
+                    this.Value.DataType == AttributeDataTypeConstants.BIT)
                 {
                     double d1 = 0.0;
                     double d2 = 0.0;
@@ -257,7 +257,7 @@ namespace PanoramicData.controller.data
                         return d2 <= d1;
                     }
                 }
-                else if (this.Value.DataType == DataTypeConstants.NVARCHAR)
+                else if (this.Value.DataType == AttributeDataTypeConstants.NVARCHAR)
                 {
                     int cmp = value.StringValue.CompareTo(this.Value.StringValue);
                     if (cmp == -1 || cmp == 0)

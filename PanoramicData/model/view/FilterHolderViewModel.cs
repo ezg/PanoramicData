@@ -203,7 +203,7 @@ namespace PanoramicData.model.view
             filterHolderViewModel.TableModel = tableModel;
             //filterHolderViewModel.Label = columnDescriptor.Name;
 
-            if (columnDescriptor.VisualizationType == VisualizationTypeConstants.ENUM)
+            if (columnDescriptor.VisualizationType == AttributeVisualizationTypeConstants.ENUM)
             {
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Pie;
 
@@ -217,7 +217,7 @@ namespace PanoramicData.model.view
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, g);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);
             }
-            else if (columnDescriptor.VisualizationType == VisualizationTypeConstants.NUMERIC)
+            else if (columnDescriptor.VisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
             {
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Histogram;
 
@@ -234,7 +234,7 @@ namespace PanoramicData.model.view
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.GroupBy, bin);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);
             }
-            else if (columnDescriptor.VisualizationType == VisualizationTypeConstants.GEOGRAPHY)
+            else if (columnDescriptor.VisualizationType == AttributeVisualizationTypeConstants.GEOGRAPHY)
             {
                 filterHolderViewModel.FilterRendererType = FilterRendererType.Map;
 

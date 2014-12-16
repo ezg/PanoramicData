@@ -78,7 +78,7 @@ namespace PanoramicData.model.view
         {
             get
             {
-                return DataTypeConstants.FLOAT;
+                return AttributeDataTypeConstants.FLOAT;
             }
         }
 
@@ -86,7 +86,7 @@ namespace PanoramicData.model.view
         {
             get
             {
-                return VisualizationTypeConstants.NUMERIC;
+                return AttributeVisualizationTypeConstants.NUMERIC;
             }
         }
 

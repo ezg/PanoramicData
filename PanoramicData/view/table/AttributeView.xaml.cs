@@ -604,18 +604,18 @@ namespace PanoramicData.view.table
 
                 if (needle != "")
                 {
-                    if (cd.DataType == DataTypeConstants.NVARCHAR || 
-                        cd.DataType == DataTypeConstants.GEOGRAPHY)
+                    if (cd.DataType == AttributeDataTypeConstants.NVARCHAR || 
+                        cd.DataType == AttributeDataTypeConstants.GEOGRAPHY)
                     {
                         fi = new FilteredItem();
                         fi.IsHandwrittenFilter = true;
                         PanoramicDataValue val = new PanoramicDataValue();
                         val.Value = needle;
-                        val.DataType = DataTypeConstants.NVARCHAR;
+                        val.DataType = AttributeDataTypeConstants.NVARCHAR;
                         fi.ColumnComparisonValues.Add(cd, new PanoramicDataValueComparison(val, Predicate.LIKE));
                     }
-                    else if (cd.DataType == DataTypeConstants.FLOAT ||
-                                cd.DataType == DataTypeConstants.INT)
+                    else if (cd.DataType == AttributeDataTypeConstants.FLOAT ||
+                                cd.DataType == AttributeDataTypeConstants.INT)
                     {
 
                         double d = 0;
@@ -661,7 +661,7 @@ namespace PanoramicData.view.table
                             fi.IsHandwrittenFilter = true;
                             PanoramicDataValue val = new PanoramicDataValue();
                             val.Value = d;
-                            val.DataType = DataTypeConstants.FLOAT;
+                            val.DataType = AttributeDataTypeConstants.FLOAT;
                             fi.ColumnComparisonValues.Add(cd, new PanoramicDataValueComparison(val, pred));
                         }
 

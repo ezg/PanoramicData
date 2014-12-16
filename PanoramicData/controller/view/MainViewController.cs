@@ -158,7 +158,8 @@ namespace PanoramicData.controller.view
 
             double width = e.UseDefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
             double height = e.UseDefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-            Pt position = e.Bounds.Center;
+            Vec size = new Vec(width, height);
+            Pt position = e.Bounds.Center - size / 2.0;
 
             if (hits.Count > 0)
             {
@@ -171,10 +172,9 @@ namespace PanoramicData.controller.view
             }
             else
             {
-                VisualizationViewModel visualizationViewModel = new VisualizationViewModel();
                 VisualizationContainerView visualizationContainerView = new VisualizationContainerView();
-                visualizationContainerView.DataContext = visualizationViewModel;
-                visualizationContainerView.InitPostionAndDimension(position, new Vec(width, height));
+                visualizationContainerView.DataContext = VisualizationViewModelFactory.CreateDefault(e.AttributeViewModel);
+                visualizationContainerView.InitPostionAndDimension(position, size);
                /* FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(columnDescriptor, tableModel);
                 filterHolderViewModel.Center = new Point();

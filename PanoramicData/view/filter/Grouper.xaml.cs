@@ -100,8 +100,8 @@ namespace PanoramicData.view.filter
 
             foreach (var descriptor in descriptors)
             {
-                if (!(descriptor.DataType == DataTypeConstants.INT ||
-                      descriptor.DataType == DataTypeConstants.FLOAT) || descriptor.IsPrimaryKey)
+                if (!(descriptor.DataType == AttributeDataTypeConstants.INT ||
+                      descriptor.DataType == AttributeDataTypeConstants.FLOAT) || descriptor.IsPrimaryKey)
                 {
                     RadialMenuCommand groupDistinct = new RadialMenuCommand();
                     groupDistinct.Name = descriptor.GetSimpleLabel().Replace(" ", "\n");

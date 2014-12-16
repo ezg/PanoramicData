@@ -25,6 +25,7 @@ using PanoramicData.view.other;
 using PanoramicData.view.table;
 using CombinedInputAPI;
 using PanoramicData.model.view_new;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.filter
 {
@@ -275,18 +276,18 @@ namespace PanoramicData.view.filter
 
         void plusCanvas_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
             CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo = new CalculatedColumnDescriptorInfo();
             calculatedColumnDescriptorInfo.Name = "Calculated Field " + FilterModel.TableModel.CalculatedColumnDescriptorInfos.Count;
             calculatedColumnDescriptorInfo.TableModel = FilterModel.TableModel;
 
             MathEditor me = new MathEditor(
-                new ResizerMathEditorExecution(inqScene, calculatedColumnDescriptorInfo), FilterModel, calculatedColumnDescriptorInfo);
-            me.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
-                fromInqScene.Y - RadialControl.SIZE / 2);
-            inqScene.AddNoUndo(me);
+                new ResizerMathEditorExecution(inkableScene, calculatedColumnDescriptorInfo), FilterModel, calculatedColumnDescriptorInfo);
+            me.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
+                fromInkableScene.Y - RadialControl.SIZE / 2);
+            inkableScene.Add(me);
 
             e.Handled = true;
         }
@@ -433,8 +434,8 @@ namespace PanoramicData.view.filter
             _optionGrid.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(optionGrid_PointDrag));
             _optionGrid.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(optionGrid_PointUp));
 
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
             RadialMenuCommand root = new RadialMenuCommand();
             root.IsSelectable = false;
@@ -480,10 +481,10 @@ namespace PanoramicData.view.filter
                 MovableElement movableElement = this.FindParent<MovableElement>();
 
                 RadialControl rc = new RadialControl(root,
-                    new ResizerRadialControlExecution(FilterModel, FilterModel.TableModel, movableElement, this, inqScene));
-                rc.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
-                    fromInqScene.Y - RadialControl.SIZE / 2);
-                inqScene.AddNoUndo(rc);
+                    new ResizerRadialControlExecution(FilterModel, FilterModel.TableModel, movableElement, this, inkableScene));
+                rc.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
+                    fromInkableScene.Y - RadialControl.SIZE / 2);
+                inkableScene.Add(rc);
             }
             e.Handled = true;
         }
@@ -496,7 +497,7 @@ namespace PanoramicData.view.filter
         bool fix = false;
         void headerGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
 
             if (_dragDevice1 == null && _dragDevice2 == null)
             {
@@ -506,9 +507,9 @@ namespace PanoramicData.view.filter
                 MovableElement movableParent = this.FindParent<MovableElement>();
 
                 e.TouchDevice.Capture(_headerGrid);
-                _startDrag1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement) inqScene);
+                _startDrag1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement) inkableScene);
                 _headerGridStartPoint = _startDrag1;
-                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
                 _headerGrid.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(headerGrid_TouchMoveEvent));
                 if (Mouse.RightButton != MouseButtonState.Pressed && !fix)
@@ -542,7 +543,7 @@ namespace PanoramicData.view.filter
 
         void headerGrid_TouchUpEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             MovableElement movableParent = this.FindParent<MovableElement>();
 
             if (e.TouchDevice == _dragDevice1)
@@ -551,7 +552,7 @@ namespace PanoramicData.view.filter
                 e.TouchDevice.Capture(null);
                 _dragDevice1 = null;
 
-                Pt pos = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                Pt pos = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
                 // notify content if needed
                 this.PostTransformation();
@@ -561,7 +562,7 @@ namespace PanoramicData.view.filter
                 movableParent.NotifyDragEnd(pos);
 
 
-                Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
             }
             else if (e.TouchDevice == _dragDevice2)
             {
@@ -571,8 +572,8 @@ namespace PanoramicData.view.filter
 
                 if (_copyShadow != null)
                 {
-                    Point fromInqScene = e.GetTouchPoint(inqScene).Position;
-                    inqScene.Rem(_copyShadow);
+                    Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
+                    inkableScene.Add(_copyShadow);
                     _copyShadow = null;
 
                     RadialMenuCommand copy = new RadialMenuCommand();
@@ -581,8 +582,8 @@ namespace PanoramicData.view.filter
                     copy.AllowsDragging = true;
                     copy.IsSelectable = true;
                     copy.IsActivatable = false;
-                    ResizerRadialControlExecution exec = new ResizerRadialControlExecution(FilterModel, FilterModel.TableModel, movableParent, this, inqScene);
-                    exec.Drop(null, copy, fromInqScene);
+                    ResizerRadialControlExecution exec = new ResizerRadialControlExecution(FilterModel, FilterModel.TableModel, movableParent, this, inkableScene);
+                    exec.Drop(null, copy, fromInkableScene);
                 }
             }
 
@@ -595,17 +596,17 @@ namespace PanoramicData.view.filter
 
         void headerGrid_TouchMoveEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             if (e.TouchDevice == _dragDevice1)
             {
                 MovableElement movableParent = this.FindParent<MovableElement>();
-                Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
                 Vector vec = curDrag - _startDrag1;
                 Point dragDelta = new Point(vec.X, vec.Y);
 
                 _startDrag1 = curDrag;
-                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
                 e.Handled = true;
 
                 // notify content if needed
@@ -617,9 +618,9 @@ namespace PanoramicData.view.filter
             else if (e.TouchDevice == _dragDevice2)
             {
                 e.Handled = true;
-                if (inqScene != null && _copyShadow == null)
+                if (inkableScene != null && _copyShadow == null)
                 {
-                    _startDrag2 = e.GetTouchPoint(inqScene).Position;
+                    _startDrag2 = e.GetTouchPoint(inkableScene).Position;
                     _copyShadow = new Border();
                     _copyShadow.Width = 120;
                     _copyShadow.Height = 40;
@@ -631,12 +632,12 @@ namespace PanoramicData.view.filter
                     l.FontWeight = FontWeights.Bold;
                     l.Content = "Create Copy";
                     _copyShadow.Child = l;
-                    inqScene.AddNoUndo(_copyShadow);
+                    inkableScene.Add(_copyShadow);
                 }
 
                 if (_copyShadow != null)
                 {
-                    _startDrag2 = e.GetTouchPoint(inqScene).Position;
+                    _startDrag2 = e.GetTouchPoint(inkableScene).Position;
                     _copyShadow.RenderTransform = new TranslateTransform(
                         _startDrag2.X - _copyShadow.Width / 2.0,
                         _startDrag2.Y - _copyShadow.Height);
@@ -652,12 +653,12 @@ namespace PanoramicData.view.filter
             if (_dragDevice1 == null)
             {
                 e.Handled = true;
-                InqScene inqScene = this.FindParent<InqScene>();
+                InkableScene inkableScene = this.FindParent<InkableScene>();
                 MovableElement movableParent = this.FindParent<MovableElement>();
 
                 e.TouchDevice.Capture(_resizeGrid);
-                _startDrag1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
-                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                _startDrag1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
+                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
                 _resizeGrid.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(resizeGrid_TouchMoveEvent));
                 _resizeGrid.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(resizeGrid_TouchUpEvent));
@@ -694,9 +695,9 @@ namespace PanoramicData.view.filter
 
         void resizeGrid_TouchMoveEvent(object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             MovableElement movableParent = this.FindParent<MovableElement>();
-            Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+            Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
             if (e.TouchDevice == _dragDevice1)
             {
@@ -709,7 +710,7 @@ namespace PanoramicData.view.filter
                 double deltaHorizontal = Math.Min(dragDelta.X, currentSize.X - currentMinSize.X);
 
                 _startDrag1 = curDrag;
-                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inqScene);
+                _current1 = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
                 e.Handled = true;
 
                 Vec newSize = new Vec(currentSize.X + dragDelta.X, currentSize.Y + dragDelta.Y);
@@ -815,17 +816,17 @@ namespace PanoramicData.view.filter
         private TableModel _tableModel = null;
         private MovableElement _movableElement = null;
         private Resizer _resizer = null;
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
 
         public static event EventHandler<AttributeViewModelEventArgs> Dropped;
 
-        public ResizerRadialControlExecution(FilterModel filterModel, TableModel tableModel, MovableElement movableElement, Resizer resizer, InqScene inqScene)
+        public ResizerRadialControlExecution(FilterModel filterModel, TableModel tableModel, MovableElement movableElement, Resizer resizer, InkableScene inkableScene)
         {
             this._filterModel = filterModel;
             this._tableModel = tableModel;
             this._movableElement = movableElement;
             this._resizer = resizer;
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
         }
 
         public override void Remove(RadialControl sender, RadialMenuCommand cmd)
@@ -834,14 +835,14 @@ namespace PanoramicData.view.filter
 
             if (_filterModel != null)
             {
-                foreach (var elem in _inqScene.Elements.ToArray())
+                //foreach (var elem in _inkableScene.Elements.ToArray())
                 {
-                    if (elem is VisualizationContainerView)
+                    //if (elem is VisualizationContainerView)
                     {
                         //if ((elem as VisualizationContainerView).FilterHolderViewModel == _filterModel)
                         {
-                            _inqScene.Rem(elem);
-                            break;
+                            //_inkableScene.Rem(elem);
+                            //break;
                         }
                     }  
                 }
@@ -852,19 +853,19 @@ namespace PanoramicData.view.filter
             }
         }
 
-        public override void Drop(RadialControl sender, RadialMenuCommand cmd, Point fromInqScene)
+        public override void Drop(RadialControl sender, RadialMenuCommand cmd, Point fromInkableScene)
         {
             base.Dispose(sender);
 
-            if (_inqScene != null && sender != null)
+            if (_inkableScene != null && sender != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                //_inkableScene.Rem(sender as FrameworkElement);
             }
 
             if (Dropped != null)
             {
                 Vec size = _movableElement.GetSize();
-                Rct bounds = new Rct(new Pt(fromInqScene.X - (size.X / 2.0), fromInqScene.Y - (size.Y / 2.0)), _movableElement.GetSize());
+                Rct bounds = new Rct(new Pt(fromInkableScene.X - (size.X / 2.0), fromInkableScene.Y - (size.Y / 2.0)), _movableElement.GetSize());
                 if (cmd.Name == "Create\nSnaphot")
                 {
                     FilterHolderViewModel frozenModel = new FilterHolderViewModel();
@@ -890,9 +891,9 @@ namespace PanoramicData.view.filter
         {
             base.Dispose(sender);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                //_inkableScene.Rem(sender as FrameworkElement);
             }
         }
 
@@ -937,12 +938,12 @@ namespace PanoramicData.view.filter
 
     public class ResizerMathEditorExecution : MathEditorExecution
     {
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
         private CalculatedColumnDescriptorInfo _calculatedColumnDescriptorInfo = null;
 
-        public ResizerMathEditorExecution(InqScene inqScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
+        public ResizerMathEditorExecution(InkableScene inkableScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
         {
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
             this._calculatedColumnDescriptorInfo = calculatedColumnDescriptorInfo;
         }
 
@@ -954,9 +955,9 @@ namespace PanoramicData.view.filter
                 _calculatedColumnDescriptorInfo.TableModel.UpdateCalculatedColumnDescriptorInfo(
                     _calculatedColumnDescriptorInfo);
             }
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                //_inkableScene.Rem(sender as FrameworkElement);
             }
         }
     }

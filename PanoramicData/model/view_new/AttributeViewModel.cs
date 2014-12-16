@@ -275,6 +275,7 @@ namespace PanoramicData.model.view_new
             AttributeViewModel = attributeViewModel;
             Bounds = bounds;
             Type = type;
+            UseDefaultSize = true;
         }
     }
 

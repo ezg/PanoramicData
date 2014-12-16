@@ -981,8 +981,8 @@ namespace PanoramicData.model.view
         {
             string dt = GetDataTypeOfPanoramicDataColumnDescriptor(columnDescriptor, considerGrouping);
 
-            if (dt == DataTypeConstants.FLOAT ||
-                dt == DataTypeConstants.INT)
+            if (dt == AttributeDataTypeConstants.FLOAT ||
+                dt == AttributeDataTypeConstants.INT)
             {
                 return true;
             }
@@ -1002,7 +1002,7 @@ namespace PanoramicData.model.view
             {
                 if (columnDescriptor.IsBinned)
                 {
-                    return DataTypeConstants.NVARCHAR;
+                    return AttributeDataTypeConstants.NVARCHAR;
                 }
 
                 bool isGroupingApplied = this.ColumnDescriptors.Where(cd => cd.IsAnyGroupingOperationApplied()).Count() > 0;
@@ -1016,25 +1016,25 @@ namespace PanoramicData.model.view
                             columnDescriptor.AggregateFunction == AggregateFunction.Max ||
                             columnDescriptor.AggregateFunction == AggregateFunction.Min)
                         {
-                            if (columnDescriptor.DataType == DataTypeConstants.TIME)
+                            if (columnDescriptor.DataType == AttributeDataTypeConstants.TIME)
                             {
-                                return DataTypeConstants.TIME;
+                                return AttributeDataTypeConstants.TIME;
                             }
-                            if (columnDescriptor.DataType == DataTypeConstants.NVARCHAR)
+                            if (columnDescriptor.DataType == AttributeDataTypeConstants.NVARCHAR)
                             {
-                                return DataTypeConstants.NVARCHAR;
+                                return AttributeDataTypeConstants.NVARCHAR;
                             }
-                            if (columnDescriptor.DataType == DataTypeConstants.BIT)
+                            if (columnDescriptor.DataType == AttributeDataTypeConstants.BIT)
                             {
-                                return DataTypeConstants.BIT;
+                                return AttributeDataTypeConstants.BIT;
                             }
-                            return DataTypeConstants.FLOAT;
+                            return AttributeDataTypeConstants.FLOAT;
                         }
                         else if (columnDescriptor.AggregateFunction == AggregateFunction.Count)
                         {
-                            return DataTypeConstants.INT;
+                            return AttributeDataTypeConstants.INT;
                         }
-                        return DataTypeConstants.NVARCHAR;
+                        return AttributeDataTypeConstants.NVARCHAR;
                     }
                     else
                     {
@@ -1055,27 +1055,27 @@ namespace PanoramicData.model.view
                         columnDescriptor.AggregateFunction == AggregateFunction.Max ||
                         columnDescriptor.AggregateFunction == AggregateFunction.Min)
                     {
-                        if (columnDescriptor.DataType == DataTypeConstants.NVARCHAR)
+                        if (columnDescriptor.DataType == AttributeDataTypeConstants.NVARCHAR)
                         {
-                            return DataTypeConstants.NVARCHAR;
+                            return AttributeDataTypeConstants.NVARCHAR;
                         }
-                        if (columnDescriptor.DataType == DataTypeConstants.TIME)
+                        if (columnDescriptor.DataType == AttributeDataTypeConstants.TIME)
                         {
-                            return DataTypeConstants.TIME;
+                            return AttributeDataTypeConstants.TIME;
                         } 
-                        if (columnDescriptor.DataType == DataTypeConstants.BIT)
+                        if (columnDescriptor.DataType == AttributeDataTypeConstants.BIT)
                         {
-                            return DataTypeConstants.BIT;
+                            return AttributeDataTypeConstants.BIT;
                         }
-                        return DataTypeConstants.FLOAT;
+                        return AttributeDataTypeConstants.FLOAT;
                     }
                     else if (columnDescriptor.AggregateFunction == AggregateFunction.Count)
                     {
-                        return DataTypeConstants.INT;
+                        return AttributeDataTypeConstants.INT;
                     }
                     else
                     {
-                        return DataTypeConstants.NVARCHAR;
+                        return AttributeDataTypeConstants.NVARCHAR;
                     }
                 }
             }
@@ -1088,10 +1088,10 @@ namespace PanoramicData.model.view
             this.GetColumnDescriptorsForOption(Option.ColorBy).ForEach(cd => cd.IsGrouped = true);
 
             this.GetColumnDescriptorsForOption(Option.X).Where(cd =>
-                (cd.DataType == DataTypeConstants.INT ||
-                cd.DataType == DataTypeConstants.FLOAT ||
-                cd.DataType == DataTypeConstants.BIT ||
-                cd.DataType == DataTypeConstants.TIME) &&
+                (cd.DataType == AttributeDataTypeConstants.INT ||
+                cd.DataType == AttributeDataTypeConstants.FLOAT ||
+                cd.DataType == AttributeDataTypeConstants.BIT ||
+                cd.DataType == AttributeDataTypeConstants.TIME) &&
                 cd.AggregateFunctionSetByUser == false).
                 ForEach(cd =>
                 {
@@ -1108,10 +1108,10 @@ namespace PanoramicData.model.view
                 });
 
             this.GetColumnDescriptorsForOption(Option.Y).Where(cd =>
-                (cd.DataType == DataTypeConstants.INT ||
-                cd.DataType == DataTypeConstants.FLOAT ||
-                cd.DataType == DataTypeConstants.BIT ||
-                cd.DataType == DataTypeConstants.TIME) &&
+                (cd.DataType == AttributeDataTypeConstants.INT ||
+                cd.DataType == AttributeDataTypeConstants.FLOAT ||
+                cd.DataType == AttributeDataTypeConstants.BIT ||
+                cd.DataType == AttributeDataTypeConstants.TIME) &&
                 cd.AggregateFunctionSetByUser == false).
                 ForEach(cd =>
                 {
@@ -1135,10 +1135,10 @@ namespace PanoramicData.model.view
             if (this.GetColumnDescriptorsForOption(Option.GroupBy).Count == 0)
             {
                 this.GetColumnDescriptorsForOption(Option.X).Where(cd =>
-                    (cd.DataType == DataTypeConstants.INT ||
-                        cd.DataType == DataTypeConstants.FLOAT ||
-                        cd.DataType == DataTypeConstants.BIT ||
-                        cd.DataType == DataTypeConstants.TIME) &&
+                    (cd.DataType == AttributeDataTypeConstants.INT ||
+                        cd.DataType == AttributeDataTypeConstants.FLOAT ||
+                        cd.DataType == AttributeDataTypeConstants.BIT ||
+                        cd.DataType == AttributeDataTypeConstants.TIME) &&
                     cd.AggregateFunctionSetByUser == false).
                     ForEach(cd =>
                     {
@@ -1148,10 +1148,10 @@ namespace PanoramicData.model.view
 
 
                 this.GetColumnDescriptorsForOption(Option.Y).Where(cd =>
-                    (cd.DataType == DataTypeConstants.INT ||
-                        cd.DataType == DataTypeConstants.FLOAT ||
-                        cd.DataType == DataTypeConstants.BIT ||
-                        cd.DataType == DataTypeConstants.TIME) &&
+                    (cd.DataType == AttributeDataTypeConstants.INT ||
+                        cd.DataType == AttributeDataTypeConstants.FLOAT ||
+                        cd.DataType == AttributeDataTypeConstants.BIT ||
+                        cd.DataType == AttributeDataTypeConstants.TIME) &&
                     cd.AggregateFunctionSetByUser == false).
                     ForEach(cd =>
                     {

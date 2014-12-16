@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PanoramicDataModel
 {
-    public class DataTypeConstants
+    public class AttributeDataTypeConstants
     {
         public static string NVARCHAR = "nvarchar";
         public static string BIT = "bit";
@@ -18,7 +18,7 @@ namespace PanoramicDataModel
         public static string GUID = "uniqueidentifier";
     }
 
-    public class VisualizationTypeConstants
+    public class AttributeVisualizationTypeConstants
     {
         public static string NUMERIC = "numeric";
         public static string DATE = "date";

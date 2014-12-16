@@ -12,5 +12,10 @@ namespace PanoramicData.model.data
         {
             get { throw new NotImplementedException(); }
         }
+
+        public override string AttributeVisualizationType
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

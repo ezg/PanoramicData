@@ -132,8 +132,8 @@ namespace PanoramicData.view.vis
             string dataType = FilterModel.GetDataTypeOfPanoramicDataColumnDescriptor(columnDescriptor, true);
             PanoramicDataValue dataValue = loadedRow.GetValue(columnDescriptor);
 
-            if (dataType == DataTypeConstants.FLOAT ||
-                dataType == DataTypeConstants.INT)
+            if (dataType == AttributeDataTypeConstants.FLOAT ||
+                dataType == AttributeDataTypeConstants.INT)
             {
                 double d = 0;
                 if (dataValue.Value != DBNull.Value && double.TryParse(dataValue.StringValue, out d))
@@ -146,15 +146,15 @@ namespace PanoramicData.view.vis
                     isNull = true;
                 }
             }
-            else if (dataType == DataTypeConstants.NVARCHAR ||
-                     dataType == DataTypeConstants.GEOGRAPHY ||
-                     dataType == DataTypeConstants.GUID)
+            else if (dataType == AttributeDataTypeConstants.NVARCHAR ||
+                     dataType == AttributeDataTypeConstants.GEOGRAPHY ||
+                     dataType == AttributeDataTypeConstants.GUID)
             {
                 value = 0.0;
                 isNull = true;
             }
-            else if (dataType == DataTypeConstants.DATE ||
-                     dataType == DataTypeConstants.TIME)
+            else if (dataType == AttributeDataTypeConstants.DATE ||
+                     dataType == AttributeDataTypeConstants.TIME)
             {
                 value = 0.0;
                 isNull = true;
@@ -253,14 +253,14 @@ namespace PanoramicData.view.vis
 
                 PanoramicDataValue val = new PanoramicDataValue();
                 val.Value = realBoundRenderer.RealBound.Left;
-                val.DataType = DataTypeConstants.FLOAT;
+                val.DataType = AttributeDataTypeConstants.FLOAT;
                 fi.ColumnComparisonValues.Add(FilterModel.ColumnDescriptors[2], new PanoramicDataValueComparison(val, Predicate.GREATER_THAN));
 
                 
                 // lower bound
                 val = new PanoramicDataValue();
                 val.Value = realBoundRenderer.RealBound.Right;
-                val.DataType = DataTypeConstants.FLOAT;
+                val.DataType = AttributeDataTypeConstants.FLOAT;
                 fi.GroupComparisonValues.Add(FilterModel.ColumnDescriptors[2], new PanoramicDataValueComparison(val, Predicate.LESS_THAN));
                 FilterModel.AddFilteredItem(fi, this);
             }

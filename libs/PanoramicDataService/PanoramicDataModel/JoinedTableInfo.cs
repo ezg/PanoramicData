@@ -361,13 +361,13 @@ namespace PanoramicDataModel
                 if (_aggregateFunction == AggregateFunction.Avg)
                 {
                     sqlFunction = "avg";
-                    if (DataType == DataTypeConstants.TIME)
+                    if (DataType == AttributeDataTypeConstants.TIME)
                     {
                         sqlFunction = "cast(dateadd(ss, avg(datediff(ss, 0, " + name + ")), 0) as time)";
                         return sqlFunction;
                     } 
-                    if (DataType == DataTypeConstants.BIT || 
-                        DataType == DataTypeConstants.INT)
+                    if (DataType == AttributeDataTypeConstants.BIT || 
+                        DataType == AttributeDataTypeConstants.INT)
                     {
                         sqlFunction = "avg(cast(" + name + " as float))";
                         return sqlFunction;
@@ -412,7 +412,7 @@ namespace PanoramicDataModel
                 else /*if (_aggregateFunction == AggregateFunction.None)*/
                 {
                     //sqlFunction = "dbo.group_concat";
-                    if (DataType == DataTypeConstants.BIT)
+                    if (DataType == AttributeDataTypeConstants.BIT)
                     {
                         sqlFunction = "max(cast(" + name + " as float))";
                         return sqlFunction;

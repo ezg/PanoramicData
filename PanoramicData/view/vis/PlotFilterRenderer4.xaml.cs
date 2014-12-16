@@ -74,8 +74,8 @@ namespace PanoramicData.view.vis
 
         private const double PI2 = Math.PI*2f;
 
-        private string _xDataType = DataTypeConstants.FLOAT;
-        private string _yDataType = DataTypeConstants.FLOAT;
+        private string _xDataType = AttributeDataTypeConstants.FLOAT;
+        private string _yDataType = AttributeDataTypeConstants.FLOAT;
 
         private int _toLoad = 0;
         private int _loaded = 0;
@@ -593,9 +593,9 @@ namespace PanoramicData.view.vis
 
         private void reorderLabels()
         {
-            if ((_xDataType == DataTypeConstants.NVARCHAR ||
-                _xDataType == DataTypeConstants.GEOGRAPHY ||
-                _xDataType == DataTypeConstants.GUID) &&
+            if ((_xDataType == AttributeDataTypeConstants.NVARCHAR ||
+                _xDataType == AttributeDataTypeConstants.GEOGRAPHY ||
+                _xDataType == AttributeDataTypeConstants.GUID) &&
                 FilterModel.GetColumnDescriptorsForOption(Option.X)[0].AggregateFunction != AggregateFunction.Bin)
             {
                 int count = 0;
@@ -621,9 +621,9 @@ namespace PanoramicData.view.vis
                 }
             }
 
-            if ((_yDataType == DataTypeConstants.NVARCHAR ||
-                _yDataType == DataTypeConstants.GEOGRAPHY ||
-                _yDataType == DataTypeConstants.GUID) &&
+            if ((_yDataType == AttributeDataTypeConstants.NVARCHAR ||
+                _yDataType == AttributeDataTypeConstants.GEOGRAPHY ||
+                _yDataType == AttributeDataTypeConstants.GUID) &&
                 FilterModel.GetColumnDescriptorsForOption(Option.Y)[0].AggregateFunction != AggregateFunction.Bin)
             {
                 int count = 0;
@@ -661,8 +661,8 @@ namespace PanoramicData.view.vis
             dataValue = loadedRow.GetValue(columnDescriptor);
             label = dataValue.StringValue;
 
-            if (dataType == DataTypeConstants.FLOAT ||
-                dataType == DataTypeConstants.INT)
+            if (dataType == AttributeDataTypeConstants.FLOAT ||
+                dataType == AttributeDataTypeConstants.INT)
             {
                 double d = 0;
                 if (dataValue.Value != DBNull.Value && double.TryParse(dataValue.StringValue, out d))
@@ -681,7 +681,7 @@ namespace PanoramicData.view.vis
                     }
                 }
             }
-            else if (dataType == DataTypeConstants.BIT)
+            else if (dataType == AttributeDataTypeConstants.BIT)
             {
                 double d = 0;
                 if (dataValue.Value != DBNull.Value && double.TryParse(dataValue.Value.ToString(), out d))
@@ -704,9 +704,9 @@ namespace PanoramicData.view.vis
                     }
                 }
             }
-            else if (dataType == DataTypeConstants.NVARCHAR ||
-                     dataType == DataTypeConstants.GEOGRAPHY ||
-                     dataType == DataTypeConstants.GUID)
+            else if (dataType == AttributeDataTypeConstants.NVARCHAR ||
+                     dataType == AttributeDataTypeConstants.GEOGRAPHY ||
+                     dataType == AttributeDataTypeConstants.GUID)
             {
                 value = loadedRow.RowNumber - 1;
                 if (dataValue.Value != DBNull.Value)
@@ -748,7 +748,7 @@ namespace PanoramicData.view.vis
                     isNull = true;
                 }
             }
-            else if (dataType == DataTypeConstants.DATE)
+            else if (dataType == AttributeDataTypeConstants.DATE)
             {
                 if (dataValue.Value != DBNull.Value)
                 {
@@ -760,7 +760,7 @@ namespace PanoramicData.view.vis
                     isNull = true;
                 }
             }
-            else if (dataType == DataTypeConstants.TIME)
+            else if (dataType == AttributeDataTypeConstants.TIME)
             {
                 if (dataValue.Value != DBNull.Value)
                 {
@@ -2482,9 +2482,9 @@ namespace PanoramicData.view.vis
         {
             IAxisRenderer axisRenderer = null;
 
-            if (dataType == DataTypeConstants.NVARCHAR ||
-                dataType == DataTypeConstants.GEOGRAPHY ||
-                dataType == DataTypeConstants.GUID)
+            if (dataType == AttributeDataTypeConstants.NVARCHAR ||
+                dataType == AttributeDataTypeConstants.GEOGRAPHY ||
+                dataType == AttributeDataTypeConstants.GUID)
             {
                 Range<int> intRange = new Range<int>((int)range.Min, (int)range.Max);
                 axisRenderer = new IntegerAxisRenderer(
@@ -2512,26 +2512,26 @@ namespace PanoramicData.view.vis
                 lp.Collection = dict;
                 ((AxisRenderer<int>) axisRenderer).LabelProvider = lp;
             }
-            else if (dataType == DataTypeConstants.FLOAT ||
-                     dataType == DataTypeConstants.BIT)
+            else if (dataType == AttributeDataTypeConstants.FLOAT ||
+                     dataType == AttributeDataTypeConstants.BIT)
             {
                 axisRenderer = new NumericAxisRenderer(
                     range, offset1, offset2, width, height, ticksBackgroundSize, dataToScreen, flipped);
             }
-            else if (dataType == DataTypeConstants.INT)
+            else if (dataType == AttributeDataTypeConstants.INT)
             {
                 Range<int> intRange = new Range<int>((int)range.Min, (int)range.Max);
                 axisRenderer = new IntegerAxisRenderer(
                     intRange, offset1, offset2, width, height, ticksBackgroundSize, dataToScreen, flipped);
             }
-            else if (dataType == DataTypeConstants.DATE)
+            else if (dataType == AttributeDataTypeConstants.DATE)
             {
                 Range<DateTime> dateRange = new Range<DateTime>(
                    new DateTime((long)range.Min), new DateTime((long)range.Max));
                 axisRenderer = new DateTimeAxisRenderer(
                     dateRange, offset1, offset2, width, height, ticksBackgroundSize, dataToScreen, flipped);
             }
-            else if (dataType == DataTypeConstants.TIME) 
+            else if (dataType == AttributeDataTypeConstants.TIME) 
             {
                 Range<int> intRange = new Range<int>((int)range.Min, (int)range.Max);
                 axisRenderer = new IntegerAxisRenderer(

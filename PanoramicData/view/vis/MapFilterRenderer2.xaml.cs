@@ -301,7 +301,7 @@ namespace PanoramicData.view.vis
             if (FilterModel.GetColumnDescriptorsForOption(Option.Location).Count > 0)
             {
                 if (FilterModel.GetDataTypeOfPanoramicDataColumnDescriptor(FilterModel.GetColumnDescriptorsForOption(Option.Location)[0], true) !=
-                    DataTypeConstants.GEOGRAPHY) 
+                    AttributeDataTypeConstants.GEOGRAPHY) 
                 {
                     yErrMsg = "Not a geo datatype";
                 }

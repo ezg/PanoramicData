@@ -58,7 +58,6 @@ namespace PanoramicData.view.table
 
         private TableModel _tableModel = null;
         private FilterModel _filterModel = null;
-        private bool _renderSettings = false;
         
         private List<SettingsMapping> _settingsMappings = new List<SettingsMapping>(); 
 
@@ -231,116 +230,6 @@ namespace PanoramicData.view.table
             {
                 updateSettingsAndOptionPanel();
             }
-
-        }
-
-        public void OptionMoved(OptionRenderer optionRenderer, FrameworkElement elem)
-        {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Rct bounds = elem.GetBounds(inqScene);
-            bool found = false;
-            foreach (var settingsMapping in _settingsMappings)
-            {
-                if (!found && settingsMapping.Border.GetBounds(inqScene).IntersectsWith(bounds))
-                {
-                    settingsMapping.Border.Background = Brushes.LightGray;
-                    found = true;
-                }
-                else
-                {
-                    settingsMapping.Border.Background = Brushes.White;
-                }
-            }
-        }
-
-        public void OptionDropped(OptionRenderer optionRenderer, FrameworkElement elem)
-        {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Rct bounds = elem.GetBounds(inqScene);
-            foreach (var settingsMapping in _settingsMappings)
-            {
-                settingsMapping.Border.Background = Brushes.White;
-
-                if (settingsMapping.Border.GetBounds(inqScene).IntersectsWith(bounds))
-                {
-                    _filterModel.AddOptionColumnDescriptor(optionRenderer.Option, settingsMapping.ColumnDescriptor);
-                    break;
-                }
-            }
-
-            if (!optionRenderer.IsInOptionsPanel)
-            {
-                foreach (var settingsMapping in _settingsMappings)
-                {
-                    if (settingsMapping.StackPanel.Children.Contains(optionRenderer))
-                    {
-                        _filterModel.RemoveOptionColumnDescriptor(optionRenderer.Option, settingsMapping.ColumnDescriptor);
-                    }
-                }
-            }
-
-            //updateSettingsAndOptionPanel();
-        }
-
-        void updateSettingsAndOptionPanel()
-        {
-            optionsPanel.Children.Clear();
-            foreach (var optionMapping in _filterModel.OptionCardinalityMappings.Where(om => om.OptionCardinality != OptionCardinality.Zero))
-            {
-                var cdsOption = _filterModel.GetColumnDescriptorsForOption(optionMapping.Option);
-                OptionRenderer opt = null;
-
-                if (optionMapping.OptionCardinality == OptionCardinality.Many)
-                {
-                    opt = new OptionRenderer(optionMapping.Option, this, true, true);
-                }
-                else if (optionMapping.OptionCardinality == OptionCardinality.One)
-                {
-                    opt = new OptionRenderer(optionMapping.Option, this, cdsOption.Count == 0, true);
-                }
-                optionsPanel.Children.Add(opt);
-            }
-            
-            _settingsMappings.Clear();
-
-            settingsPanel.Children.Clear();
-            settingsPanel.Height = 45;
-            settingsPanel.Margin = new Thickness(2,0,2,0);
-
-            foreach (var mappingEntry in _mapping)
-            {
-                Border b  = new Border();
-                b.BorderBrush = Brushes.LightGray;
-                b.BorderThickness = new Thickness(1);
-
-                b.Height = 45;
-                b.Width = mappingEntry.GridViewColumn.ActualWidth;
-                b.Background = Brushes.White;
-
-                StackPanel r = new StackPanel();
-                r.Orientation = Orientation.Horizontal;
-                r.HorizontalAlignment = HorizontalAlignment.Center;
-                r.VerticalAlignment = VerticalAlignment.Stretch;
-                
-                b.Child = r;
-                
-                settingsPanel.Children.Add(b);
-
-                SettingsMapping settingsMapping = new SettingsMapping
-                {
-                    StackPanel = r,
-                    Border = b,
-                    ColumnDescriptor = mappingEntry.ColumnDescriptor
-                };
-                _settingsMappings.Add(settingsMapping);
-
-                foreach (var option in _filterModel.GetOptionsForColumnDescriptors(mappingEntry.ColumnDescriptor))
-                {
-                    OptionRenderer or = new OptionRenderer(option, this, true);
-                    settingsMapping.StackPanel.Children.Add(or);
-                }
-                
-            }
         }
 
         GridViewColumn createGridViewColumn(PanoramicDataColumnDescriptor columnDescriptor, int index, GridViewColumn oldColumn)
@@ -396,8 +285,8 @@ namespace PanoramicData.view.table
                 tbFactory.SetValue(TextBlock.TagProperty, index);
                 //tbFactory.SetValue(TextBlock.TextWrappingProperty, TextWrapping.WrapWithOverflow);
                 string dataType = FilterModel.GetDataTypeOfPanoramicDataColumnDescriptor(columnDescriptor, true);
-                if (dataType == DataTypeConstants.NVARCHAR ||
-                    dataType == DataTypeConstants.GEOGRAPHY)
+                if (dataType == AttributeDataTypeConstants.NVARCHAR ||
+                    dataType == AttributeDataTypeConstants.GEOGRAPHY)
                 {
                     tbFactory.SetValue(TextBlock.TextAlignmentProperty, TextAlignment.Left);
                 }
@@ -1297,116 +1186,6 @@ namespace PanoramicData.view.table
         }
     }
     
-    public class OptionRenderer : UserControl
-    {
-        private Image _image = new Image();
-        private SimpleDataGrid _simpleDataGrid = null;
-        private bool _isActive = true;
-        
-        
-        private Image _shadow = null;
-        private Point _startDrag = new Point(0, 0);
-
-        public Option Option { get; set; }
-        public bool IsInOptionsPanel { get; set; }
-
-        public OptionRenderer(Option option, SimpleDataGrid simpleDataGrid, bool isAtive = true, bool isInOptionsPanel = false)
-        {
-            Option = option;
-            _simpleDataGrid = simpleDataGrid;
-            _isActive = isAtive;
-            IsInOptionsPanel = isInOptionsPanel;
-            
-            Content = _image;
-
-            if (_isActive)
-            {
-                this.MouseDown += OptionRenderer_MouseDown;
-            }
-            else
-            {
-                _image.Opacity = 0.5;
-            }
-
-            this.Width = 25;
-            this.Height = 25;
-            this.Margin = new Thickness(8);
-
-            if (Option == Option.X)
-            {
-                _image.Source = Properties.Resources.c_x.LoadBitmap();
-            }
-            else if (Option == Option.Y)
-            {
-                _image.Source = Properties.Resources.c_y.LoadBitmap();
-            }
-            else if (Option == Option.Label)
-            {
-                _image.Source = Properties.Resources.c_label.LoadBitmap();
-            }
-            else if (Option == Option.Location)
-            {
-                _image.Source = Properties.Resources.c_location.LoadBitmap();
-            }
-            else if (Option == Option.SegmentSize)
-            {
-                _image.Source = Properties.Resources.c_segement_size.LoadBitmap();
-            }
-            else if (Option == Option.ColorBy)
-            {
-                _image.Source = Properties.Resources.c_series_2.LoadBitmap();
-            }
-        }
-
-        void OptionRenderer_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            e.MouseDevice.Capture(this);
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetPosition(inqScene);
-
-            _startDrag = fromInqScene;
-            _shadow = new Image();
-            _shadow.Source = _image.Source;
-            _shadow.Width = 25;
-            _shadow.Height = 25;
-            _shadow.RenderTransform = new TranslateTransform(fromInqScene.X - _shadow.Width / 2.0, fromInqScene.Y - _shadow.Height);
-            inqScene.AddNoUndo(_shadow);
-
-            this.MouseMove += OptionRenderer_MouseMove;
-            this.MouseUp += OptionRenderer_MouseUp;
-        }
-
-        void OptionRenderer_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            Mouse.Capture(null);
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetPosition(inqScene);
-
-            if (_shadow != null)
-            {
-                _simpleDataGrid.OptionDropped(this, _shadow);
-                inqScene.Rem(_shadow);
-                _shadow = null;
-            }
-            
-            this.MouseMove -= OptionRenderer_MouseMove;
-            this.MouseUp -= OptionRenderer_MouseUp;
-        }
-
-        void OptionRenderer_MouseMove(object sender, MouseEventArgs e)
-        {
-            e.Handled = true;
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetPosition(inqScene);
-
-            _shadow.RenderTransform = new TranslateTransform(fromInqScene.X - _shadow.Width / 2.0, fromInqScene.Y - _shadow.Height);
-
-            _simpleDataGrid.OptionMoved(this, _shadow);
-        }
-    }
-
     public class FilterHighlightImageConverter : IValueConverter
     {
         private FilterModel _filterModel = null;

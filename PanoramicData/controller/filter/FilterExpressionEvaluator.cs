@@ -123,8 +123,8 @@ namespace PanoramicData.controller.filter
                     string value = expressionValue.Value;
                     if (value == "")
                     {
-                        if (column.DataType == DataTypeConstants.FLOAT ||
-                            column.DataType == DataTypeConstants.INT)
+                        if (column.DataType == AttributeDataTypeConstants.FLOAT ||
+                            column.DataType == AttributeDataTypeConstants.INT)
                         {
                             value = int.MaxValue.ToString();
                         }
@@ -138,7 +138,7 @@ namespace PanoramicData.controller.filter
                     {
                         if (compValues[column].Predicate == Predicate.EQUALS)
                         {
-                            if (column.DataType == DataTypeConstants.FLOAT)
+                            if (column.DataType == AttributeDataTypeConstants.FLOAT)
                             {
                                 // fixes sql server precision issues when comparing floats. 
                                 // t0.age_8  > 28.6870706185852 - 0.0001 AND t0.age_8 < 28.6870706185852 + 0.0001
@@ -159,52 +159,52 @@ namespace PanoramicData.controller.filter
                         }
                         else if (compValues[column].Predicate == Predicate.GREATER_THAN)
                         {
-                            if (column.DataType == DataTypeConstants.FLOAT ||
-                                column.DataType == DataTypeConstants.INT ||
-                                column.DataType == DataTypeConstants.NVARCHAR ||
-                                column.DataType == DataTypeConstants.TIME ||
-                                column.DataType == DataTypeConstants.DATE)
+                            if (column.DataType == AttributeDataTypeConstants.FLOAT ||
+                                column.DataType == AttributeDataTypeConstants.INT ||
+                                column.DataType == AttributeDataTypeConstants.NVARCHAR ||
+                                column.DataType == AttributeDataTypeConstants.TIME ||
+                                column.DataType == AttributeDataTypeConstants.DATE)
                             {
                                 subWhere.Add(value + " > " + ((PanoramicDataValue)val).ToSqlString());
                             }
                         }
                         else if (compValues[column].Predicate == Predicate.LESS_THAN)
                         {
-                            if (column.DataType == DataTypeConstants.FLOAT ||
-                                column.DataType == DataTypeConstants.INT ||
-                                column.DataType == DataTypeConstants.NVARCHAR ||
-                                column.DataType == DataTypeConstants.TIME ||
-                                column.DataType == DataTypeConstants.DATE)
+                            if (column.DataType == AttributeDataTypeConstants.FLOAT ||
+                                column.DataType == AttributeDataTypeConstants.INT ||
+                                column.DataType == AttributeDataTypeConstants.NVARCHAR ||
+                                column.DataType == AttributeDataTypeConstants.TIME ||
+                                column.DataType == AttributeDataTypeConstants.DATE)
                             {
                                 subWhere.Add(value + " < " + ((PanoramicDataValue)val).ToSqlString());
                             }
                         }
                         else if (compValues[column].Predicate == Predicate.GREATER_THAN_EQUAL)
                         {
-                            if (column.DataType == DataTypeConstants.FLOAT ||
-                                column.DataType == DataTypeConstants.INT ||
-                                column.DataType == DataTypeConstants.NVARCHAR ||
-                                column.DataType == DataTypeConstants.TIME ||
-                                column.DataType == DataTypeConstants.DATE)
+                            if (column.DataType == AttributeDataTypeConstants.FLOAT ||
+                                column.DataType == AttributeDataTypeConstants.INT ||
+                                column.DataType == AttributeDataTypeConstants.NVARCHAR ||
+                                column.DataType == AttributeDataTypeConstants.TIME ||
+                                column.DataType == AttributeDataTypeConstants.DATE)
                             {
                                 subWhere.Add(value + " >= " + ((PanoramicDataValue)val).ToSqlString());
                             }
-                            else if (column.DataType == DataTypeConstants.BIT)
+                            else if (column.DataType == AttributeDataTypeConstants.BIT)
                             {
                                 subWhere.Add(value + " >= " + ((PanoramicDataValue)val).ToSqlString());
                             }
                         }
                         else if (compValues[column].Predicate == Predicate.LESS_THAN_EQUAL)
                         {
-                            if (column.DataType == DataTypeConstants.FLOAT ||
-                                column.DataType == DataTypeConstants.INT ||
-                                column.DataType == DataTypeConstants.NVARCHAR ||
-                                column.DataType == DataTypeConstants.TIME ||
-                                column.DataType == DataTypeConstants.DATE) 
+                            if (column.DataType == AttributeDataTypeConstants.FLOAT ||
+                                column.DataType == AttributeDataTypeConstants.INT ||
+                                column.DataType == AttributeDataTypeConstants.NVARCHAR ||
+                                column.DataType == AttributeDataTypeConstants.TIME ||
+                                column.DataType == AttributeDataTypeConstants.DATE) 
                             {
                                 subWhere.Add(value + " <= " + ((PanoramicDataValue)val).ToSqlString());
                             }
-                            else if (column.DataType == DataTypeConstants.BIT)
+                            else if (column.DataType == AttributeDataTypeConstants.BIT)
                             {
                                 subWhere.Add(value + " <= " + ((PanoramicDataValue)val).ToSqlString());
                             }

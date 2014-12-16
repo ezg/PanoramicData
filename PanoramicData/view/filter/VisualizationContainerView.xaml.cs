@@ -86,11 +86,6 @@ namespace PanoramicData.view.filter
 
         private void updateRendering()
         {
-            changeIncomingFilterModel();
-        }
-
-        void VisualizationContainerView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
             VisualizationViewModel visualizationViewModel = (DataContext as VisualizationViewModel);
 
             rotationTransition.Duration = new Duration(TimeSpan.FromSeconds(0.05));
@@ -159,6 +154,13 @@ namespace PanoramicData.view.filter
                 _front.ShowToggle = false;
                 _front.CreateBitmapForInteractions = false;*/
             }
+
+            changeIncomingFilterModel();
+        }
+
+        void VisualizationContainerView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            
         }
 
         void changeIncomingFilterModel()
@@ -206,12 +208,6 @@ namespace PanoramicData.view.filter
                 }
             }
             _isFrontShown = !_isFrontShown;*/
-        }
-
-        public byte[] CreateImage()
-        {
-            FilterRenderer renderer = _front.VisualDescendentsOfType<FilterRenderer>().First();
-            return renderer.CreateImage();
         }
 
         public override void NotifyMove(Pt delta)

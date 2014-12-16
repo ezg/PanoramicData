@@ -306,7 +306,7 @@ namespace PanoramicData.controller.data
                                                 var qual = levelQualifiers.First(iq => iq.ColumnDescriptor.MatchComplete(cd2));
                                                 return qual.TableQualifier + P + qual.FieldQualifier;
                                             })) + ")";
-                                    if (columnDescriptor.DataType == DataTypeConstants.TIME)
+                                    if (columnDescriptor.DataType == AttributeDataTypeConstants.TIME)
                                     {
                                         name = name.Replace(", 0) as time)", "") + overClause + ", 0) as time)";
                                     }
@@ -595,7 +595,7 @@ namespace PanoramicData.controller.data
                     {
                         dv.StringValue = d + " - " + (d + columnDescriptor.BinSize);
                     }
-                    else if (dv.DataType == DataTypeConstants.BIT)
+                    else if (dv.DataType == AttributeDataTypeConstants.BIT)
                     {
                         if (d == 1.0)
                         {
@@ -616,7 +616,7 @@ namespace PanoramicData.controller.data
                     }
                 }
 
-                if (dv.DataType == DataTypeConstants.GEOGRAPHY)
+                if (dv.DataType == AttributeDataTypeConstants.GEOGRAPHY)
                 {
 
                     string toSplit = dv.StringValue;
