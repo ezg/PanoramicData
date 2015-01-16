@@ -5,10 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fr="clr-namespace:PanoramicData.view.filter"
              xmlns:other="clr-namespace:PanoramicData.view.other"
-             mc:Ignorable="d" 
+             xmlns:viewmodel="clr-namespace:PanoramicData.model.view_new"
+             xmlns:utils="clr-namespace:PanoramicData.utils"
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <utils:BooleanToVisibilityConverter x:Key="IsTableVisualizationTypeConverter" />
+    </UserControl.Resources>
+
     <Grid Margin="0">
         <other:SimpleAPage x:Name="aPage"/>
-        <Label Name="resultLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Label Name="resultLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisualizationType, Converter={StaticResource IsTableVisualizationTypeConverter}}" Value="True">
+                            <Setter Property="Margin" Value="0,0,0,30" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding VisualizationType, Converter={StaticResource IsTableVisualizationTypeConverter}}" Value="False">
+                            <Setter Property="Margin" Value="0,0,0,30" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
     </Grid>
 </fr:FilterRenderer>

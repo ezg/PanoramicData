@@ -24,11 +24,6 @@ namespace PanoramicData.view.table
 
         }
 
-        public override byte[] CreateImage()
-        {
-            return null;
-        }
-
         void _dataGrid_RowsSelected(object sender, List<PanoramicDataRow> rows)
         {
             if (rows != null)
@@ -60,14 +55,16 @@ namespace PanoramicData.view.table
             }
         }
 
-        protected override void Init(bool resetViewport)
+
+        protected override void UpdateRendering()
         {
-            if (FilterModel != null)
+            base.UpdateRendering();
+            /*if (FilterModel != null)
             {
                 QueryItemsProvider queryItemsProvider = new QueryItemsProvider(new FilterQueryGenerator(FilterModel));
-                AsyncVirtualizingCollection<PanoramicDataRow> dataValues = new AsyncVirtualizingCollection<PanoramicDataRow>(queryItemsProvider, 100 /*page size*/, 1000 /*timeout*/);
+                AsyncVirtualizingCollection<PanoramicDataRow> dataValues = new AsyncVirtualizingCollection<PanoramicDataRow>(queryItemsProvider, 100 , 1000 );
                 _dataGrid.PopulateData(dataValues, null, FilterModel, false);
-            }
+            }*/
         }
     }
 }

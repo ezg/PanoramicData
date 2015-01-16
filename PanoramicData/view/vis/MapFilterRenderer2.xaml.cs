@@ -47,12 +47,7 @@ namespace PanoramicData.view.vis
             map.MouseDown += map_MouseDown;
             map.IsManipulationEnabled = true; // hack for making the touch events work properly
         }
-
-        public override byte[] CreateImage()
-        {
-            return null;
-        }
-
+        
         void map_MouseDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true; // hack for making the touch events work properly
@@ -171,8 +166,9 @@ namespace PanoramicData.view.vis
             }
         }
 
-        protected override void Init(bool resetViewport)
+        protected override void UpdateRendering()
         {
+            base.UpdateRendering();
             if (FilterModel == null)
             {
                 return;

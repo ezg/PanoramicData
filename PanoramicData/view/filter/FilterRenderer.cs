@@ -14,6 +14,9 @@ namespace PanoramicData.view.filter
 {
     public class FilterRenderer : UserControl
     {
+        protected VisualizationViewResultModel VisualizationViewResultModel { get; set; }
+        protected VisualizationViewModel VisualizationViewModel { get; set; }
+
         public FilterRenderer()
         {
             this.DataContextChanged += FilterRenderer_DataContextChanged;
@@ -39,6 +42,8 @@ namespace PanoramicData.view.filter
 
         protected virtual void UpdateRendering()
         {
+            VisualizationViewModel = (DataContext as VisualizationViewModel);
+            VisualizationViewResultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

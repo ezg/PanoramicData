@@ -126,11 +126,6 @@ namespace PanoramicData.view.filter
                 _front.CreateBitmapForInteractions = false;
                 MainViewController.Instance.InkableScene.Remove(_brushAttachment);
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Slider)
-            {
-                SliderFilterRenderer fRenderer = new SliderFilterRenderer();
-                (_front.Content as Front).SetContent(fRenderer);
-            }
             else if (visualizationViewModel.VisualizationType == VisualizationType.Plot)
             {
                 PlotFilterRenderer4 fRenderer = new PlotFilterRenderer4(false);

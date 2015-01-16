@@ -19,8 +19,9 @@ namespace PanoramicData.view.vis
         }
 
 
-        protected override void Init(bool resetViewport)
+        protected override void UpdateRendering()
         {
+            base.UpdateRendering();
             if (FilterModel == null)
             {
                 return;

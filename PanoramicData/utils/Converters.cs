@@ -1,4 +1,5 @@
-﻿using PixelLab.Common;
+﻿using PanoramicData.model.view_new;
+using PixelLab.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,14 @@ namespace PanoramicData.utils
         protected override Visibility ConvertBase(bool input)
         {
             return input ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    public class IsTableVisualizationTypeConverter : SimpleValueConverter<VisualizationType, bool>
+    {
+        protected override bool ConvertBase(VisualizationType input)
+        {
+            return input == VisualizationType.Table;
         }
     }
     

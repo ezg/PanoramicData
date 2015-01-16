@@ -7,6 +7,7 @@ using PanoramicDataModel;
 using starPadSDK.Inq;
 using PanoramicData.model.view;
 using PanoramicData.utils.inq;
+using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.filter
 {
@@ -51,20 +52,10 @@ namespace PanoramicData.view.filter
             aPage.Height = this.ActualHeight;
         }
 
-        public override byte[] CreateImage()
-        {
-            return null;
-        }
 
-        protected override void Init(bool resetViewport)
+        protected override void UpdateRendering()
         {
-            if (FilterModel != null)
-            {
-                if (FilterModel.FilterRendererType != FilterRendererType.Table)
-                {
-                    resultLabel.Margin = new Thickness(0,0,0,30);
-                }
-            }
+            base.UpdateRendering();
         }
 
         public void SetStroqs(StroqCollection stroqs)

@@ -179,5 +179,5 @@ namespace PanoramicData.model.view_new
 
     public enum VisualizationViewModelUpdatedEventType { Structure, Rendering, Links }
 
-    public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Slider, Pivot, Line, OneD, Frozen, Test }
+    public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Pivot, Line, OneD, Frozen, Test }
 }

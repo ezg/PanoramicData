@@ -253,9 +253,6 @@
     <Compile Include="view\vis\PlotFilterRenderer4.xaml.cs">
       <DependentUpon>PlotFilterRenderer4.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\vis\SliderFilterRenderer.xaml.cs">
-      <DependentUpon>SliderFilterRenderer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\vis\MapFilterRenderer2.xaml.cs">
       <DependentUpon>MapFilterRenderer2.xaml</DependentUpon>
     </Compile>
@@ -369,10 +366,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="view\vis\PlotFilterRenderer4.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\SliderFilterRenderer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

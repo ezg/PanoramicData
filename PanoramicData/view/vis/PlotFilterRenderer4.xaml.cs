@@ -166,15 +166,7 @@ namespace PanoramicData.view.vis
             FilterModel.RemoveOptionColumnDescriptor(Option.X, FilterModel.GetColumnDescriptorsForOption(Option.X)[0]);
             //FilterModel.AddOptionColumnDescriptor(Option.X, (PanoramicDataColumnDescriptor)e.ColumnDescriptor.Clone());
         }
-
-        public override byte[] CreateImage()
-        {
-            /*plotter.SaveScreenshot("c:\\temp\\test.png");
-            byte[] bytes = File.ReadAllBytes("c:\\temp\\test.png");
-            return bytes;*/
-            return null;
-        }
-
+        
         void DataValues_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             AsyncVirtualizingCollection<PanoramicDataRow> values = (AsyncVirtualizingCollection<PanoramicDataRow>)sender;
@@ -2039,9 +2031,9 @@ namespace PanoramicData.view.vis
                 _renderGraph = true;
             }
         }
-
-        protected override void Init(bool resetViewport)
+        protected override void UpdateRendering()
         {
+            base.UpdateRendering();
             if (FilterModel == null)
             {
                 return;
