@@ -27,7 +27,7 @@ using CombinedInputAPI;
 using PanoramicData.model.view_new;
 using PanoramicData.view.inq;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     public partial class Resizer : UserControl
     {

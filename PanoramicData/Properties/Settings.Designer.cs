@@ -214,5 +214,17 @@ namespace PanoramicData.Properties {
                 this["RenderFingers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Test")]
+        public string InitialDataSet {
+            get {
+                return ((string)(this["InitialDataSet"]));
+            }
+            set {
+                this["InitialDataSet"] = value;
+            }
+        }
     }
 }

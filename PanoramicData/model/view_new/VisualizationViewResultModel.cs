@@ -10,16 +10,16 @@ namespace PanoramicData.model.view_new
 {
     public class VisualizationViewResultModel : BindableBase
     {
-        private AsyncVirtualizingCollection<PanoramicDataRow> _dataValues = null;
-        public AsyncVirtualizingCollection<PanoramicDataRow> DataValues
+        private AsyncVirtualizingCollection<VisualizationViewResultItemModel> _visualizationViewResultItemModels = null;
+        public AsyncVirtualizingCollection<VisualizationViewResultItemModel> VisualizationViewResultItemModels
         {
             get
             {
-                return _dataValues;
+                return _visualizationViewResultItemModels;
             }
             set
             {
-                this.SetProperty(ref _dataValues, value);
+                this.SetProperty(ref _visualizationViewResultItemModels, value);
             }
         }
     }

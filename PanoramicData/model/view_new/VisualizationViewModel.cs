@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using starPadSDK.AppLib;
+using PanoramicData.utils;
 
 namespace PanoramicData.model.view_new
 {
-    public class VisualizationViewModel : BindableBase
+    public class VisualizationViewModel : ExtendedBindableBase
     {
         public delegate void VisualizationViewModelUpdatedHandler(object sender, VisualizationViewModelUpdatedEventArgs e);
         public event VisualizationViewModelUpdatedHandler VisualizationViewModelUpdated;
@@ -157,6 +158,51 @@ namespace PanoramicData.model.view_new
             }
         }
 
+        private List<FilterItem> _filterItems = new List<FilterItem>();
+        public List<FilterItem> FilterItems
+        {
+            get
+            {
+                return _filterItems;
+            }
+        }
+
+        public void ClearFilterItems()
+        {
+            _filterItems.Clear();
+            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.FilterItems);
+        }
+
+        public void AddFilterItems(List<FilterItem> filterItems, object sender)
+        {
+            _filterItems.AddRange(filterItems);
+            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
+        }
+
+        public void AddFilterItem(FilterItem filterItem, object sender)
+        {
+            _filterItems.Add(filterItem);
+            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
+        }
+
+        public void RemoveFilterItem(FilterItem filterItem, object sender)
+        {
+            _filterItems.Remove(filterItem);
+            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
+        }
+
+        public void RemoveFilterItems(List<FilterItem> filterItems, object sender)
+        {
+            foreach (var filterItem in filterItems)
+            {
+                _filterItems.Remove(filterItem);
+            }
+            if (filterItems.Count > 0)
+            {
+                fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
+            }
+        }
+
         protected void fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType type)
         {
             if (VisualizationViewModelUpdated != null)
@@ -177,7 +223,7 @@ namespace PanoramicData.model.view_new
         }
     }
 
-    public enum VisualizationViewModelUpdatedEventType { Structure, Rendering, Links }
+    public enum VisualizationViewModelUpdatedEventType { Structure, Rendering, Links, FilterItems }
 
-    public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Pivot, Line, OneD, Frozen, Test }
+    public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Line, OneD, Frozen, Test }
 }

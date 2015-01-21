@@ -24,7 +24,7 @@ using PanoramicData.view.table;
 using CombinedInputAPI;
 using PanoramicData.model.view_new;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     /// <summary>
     /// Interaction logic for Colorer.xaml

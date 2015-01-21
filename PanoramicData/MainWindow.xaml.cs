@@ -22,8 +22,6 @@ using starPadSDK.WPFHelp;
 using starPadSDK.AppLib;
 using PixelLab.Common;
 using Path = System.Windows.Shapes.Path;
-using PanoramicData.view.filter;
-using PanoramicData.view.table;
 using PanoramicData.utils.inq;
 using PanoramicData.view.schema;
 using PanoramicData.model.view;
@@ -35,6 +33,7 @@ using CombinedInputAPI;
 using PanoramicData.controller.view;
 using starPadSDK.AppLib;
 using System.Diagnostics;
+using PanoramicData.view.vis;
 
 namespace PanoramicData
 {

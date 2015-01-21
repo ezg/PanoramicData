@@ -25,7 +25,7 @@ using PanoramicData.view.table;
 using PanoramicData.model.view;
 using PanoramicData.model.view_new;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     /// <summary>
     /// Interaction logic for Grouper.xaml

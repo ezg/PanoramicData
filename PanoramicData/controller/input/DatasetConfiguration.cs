@@ -63,6 +63,19 @@ namespace PanoramicData.controller.input
             }
         }
 
+        private string _dataFile;
+        public string DataFile
+        {
+            get
+            {
+                return _dataFile;
+            }
+            set
+            {
+                this.SetProperty(ref _dataFile, value);
+            }
+        }
+
         public static DatasetConfiguration FromFile(string fileName)
         {
             try
@@ -93,6 +106,10 @@ namespace PanoramicData.controller.input
                     else if (parts[0] == "Backend")
                     {
                         config.Backend = parts[1];
+                    }
+                    else if (parts[0] == "DataFile")
+                    {
+                        config.DataFile = parts[1];
                     }
                 }
 

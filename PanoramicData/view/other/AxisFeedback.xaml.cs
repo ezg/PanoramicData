@@ -10,7 +10,6 @@ using PixelLab.Common;
 using starPadSDK.WPFHelp;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
-using PanoramicData.view.filter;
 using PanoramicData.model.view_new;
 
 namespace PanoramicData.view.other

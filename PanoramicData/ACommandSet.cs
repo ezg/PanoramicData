@@ -11,10 +11,10 @@ using System.Windows.Media;
 using starPadSDK.AppLib;
 using PanoramicDataDBConnector;
 using PanoramicDataModel;
-using PanoramicData.view.filter;
 using PanoramicData.model.view;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
+using PanoramicData.view.vis;
 
 namespace PanoramicData
 {

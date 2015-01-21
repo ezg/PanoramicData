@@ -11,9 +11,9 @@ using Recognizer.NDollar;
 using System.IO;
 using BrownRecognitionCommon;
 using PanoramicData.utils.inq;
-using PanoramicData.view.filter;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
+using PanoramicData.view.vis;
 
 namespace PanoramicData
 {

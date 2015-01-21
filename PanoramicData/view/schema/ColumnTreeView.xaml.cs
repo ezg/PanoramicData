@@ -20,10 +20,10 @@ using starPadSDK.Geom;
 using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
-using PanoramicData.view.filter;
 using PanoramicData.view.inq;
 using PanoramicData.model.data;
 using PanoramicData.model.view_new;
+using PanoramicData.view.vis;
 
 namespace PanoramicData.view.schema
 {

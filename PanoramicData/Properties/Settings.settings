@@ -50,5 +50,8 @@
     <Setting Name="RenderFingers" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="InitialDataSet" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Test</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows.Media;
 
-namespace PanoramicData.view.vis
+namespace PanoramicData.view.vis.render
 {
-    class FilterRendererResources
+    class RendererResources
     {
         private static Dictionary<string, Color> _groupColorLookup = new Dictionary<string, Color>(); 
 
@@ -13,7 +13,7 @@ namespace PanoramicData.view.vis
             if (!_groupColorLookup.ContainsKey(grouping))
             {
                 _groupColorLookup.Add(grouping,
-                    SERIES_COLORS[_groupColorLookup.Count%FilterRendererResources.SERIES_COLORS.Length]);
+                    SERIES_COLORS[_groupColorLookup.Count % RendererResources.SERIES_COLORS.Length]);
             }
             return _groupColorLookup[grouping];
         }

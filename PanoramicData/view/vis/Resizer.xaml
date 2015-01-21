@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PanoramicData.view.filter.Resizer"
+﻿<UserControl x:Class="PanoramicData.view.vis.Resizer"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:PanoramicData.model.view"
              xmlns:util="clr-namespace:PanoramicData.view.schema"
-             xmlns:filter="clr-namespace:PanoramicData.view.filter"
+             xmlns:vis="clr-namespace:PanoramicData.view.vis"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="400">
     
@@ -127,9 +127,9 @@
                     <Grid Grid.Row="1" Name="groupGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                           Height="40" >
                         <StackPanel Orientation="Horizontal">
-                            <filter:Grouper Name="grouper" VerticalAlignment="Top"/>
-                            <filter:Colorer Name="colorer" VerticalAlignment="Top"/>
-                            <filter:Styler Name="styler" VerticalAlignment="Top"/>
+                            <vis:Grouper Name="grouper" VerticalAlignment="Top"/>
+                            <vis:Colorer Name="colorer" VerticalAlignment="Top"/>
+                            <vis:Styler Name="styler" VerticalAlignment="Top"/>
                         </StackPanel>
                     </Grid>
 

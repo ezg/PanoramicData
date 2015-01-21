@@ -3,8 +3,7 @@ using PanoramicDataModel;
 using starPadSDK.Geom;
 using System.Windows;
 using starPadSDK.Inq;
-using PanoramicData.view.filter;
-
+using PanoramicData.view.vis;
 namespace PanoramicData.model.view
 {
     public class FilterHolderViewModel : FilterModel

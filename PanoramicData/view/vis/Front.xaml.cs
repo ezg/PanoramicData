@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     /// <summary>
     /// Interaction logic for Front.xaml

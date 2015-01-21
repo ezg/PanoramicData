@@ -10,7 +10,6 @@ using starPadSDK.AppLib;
 using starPadSDK.Inq;
 using System.Windows.Controls;
 using PanoramicData.controller.data;
-using PanoramicData.view.filter;
 using Microsoft.Practices.Prism.Mvvm;
 
 namespace PanoramicData.model.view

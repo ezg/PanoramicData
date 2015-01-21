@@ -1,19 +1,20 @@
 ﻿using PanoramicData.controller.data;
-using PanoramicData.view.filter;
+using PanoramicData.model.view_new;
+using PanoramicData.view.table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PanoramicData.view.table
+namespace PanoramicData.view.vis.render
 {
-    public class TableFilterRenderer : FilterRenderer
+    public class TableRenderer : FilterRenderer
     {
         private SimpleDataGrid _dataGrid = new SimpleDataGrid();
         private IDisposable _filterModelDisposable = null;
 
-        public TableFilterRenderer()
+        public TableRenderer()
         {
             _dataGrid.CanDrag = false;
             _dataGrid.CanReorder = true;
@@ -33,10 +34,10 @@ namespace PanoramicData.view.table
                     foreach (var row in rows)
                     {
                         row.IsHighligthed = false;
-                        FilteredItem fi = new FilteredItem(row);
-                        if (FilterModel.FilteredItems.Contains(fi))
+                        FilterItem fi = new FilterItem(row);
+                        if (VisualizationViewModel.FilterItems.Contains(fi))
                         {
-                            FilterModel.RemoveFilteredItem(fi, this);
+                            VisualizationViewModel.RemoveFilterItem(fi, this);
                         }
                     }
                 }
@@ -45,10 +46,10 @@ namespace PanoramicData.view.table
                     foreach (var row in rows)
                     {
                         row.IsHighligthed = true;
-                        FilteredItem fi = new FilteredItem(row);
-                        if (!FilterModel.FilteredItems.Contains(fi))
+                        FilterItem fi = new FilterItem(row);
+                        if (!VisualizationViewModel.FilterItems.Contains(fi))
                         {
-                            FilterModel.AddFilteredItem(fi, this);
+                            VisualizationViewModel.AddFilterItem(fi, this);
                         }
                     }
                 }
@@ -56,15 +57,14 @@ namespace PanoramicData.view.table
         }
 
 
-        protected override void UpdateRendering()
+        protected override void UpdateResults()
         {
-            base.UpdateRendering();
+            base.UpdateResults();
             /*if (FilterModel != null)
             {
                 QueryItemsProvider queryItemsProvider = new QueryItemsProvider(new FilterQueryGenerator(FilterModel));
                 AsyncVirtualizingCollection<PanoramicDataRow> dataValues = new AsyncVirtualizingCollection<PanoramicDataRow>(queryItemsProvider, 100 , 1000 );
                 _dataGrid.PopulateData(dataValues, null, FilterModel, false);
             }*/
-        }
-    }
+        }    }
 }

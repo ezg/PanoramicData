@@ -20,9 +20,9 @@ using starPadSDK.Inq;
 using starPadSDK.WPFHelp;
 using Matrix = System.Windows.Media.Matrix;
 using PanoramicData.view.physics;
-using PanoramicData.view.filter;
 using PanoramicData.controller.view;
 using PanoramicData.model.view_new;
+using PanoramicData.view.vis;
 
 namespace PanoramicData.controller.physics
 {

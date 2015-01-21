@@ -23,12 +23,12 @@ using Image = System.Windows.Controls.Image;
 using Point = System.Windows.Point;
 using TextAlignment = System.Windows.TextAlignment;
 using PanoramicData.model.view;
-using PanoramicData.view.filter;
 using PanoramicData.controller.data;
 using PanoramicData.utils.inq;
 using PanoramicData.view.utils;
 using PanoramicData.view.vis;
 using PanoramicData.model.view_new;
+using PanoramicData.view.vis.render;
 
 namespace PanoramicData.view.table
 {
@@ -1277,7 +1277,7 @@ namespace PanoramicData.view.table
                 System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(pg);
                 if (grouping != "")
                 {
-                        Color c = FilterRendererResources.GetGroupingColor(grouping);
+                        Color c = RendererResources.GetGroupingColor(grouping);
                         System.Drawing.Color fmColor = System.Drawing.Color.FromArgb(c.A, c.R,
                             c.G, c.B);
                         System.Drawing.Brush fmBrush = new System.Drawing.SolidBrush(fmColor);

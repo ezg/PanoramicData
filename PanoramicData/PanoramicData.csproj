@@ -199,19 +199,24 @@
     <Compile Include="model\data\NamedAttributeModel.cs" />
     <Compile Include="model\data\OriginModel.cs" />
     <Compile Include="model\data\SchemaModel.cs" />
+    <Compile Include="model\data\sim\SimSchemaModel.cs" />
     <Compile Include="model\data\sim\SimAttributeModel.cs" />
     <Compile Include="model\data\sim\SimOriginModel.cs" />
     <Compile Include="model\view_new\AttributeFunction.cs" />
     <Compile Include="model\view_new\AttributeViewModel.cs" />
     <Compile Include="model\view\FilteringType.cs" />
     <Compile Include="model\view\FilterRendererType.cs" />
+    <Compile Include="model\view_new\FilterItem.cs" />
     <Compile Include="model\view_new\LinkViewModel.cs" />
     <Compile Include="model\view\MainModel.cs" />
     <Compile Include="model\view\SchemaViewModel.cs" />
     <Compile Include="model\view_new\VisualizationViewModelFactory.cs" />
     <Compile Include="model\view_new\VisualizationViewModel.cs" />
+    <Compile Include="model\view_new\VisualizationViewResultItemModel.cs" />
     <Compile Include="model\view_new\VisualizationViewResultModel.cs" />
     <Compile Include="utils\Converters.cs" />
+    <Compile Include="utils\CSVParser.cs" />
+    <Compile Include="utils\ExtendedBindableBase.cs" />
     <Compile Include="utils\Helpers.cs" />
     <Compile Include="utils\HitTester.cs" />
     <Compile Include="utils\inq\FormulaEvaluator.cs" />
@@ -221,49 +226,34 @@
     <Compile Include="utils\inq\Label.cs" />
     <Compile Include="utils\inq\StroqCache.cs" />
     <Compile Include="utils\inq\StroqListener.cs" />
-    <Compile Include="view\filter\Back.xaml.cs">
+    <Compile Include="view\vis\Back.xaml.cs">
       <DependentUpon>Back.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\view\CalculatedColumnDescriptor.cs" />
     <Compile Include="model\view\CalculatedColumnDescriptorInfo.cs" />
-    <Compile Include="view\filter\Colorer.xaml.cs">
+    <Compile Include="view\vis\Colorer.xaml.cs">
       <DependentUpon>Colorer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\filter\Styler.xaml.cs">
+    <Compile Include="view\vis\Styler.xaml.cs">
       <DependentUpon>Styler.xaml</DependentUpon>
     </Compile>
     <Compile Include="controller\filter\FilterExpressionEvaluator.cs" />
-    <Compile Include="view\filter\Front.xaml.cs">
+    <Compile Include="view\vis\Front.xaml.cs">
       <DependentUpon>Front.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\filter\MovableElement.cs" />
+    <Compile Include="view\vis\MovableElement.cs" />
     <Compile Include="model\view\NamedFilterModelColumnDescriptor.cs" />
     <Compile Include="view\inq\InkableCanvas.cs" />
     <Compile Include="view\inq\InkableScene.cs" />
     <Compile Include="view\math\RecognitionResultRenderer.xaml.cs">
       <DependentUpon>RecognitionResultRenderer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\vis\TableFilterRenderer.cs" />
-    <Compile Include="view\vis\PivotFilterItemRenderer.xaml.cs">
-      <DependentUpon>PivotFilterItemRenderer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\PivotFilterRenderer.xaml.cs">
-      <DependentUpon>PivotFilterRenderer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\PlotFilterRenderer4.xaml.cs">
-      <DependentUpon>PlotFilterRenderer4.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\MapFilterRenderer2.xaml.cs">
-      <DependentUpon>MapFilterRenderer2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\FilterRendererResources.cs" />
-    <Compile Include="view\filter\Resizer.xaml.cs">
+    <Compile Include="view\vis\render\TableFilterRenderer.cs" />
+    <Compile Include="view\vis\render\FilterRendererResources.cs" />
+    <Compile Include="view\vis\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\vis\SimpleMapPushpin.xaml.cs">
-      <DependentUpon>SimpleMapPushpin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\filter\Grouper.xaml.cs">
+    <Compile Include="view\vis\Grouper.xaml.cs">
       <DependentUpon>Grouper.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\view\OrgData.cs" />
@@ -292,13 +282,13 @@
       <DependentUpon>RadialControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\other\SimpleACommandSet.cs" />
-    <Compile Include="view\filter\VisualizationContainerView.xaml.cs">
+    <Compile Include="view\vis\VisualizationContainerView.xaml.cs">
       <DependentUpon>VisualizationContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\filter\FilterModelAttachment.cs" />
+    <Compile Include="view\vis\FilterModelAttachment.cs" />
     <Compile Include="view\other\SimpleAPage.cs" />
     <Compile Include="model\view\FilterModel.cs" />
-    <Compile Include="view\filter\FilterRenderer.cs" />
+    <Compile Include="view\vis\render\FilterRenderer.cs" />
     <Compile Include="view\utils\GridViewColumnResizeBehavior.cs" />
     <Compile Include="model\view\FilterHolderViewModel.cs" />
     <Compile Include="view\table\SimpleDataGridDragFeedback.xaml.cs">
@@ -333,23 +323,23 @@
       <DependentUpon>SlideMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\physics\WPFDebugView.cs" />
-    <Page Include="view\filter\Back.xaml">
+    <Page Include="view\vis\Back.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\filter\Colorer.xaml">
+    <Page Include="view\vis\Colorer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\filter\Styler.xaml">
+    <Page Include="view\vis\Styler.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\filter\VisualizationContainerView.xaml">
+    <Page Include="view\vis\VisualizationContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\filter\Front.xaml">
+    <Page Include="view\vis\Front.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -357,31 +347,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\vis\PivotFilterItemRenderer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\PivotFilterRenderer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\PlotFilterRenderer4.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\vis\MapFilterRenderer2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\filter\Resizer.xaml">
+    <Page Include="view\vis\Resizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\vis\SimpleMapPushpin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\filter\Grouper.xaml">
+    <Page Include="view\vis\Grouper.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -456,27 +426,28 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\configs\data\TestData.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\configs\test.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\configs\titanic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\c_label.png" />
-    <None Include="Resources\c_location.png" />
-    <None Include="Resources\c_segement_size.png" />
-    <None Include="Resources\c_series.png" />
-    <None Include="Resources\c_series_2.png" />
-    <None Include="Resources\c_x.png" />
-    <None Include="Resources\c_y.png" />
-    <Resource Include="Resources\bing.png" />
+    <None Include="Resources\img\c_label.png" />
+    <None Include="Resources\img\c_location.png" />
+    <None Include="Resources\img\c_segement_size.png" />
+    <None Include="Resources\img\c_series.png" />
+    <None Include="Resources\img\c_series_2.png" />
+    <None Include="Resources\img\c_x.png" />
+    <None Include="Resources\img\c_y.png" />
+    <Resource Include="Resources\img\bing.png" />
     <None Include="Service References\BingMapService\dev.wsdl" />
     <None Include="Service References\BingMapService\dev.xsd">
       <SubType>Designer</SubType>
@@ -533,7 +504,7 @@
     <None Include="Service References\BingMapService\configuration91.svcinfo" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -542,7 +513,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Resources\ez_sample.font" />
+    <None Include="Resources\img\ez_sample.font" />
     <None Include="Service References\BingMapService\GeocodeService.wsdl" />
     <None Include="Service References\BingMapService\GeocodeService.xsd">
       <SubType>Designer</SubType>
@@ -694,26 +665,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\mic.png" />
+    <Resource Include="Resources\img\mic.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\clear.png" />
-    <Resource Include="Resources\down.png" />
-    <Resource Include="Resources\exit.png" />
-    <Resource Include="Resources\home.png" />
-    <Resource Include="Resources\up.png" />
+    <Resource Include="Resources\img\clear.png" />
+    <Resource Include="Resources\img\down.png" />
+    <Resource Include="Resources\img\exit.png" />
+    <Resource Include="Resources\img\home.png" />
+    <Resource Include="Resources\img\up.png" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Resources\splash.png" />
+    <SplashScreen Include="Resources\img\splash.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\fluidsheet_2.png" />
+    <Resource Include="Resources\img\fluidsheet_2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\axis.png" />
+    <Resource Include="Resources\img\axis.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\pen.png" />
+    <Resource Include="Resources\img\pen.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -741,24 +712,24 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\pie.png" />
-    <Resource Include="Resources\sale.png" />
-    <Resource Include="Resources\wikipedia.png" />
-    <Resource Include="Resources\wolfram_alpha.png" />
-    <Resource Include="Resources\youtube.png" />
-    <Resource Include="Resources\facebook.png" />
-    <Resource Include="Resources\bing.jpg" />
-    <Resource Include="Resources\businessman.png" />
-    <Resource Include="Resources\flickr.png" />
-    <Resource Include="Resources\google.png" />
-    <None Include="Resources\map.png" />
-    <Resource Include="Resources\bar.png" />
-    <Resource Include="Resources\line.png" />
-    <Resource Include="Resources\data_base.png" />
-    <None Include="Resources\documents.png" />
-    <None Include="Resources\folder.png" />
-    <Resource Include="Resources\empty_filter.png" />
-    <Resource Include="Resources\printer.png" />
+    <Resource Include="Resources\img\pie.png" />
+    <Resource Include="Resources\img\sale.png" />
+    <Resource Include="Resources\img\wikipedia.png" />
+    <Resource Include="Resources\img\wolfram_alpha.png" />
+    <Resource Include="Resources\img\youtube.png" />
+    <Resource Include="Resources\img\facebook.png" />
+    <Resource Include="Resources\img\bing.jpg" />
+    <Resource Include="Resources\img\businessman.png" />
+    <Resource Include="Resources\img\flickr.png" />
+    <Resource Include="Resources\img\google.png" />
+    <None Include="Resources\img\map.png" />
+    <Resource Include="Resources\img\bar.png" />
+    <Resource Include="Resources\img\line.png" />
+    <Resource Include="Resources\img\data_base.png" />
+    <None Include="Resources\img\documents.png" />
+    <None Include="Resources\img\folder.png" />
+    <Resource Include="Resources\img\empty_filter.png" />
+    <Resource Include="Resources\img\printer.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BingMapService\" />

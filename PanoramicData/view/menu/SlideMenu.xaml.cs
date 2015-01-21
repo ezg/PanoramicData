@@ -39,26 +39,26 @@ namespace PanoramicData.view.menu
 
             SlideMenuItemTemplate item = new SlideMenuItemTemplate();
             item.label.Content = "Close Menu";
-            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/down.png"));
+            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/img/down.png"));
             contentPanel.Children.Insert(0, item);
             item.Margin = new Thickness(0, 0, 20, 0);
             item.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(down_TouchDownEvent));
 
             item = new SlideMenuItemTemplate();
             item.label.Content = "Exit Application";
-            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/exit.png"));
+            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/img/exit.png"));
             contentPanel.Children.Insert(0, item);
             item.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(exit_TouchDownEvent));
 
             item = new SlideMenuItemTemplate();
             item.label.Content = "Center Canvas";
-            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/home.png"));
+            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/img/home.png"));
             contentPanel.Children.Insert(0, item);
             item.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(center_TouchDownEvent));
 
             item = new SlideMenuItemTemplate();
             item.label.Content = "Clear Canvas";
-            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/clear.png"));
+            item.img.Source = new BitmapImage(new Uri(@"pack://application:,,,/PanoramicData;component/Resources/img/clear.png"));
             contentPanel.Children.Insert(0, item);
             item.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(clear_TouchDownEvent));
         }

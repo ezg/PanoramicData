@@ -19,8 +19,8 @@ using Action = System.Action;
 using PanoramicData.view.schema;
 using PanoramicData.model.view;
 using PanoramicData.utils.inq;
-using PanoramicData.view.filter;
 using PanoramicData.controller.physics;
+using PanoramicData.view.vis;
 
 namespace PanoramicData
 {

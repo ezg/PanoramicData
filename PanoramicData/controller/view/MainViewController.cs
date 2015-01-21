@@ -1,6 +1,5 @@
 ﻿using PanoramicData.model.view;
 using PanoramicData.utils;
-using PanoramicData.view.filter;
 using PanoramicData.view.inq;
 using PanoramicData.view.schema;
 using PanoramicData.view.table;
@@ -23,6 +22,9 @@ using PanoramicData.controller.input;
 using PanoramicData.model.data;
 using PanoramicData.model.data.mssql;
 using PanoramicData.model.view_new;
+using PanoramicData.view.vis;
+using PanoramicData.model.data.sim;
+using PanoramicData.Properties;
 
 namespace PanoramicData.controller.view
 {
@@ -39,7 +41,7 @@ namespace PanoramicData.controller.view
             {
                 _mainModel.DatasetConfigurations.Add(DatasetConfiguration.FromFile(file));
             }
-            LoadData(_mainModel.DatasetConfigurations[0]);
+            LoadData(_mainModel.DatasetConfigurations.Where(ds => ds.Name == Settings.Default.InitialDataSet).First());
 
             AttributeViewModel.AttributeViewModelDropped += AttributeViewModelDropped;
             AttributeViewModel.AttributeViewModelMoved += AttributeViewModelMoved;
@@ -101,10 +103,12 @@ namespace PanoramicData.controller.view
             {
                 schemaModel = new MSSQLSchemaModel(datasetConfiguration);
             }
+            else if (datasetConfiguration.Backend == "SIM")
+            {
+                schemaModel = new SimSchemaModel(datasetConfiguration);
+            }
 
-            schemaViewModel.SchemaModel = schemaModel;
-
-            
+            schemaViewModel.SchemaModel = schemaModel;            
             _schemaViewer.DataContext = schemaViewModel;
         }
 

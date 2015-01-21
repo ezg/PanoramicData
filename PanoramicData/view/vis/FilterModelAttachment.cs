@@ -19,7 +19,7 @@ using CombinedInputAPI;
 using System.Windows.Input;
 using PanoramicData.controller.view;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     public class FilterModelAttachment : UserControl, GeometryElement, StroqListener
     {

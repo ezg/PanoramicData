@@ -10,7 +10,7 @@ using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.model.view_new;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis.render
 {
     public class FilterRenderer : UserControl
     {
@@ -31,16 +31,16 @@ namespace PanoramicData.view.filter
             if (e.NewValue != null)
             {
                 (e.NewValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged += VisualizationViewResultModel_PropertyChanged;
-                this.UpdateRendering(); 
+                this.UpdateResults(); 
             }
         }
 
         void VisualizationViewResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.UpdateRendering();
+            this.UpdateResults();
         }
 
-        protected virtual void UpdateRendering()
+        protected virtual void UpdateResults()
         {
             VisualizationViewModel = (DataContext as VisualizationViewModel);
             VisualizationViewResultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;

@@ -20,7 +20,7 @@ using PanoramicData.model.view;
 using PanoramicData.view.other;
 using CombinedInputAPI;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     /// <summary>
     /// Interaction logic for Styler.xaml

@@ -8,8 +8,9 @@ using starPadSDK.Inq;
 using PanoramicData.model.view;
 using PanoramicData.utils.inq;
 using PanoramicData.model.view_new;
+using PanoramicData.view.vis.render;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     /// <summary>
     /// Interaction logic for Back.xaml
@@ -53,9 +54,9 @@ namespace PanoramicData.view.filter
         }
 
 
-        protected override void UpdateRendering()
+        protected override void UpdateResults()
         {
-            base.UpdateRendering();
+            base.UpdateResults();
         }
 
         public void SetStroqs(StroqCollection stroqs)

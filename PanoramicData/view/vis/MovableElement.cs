@@ -12,7 +12,7 @@ using starPadSDK.WPFHelp;
 using PanoramicData.controller.physics;
 using PanoramicData.controller.view;
 
-namespace PanoramicData.view.filter
+namespace PanoramicData.view.vis
 {
     public abstract class MovableElement : UserControl
     {
