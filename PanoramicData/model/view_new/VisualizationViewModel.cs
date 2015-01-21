@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using starPadSDK.AppLib;
 using PanoramicData.utils;
+using System.Collections.ObjectModel;
 
 namespace PanoramicData.model.view_new
 {
@@ -39,12 +40,17 @@ namespace PanoramicData.model.view_new
             Color.FromRgb(127, 140, 141)
         };
 
-        private Dictionary<AttributeFunction, List<AttributeViewModel>> _attributeFunctionViewModels = new Dictionary<AttributeFunction, List<AttributeViewModel>>();
+        private Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>> _attributeFunctionViewModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>>();
 
         public VisualizationViewModel()
         {
             selectColor();
             _visualizationViewResultModel = new VisualizationViewResultModel();
+
+            foreach (var attributeFunction in Enum.GetValues(typeof(AttributeFunction)).Cast<AttributeFunction>())
+            {
+                _attributeFunctionViewModels.Add(attributeFunction, new ObservableCollection<AttributeViewModel>());
+            }
         }
 
         private void selectColor()
@@ -146,16 +152,16 @@ namespace PanoramicData.model.view_new
 
         public void AddFunctionAttributeViewModel(AttributeFunction attributeFunction, AttributeViewModel attributeViewModel)
         {
-            if (!_attributeFunctionViewModels.ContainsKey(attributeFunction))
-            {
-                _attributeFunctionViewModels.Add(attributeFunction, new List<AttributeViewModel>());
-            }
-
             if (!_attributeFunctionViewModels[attributeFunction].Contains(attributeViewModel))
             {
                 _attributeFunctionViewModels[attributeFunction].Add(attributeViewModel);
                 fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
             }
+        }
+
+        public ObservableCollection<AttributeViewModel> GetFunctionAttributeViewModel(AttributeFunction attributeFunction)
+        {
+            return _attributeFunctionViewModels[attributeFunction];
         }
 
         private List<FilterItem> _filterItems = new List<FilterItem>();

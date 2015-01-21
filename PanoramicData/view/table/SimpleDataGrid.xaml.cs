@@ -83,11 +83,29 @@ namespace PanoramicData.view.table
         public SimpleDataGrid()
         {
             InitializeComponent();
+            this.DataContextChanged += SimpleDataGrid_DataContextChanged;
         }
 
-        public void Refresh()
+        void SimpleDataGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            listView.Items.Refresh();
+            if (e.OldValue != null)
+            {
+                (e.OldValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_CollectionChanged;
+            }
+            if (e.NewValue != null)
+            {
+                (e.NewValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_CollectionChanged;
+                populateTable();
+            }
+        }
+        void SimpleDataGrid_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            populateTable();
+        }
+
+        private void populateTable()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnRender(DrawingContext drawingContext)
