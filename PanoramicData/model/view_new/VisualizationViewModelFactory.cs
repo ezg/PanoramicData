@@ -1,5 +1,5 @@
-﻿using PanoramicData.model.view;
-using PanoramicDataModel;
+﻿using PanoramicData.model.data;
+using PanoramicData.model.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,9 @@ namespace PanoramicData.model.view_new
 {
     public class VisualizationViewModelFactory
     {
-        public static VisualizationViewModel CreateDefault(AttributeViewModel attributeViewModel)
+        public static VisualizationViewModel CreateDefault(SchemaModel schemaModel, AttributeViewModel attributeViewModel)
         {
-            VisualizationViewModel visualizationViewModel = new VisualizationViewModel();
+            VisualizationViewModel visualizationViewModel = new VisualizationViewModel(schemaModel);
 
             if (attributeViewModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
             {

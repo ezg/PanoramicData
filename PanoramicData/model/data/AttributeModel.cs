@@ -9,6 +9,11 @@ namespace PanoramicData.model.data
 {
     public abstract class AttributeModel : BindableBase
     {
+        public AttributeModel(OriginModel originModel)
+        {
+            _originModel = originModel;
+        }
+
         private OriginModel _originModel = null;
         public OriginModel OriginModel
         {

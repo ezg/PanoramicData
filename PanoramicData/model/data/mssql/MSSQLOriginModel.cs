@@ -47,8 +47,7 @@ namespace PanoramicData.model.data.mssql
                     {
                         continue;
                     }
-                    AttributeModel childAttributeModel = new MSSQLAttributeModel(field);
-                    childAttributeModel.OriginModel = this;
+                    AttributeModel childAttributeModel = new MSSQLAttributeModel(this, field);
                     childAttributeModels.Add(childAttributeModel);
                 }
                 return childAttributeModels.OrderBy(item => item.Name).ToList();

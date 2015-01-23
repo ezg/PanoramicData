@@ -8,6 +8,8 @@ namespace PanoramicData.model.data
 {
     public class CalculatedAttributeModel : AttributeModel
     {
+        public CalculatedAttributeModel(OriginModel originModel) : base(originModel) { }
+
         public override string Name
         {
             get { throw new NotImplementedException(); }

@@ -25,6 +25,8 @@ using PanoramicData.model.view_new;
 using PanoramicData.view.vis;
 using PanoramicData.model.data.sim;
 using PanoramicData.Properties;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace PanoramicData.controller.view
 {
@@ -49,8 +51,8 @@ namespace PanoramicData.controller.view
             ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
             Colorer.ColorerDropped += ColorerDropped;
             DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
+            VisualizationViewModels.CollectionChanged += VisualizationViewModels_CollectionChanged;
         }
-
 
         public static void CreateInstance(InkableScene root, MainWindow window)
         {
@@ -74,12 +76,30 @@ namespace PanoramicData.controller.view
             }
         }
 
+        private ObservableCollection<VisualizationViewModel> _visualizationViewModels = new ObservableCollection<VisualizationViewModel>();
+        public ObservableCollection<VisualizationViewModel> VisualizationViewModels
+        {
+            get
+            {
+                return _visualizationViewModels;
+            }
+        }
+
         private MainModel _mainModel;
         public MainModel MainModel
         {
             get
             {
                 return _mainModel;
+            }
+        }
+
+        private SchemaModel _schemaModel;
+        public SchemaModel SchemaModel
+        {
+            get
+            {
+                return _schemaModel;
             }
         }
 
@@ -97,18 +117,18 @@ namespace PanoramicData.controller.view
         public void LoadData(DatasetConfiguration datasetConfiguration)
         {
             SchemaViewModel schemaViewModel = new SchemaViewModel();
-            SchemaModel schemaModel = null;
+            _schemaModel = null;
 
             if (datasetConfiguration.Backend == "MSSQL")
             {
-                schemaModel = new MSSQLSchemaModel(datasetConfiguration);
+                _schemaModel = new MSSQLSchemaModel(datasetConfiguration);
             }
             else if (datasetConfiguration.Backend == "SIM")
             {
-                schemaModel = new SimSchemaModel(datasetConfiguration);
+                _schemaModel = new SimSchemaModel(datasetConfiguration);
             }
 
-            schemaViewModel.SchemaModel = schemaModel;            
+            schemaViewModel.SchemaModel = _schemaModel;            
             _schemaViewer.DataContext = schemaViewModel;
         }
 
@@ -117,6 +137,13 @@ namespace PanoramicData.controller.view
             SchemaViewModel model = _schemaViewer.DataContext as SchemaViewModel;
             model.Position = new Pt(pos.X - model.Size.X / 2.0, pos.Y - model.Size.Y / 2.0);
             InkableScene.Add(_schemaViewer);
+        }
+
+        public VisualizationViewModel CreateVisualizationViewModel(AttributeViewModel attribueViewModel)
+        {
+            VisualizationViewModel visModel = VisualizationViewModelFactory.CreateDefault(_schemaModel, attribueViewModel);
+            _visualizationViewModels.Add(visModel);
+            return visModel;
         }
 
         private void DatabaseManager_ErrorMessageChanged(object sender, string e)
@@ -177,7 +204,7 @@ namespace PanoramicData.controller.view
             else
             {
                 VisualizationContainerView visualizationContainerView = new VisualizationContainerView();
-                visualizationContainerView.DataContext = VisualizationViewModelFactory.CreateDefault(e.AttributeViewModel);
+                visualizationContainerView.DataContext = CreateVisualizationViewModel(e.AttributeViewModel);
                 visualizationContainerView.InitPostionAndDimension(position, size);
                /* FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(columnDescriptor, tableModel);
@@ -285,6 +312,35 @@ namespace PanoramicData.controller.view
                     filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                 }
             }
+        }
+
+        void VisualizationViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var n in e.NewItems)
+                {
+                    (n as VisualizationViewModel).VisualizationViewModelUpdated += MainViewController_VisualizationViewModelUpdated;
+                    //(n as AtomViewModel).OutgoingLinkViewModels.CollectionChanged += outgoingLinkedAtomViewModels_CollectionChanged;
+                    visualizationViewModelUpdated(n as VisualizationViewModel);
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (var o in e.OldItems)
+                {
+                    (o as VisualizationViewModel).VisualizationViewModelUpdated -= MainViewController_VisualizationViewModelUpdated;
+                }
+            }
+        }
+        void MainViewController_VisualizationViewModelUpdated(object sender, VisualizationViewModelUpdatedEventArgs e)
+        {
+            visualizationViewModelUpdated(sender as VisualizationViewModel);
+        }
+
+        void visualizationViewModelUpdated(VisualizationViewModel visualizationViewModel)
+        {
+            visualizationViewModel.SchemaModel.QueryExecuter.ExecuteQuery(visualizationViewModel);
         }
 
         void ResizerRadialControlExecution_Dropped(object sender, AttributeViewModelEventArgs e)

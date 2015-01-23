@@ -10,5 +10,21 @@ namespace PanoramicData.model.view_new
 {
     public class VisualizationViewResultItemModel : BindableBase
     {
+        public VisualizationViewResultItemModel()
+        {
+        }
+        
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                this.SetProperty(ref _isSelected, value);
+            }
+        }
     }
 }

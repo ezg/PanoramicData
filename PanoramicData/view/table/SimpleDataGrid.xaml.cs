@@ -95,17 +95,130 @@ namespace PanoramicData.view.table
             if (e.NewValue != null)
             {
                 (e.NewValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_CollectionChanged;
-                populateTable();
+                populateTableHeaders();
             }
         }
         void SimpleDataGrid_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            populateTable();
+            populateTableHeaders();
         }
 
-        private void populateTable()
+        private void populateTableHeaders()
         {
-            throw new NotImplementedException();
+            return;
+            _dragDevice1 = null;
+            _dragDevice2 = null;
+
+            IList<PanoramicDataColumnDescriptor> columnDescriptors = null;
+
+            if (_filterModel != null)
+            {
+                columnDescriptors = _filterModel.GetColumnDescriptorsForOption(Option.X);
+                FilterModel = _filterModel;
+            }
+
+            var gridView = new GridView();
+            gridView.AllowsColumnReorder = false;
+
+            // selection / checkbox column 
+            _checkBoxColumn = new GridViewColumn();
+            _checkBoxColumn.Width = 35;
+            _checkBoxColumn.Header = "";
+            DataTemplate template = new DataTemplate();
+            FrameworkElementFactory checkboxFactory = new FrameworkElementFactory(typeof(CheckBox));
+            checkboxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("Data.IsHighligthed"));
+            checkboxFactory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center);
+            checkboxFactory.SetValue(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+            checkboxFactory.SetValue(CheckBox.IsEnabledProperty, false);
+            checkboxFactory.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchDownEvent));
+            template.VisualTree = checkboxFactory;
+            _checkBoxColumn.CellTemplate = template;
+            gridView.Columns.Add(_checkBoxColumn);
+
+            if (_filterModel.GetIncomingFilterModels(FilteringType.Brush).Count > 0) //_tableModel != null)
+            {
+                GridViewColumn special = new GridViewColumn();
+                special.Width = 35;
+                special.Header = "";
+                template = new DataTemplate();
+                FrameworkElementFactory imgFactory = new FrameworkElementFactory(typeof(Image));
+                Binding bimg = new Binding("Data");
+                bimg.Converter = new FilterHighlightImageConverter(_filterModel);
+                imgFactory.SetValue(Image.MarginProperty, new Thickness(0));
+                imgFactory.SetBinding(Image.SourceProperty, bimg);
+                imgFactory.SetValue(Image.StretchProperty, Stretch.Uniform);
+
+                template.VisualTree = imgFactory;
+                special.CellTemplate = template;
+                gridView.Columns.Add(special);
+            }
+            else if (_filterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0) //_tableModel != null)
+            {
+                GridViewColumn special = new GridViewColumn();
+                special.Width = 35;
+                special.Header = "";
+                template = new DataTemplate();
+                FrameworkElementFactory imgFactory = new FrameworkElementFactory(typeof(Image));
+                Binding bimg = new Binding("Data");
+                bimg.Converter = new ColorByImageConverter(_filterModel);
+                imgFactory.SetValue(Image.MarginProperty, new Thickness(0));
+                imgFactory.SetBinding(Image.SourceProperty, bimg);
+                imgFactory.SetValue(Image.StretchProperty, Stretch.Uniform);
+
+                template.VisualTree = imgFactory;
+                special.CellTemplate = template;
+                gridView.Columns.Add(special);
+            }
+
+            List<MappingEntry> newMapping = new List<MappingEntry>();
+
+            int fieldsIndex = 0;
+            foreach (var columnDescriptor in columnDescriptors.OrderBy(cd => cd.Order))
+            {
+                // loop over the current mapping and see if any fields match. 
+                // this makes sure any reordering and adjusted widths are preserved
+
+                if (_mapping.Where(me => me.ColumnDescriptor == columnDescriptor).Count() > 0)
+                {
+                    MappingEntry mappingEntry = _mapping.Single(me => me.ColumnDescriptor == columnDescriptor);
+                    GridViewColumn gvc = createGridViewColumn(mappingEntry.ColumnDescriptor, _filterModel.ColumnDescriptors.IndexOf(mappingEntry.ColumnDescriptor), mappingEntry.GridViewColumn);
+                    gridView.Columns.Add(gvc);
+                    mappingEntry.GridViewColumn = gvc;
+                    newMapping.Add(mappingEntry);
+                }
+                else
+                {
+                    GridViewColumn gvc = createGridViewColumn(columnDescriptor, fieldsIndex, null);
+                    if (columnDescriptors.Count == 1)
+                    {
+                        gvc.Width = 200;
+                    }
+                    gridView.Columns.Add(gvc);
+                    MappingEntry me = new MappingEntry();
+                    me.ColumnDescriptor = columnDescriptor;
+                    me.GridViewColumn = gvc;
+                    me.FieldsIndex = fieldsIndex;
+                    newMapping.Add(me);
+                }
+
+                fieldsIndex++;
+            }
+
+            _mapping.Clear();
+            _mapping = newMapping;
+
+            if (gridView.Columns.Count() > 0)
+            {
+                GridViewColumnResize.SetWidth(gridView.Columns.Last(), "*");
+                listView.View = gridView;
+                if (_dataValues != null)
+                {
+                    _dataValues.PropertyChanged -= DataValues_PropertyChanged;
+                }
+                //_dataValues = dataValues;
+                listView.ItemsSource = _dataValues;
+                _dataValues.PropertyChanged += DataValues_PropertyChanged;
+            }
         }
 
         protected override void OnRender(DrawingContext drawingContext)

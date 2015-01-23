@@ -185,8 +185,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="controller\data\FilterQueryGenerator.cs" />
+    <Compile Include="controller\data\mssql\MSSQLQueryExecuter.cs" />
+    <Compile Include="controller\data\QueryExecuter.cs" />
     <Compile Include="controller\data\QueryGenerator.cs" />
     <Compile Include="controller\data\QueryItemsProvider.cs" />
+    <Compile Include="controller\data\sim\SimQueryExecuter.cs" />
     <Compile Include="controller\input\DatasetConfiguration.cs" />
     <Compile Include="controller\math\MathManager.cs" />
     <Compile Include="controller\view\MainViewController.cs" />

@@ -1,4 +1,5 @@
 ﻿using PanoramicData.controller.data;
+using PanoramicData.controller.data.mssql;
 using PanoramicData.controller.input;
 using PanoramicDataDBConnector;
 using PanoramicDataModel;
@@ -14,12 +15,23 @@ namespace PanoramicData.model.data.mssql
     {
         private PathInfo _rootPathInfo = null;
         private OriginModel _rootOriginModel = null;
+        private QueryExecuter _queryExecuter = null;
 
         public MSSQLSchemaModel(DatasetConfiguration datasetConfiguration) 
         {
             _rootPathInfo = generatePathInfo(datasetConfiguration.Schema, datasetConfiguration.Table);
             _rootOriginModel = new MSSQLOriginModel(_rootPathInfo);
+            _queryExecuter = new MSSQLQueryExecuter();
         }
+
+        public override QueryExecuter QueryExecuter
+        {
+            get
+            {
+                return _queryExecuter;
+            }
+        }
+
 
         public override List<OriginModel> OriginModels
         {

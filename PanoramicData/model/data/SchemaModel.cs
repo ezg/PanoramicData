@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using PanoramicData.controller.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace PanoramicData.model.data
         }
 
         public abstract Dictionary<NamedAttributeModel, string> NamedAttributeModels
+        {
+            get;
+        }
+        public abstract QueryExecuter QueryExecuter
         {
             get;
         }

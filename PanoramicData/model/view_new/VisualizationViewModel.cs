@@ -9,6 +9,7 @@ using System.Windows.Media;
 using starPadSDK.AppLib;
 using PanoramicData.utils;
 using System.Collections.ObjectModel;
+using PanoramicData.model.data;
 
 namespace PanoramicData.model.view_new
 {
@@ -42,10 +43,11 @@ namespace PanoramicData.model.view_new
 
         private Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>> _attributeFunctionViewModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>>();
 
-        public VisualizationViewModel()
+        public VisualizationViewModel(SchemaModel schemaModel)
         {
             selectColor();
             _visualizationViewResultModel = new VisualizationViewResultModel();
+            _schemaModel = schemaModel;
 
             foreach (var attributeFunction in Enum.GetValues(typeof(AttributeFunction)).Cast<AttributeFunction>())
             {
@@ -60,6 +62,19 @@ namespace PanoramicData.model.view_new
                 _nextColorId = 0;
             }
             Color = COLORS[_nextColorId++];
+        }
+
+        private SchemaModel _schemaModel = null;
+        public SchemaModel SchemaModel
+        {
+            get
+            {
+                return _schemaModel;
+            }
+            set
+            {
+                this.SetProperty(ref _schemaModel, value);
+            }
         }
 
         private SolidColorBrush _brush = null;

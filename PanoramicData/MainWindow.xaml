@@ -69,7 +69,7 @@
                     <Image 
                             Grid.Column="3"
                             Grid.Row="0"
-                            Source="Resources/up.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            Source="Resources/img/up.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Ellipse 
                             Grid.Column="3"
                             Grid.Row="0"

@@ -9,7 +9,8 @@ namespace PanoramicData.model.data.mssql
 {
     public class MSSQLAttributeModel : AttributeModel
     {
-        public MSSQLAttributeModel(FieldInfo fieldInfo)
+        public MSSQLAttributeModel(OriginModel originModel, FieldInfo fieldInfo)
+            : base(originModel)
         {
             _fieldInfo = fieldInfo;
         }

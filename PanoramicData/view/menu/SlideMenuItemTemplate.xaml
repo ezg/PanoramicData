@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              MinWidth="60"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="100" d:DesignWidth="300">
+    <Grid Margin="0,10,0,0">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Image 
                 Name="img"
                 Grid.Column="0"
                 Grid.Row="0"
                 Margin="0,0,0,0"
-                Source="/PanoramicData;component/Resources/data_base.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                Source="/PanoramicData;component/Resources/img/data_base.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Ellipse 
                 Name="ell"
                 Grid.Column="0"
@@ -26,8 +26,9 @@
         <Label 
                 Name="label"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
+                VerticalAlignment="Top"
                 Grid.Column="0"
+                Margin="0,-5,0,0"
                 Grid.Row="1"
                 FontWeight="Bold"
                 Content="{Binding Name}"/>

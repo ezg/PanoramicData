@@ -60,11 +60,13 @@ namespace PanoramicData.view.vis.render
         protected override void UpdateResults()
         {
             base.UpdateResults();
+
             /*if (FilterModel != null)
             {
                 QueryItemsProvider queryItemsProvider = new QueryItemsProvider(new FilterQueryGenerator(FilterModel));
                 AsyncVirtualizingCollection<PanoramicDataRow> dataValues = new AsyncVirtualizingCollection<PanoramicDataRow>(queryItemsProvider, 100 , 1000 );
                 _dataGrid.PopulateData(dataValues, null, FilterModel, false);
             }*/
-        }    }
+        }    
+    }
 }

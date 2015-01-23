@@ -23,7 +23,28 @@ namespace PanoramicData.model.data.sim
 
             for (int i = 0; i < names.Count; i++)
             {
-                _attributeModels.Add(new SimAttributeModel(names[i], dataTypes[i]));
+                AttributeModel attributeModel = new SimAttributeModel(this, names[i], dataTypes[i]);
+                _attributeModels.Add(attributeModel);
+                _data.Add(attributeModel, new List<object>());
+            }
+            string line = file.ReadLine();
+            while (line != null)
+            {
+                List<string> values = CSVParser.CSVLineSplit(line);
+                for (int i = 0; i < values.Count; i++)
+                {
+                    _data[_attributeModels[i]].Add(values[i]);
+                }
+                line = file.ReadLine();
+            }
+        }
+
+        private Dictionary<AttributeModel, List<object>> _data = new Dictionary<AttributeModel, List<object>>();
+        public Dictionary<AttributeModel, List<object>> Data
+        {
+            get
+            {
+                return _data;
             }
         }
 

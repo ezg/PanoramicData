@@ -1,4 +1,5 @@
 ﻿using PanoramicData.controller.data;
+using PanoramicData.controller.data.sim;
 using PanoramicData.controller.input;
 using PanoramicDataDBConnector;
 using PanoramicDataModel;
@@ -13,10 +14,20 @@ namespace PanoramicData.model.data.sim
     public class SimSchemaModel : SchemaModel
     {
         private OriginModel _rootOriginModel = null;
+        private QueryExecuter _queryExecuter = null;
 
         public SimSchemaModel(DatasetConfiguration datasetConfiguration) 
         {
             _rootOriginModel = new SimOriginModel(datasetConfiguration);
+            _queryExecuter = new SimQueryExecuter();
+        }
+
+        public override QueryExecuter QueryExecuter
+        {
+            get
+            {
+                return _queryExecuter;
+            }
         }
 
         public override List<OriginModel> OriginModels

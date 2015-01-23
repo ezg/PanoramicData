@@ -8,7 +8,8 @@ namespace PanoramicData.model.data.sim
 {
     public class SimAttributeModel : AttributeModel
     {
-        public SimAttributeModel(string name, string attributeVisualizationType)
+        public SimAttributeModel(OriginModel originModel, string name, string attributeVisualizationType)
+            : base(originModel)
         {
             _name = name;
             _attributeVisualizationType = attributeVisualizationType;
