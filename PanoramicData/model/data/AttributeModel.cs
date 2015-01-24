@@ -36,6 +36,10 @@ namespace PanoramicData.model.data
         {
             get;
         }
+        public abstract string AttributeDataType
+        {
+            get;
+        }
     }
 
     public class AttributeDataTypeConstants

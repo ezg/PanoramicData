@@ -29,6 +29,7 @@ using PanoramicData.view.utils;
 using PanoramicData.view.vis;
 using PanoramicData.model.view_new;
 using PanoramicData.view.vis.render;
+using System.Collections.Specialized;
 
 namespace PanoramicData.view.table
 {
@@ -49,6 +50,8 @@ namespace PanoramicData.view.table
 
         public delegate void CellDroppedOutsideHandler(object sender, PanoramicDataColumnDescriptor column, PanoramicDataRow row, Point position);
         public event CellDroppedOutsideHandler CellDroppedOutside;
+
+        private GridView _gridView = null;
 
         public bool CanReorder { get; set; }
         public bool CanResize { get; set; }
@@ -74,7 +77,6 @@ namespace PanoramicData.view.table
         private SimpleDataGridDragFeedback _cellDragFeedback = null;
         private bool _isSimpleGridViewColumnHeaderMoveFeedbackShown = false;
         private List<MappingEntry> _mapping = new List<MappingEntry>();
-        private AsyncVirtualizingCollection<PanoramicDataRow> _dataValues = null;
 
         private GridViewColumn _checkBoxColumn = null;
 
@@ -90,35 +92,59 @@ namespace PanoramicData.view.table
         {
             if (e.OldValue != null)
             {
-                (e.OldValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_CollectionChanged;
+                (e.OldValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_XCollectionChanged;
+                (e.OldValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged -= VisualizationViewResultModel_PropertyChanged;
             }
             if (e.NewValue != null)
             {
-                (e.NewValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_CollectionChanged;
+                (e.NewValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_XCollectionChanged;
+
+                VisualizationViewResultModel resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
+                resultModel.PropertyChanged += VisualizationViewResultModel_PropertyChanged;
+                if (resultModel.VisualizationViewResultItemModels != null)
+                {
+                    CollectionChangedEventManager.AddHandler(resultModel.VisualizationViewResultItemModels, VisualizationViewResultItemModels_CollectionChanged);
+                    populateData();
+                }
                 populateTableHeaders();
             }
         }
-        void SimpleDataGrid_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+
+        void VisualizationViewResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+             VisualizationViewResultModel  resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
+             if (e.PropertyName == resultModel.GetPropertyName(() => resultModel.VisualizationViewResultItemModels))
+             {
+                 CollectionChangedEventManager.AddHandler(resultModel.VisualizationViewResultItemModels, VisualizationViewResultItemModels_CollectionChanged);
+                 populateData();
+             }
+        }
+        void VisualizationViewResultItemModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+        }
+
+        void SimpleDataGrid_XCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             populateTableHeaders();
         }
 
+        private void populateData()
+        {
+            VisualizationViewResultModel resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
+
+            listView.ItemsSource = resultModel.VisualizationViewResultItemModels;
+        }
+
         private void populateTableHeaders()
         {
-            return;
             _dragDevice1 = null;
             _dragDevice2 = null;
 
-            IList<PanoramicDataColumnDescriptor> columnDescriptors = null;
+            VisualizationViewModel model = (DataContext as VisualizationViewModel);
+            List<AttributeViewModel> attributeViewModels = model.GetFunctionAttributeViewModel(AttributeFunction.X).ToList();
 
-            if (_filterModel != null)
-            {
-                columnDescriptors = _filterModel.GetColumnDescriptorsForOption(Option.X);
-                FilterModel = _filterModel;
-            }
-
-            var gridView = new GridView();
-            gridView.AllowsColumnReorder = false;
+            _gridView = new GridView();
+            _gridView.AllowsColumnReorder = false;
 
             // selection / checkbox column 
             _checkBoxColumn = new GridViewColumn();
@@ -126,16 +152,16 @@ namespace PanoramicData.view.table
             _checkBoxColumn.Header = "";
             DataTemplate template = new DataTemplate();
             FrameworkElementFactory checkboxFactory = new FrameworkElementFactory(typeof(CheckBox));
-            checkboxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("Data.IsHighligthed"));
+            checkboxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("Data.IsSelected"));
             checkboxFactory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center);
             checkboxFactory.SetValue(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center);
             checkboxFactory.SetValue(CheckBox.IsEnabledProperty, false);
             checkboxFactory.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchDownEvent));
             template.VisualTree = checkboxFactory;
             _checkBoxColumn.CellTemplate = template;
-            gridView.Columns.Add(_checkBoxColumn);
+            _gridView.Columns.Add(_checkBoxColumn);
 
-            if (_filterModel.GetIncomingFilterModels(FilteringType.Brush).Count > 0) //_tableModel != null)
+            /*if (_filterModel.GetIncomingFilterModels(FilteringType.Brush).Count > 0) //_tableModel != null)
             {
                 GridViewColumn special = new GridViewColumn();
                 special.Width = 35;
@@ -151,8 +177,8 @@ namespace PanoramicData.view.table
                 template.VisualTree = imgFactory;
                 special.CellTemplate = template;
                 gridView.Columns.Add(special);
-            }
-            else if (_filterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0) //_tableModel != null)
+            }*/
+            /*if (_filterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0) //_tableModel != null)
             {
                 GridViewColumn special = new GridViewColumn();
                 special.Width = 35;
@@ -168,34 +194,34 @@ namespace PanoramicData.view.table
                 template.VisualTree = imgFactory;
                 special.CellTemplate = template;
                 gridView.Columns.Add(special);
-            }
+            }*/
 
             List<MappingEntry> newMapping = new List<MappingEntry>();
 
             int fieldsIndex = 0;
-            foreach (var columnDescriptor in columnDescriptors.OrderBy(cd => cd.Order))
+            foreach (var attributeViewModel in attributeViewModels)
             {
                 // loop over the current mapping and see if any fields match. 
                 // this makes sure any reordering and adjusted widths are preserved
 
-                if (_mapping.Where(me => me.ColumnDescriptor == columnDescriptor).Count() > 0)
+                if (_mapping.Where(me => me.AttributeViewModel == attributeViewModel).Count() > 0)
                 {
-                    MappingEntry mappingEntry = _mapping.Single(me => me.ColumnDescriptor == columnDescriptor);
-                    GridViewColumn gvc = createGridViewColumn(mappingEntry.ColumnDescriptor, _filterModel.ColumnDescriptors.IndexOf(mappingEntry.ColumnDescriptor), mappingEntry.GridViewColumn);
-                    gridView.Columns.Add(gvc);
+                    MappingEntry mappingEntry = _mapping.Single(me => me.AttributeViewModel == attributeViewModel);
+                    GridViewColumn gvc = createGridViewColumn(mappingEntry.AttributeViewModel, attributeViewModels.IndexOf(mappingEntry.AttributeViewModel), mappingEntry.GridViewColumn);
+                    _gridView.Columns.Add(gvc);
                     mappingEntry.GridViewColumn = gvc;
                     newMapping.Add(mappingEntry);
                 }
                 else
                 {
-                    GridViewColumn gvc = createGridViewColumn(columnDescriptor, fieldsIndex, null);
-                    if (columnDescriptors.Count == 1)
+                    GridViewColumn gvc = createGridViewColumn(attributeViewModel, fieldsIndex, null);
+                    if (attributeViewModels.Count == 1)
                     {
                         gvc.Width = 200;
                     }
-                    gridView.Columns.Add(gvc);
+                    _gridView.Columns.Add(gvc);
                     MappingEntry me = new MappingEntry();
-                    me.ColumnDescriptor = columnDescriptor;
+                    me.AttributeViewModel = attributeViewModel;
                     me.GridViewColumn = gvc;
                     me.FieldsIndex = fieldsIndex;
                     newMapping.Add(me);
@@ -207,17 +233,11 @@ namespace PanoramicData.view.table
             _mapping.Clear();
             _mapping = newMapping;
 
-            if (gridView.Columns.Count() > 0)
+
+            if (_gridView.Columns.Count() > 0)
             {
-                GridViewColumnResize.SetWidth(gridView.Columns.Last(), "*");
-                listView.View = gridView;
-                if (_dataValues != null)
-                {
-                    _dataValues.PropertyChanged -= DataValues_PropertyChanged;
-                }
-                //_dataValues = dataValues;
-                listView.ItemsSource = _dataValues;
-                _dataValues.PropertyChanged += DataValues_PropertyChanged;
+                GridViewColumnResize.SetWidth(_gridView.Columns.Last(), "*");
+                listView.View = _gridView;
             }
         }
 
@@ -233,135 +253,13 @@ namespace PanoramicData.view.table
             }
         }
 
-        public void PopulateData(
-            AsyncVirtualizingCollection<PanoramicDataRow> dataValues,
-            TableModel tableModel, FilterModel filterModel)
-        {
-            _dragDevice1 = null;
-            _dragDevice2 = null;
-
-            _tableModel = tableModel;
-            _filterModel = filterModel;
-
-            IList<PanoramicDataColumnDescriptor> columnDescriptors = null;
-
-            if (_filterModel != null)
-            {
-                columnDescriptors = _filterModel.GetColumnDescriptorsForOption(Option.X);
-                FilterModel = _filterModel;
-            }
-
-            var gridView = new GridView();
-            gridView.AllowsColumnReorder = false;
-
-            // selection / checkbox column 
-            _checkBoxColumn = new GridViewColumn();
-            _checkBoxColumn.Width = 35;
-            _checkBoxColumn.Header = "";
-            DataTemplate template = new DataTemplate();
-            FrameworkElementFactory checkboxFactory = new FrameworkElementFactory(typeof(CheckBox));
-            checkboxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("Data.IsHighligthed"));
-            checkboxFactory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center);
-            checkboxFactory.SetValue(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-            checkboxFactory.SetValue(CheckBox.IsEnabledProperty, false);
-            checkboxFactory.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchDownEvent));
-            template.VisualTree = checkboxFactory;
-            _checkBoxColumn.CellTemplate = template;
-            gridView.Columns.Add(_checkBoxColumn);
-
-            if (_filterModel.GetIncomingFilterModels(FilteringType.Brush).Count > 0) //_tableModel != null)
-            {
-                GridViewColumn special = new GridViewColumn();
-                special.Width = 35;
-                special.Header = "";
-                template = new DataTemplate();
-                FrameworkElementFactory imgFactory = new FrameworkElementFactory(typeof(Image));
-                Binding bimg = new Binding("Data");
-                bimg.Converter = new FilterHighlightImageConverter(_filterModel);
-                imgFactory.SetValue(Image.MarginProperty, new Thickness(0));
-                imgFactory.SetBinding(Image.SourceProperty, bimg);
-                imgFactory.SetValue(Image.StretchProperty, Stretch.Uniform);
-
-                template.VisualTree = imgFactory;
-                special.CellTemplate = template;
-                gridView.Columns.Add(special);
-            }
-            else if (_filterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0) //_tableModel != null)
-            {
-                GridViewColumn special = new GridViewColumn();
-                special.Width = 35;
-                special.Header = "";
-                template = new DataTemplate();
-                FrameworkElementFactory imgFactory = new FrameworkElementFactory(typeof(Image));
-                Binding bimg = new Binding("Data");
-                bimg.Converter = new ColorByImageConverter(_filterModel);
-                imgFactory.SetValue(Image.MarginProperty, new Thickness(0));
-                imgFactory.SetBinding(Image.SourceProperty, bimg);
-                imgFactory.SetValue(Image.StretchProperty, Stretch.Uniform);
-
-                template.VisualTree = imgFactory;
-                special.CellTemplate = template;
-                gridView.Columns.Add(special);
-            }
-
-            List<MappingEntry> newMapping = new List<MappingEntry>();
-
-            int fieldsIndex = 0;
-            foreach (var columnDescriptor in columnDescriptors.OrderBy(cd => cd.Order))
-            {
-                // loop over the current mapping and see if any fields match. 
-                // this makes sure any reordering and adjusted widths are preserved
-
-                if (_mapping.Where(me => me.ColumnDescriptor == columnDescriptor).Count() > 0)
-                {
-                    MappingEntry mappingEntry = _mapping.Single(me => me.ColumnDescriptor == columnDescriptor);
-                    GridViewColumn gvc = createGridViewColumn(mappingEntry.ColumnDescriptor, _filterModel.ColumnDescriptors.IndexOf(mappingEntry.ColumnDescriptor), mappingEntry.GridViewColumn);
-                    gridView.Columns.Add(gvc);
-                    mappingEntry.GridViewColumn = gvc;
-                    newMapping.Add(mappingEntry);
-                }
-                else 
-                {
-                    GridViewColumn gvc = createGridViewColumn(columnDescriptor, fieldsIndex, null);
-                    if (columnDescriptors.Count == 1)
-                    {
-                        gvc.Width = 200;
-                    }
-                    gridView.Columns.Add(gvc);
-                    MappingEntry me = new MappingEntry();
-                    me.ColumnDescriptor = columnDescriptor;
-                    me.GridViewColumn = gvc;
-                    me.FieldsIndex = fieldsIndex;
-                    newMapping.Add(me);
-                }
-
-                fieldsIndex++;
-            }
-
-            _mapping.Clear();
-            _mapping = newMapping;
-
-            if (gridView.Columns.Count() > 0)
-            {
-                GridViewColumnResize.SetWidth(gridView.Columns.Last(), "*");
-                listView.View = gridView;
-                if (_dataValues != null)
-                {
-                    _dataValues.PropertyChanged -= DataValues_PropertyChanged;
-                }
-                _dataValues = dataValues;
-                listView.ItemsSource = _dataValues;
-                _dataValues.PropertyChanged += DataValues_PropertyChanged;
-            }
-        }
-
-        GridViewColumn createGridViewColumn(PanoramicDataColumnDescriptor columnDescriptor, int index, GridViewColumn oldColumn)
+        GridViewColumn createGridViewColumn(AttributeViewModel attributeViewModel, int index, GridViewColumn oldColumn)
         {
             GridViewColumn gvc = new GridViewColumn();
 
             DataTemplate template = new DataTemplate();
             FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
-            tbFactory.SetValue(AttributeView.DataContextProperty, columnDescriptor);
+            tbFactory.SetValue(AttributeView.DataContextProperty, attributeViewModel);
             /*tbFactory.SetValue(AttributeView.IsInteractiveProperty, false);
             tbFactory.SetValue(AttributeView.FilterModelProperty, _filterModel);
             tbFactory.SetValue(AttributeView.TableModelProperty, _tableModel);*/
@@ -379,7 +277,7 @@ namespace PanoramicData.view.table
             }
 
             template = new DataTemplate();
-            if ((columnDescriptor.AggregateFunction == AggregateFunction.Concat ||
+            /*if ((columnDescriptor.AggregateFunction == AggregateFunction.Concat ||
                       columnDescriptor.AggregateFunction == AggregateFunction.None) &&
                      ((_filterModel.GetColumnDescriptorsForOption(Option.GroupBy)
                             .Count(cd => !cd.MatchSimple(columnDescriptor)) > 0 &&
@@ -401,13 +299,16 @@ namespace PanoramicData.view.table
                 tbFactory.SetValue(TextBlock.ForegroundProperty, Brushes.Black);
                 template.VisualTree = tbFactory;
             }
-            else if (!columnDescriptor.IsVisualization)
+            else if (!columnDescriptor.IsVisualization)*/
             {
                 tbFactory = new FrameworkElementFactory(typeof(TextBlock));
-                tbFactory.SetBinding(TextBlock.TextProperty, new Binding("Data.Values.[" + index + "].ShortStringValue"));
+                Binding valueBinding = new Binding("Data");
+                valueBinding.Converter = new TextValueConverter(attributeViewModel);
+
+                tbFactory.SetBinding(TextBlock.TextProperty, valueBinding);
                 tbFactory.SetValue(TextBlock.TagProperty, index);
                 //tbFactory.SetValue(TextBlock.TextWrappingProperty, TextWrapping.WrapWithOverflow);
-                string dataType = FilterModel.GetDataTypeOfPanoramicDataColumnDescriptor(columnDescriptor, true);
+                /*string dataType = FilterModel.GetDataTypeOfPanoramicDataColumnDescriptor(columnDescriptor, true);
                 if (dataType == AttributeDataTypeConstants.NVARCHAR ||
                     dataType == AttributeDataTypeConstants.GEOGRAPHY)
                 {
@@ -416,13 +317,13 @@ namespace PanoramicData.view.table
                 else
                 {
                     tbFactory.SetValue(TextBlock.TextAlignmentProperty, TextAlignment.Center);
-                }
+                }*/
                 tbFactory.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
                 tbFactory.SetValue(TextBlock.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
                 tbFactory.SetValue(TextBlock.ForegroundProperty, Brushes.Black);
                 template.VisualTree = tbFactory;
             }
-            else
+            /*else
             {
                 FrameworkElementFactory gFactory = new FrameworkElementFactory(typeof(Grid));
                 gFactory.SetValue(Grid.ColumnProperty, 0);
@@ -437,7 +338,7 @@ namespace PanoramicData.view.table
                 b = new Binding("ActualHeight");
                 b.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Grid), 1);
                 bimg.Bindings.Add(b);
-                bimg.Bindings.Add(new Binding("Data.Values.[" + index + "].StringValue"));
+                bimg.Bindings.Add(new Binding("Data.Values.Values[" + index + "].StringValue"));
                 bimg.Converter = new MultiValueImageConverter();
                 imgFactory.SetBinding(Image.SourceProperty, bimg);
 
@@ -448,29 +349,11 @@ namespace PanoramicData.view.table
 
                 gFactory.AppendChild(imgFactory);
                 template.VisualTree = gFactory;
-            }
+            }*/
             gvc.CellTemplate = template;
 
 
             return gvc;
-        }
-
-        void DataValues_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (listView.ItemsSource != null && listView.ItemsSource is AsyncVirtualizingCollection<PanoramicDataRow>)
-            {
-                AsyncVirtualizingCollection<PanoramicDataRow> dataValues = (AsyncVirtualizingCollection<PanoramicDataRow>)listView.ItemsSource;
-                FilterModel.RowCount = dataValues.Count;
-
-                if (dataValues.IsInitializing || dataValues.IsLoading)
-                {
-                    //loadingAnim.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    //loadingAnim.Visibility = System.Windows.Visibility.Collapsed;
-                }
-            }
         }
 
         void tbFactory_TouchDownEvent(object sender, TouchEventArgs e)
@@ -582,7 +465,7 @@ namespace PanoramicData.view.table
             if (_mapping.Where(me => me.GridViewColumn == header.Column).Count() > 0)
             {
                 MappingEntry map = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                column = map.ColumnDescriptor;
+                //EZ: column = map.ColumnDescriptor;
             }
 
             _eventExecution.ProcessAction();
@@ -634,7 +517,7 @@ namespace PanoramicData.view.table
             if (_mapping.Where(me => me.GridViewColumn == header.Column).Count() > 0)
             {
                 MappingEntry map = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                column = map.ColumnDescriptor;
+                //EZ: column = map.ColumnDescriptor;
             }
 
             if (_dragDevice1 == null && _dragDevice2 == null)
@@ -642,7 +525,7 @@ namespace PanoramicData.view.table
                 if (header.Column != null && (header.Column.Header as string) != "")
                 {
                     MappingEntry fieldMapping = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                    _headerColumnDescriptor1 = fieldMapping.ColumnDescriptor;
+                    //EZ: _headerColumnDescriptor1 = fieldMapping.ColumnDescriptor;
                     e.Handled = true;
                     e.TouchDevice.Capture(header);
                     _dragDevice1 = e.TouchDevice;
@@ -673,11 +556,11 @@ namespace PanoramicData.view.table
                     MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == header.Column).First();
 
                     _twoFingerExploreFeedback = new VisualizationContainerView();
-                    FilterHolderViewModel filterHolderViewModel =
-                        FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel,
-                        FilterRendererType.Plot);
-                    _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
-                    filterHolderViewModel.Temporary = true;
+                    //EZ: FilterHolderViewModel filterHolderViewModel =
+                    //EZ:     FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel,
+                    //EZ:     FilterRendererType.Plot);
+                    //EZ: _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
+                    //EZ: filterHolderViewModel.Temporary = true;
                     //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
 
                     _twoFingerExploreFeedback.SetPosition(new Pt(transInqScene.X - VisualizationContainerView.WIDTH / 2.0, thisOffset.Y - VisualizationContainerView.HEIGHT)); 
@@ -767,8 +650,8 @@ namespace PanoramicData.view.table
                 if (_headerColumnDescriptor1 != null && overHeader != null && overHeader.Column != null)
                 {
                     MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == overHeader.Column).First();
-                    if (fieldMapping2.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
-                    {
+                    //EZ: if (fieldMapping2.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
+                    /*{
                         _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
 
                         FilterHolderViewModel filterHolderViewModel =
@@ -776,7 +659,7 @@ namespace PanoramicData.view.table
                         _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
                         filterHolderViewModel.Temporary = true;
                         //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
-                    }
+                    }*/
                 }
             }
             //else
@@ -875,15 +758,15 @@ namespace PanoramicData.view.table
                             if (overHeader != null && overHeader.Column != null && (overHeader.Column.Header as string) != "")
                             {
                                 MappingEntry fieldMapping = _mapping.Where(me => me.GridViewColumn == overHeader.Column).First();
-                                if (fieldMapping.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
-                                {
+                                //EZ: if (fieldMapping.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
+                                /*{
                                     FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(fieldMapping.ColumnDescriptor, _filterModel.TableModel);
                                     filterHolderViewModel.Temporary = true;
                                     //filterHolderViewModel.Color = _explorerFeedback.FilterHolderViewModel.Color;
 
                                     //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
                                     _explorerFeedbackColumnDescriptor = fieldMapping.ColumnDescriptor;
-                                }
+                                }*/
                             }
                         }
                         //else
@@ -1175,9 +1058,9 @@ namespace PanoramicData.view.table
                 InqScene inqScene = this.FindParent<InqScene>();
 
                 _explorerFeedback = new VisualizationContainerView();
-                _explorerFeedbackColumnDescriptor = map.ColumnDescriptor;
-                FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
-                filterHolderViewModel.Temporary = true;
+                //EZ: _explorerFeedbackColumnDescriptor = map.ColumnDescriptor;
+                //EZ: FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
+                //EZ: filterHolderViewModel.Temporary = true;
 
                 //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
                 //_explorerFeedback.SetDimension(new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
@@ -1252,8 +1135,8 @@ namespace PanoramicData.view.table
 
                                     bool downStroq = (s[-1].Y - s[0].Y) > 0;
 
-                                    if ((map.ColumnDescriptor.SortMode == SortMode.None ||
-                                         map.ColumnDescriptor.SortMode == SortMode.Asc) && downStroq)
+                                    //EZ: if ((map.ColumnDescriptor.SortMode == SortMode.None ||
+                                    /*     map.ColumnDescriptor.SortMode == SortMode.Asc) && downStroq)
                                     {
                                         map.ColumnDescriptor.SortMode = SortMode.Desc;
                                     }
@@ -1269,7 +1152,7 @@ namespace PanoramicData.view.table
                                     else if (map.ColumnDescriptor.SortMode == SortMode.Asc && !downStroq)
                                     {
                                         map.ColumnDescriptor.SortMode = SortMode.None;
-                                    }
+                                    }*/
                                 }
                             }
                         }
@@ -1369,6 +1252,33 @@ namespace PanoramicData.view.table
         }
     }
 
+    public class TextValueConverter : IValueConverter
+    {
+        //new Binding("Data.Values.Values.ToList().[" + index + "].ShortStringValue"));
+        private AttributeViewModel _attributeViewModel = null;
+
+        public TextValueConverter(AttributeViewModel attributeViewModel)
+        {
+            _attributeViewModel = attributeViewModel;
+        }
+        public object Convert(object value, Type targetType, object parameter,
+           CultureInfo culture)
+        {
+            if (value != null)
+            {
+                VisualizationViewResultItemModel model = (value as VisualizationViewResultItemModel);
+                return model.Values[_attributeViewModel].ShortStringValue;
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
     public class ColorByImageConverter : IValueConverter
     {
@@ -1435,7 +1345,7 @@ namespace PanoramicData.view.table
     public class MappingEntry
     {
         public GridViewColumn GridViewColumn { get; set; }
-        public PanoramicDataColumnDescriptor ColumnDescriptor { get; set; }
+        public AttributeViewModel AttributeViewModel { get; set; }
         public int FieldsIndex { get; set; }
     }
 

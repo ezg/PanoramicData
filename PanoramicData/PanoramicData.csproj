@@ -216,6 +216,7 @@
     <Compile Include="model\view_new\VisualizationViewModelFactory.cs" />
     <Compile Include="model\view_new\VisualizationViewModel.cs" />
     <Compile Include="model\view_new\VisualizationViewResultItemModel.cs" />
+    <Compile Include="model\view_new\VisualizationViewResultItemValueModel.cs" />
     <Compile Include="model\view_new\VisualizationViewResultModel.cs" />
     <Compile Include="utils\Converters.cs" />
     <Compile Include="utils\CSVParser.cs" />

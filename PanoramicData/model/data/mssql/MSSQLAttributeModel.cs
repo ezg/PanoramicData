@@ -43,5 +43,13 @@ namespace PanoramicData.model.data.mssql
                 return _fieldInfo.VisualizationType;
             }
         }
+
+        public override string AttributeDataType
+        {
+            get
+            {
+                return _fieldInfo.DataType;
+            }
+        }
     }
 }

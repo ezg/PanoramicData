@@ -19,5 +19,10 @@ namespace PanoramicData.model.data
         {
             get { throw new NotImplementedException(); }
         }
+
+        public override string AttributeDataType
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

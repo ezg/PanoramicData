@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using PanoramicData.controller.data;
+using PanoramicData.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PanoramicData.model.view_new
 {
-    public class VisualizationViewResultModel : BindableBase
+    public class VisualizationViewResultModel : ExtendedBindableBase
     {
         private AsyncVirtualizingCollection<VisualizationViewResultItemModel> _visualizationViewResultItemModels = null;
         public AsyncVirtualizingCollection<VisualizationViewResultItemModel> VisualizationViewResultItemModels
