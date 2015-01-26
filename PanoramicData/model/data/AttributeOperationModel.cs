@@ -53,7 +53,21 @@ namespace PanoramicData.model.data
             }
         }
 
+        private SortMode _sortMode = SortMode.None;
+        public SortMode SortMode
+        {
+            get
+            {
+                return _sortMode;
+            }
+            set
+            {
+                this.SetProperty(ref _sortMode, value);
+            }
+        }
     }
 
     public enum AggregateFunction { None, Sum, Count, Min, Max, Avg, Concat, Vis, Bin };
+
+    public enum SortMode { Asc, Desc, None }
 }

@@ -1,4 +1,5 @@
-﻿using PanoramicData.model.view_new;
+﻿using PanoramicData.model.data;
+using PanoramicData.model.view_new;
 using PixelLab.Common;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,22 @@ namespace PanoramicData.utils
         protected override Visibility ConvertBase(object input)
         {
             return input == null ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
+
+    public class SortModeAscToVisibilityConvertor : SimpleValueConverter<SortMode, Visibility>
+    {
+        protected override Visibility ConvertBase(SortMode input)
+        {
+            return input == SortMode.Asc ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    public class SortModeDescToVisibilityConvertor : SimpleValueConverter<SortMode, Visibility>
+    {
+        protected override Visibility ConvertBase(SortMode input)
+        {
+            return input == SortMode.Desc ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

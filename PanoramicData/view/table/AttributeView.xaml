@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:utils="clr-namespace:PanoramicData.utils"
+             xmlns:model="clr-namespace:PanoramicData.model.view_new"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="300"
+             d:DesignHeight="40" d:DesignWidth="80"
              ClipToBounds="False">
+
+    <d:DesignProperties.DataContext>
+        <model:AttributeViewModel>
+            <model:AttributeViewModel.IsNoChrome>False</model:AttributeViewModel.IsNoChrome>
+            <model:AttributeViewModel.MainLabel>Test</model:AttributeViewModel.MainLabel>
+            <model:AttributeViewModel.SubLabel>Test dsafdsa</model:AttributeViewModel.SubLabel>
+            <model:AttributeViewModel.IsShadow>True</model:AttributeViewModel.IsShadow>
+        </model:AttributeViewModel>
+    </d:DesignProperties.DataContext>
+    
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
@@ -21,7 +32,10 @@
     </UserControl.Style>
 
     <UserControl.Resources>
+        <utils:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <utils:SortModeAscToVisibilityConvertor x:Key="SortModeAscToVisibilityConvertor"/>
+        <utils:SortModeDescToVisibilityConvertor x:Key="SortModeDescToVisibilityConvertor"/>
     </UserControl.Resources>
 
     <Grid SnapsToDevicePixels="True" HorizontalAlignment="Stretch">
@@ -30,11 +44,24 @@
                        Stroke="DarkGray"
                        Name="rectHighlight"/>
             <Border
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
                 BorderBrush="Black" 
-                Background="White"
                 Name="HeaderBorder">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShadow}" Value="True">
+                                <Setter Property="Background" Value="#bbbbbbbb" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsShadow}" Value="False">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 
                 <Grid Name="mainGrid">
                     <Grid.Style>
@@ -90,14 +117,14 @@
                                     <DataTrigger Binding="{Binding IsNoChrome}" Value="True">
                                         <Setter Property="TextAlignment" Value="Left" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsNoChrome}" Value="Flase">
+                                    <DataTrigger Binding="{Binding IsNoChrome}" Value="False">
                                         <Setter Property="TextAlignment" Value="Center" />
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding IsNoChrome}" Value="True">
                                         <Setter Property="FontWeight" Value="Normal" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsNoChrome}" Value="Flase">
+                                    <DataTrigger Binding="{Binding IsNoChrome}" Value="False">
                                         <Setter Property="FontWeight" Value="Bold" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -108,13 +135,13 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" Name="subTB" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextAlignment="Center"
                                Text="{Binding SubLabel}">
                         <TextBlock.Visibility>
-                            <Binding Converter="{StaticResource BooleanToVisibilityConverter}" Path="IsNoChrome"/>
+                            <Binding Converter="{StaticResource InverseBooleanToVisibilityConverter}" Path="IsNoChrome"/>
                         </TextBlock.Visibility>
                     </TextBlock>
 
                     <Canvas Name="downArrow" Width="10" Height="10" Grid.RowSpan="2" Grid.Column="2">
                         <Canvas.Visibility>
-                            <Binding Converter="{StaticResource BooleanToVisibilityConverter}" Path="IsDownSorted"/>
+                            <Binding Converter="{StaticResource SortModeAscToVisibilityConvertor}" Path="AttributeOperationModel.SortMode"/>
                         </Canvas.Visibility>
                         <Polygon Points="0,0 10,0, 5,10">
                             <Polygon.Fill>
@@ -129,7 +156,7 @@
 
                     <Canvas Name="upArrow" Width="10" Height="10" Grid.RowSpan="2" Grid.Column="2">
                         <Canvas.Visibility>
-                            <Binding Converter="{StaticResource BooleanToVisibilityConverter}" Path="IsUpSorted"/>
+                            <Binding Converter="{StaticResource SortModeDescToVisibilityConvertor}" Path="AttributeOperationModel.SortMode"/>
                         </Canvas.Visibility>
                         <Polygon Points="0,10 10,10, 5,0">
                             <Polygon.Fill>

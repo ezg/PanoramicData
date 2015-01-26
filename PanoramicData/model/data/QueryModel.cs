@@ -116,8 +116,8 @@ namespace PanoramicData.model.data
             if (QueryModelUpdated != null)
             {
                 QueryModelUpdated(this, new QueryModelUpdatedEventArgs(type));
-                SchemaModel.QueryExecuter.ExecuteQuery(this);
             }
+            SchemaModel.QueryExecuter.ExecuteQuery(this);
         }
     }
 

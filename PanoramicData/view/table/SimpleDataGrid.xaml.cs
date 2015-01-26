@@ -39,13 +39,6 @@ namespace PanoramicData.view.table
     /// </summary>
     public partial class SimpleDataGrid : AttributeViewModelEventHandler, StroqListener
     {
-        public static readonly DependencyProperty TestProperty =
-            DependencyProperty.Register("Test", typeof(bool), typeof(SimpleDataGrid),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        private DelayedEventExecution _eventExecution = new DelayedEventExecution();
-        private DelayedEventExecution _eventExecution2 = new DelayedEventExecution();
-
         public delegate void RowsSelectedHandler(object sender, List<PanoramicDataRow> rows);
         public event RowsSelectedHandler RowsSelected;
 
@@ -75,7 +68,6 @@ namespace PanoramicData.view.table
         private VisualizationContainerView _twoFingerExploreFeedback = null;
         private VisualizationContainerView _explorerFeedback = null;
         private PanoramicDataColumnDescriptor _explorerFeedbackColumnDescriptor = null;
-        private SimpleDataGridDragFeedback _cellDragFeedback = null;
         private bool _isSimpleGridViewColumnHeaderMoveFeedbackShown = false;
         private List<MappingEntry> _mapping = new List<MappingEntry>();
 
@@ -242,18 +234,6 @@ namespace PanoramicData.view.table
             }
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            if (DateTime.Now.Subtract(_last).TotalMilliseconds > 33)
-            {
-                base.OnRender(drawingContext);
-
-                _eventExecution.ProcessAction();
-                _eventExecution2.ProcessAction();
-                _last = DateTime.Now;
-            }
-        }
-
         GridViewColumn createGridViewColumn(AttributeOperationModel attributeOperationModel, int index, GridViewColumn oldColumn)
         {
             GridViewColumn gvc = new GridViewColumn();
@@ -380,306 +360,22 @@ namespace PanoramicData.view.table
             }
         }
 
-        void GridViewRowPresenter_MouseDown(object sender, MouseButtonEventArgs e)
+        void ColumnHeader_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
-            var elem = sender as FrameworkElement;
-            if (elem != null)
+            if ((e.Device is StylusDevice || (e.Device is MouseTouchDevice && (e.Device as MouseTouchDevice).IsStylus)))
             {
-                e.Handled = true;
-                e.MouseDevice.Capture(elem);
-
-                Point position = e.GetPosition((FrameworkElement)elem);
-                _startDrag1 = position;
-
-                elem.MouseMove += GridViewRowPresenter_MouseMove;
-                elem.MouseUp += GridViewRowPresenter_MouseUp;
-            }
-        }
-        void GridViewRowPresenter_MouseMove(object sender, MouseEventArgs e)
-        {
-            e.Handled = true;
-
-            var elem = sender as FrameworkElement;
-            if (elem != null)
-            {
-                Point position = e.GetPosition((FrameworkElement)elem);
-                Vector vec = position - _startDrag1;
-                Point dragDelta = new Point(vec.X, vec.Y);
-
-                if (vec.Length > 10 && _cellDragFeedback == null)
-                {
-                    _cellDragFeedback = new SimpleDataGridDragFeedback();
-                    _cellDragFeedback.Width = elem.ActualWidth + 20;
-                    _cellDragFeedback.Height = elem.ActualHeight * 2;
-                    _cellDragFeedback.DataContext = (elem as TextBlock).Text;
-                    InqScene inqScene = this.FindParent<InqScene>();
-
-                    if (inqScene != null)
-                    {
-                        inqScene.AddNoUndo(_cellDragFeedback);
-                    }
-                }
-                // move filter drag feedback
-                if (_cellDragFeedback != null)
-                {
-                    InqScene inqScene = this.FindParent<InqScene>();
-                    Point trans = elem.TranslatePoint(position, inqScene);
-                    _cellDragFeedback.RenderTransform = new TranslateTransform(trans.X - _cellDragFeedback.Width / 2.0, trans.Y - _cellDragFeedback.Height);
-                }
-            }
-
-        }
-        void GridViewRowPresenter_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-            Mouse.Capture(null);
-            var elem = sender as FrameworkElement;
-
-            elem.MouseMove -= GridViewRowPresenter_MouseMove;
-            elem.MouseUp -= GridViewRowPresenter_MouseUp;
-
-            if (elem != null && _cellDragFeedback != null)
-            {
-                Point position = e.GetPosition(elem);
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point trans = elem.TranslatePoint(position, inqScene);
-
-                inqScene.Rem(_cellDragFeedback);
-                _cellDragFeedback = null;
-
-                GridViewColumn column = this.FindParent<GridViewColumn>();
-
-                if (CellDroppedOutside != null)
-                {
-                    PanoramicDataRow row = ((DataWrapper<PanoramicDataRow>)elem.DataContext).Data;
-                    //CellDroppedOutside(this, row.ColumnValues[(int)elem.Tag], row, trans);
-                }
-            }
-        }
-
-        void ColumnHeader_TouchDownEvent(Object sender, TouchEventArgs e)
-        {
-            if ((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus)
                 return;
-            var header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
-            PanoramicDataColumnDescriptor column = null;
-            if (_mapping.Where(me => me.GridViewColumn == header.Column).Count() > 0)
-            {
-                MappingEntry map = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                //EZ: column = map.ColumnDescriptor;
             }
-
-            _eventExecution.ProcessAction();
-
-            if (header.Column != null)
-            {
-                e.Handled = true;
-                e.TouchDevice.Capture(header);
-
-                manipulationStart(header, e.GetTouchPoint((FrameworkElement)header).Position);
-
-                header.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(ColumnHeader_PointDrag));
-                header.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(ColumnHeader_PointUp));
-            }
-        }
-        void ColumnHeader_PointDrag(Object sender, TouchEventArgs e)
-        {
-            var header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
-
-            Point position = e.GetTouchPoint((FrameworkElement)header).Position;
-
-            _eventExecution.SubmitWorkItem(new System.Action(() =>
-                    manipulationMove(header, position)), this);
-
-            e.Handled = true;
-        }
-        void ColumnHeader_PointUp(Object sender, TouchEventArgs e)
-        {
-            _eventExecution.ProcessAction();
+            (sender as FrameworkElement).ManipulationDelta += ColumnHeader_ManipulationDelta;
+            (sender as FrameworkElement).ManipulationCompleted += ColumnHeader_ManipulationCompleted;
 
             var header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
-            e.Handled = true;
-            e.TouchDevice.Capture(null);
-
-            Point position = e.GetTouchPoint((FrameworkElement)header).Position;
-            manipulationEnd(header, position);
-
-            header.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(ColumnHeader_PointDrag));
-            header.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(ColumnHeader_PointUp));
-        }
-
-        void ColumnHeader_TouchDown(object sender, TouchEventArgs e)
-        {
-            _eventExecution.ProcessAction();
-            _eventExecution2.ProcessAction();
-
-            var header = sender as GridViewColumnHeader;
-            PanoramicDataColumnDescriptor column = null;
-            if (_mapping.Where(me => me.GridViewColumn == header.Column).Count() > 0)
-            {
-                MappingEntry map = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                //EZ: column = map.ColumnDescriptor;
-            }
-
-            if (_dragDevice1 == null && _dragDevice2 == null)
-            {
-                if (header.Column != null && (header.Column.Header as string) != "")
-                {
-                    MappingEntry fieldMapping = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-                    //EZ: _headerColumnDescriptor1 = fieldMapping.ColumnDescriptor;
-                    e.Handled = true;
-                    e.TouchDevice.Capture(header);
-                    _dragDevice1 = e.TouchDevice;
-
-                    manipulationStart(header, e.GetTouchPoint((FrameworkElement)header).Position);
-                }
-            }
-            else if (_dragDevice2 == null)
-            {
-                if (_headerColumnDescriptor1 != null && header.Column != null)
-                {
-                    _isTwoFingerExploringGraphs = true;
-                    e.TouchDevice.Capture(header);
-                    _dragDevice2 = e.TouchDevice;
-
-                    // remove any other feedback that might have been triggered so far
-                    InqScene inqScene = this.FindParent<InqScene>();
-                    inqScene.Rem(_explorerFeedback);
-                    _explorerFeedback = null;
-                    _explorerFeedbackColumnDescriptor = null;
-                    hideColumnReorderFeedbacks();
-
-                    // create a new filter
-                    Point curDrag = e.GetTouchPoint((FrameworkElement)header).Position;
-                    Point transInqScene = header.TranslatePoint(curDrag, inqScene);
-                    Point thisOffset = this.TranslatePoint(new Point(), inqScene);
-
-                    MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == header.Column).First();
-
-                    _twoFingerExploreFeedback = new VisualizationContainerView();
-                    //EZ: FilterHolderViewModel filterHolderViewModel =
-                    //EZ:     FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel,
-                    //EZ:     FilterRendererType.Plot);
-                    //EZ: _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
-                    //EZ: filterHolderViewModel.Temporary = true;
-                    //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
-
-                    _twoFingerExploreFeedback.SetPosition(new Pt(transInqScene.X - VisualizationContainerView.WIDTH / 2.0, thisOffset.Y - VisualizationContainerView.HEIGHT)); 
-                    //_twoFingerExploreFeedback.SetDimension(new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
-
-                    inqScene.AddNoUndo(_twoFingerExploreFeedback);
-                }
-            }
-        }
-        void ColumnHeader_TouchMove(object sender, TouchEventArgs e)
-        {
-            var header = sender as GridViewColumnHeader;
-
-            if (_dragDevice1 == e.TouchDevice)
-            {
-                Point position = e.GetTouchPoint((FrameworkElement)header).Position;
-                //manipulationMove(header, position);
-                _eventExecution.SubmitWorkItem(new System.Action(() =>
-                    manipulationMove(header, position)), this);
-
-                e.Handled = true;
-            }
-            else if (_dragDevice2 == e.TouchDevice && _twoFingerExploreFeedback != null)
-            {
-                Point curDrag = e.GetTouchPoint((FrameworkElement)header).Position;
-                _eventExecution2.SubmitWorkItem(new System.Action(() =>
-                    manipulationMoveTwo(header, curDrag)), this);
-
-                e.Handled = true;
-            }
-        }
-        void ColumnHeader_TouchUp(object sender, TouchEventArgs e)
-        {
-            _eventExecution.ProcessAction();
-            _eventExecution2.ProcessAction();
-
-            if (_dragDevice1 == e.TouchDevice)
-            {
-                var header = sender as GridViewColumnHeader;
-                e.Handled = true;
-                e.TouchDevice.Capture(null);
-
-                Point position = e.GetTouchPoint((FrameworkElement)header).Position;
-                manipulationEnd(header, position);
-
-                _dragDevice1 = null;
-            }
-            else if (_dragDevice2 == e.TouchDevice)
-            {
-                e.Handled = true;
-                e.TouchDevice.Capture(null);
-                _dragDevice2 = null;
-
-                //if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
-                {
-                    InqScene inqScene = this.FindParent<InqScene>();
-                    inqScene.Rem(_twoFingerExploreFeedback);
-                }
-                //else
-                {
-                    //_twoFingerExploreFeedback.FilterHolderViewModel.TableModel.AddIncomingFilter(_twoFingerExploreFeedback.FilterHolderViewModel);
-                    _twoFingerExploreFeedback.InitPostionAndDimension(_twoFingerExploreFeedback.GetPosition(), _twoFingerExploreFeedback.GetSize());
-                }
-                _twoFingerExploreFeedback = null;
-                _explorerFeedbackColumnDescriptor = null;
-            }
-        }
-
-        private void manipulationMoveTwo(GridViewColumnHeader header, Point curDrag)
-        {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point trans = header.TranslatePoint(curDrag, inqScene);
-
-            if (((double)_twoFingerExploreFeedback.GetValue(Canvas.TopProperty)) - trans.Y > -200 ||
-                ((double)_twoFingerExploreFeedback.GetValue(Canvas.TopProperty)) - trans.Y < -460)
-            {
-                //_twoFingerExploreFeedback.FilterHolderViewModel.Temporary = false;
-            }
-
-            //if (_twoFingerExploreFeedback.FilterHolderViewModel.Temporary)
-            {
-                // move filter
-                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
-
-                GridViewColumnHeader overHeader = findOverColumnHeader(trans);
-
-                if (_headerColumnDescriptor1 != null && overHeader != null && overHeader.Column != null)
-                {
-                    MappingEntry fieldMapping2 = _mapping.Where(me => me.GridViewColumn == overHeader.Column).First();
-                    //EZ: if (fieldMapping2.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
-                    /*{
-                        _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
-
-                        FilterHolderViewModel filterHolderViewModel =
-                        FilterHolderViewModel.CreateDefault(_headerColumnDescriptor1, fieldMapping2.ColumnDescriptor, _filterModel.TableModel, FilterRendererType.Plot);
-                        _explorerFeedbackColumnDescriptor = fieldMapping2.ColumnDescriptor;
-                        filterHolderViewModel.Temporary = true;
-                        //_twoFingerExploreFeedback.FilterHolderViewModel = filterHolderViewModel;
-                    }*/
-                }
-            }
-            //else
-            {
-                _twoFingerExploreFeedback.SetValue(Canvas.TopProperty, trans.Y - VisualizationContainerView.HEIGHT);
-                _twoFingerExploreFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
-                //_twoFingerExploreFeedback.FilterHolderViewModel.Center = new Point((trans.X - VisualizationContainerView.WIDTH / 2.0) + VisualizationContainerView.WIDTH / 2.0, (trans.Y - VisualizationContainerView.HEIGHT) + VisualizationContainerView.HEIGHT / 2.0);
-            }
-        }
-
-        private void manipulationStart(GridViewColumnHeader header, Point position)
-        {
             _manipulationStartTime = DateTime.Now.Ticks;
-            _startDrag1 = position;
-            _isTwoFingerExploringGraphs = false;
 
-            if (CanResize &&
-                _startDrag1.X > header.Column.ActualWidth - 15 &&
-                _startDrag1.X < header.Column.ActualWidth + 15)
+            Point pos = e.Manipulators.First().GetPosition(header);
+            if (CanResize && header.Column != null &&
+                pos.X > header.Column.ActualWidth - 15 &&
+                pos.X < header.Column.ActualWidth + 15)
             {
                 _isResizing = true;
             }
@@ -688,143 +384,27 @@ namespace PanoramicData.view.table
                 _isResizing = false;
             }
         }
-        private void manipulationMove(GridViewColumnHeader header, Point position)
+
+        void ColumnHeader_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            Point curDrag = position;
-            Vector vec = curDrag - _startDrag1;
-            Point dragDelta = new Point(vec.X, vec.Y);
-            InqScene inqScene = this.FindParent<InqScene>();
+            var header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
 
-            if (!_isTwoFingerExploringGraphs)
+            if (CanResize && _isResizing)
             {
-                if (CanResize && _isResizing)
-                {
-                    header.Column.Width = Math.Max(35, header.Column.ActualWidth + vec.X);
-                    _startDrag1 = curDrag;
-                }
-                if ((CanReorder || CanDrag) && _explorerFeedback == null && !_isResizing)
-                {
-                    Point trans = header.TranslatePoint(curDrag, inqScene);
-
-                    if (header.VisualDescendentsOfType<AttributeView>().Count() > 0)
-                    {
-                        AttributeView simpleGridViewColumnHeader = header.VisualDescendentsOfType<AttributeView>().First();
-
-                        // create drag feedback
-                        if (vec.Length > 10 && !_isSimpleGridViewColumnHeaderMoveFeedbackShown)
-                        {
-                            simpleGridViewColumnHeader.ManipulationStart(trans);
-                            _isSimpleGridViewColumnHeaderMoveFeedbackShown = true;
-
-                            _isTwoFingerExploringGraphs = false;
-                        }
-                        // move filter drag feedback
-                        if (_isSimpleGridViewColumnHeaderMoveFeedbackShown)
-                        {
-                            simpleGridViewColumnHeader.ManipulationMove(trans);
-                        }
-                    }
-                }
-                if (CanExplore && !_isSimpleGridViewColumnHeaderMoveFeedbackShown && !_isResizing)
-                {
-                    Point trans = header.TranslatePoint(curDrag, inqScene);
-                    Point thisOffset = this.TranslatePoint(new Point(), inqScene);
-
-                    // create explorer feedback
-                    if (!(_manipulationStartTime + TimeSpan.FromSeconds(1.0).Ticks > DateTime.Now.Ticks) && _explorerFeedback == null)
-                    {
-                        createExplorerDragFeedback(header.TranslatePoint(curDrag, inqScene), header);
-                        _isTwoFingerExploringGraphs = false;
-                    }
-
-                    // move filter drag feedback
-                    if (_explorerFeedback != null)
-                    {
-                        if (((double)_explorerFeedback.GetValue(Canvas.TopProperty)) - trans.Y > -200 ||
-                            ((double)_explorerFeedback.GetValue(Canvas.TopProperty)) - trans.Y < -460)
-                        {
-                            //_explorerFeedback.FilterHolderViewModel.Temporary = false;
-                        }
-
-                       // if (_explorerFeedback.FilterHolderViewModel.Temporary)
-                        {
-                            // move filter
-                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
-                            _explorerFeedback.SetValue(Canvas.TopProperty, thisOffset.Y - VisualizationContainerView.HEIGHT);
-
-
-                            Console.WriteLine((trans.X - VisualizationContainerView.WIDTH / 2.0) + " " + (thisOffset.Y - VisualizationContainerView.HEIGHT));
-                            GridViewColumnHeader overHeader = findOverColumnHeader(trans);
-
-                            if (overHeader != null && overHeader.Column != null && (overHeader.Column.Header as string) != "")
-                            {
-                                MappingEntry fieldMapping = _mapping.Where(me => me.GridViewColumn == overHeader.Column).First();
-                                //EZ: if (fieldMapping.ColumnDescriptor != _explorerFeedbackColumnDescriptor)
-                                /*{
-                                    FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(fieldMapping.ColumnDescriptor, _filterModel.TableModel);
-                                    filterHolderViewModel.Temporary = true;
-                                    //filterHolderViewModel.Color = _explorerFeedback.FilterHolderViewModel.Color;
-
-                                    //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
-                                    _explorerFeedbackColumnDescriptor = fieldMapping.ColumnDescriptor;
-                                }*/
-                            }
-                        }
-                        //else
-                        {
-                            _explorerFeedback.SetValue(Canvas.TopProperty, trans.Y - VisualizationContainerView.HEIGHT);
-                            _explorerFeedback.SetValue(Canvas.LeftProperty, trans.X - VisualizationContainerView.WIDTH / 2.0);
-                            //_explorerFeedback.FilterHolderViewModel.Center = new Point((trans.X - VisualizationContainerView.WIDTH / 2.0) + VisualizationContainerView.WIDTH / 2.0, (trans.Y - VisualizationContainerView.HEIGHT) + VisualizationContainerView.HEIGHT / 2.0);
-                        }
-                    }
-                }
+                header.Column.Width = Math.Max(35, header.Column.ActualWidth + e.DeltaManipulation.Translation.X);
+                //e.Handled = true;
             }
         }
-        private void manipulationEnd(GridViewColumnHeader header, Point position)
+
+        void ColumnHeader_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point curDrag = position;
-            Point fromInqScene = header.TranslatePoint(curDrag, inqScene);
-            Point fromThis = header.TranslatePoint(curDrag, this);
+            (sender as FrameworkElement).ManipulationDelta -= ColumnHeader_ManipulationDelta;
+            (sender as FrameworkElement).ManipulationCompleted -= ColumnHeader_ManipulationCompleted;
 
-            if (header.VisualDescendentsOfType<AttributeView>().Count() > 0)
-            {
-                AttributeView simpleGridViewColumnHeader = header.VisualDescendentsOfType<AttributeView>().First();
-
-                if (_isSimpleGridViewColumnHeaderMoveFeedbackShown)
-                {
-                    simpleGridViewColumnHeader.ManipulationEnd(fromInqScene);
-                    _isSimpleGridViewColumnHeaderMoveFeedbackShown = false;
-                }
-                else if (_explorerFeedback != null)
-                {
-                   // if (_explorerFeedback.FilterHolderViewModel.Temporary)
-                    {
-                        inqScene.Rem(_explorerFeedback);
-                    }
-                    //else
-                    {
-                        //_explorerFeedback.FilterHolderViewModel.TableModel.AddIncomingFilter(_explorerFeedback.FilterHolderViewModel);
-                        _explorerFeedback.InitPostionAndDimension(_explorerFeedback.GetPosition(), _explorerFeedback.GetSize());
-                    }
-                    _explorerFeedback = null;
-                    _explorerFeedbackColumnDescriptor = null;
-                }
-                else
-                {
-                    if (!_isTwoFingerExploringGraphs && _manipulationStartTime + TimeSpan.FromSeconds(0.5).Ticks > DateTime.Now.Ticks)
-                    {
-                        int count = _mapping.Where(me => me.GridViewColumn == header.Column).Count();
-                        if (!_isResizing && header.Column != null && count > 0)
-                        {
-                            simpleGridViewColumnHeader.DisplayRadialControl(fromInqScene);
-                        }
-                    }
-                }
-            }
             _isResizing = false;
             _manipulationStartTime = 0;
         }
+
 
         public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
@@ -1178,13 +758,13 @@ namespace PanoramicData.view.table
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
-
-            (sender as FrameworkElement).AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(ColumnHeader_TouchDownEvent));
+            (sender as FrameworkElement).IsManipulationEnabled = true;
+            (sender as FrameworkElement).AddHandler(FrameworkElement.ManipulationStartedEvent, new EventHandler<ManipulationStartedEventArgs>(ColumnHeader_ManipulationStarted));
         }
 
         private void FrameworkElement_OnUnloaded(object sender, RoutedEventArgs e)
         {
-            (sender as FrameworkElement).RemoveHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(ColumnHeader_TouchDownEvent));
+            (sender as FrameworkElement).RemoveHandler(FrameworkElement.ManipulationStartedEvent, new EventHandler<ManipulationStartedEventArgs>(ColumnHeader_ManipulationStarted));
         }
     }
     
@@ -1354,36 +934,6 @@ namespace PanoramicData.view.table
         public PanoramicDataColumnDescriptor ColumnDescriptor { get; set; }
         public StackPanel StackPanel { get; set; }
         public Border Border { get; set; }
-    }
-
-    public class DelayedEventExecution
-    {
-        int submitCount = 0;
-        int execCount = 0;
-        private System.Action _nextAction;
-        private System.Windows.Threading.DispatcherPriority _priority = System.Windows.Threading.DispatcherPriority.Render;
-        public DelayedEventExecution(System.Windows.Threading.DispatcherPriority priority = System.Windows.Threading.DispatcherPriority.Render)
-        {
-            _priority = priority;
-        }
-
-        public void SubmitWorkItem(System.Action action, SimpleDataGrid grid)
-        {
-            grid.SetValue(SimpleDataGrid.TestProperty, !((bool)grid.GetValue(SimpleDataGrid.TestProperty)));
-            _nextAction = action;
-            submitCount++;
-            //Application.Current.Dispatcher.BeginInvoke(new System.Action(() => ProcessAction(action)), _priority);
-        }
-
-        public void ProcessAction()
-        {
-            if (_nextAction != null)
-            {
-                _nextAction.Invoke();
-                _nextAction = null;
-                execCount++;
-            }
-        }
     }
 
     public class MultiValueImageConverter : IMultiValueConverter

@@ -40,7 +40,8 @@
 
                 <inq:InkableScene 
                         x:Name="inkableScene" 
-                        Width="50000" Height="50000" Canvas.Top="-25000" Canvas.Left="-25000"
+                        Width="50000" Height="50000" 
+                        RenderTransform="1 0 0 1 -25000 -25000"
                         Background="#ffd5d5d5"/>
 
                 <menu:SlideMenu x:Name="slideMenu" Visibility="Hidden"/>

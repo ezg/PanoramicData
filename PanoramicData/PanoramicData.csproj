@@ -296,9 +296,6 @@
     <Compile Include="view\vis\render\FilterRenderer.cs" />
     <Compile Include="view\utils\GridViewColumnResizeBehavior.cs" />
     <Compile Include="model\view\FilterHolderViewModel.cs" />
-    <Compile Include="view\table\SimpleDataGridDragFeedback.xaml.cs">
-      <DependentUpon>SimpleDataGridDragFeedback.xaml</DependentUpon>
-    </Compile>
     <Compile Include="model\view\TableModel.cs" />
     <Compile Include="view\table\SimpleDataGrid.xaml.cs">
       <DependentUpon>SimpleDataGrid.xaml</DependentUpon>
@@ -387,10 +384,6 @@
     <Page Include="view\other\RadialControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\table\SimpleDataGridDragFeedback.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="view\table\SimpleDataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -42,18 +42,9 @@ namespace PanoramicData
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Point _startDrag1 = new Point();
-        private Point _startDrag2 = new Point();
-
-        private Point _current1 = new Point();
-        private Point _current2 = new Point();
-        private double length = 0.0;
-
-        private TouchDevice _dragDevice1 = null;
-        private TouchDevice _dragDevice2 = null;
-
         private Stopwatch _lastTapTimer = new Stopwatch();
         private Stopwatch _upTimer = new Stopwatch();
+        private Point _lastPosition = new Point();
 
         private bool _renderTouchPoints = false;
         private Dictionary<TouchDevice, FrameworkElement> _deviceRenderings = new Dictionary<TouchDevice, FrameworkElement>();
@@ -82,7 +73,12 @@ namespace PanoramicData
             layoutRoot.PreviewTouchMove += layoutRoot_PreviewTouchMove;
             layoutRoot.PreviewTouchUp += layoutRoot_PreviewTouchUp;
 
-            inkableScene.TouchDown += inkableScene_TouchDownEvent;
+            inkableScene.IsManipulationEnabled = true;
+            inkableScene.ManipulationStarting += inkableScene_ManipulationStarting;
+            inkableScene.ManipulationStarted += inkableScene_ManipulationStarted;
+            inkableScene.ManipulationDelta += inkableScene_ManipulationDelta;
+            inkableScene.ManipulationCompleted += inkableScene_ManipulationCompleted;
+            inkableScene.ManipulationInertiaStarting += inkableScene_ManipulationInertiaStarting;
 
             up.TouchDown += up_TouchDown;
             slideMenu.Down += slideMenu_Down;
@@ -163,130 +159,62 @@ namespace PanoramicData
             }
         }
 
-
-        void inkableScene_TouchDownEvent(Object sender, TouchEventArgs e)
+        private void inkableScene_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
-            if ((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus)
+            e.TranslationBehavior.DesiredDeceleration = 80.0 * 96.0 / (1000.0 * 1000.0);
+        }
+
+        void inkableScene_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
+        {
+            e.ManipulationContainer = this;
+        }
+
+        void inkableScene_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            if ((e.Device is MouseTouchDevice) && (e.Device as MouseTouchDevice).IsStylus)
                 return;
+            e.Handled = true;
+            _upTimer.Restart();
 
-
-            /*var elements = new List<FrameworkElement>(this.GetIntersectedElements(new Rct(e.GetTouchPoint(this).Position, new Vec(1, 1))).Where((t) => t is
-                FrameworkElement).Select((t) => t as FrameworkElement));
-
-            if (elements.Count > 0)
-                return;
-            */
-            if (_dragDevice1 == null)
+            if (e.Manipulators.Count() == 1)
             {
-                _upTimer.Restart();
-                e.Handled = true;
-                e.TouchDevice.Capture(this);
-                _startDrag1 = e.GetTouchPoint((FrameworkElement)this.Parent).Position;
-                _current1 = e.GetTouchPoint((FrameworkElement)this).Position;
-
-                this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchMoveEvent));
-                this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchUpEvent));
-                _dragDevice1 = e.TouchDevice;
-            }
-            else if (_dragDevice2 == null)
-            {
-                e.Handled = true;
-                e.TouchDevice.Capture(this);
-                _dragDevice2 = e.TouchDevice;
-                _current2 = e.GetTouchPoint((FrameworkElement)this).Position;
+                _lastPosition = e.Manipulators.First().GetPosition(inkableScene);
             }
         }
 
-        void inkableScene_TouchUpEvent(object sender, TouchEventArgs e)
+        void inkableScene_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            if (e.TouchDevice == _dragDevice1)
+            UIElement element = e.Source as UIElement;
+            MatrixTransform xform = element.RenderTransform as MatrixTransform;
+            Matrix matrix = xform.Matrix;
+            ManipulationDelta delta = e.DeltaManipulation;
+            Point center = e.ManipulationOrigin;
+            matrix.Translate(-center.X, -center.Y);
+            matrix.Scale(delta.Scale.X, delta.Scale.Y);
+            matrix.Translate(center.X, center.Y);
+            matrix.Translate(delta.Translation.X, delta.Translation.Y);
+            element.RenderTransform = new MatrixTransform(matrix);
+
+            if (e.Manipulators.Count() == 1)
             {
-                e.Handled = true;
-                e.TouchDevice.Capture(null);
-                _dragDevice1 = null;
-                length = 0.0;
-
-                if (_dragDevice2 != null)
-                {
-                    _dragDevice1 = _dragDevice2;
-                    _startDrag1 = _startDrag2;
-                    _dragDevice2 = null;
-                }
-                else
-                {
-                    this.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchMoveEvent));
-                    this.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(inkableScene_TouchUpEvent));
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(_upTimer.ElapsedMilliseconds);
-                Console.WriteLine(_lastTapTimer.ElapsedMilliseconds);
-                if (_upTimer.ElapsedMilliseconds < 200 && _lastTapTimer.ElapsedMilliseconds != 0 &&
-                    _lastTapTimer.ElapsedMilliseconds < 300)
-                {
-                    Pt pos = e.GetTouchPoint(inkableScene).Position;
-                    /*_schemaViewer.RenderTransform = new TranslateTransform(
-                        pos.X - _schemaViewer.Width / 2.0,
-                        pos.Y - _schemaViewer.Height / 2.0);
-                    this.AddNoUndo(_schemaViewer);
-                    this.UpdateLayout();
-                    Console.WriteLine((pos));
-                    Console.WriteLine(this.TranslatePoint(pos, _schemaViewer));*/
-                    MainViewController.Instance.ShowSchemaViewer(pos);
-                }
-
-
-                _upTimer.Stop();
-                _lastTapTimer.Restart();
-            }
-            else if (e.TouchDevice == _dragDevice2)
-            {
-                e.Handled = true;
-                e.TouchDevice.Capture(null);
-                _dragDevice2 = null;
-                length = 0.0;
+                _lastPosition = e.Manipulators.First().GetPosition(inkableScene);
             }
 
+            e.Handled = true;
         }
 
-        void inkableScene_TouchMoveEvent(object sender, TouchEventArgs e)
+        void inkableScene_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            Point curDrag = e.GetTouchPoint((FrameworkElement)this.Parent).Position;
-
-            if (e.TouchDevice == _dragDevice1)
+            if (_upTimer.ElapsedMilliseconds < 200 && _lastTapTimer.ElapsedMilliseconds != 0 &&
+                _lastTapTimer.ElapsedMilliseconds < 300)
             {
-                if (_dragDevice2 == null)
-                {
-                    Vector dragBy = curDrag - _startDrag1;
-                    inkableScene.RenderTransform = new MatrixTransform(((Mat)inkableScene.RenderTransform.Value) * Mat.Translate(dragBy));
-                }
-                _startDrag1 = curDrag;
-                _current1 = e.GetTouchPoint((FrameworkElement)this).Position;
-                e.Handled = true;
-            }
-            else if (e.TouchDevice == _dragDevice2)
-            {
-                _startDrag2 = curDrag;
-                _current2 = e.GetTouchPoint((FrameworkElement)this).Position;
-                e.Handled = true;
+                MainViewController.Instance.ShowSchemaViewer(_lastPosition);
             }
 
-            if (_dragDevice1 != null && _dragDevice2 != null)
-            {
-                double newLength = (_current1.GetVec() - _current2.GetVec()).Length;
-                if (length != 0.0)
-                {
-                    Vector scalePos = (_current1.GetVec() + _current2.GetVec()) / 2.0;
-                    double scale = newLength / length;
-
-                    Matrix m1 = this.RenderTransform.Value;
-                    m1.ScaleAtPrepend(scale, scale, scalePos.X, scalePos.Y);
-
-                    inkableScene.RenderTransform = new MatrixTransform(m1);
-                }
-                length = newLength;
-            }
+            _upTimer.Stop();
+            _lastTapTimer.Restart();
         }
+
 
         protected override void OnManipulationBoundaryFeedback(ManipulationBoundaryFeedbackEventArgs e)
         {

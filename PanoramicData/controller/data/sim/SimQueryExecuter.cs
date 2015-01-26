@@ -41,7 +41,7 @@ namespace PanoramicData.controller.data.sim
         public IList<QueryResultItemModel> FetchRange(int startIndex, int pageCount, out int overallCount)
         {
             Console.WriteLine("page : " + startIndex + " " + pageCount);
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
             var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
             var xs = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
 

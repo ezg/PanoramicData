@@ -178,16 +178,19 @@ namespace PanoramicData.view.table
             {
                 _currentFromInkableScene = fromInkableScene;
                 _shadow = new AttributeView();
-                _shadow.DataContext = DataContext as AttributeViewModel;
+                _shadow.DataContext = new AttributeViewModel((DataContext as AttributeViewModel).AttributeOperationModel)
+                {
+                    IsNoChrome = false,
+                    IsMenuEnabled = true,
+                    IsShadow = true
+                };
 
                 _shadow.Measure(new Size(double.PositiveInfinity,
                                          double.PositiveInfinity));
 
                 double add = (DataContext as AttributeViewModel).IsNoChrome ? 30 : 0;
                 _shadow.Width = this.ActualWidth + add;
-                _shadow.HeaderBorder.Width = this.ActualWidth + add;
                 _shadow.Height = _shadow.DesiredSize.Height;
-                _shadow.HeaderBorder.Height = _shadow.DesiredSize.Height;
 
                 _shadow.RenderTransform = new TranslateTransform(
                     fromInkableScene.X - _shadow.Width / 2.0,

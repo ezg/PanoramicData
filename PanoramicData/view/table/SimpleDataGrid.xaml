@@ -104,7 +104,9 @@
                                          xmlns:wpfDevices="clr-namespace:InputFramework.WPFDevices;assembly=InputFrameworkBase"
                                          xmlns:s="clr-namespace:System;assembly=mscorlib" 
                                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-                            <Grid SnapsToDevicePixels="True" Loaded="FrameworkElement_OnLoaded" Unloaded="FrameworkElement_OnUnloaded">
+                            <Grid SnapsToDevicePixels="True" Loaded="FrameworkElement_OnLoaded" 
+                                  IsManipulationEnabled="True"
+                                  Unloaded="FrameworkElement_OnUnloaded">
                                 <Border BorderThickness="0,0,1,1" 
                                         BorderBrush="DarkGray" 
                                         Background="White"

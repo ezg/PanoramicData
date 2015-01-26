@@ -110,10 +110,11 @@ namespace PanoramicData.view.schema
                     else if (oi is AttributeOrgItem)
                     {
                         AttributeModel attributeModel = (AttributeModel)oi.Data;
-                        AttributeViewModel attributeViewModel = new AttributeViewModel(new AttributeOperationModel(attributeModel));
-                        attributeViewModel.IsNoChrome = true;
-                        attributeViewModel.IsMenuEnabled = false;
-                        attributeViewModel.IsDraggableByPen = true;
+                        AttributeViewModel attributeViewModel = new AttributeViewModel(new AttributeOperationModel(attributeModel))
+                        {
+                            IsNoChrome = true,
+                            IsMenuEnabled = false
+                        };
 
                         DataTemplate template = new DataTemplate();
                         FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));

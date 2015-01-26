@@ -14,6 +14,10 @@ namespace PanoramicData.model.view_new
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelMoved;
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelDropped;
 
+        public AttributeViewModel()
+        {
+        }
+
         public AttributeViewModel(AttributeOperationModel attributeOperationModel)
         {
             AttributeOperationModel = attributeOperationModel;
@@ -35,7 +39,7 @@ namespace PanoramicData.model.view_new
             }
         }
 
-        private bool _isShadow = true;
+        private bool _isShadow = false;
         public bool IsShadow
         {
             get
@@ -60,7 +64,7 @@ namespace PanoramicData.model.view_new
                 this.SetProperty(ref _isDraggable, value);
             }
         }
-
+        
         private bool _isDraggableByPen = true;
         public bool IsDraggableByPen
         {
