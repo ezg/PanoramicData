@@ -13,46 +13,47 @@ namespace PanoramicData.controller.data.sim
 {
     public class SimQueryExecuter : QueryExecuter
     {
-        public override void ExecuteQuery(VisualizationViewModel visualizationViewModel)
+        public override void ExecuteQuery(QueryModel queryModel)
         {
-            IItemsProvider<VisualizationViewResultItemModel> itemsProvider = new SimItemsProvider(visualizationViewModel);
-            AsyncVirtualizingCollection<VisualizationViewResultItemModel> dataValues = new AsyncVirtualizingCollection<VisualizationViewResultItemModel>(itemsProvider, 100, 1000);
-            visualizationViewModel.VisualizationViewResultModel.VisualizationViewResultItemModels = dataValues;
+            IItemsProvider<QueryResultItemModel> itemsProvider = new SimItemsProvider(queryModel);
+            AsyncVirtualizingCollection<QueryResultItemModel> dataValues = new AsyncVirtualizingCollection<QueryResultItemModel>(itemsProvider, 1000, 1000);
+            queryModel.QueryResultModel.QueryResultItemModels = dataValues;
 
         }
     }
 
-    public class SimItemsProvider : IItemsProvider<VisualizationViewResultItemModel>
+    public class SimItemsProvider : IItemsProvider<QueryResultItemModel>
     {
-        private VisualizationViewModel _visualizationViewModel = null;
+        private QueryModel _queryModel = null;
         private int _fetchCount = -1;
 
-        public SimItemsProvider(VisualizationViewModel visualizationViewModel)
+        public SimItemsProvider(QueryModel queryModel)
         {
-            _visualizationViewModel = visualizationViewModel;
+            _queryModel = queryModel;
         }
 
         public int FetchCount()
         {
-            _fetchCount = (_visualizationViewModel.SchemaModel.OriginModels[0] as SimOriginModel).Data.Count;
+            _fetchCount = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data.Count;
             return _fetchCount;
         }
 
-        public IList<VisualizationViewResultItemModel> FetchRange(int startIndex, int pageCount, out int overallCount)
+        public IList<QueryResultItemModel> FetchRange(int startIndex, int pageCount, out int overallCount)
         {
-            Thread.Sleep(1000);
-            var data = (_visualizationViewModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
-            var xs = _visualizationViewModel.GetFunctionAttributeViewModel(AttributeFunction.X);
+            Console.WriteLine("page : " + startIndex + " " + pageCount);
+            Thread.Sleep(100);
+            var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
+            var xs = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
 
-            List<VisualizationViewResultItemModel> returnList = data.Skip(startIndex).Take(pageCount).Select((dict) =>
+            List<QueryResultItemModel> returnList = data.Skip(startIndex).Take(pageCount).Select((dict) =>
             {
-                VisualizationViewResultItemModel item = new VisualizationViewResultItemModel();
+                QueryResultItemModel item = new QueryResultItemModel();
                 foreach (var attributeModel in dict.Keys)
                 {
                     if (xs.Count(avm => avm.AttributeModel == attributeModel) > 0)
                     {
                         var attributeValueViewModel = xs.First(avm => avm.AttributeModel == attributeModel);
-                        VisualizationViewResultItemValueModel valueModel = fromRaw(attributeValueViewModel, dict[attributeModel]);
+                        QueryResultItemValueModel valueModel = fromRaw(attributeValueViewModel, dict[attributeModel]);
                         item.Values.Add(attributeValueViewModel, valueModel);
                     }
                 }
@@ -63,20 +64,20 @@ namespace PanoramicData.controller.data.sim
             return returnList;
         }
 
-        private VisualizationViewResultItemValueModel fromRaw(AttributeViewModel attributeValueViewModel, object value)
+        private QueryResultItemValueModel fromRaw(AttributeOperationModel attributeOperationModel, object value)
         {
-            VisualizationViewResultItemValueModel valueModel = new VisualizationViewResultItemValueModel();
+            QueryResultItemValueModel valueModel = new QueryResultItemValueModel();
 
             double d = 0.0;
             valueModel.Value = value;
             if (double.TryParse(value.ToString(), out d))
             {
                 valueModel.StringValue = valueModel.Value.ToString().Contains(".") ? d.ToString("N") : valueModel.Value.ToString();
-                if (attributeValueViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Bin)
+                if (attributeOperationModel.AggregateFunction == AggregateFunction.Bin)
                 {
-                    valueModel.StringValue = d + " - " + (d + attributeValueViewModel.AttributeOperationModel.BinSize);
+                    valueModel.StringValue = d + " - " + (d + attributeOperationModel.BinSize);
                 }
-                else if (attributeValueViewModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
+                else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
                 {
                     if (d == 1.0)
                     {
@@ -97,7 +98,7 @@ namespace PanoramicData.controller.data.sim
                 }
             }
 
-            if (attributeValueViewModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.GEOGRAPHY)
+            if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.GEOGRAPHY)
             {
 
                 string toSplit = valueModel.StringValue;

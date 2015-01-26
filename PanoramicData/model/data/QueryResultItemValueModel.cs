@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PanoramicData.model.view_new
+namespace PanoramicData.model.data
 {
-    public class VisualizationViewResultItemValueModel
+    public class QueryResultItemValueModel
     {
         public object Value { get; set; }
         public string StringValue { get; set; }
         public string ShortStringValue { get; set; }
         
-        public VisualizationViewResultItemValueModel()
+        public QueryResultItemValueModel()
         {
         }
 
@@ -24,9 +24,9 @@ namespace PanoramicData.model.view_new
         }
         public override bool Equals(object obj)
         {
-            if (obj is VisualizationViewResultItemValueModel)
+            if (obj is QueryResultItemValueModel)
             {
-                var pv = obj as VisualizationViewResultItemValueModel;
+                var pv = obj as QueryResultItemValueModel;
                 if (pv.Value.Equals(Value))
                 {
                     return true;

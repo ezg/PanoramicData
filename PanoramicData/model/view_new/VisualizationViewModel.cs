@@ -15,9 +15,6 @@ namespace PanoramicData.model.view_new
 {
     public class VisualizationViewModel : ExtendedBindableBase
     {
-        public delegate void VisualizationViewModelUpdatedHandler(object sender, VisualizationViewModelUpdatedEventArgs e);
-        public event VisualizationViewModelUpdatedHandler VisualizationViewModelUpdated;
-
         private static int _nextColorId = 0;
         public static Color[] COLORS = new Color[] {
             Color.FromRgb(26, 188, 156),
@@ -41,17 +38,22 @@ namespace PanoramicData.model.view_new
             Color.FromRgb(127, 140, 141)
         };
 
-        private Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>> _attributeFunctionViewModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeViewModel>>();
-
         public VisualizationViewModel(SchemaModel schemaModel)
         {
+            _queryModel = new QueryModel(schemaModel);
             selectColor();
-            _visualizationViewResultModel = new VisualizationViewResultModel();
-            _schemaModel = schemaModel;
+        }
 
-            foreach (var attributeFunction in Enum.GetValues(typeof(AttributeFunction)).Cast<AttributeFunction>())
+        private QueryModel _queryModel = null;
+        public QueryModel QueryModel
+        {
+            get
             {
-                _attributeFunctionViewModels.Add(attributeFunction, new ObservableCollection<AttributeViewModel>());
+                return _queryModel;
+            }
+            set
+            {
+                this.SetProperty(ref _queryModel, value);
             }
         }
 
@@ -63,20 +65,7 @@ namespace PanoramicData.model.view_new
             }
             Color = COLORS[_nextColorId++];
         }
-
-        private SchemaModel _schemaModel = null;
-        public SchemaModel SchemaModel
-        {
-            get
-            {
-                return _schemaModel;
-            }
-            set
-            {
-                this.SetProperty(ref _schemaModel, value);
-            }
-        }
-
+        
         private SolidColorBrush _brush = null;
         public SolidColorBrush Brush
         {
@@ -155,96 +144,7 @@ namespace PanoramicData.model.view_new
                 this.SetProperty(ref _isTemporary, value);
             }
         }
-
-        private VisualizationViewResultModel _visualizationViewResultModel;
-        public VisualizationViewResultModel VisualizationViewResultModel
-        {
-            get
-            {
-                return _visualizationViewResultModel;
-            }
-        }
-
-        public void AddFunctionAttributeViewModel(AttributeFunction attributeFunction, AttributeViewModel attributeViewModel)
-        {
-            if (!_attributeFunctionViewModels[attributeFunction].Contains(attributeViewModel))
-            {
-                _attributeFunctionViewModels[attributeFunction].Add(attributeViewModel);
-                fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
-            }
-        }
-
-        public ObservableCollection<AttributeViewModel> GetFunctionAttributeViewModel(AttributeFunction attributeFunction)
-        {
-            return _attributeFunctionViewModels[attributeFunction];
-        }
-
-        private List<FilterItem> _filterItems = new List<FilterItem>();
-        public List<FilterItem> FilterItems
-        {
-            get
-            {
-                return _filterItems;
-            }
-        }
-
-        public void ClearFilterItems()
-        {
-            _filterItems.Clear();
-            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.FilterItems);
-        }
-
-        public void AddFilterItems(List<FilterItem> filterItems, object sender)
-        {
-            _filterItems.AddRange(filterItems);
-            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
-        }
-
-        public void AddFilterItem(FilterItem filterItem, object sender)
-        {
-            _filterItems.Add(filterItem);
-            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
-        }
-
-        public void RemoveFilterItem(FilterItem filterItem, object sender)
-        {
-            _filterItems.Remove(filterItem);
-            fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
-        }
-
-        public void RemoveFilterItems(List<FilterItem> filterItems, object sender)
-        {
-            foreach (var filterItem in filterItems)
-            {
-                _filterItems.Remove(filterItem);
-            }
-            if (filterItems.Count > 0)
-            {
-                fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType.Structure);
-            }
-        }
-
-        protected void fireVisualizatinViewModelUpdated(VisualizationViewModelUpdatedEventType type)
-        {
-            if (VisualizationViewModelUpdated != null)
-            {
-                VisualizationViewModelUpdated(this, new VisualizationViewModelUpdatedEventArgs(type));
-            }
-        }
     }
-
-    public class VisualizationViewModelUpdatedEventArgs : EventArgs
-    {
-        public VisualizationViewModelUpdatedEventType VisualizationViewModelUpdatedEventType { get; set; }
-
-        public VisualizationViewModelUpdatedEventArgs(VisualizationViewModelUpdatedEventType type)
-            : base()
-        {
-            VisualizationViewModelUpdatedEventType = type;
-        }
-    }
-
-    public enum VisualizationViewModelUpdatedEventType { Structure, Rendering, Links, FilterItems }
 
     public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Line, OneD, Frozen, Test }
 }

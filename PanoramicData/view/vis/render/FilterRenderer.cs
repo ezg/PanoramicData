@@ -9,12 +9,12 @@ using PanoramicDataModel;
 using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.model.view_new;
+using PanoramicData.model.data;
 
 namespace PanoramicData.view.vis.render
 {
     public class FilterRenderer : UserControl
     {
-        protected VisualizationViewResultModel VisualizationViewResultModel { get; set; }
         protected VisualizationViewModel VisualizationViewModel { get; set; }
 
         public FilterRenderer()
@@ -26,16 +26,16 @@ namespace PanoramicData.view.vis.render
         {
             if (e.OldValue != null)
             {
-                (e.OldValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged -= VisualizationViewResultModel_PropertyChanged;
+                (e.OldValue as VisualizationViewModel).QueryModel.QueryResultModel.PropertyChanged -= QueryResultModel_PropertyChanged;
             }
             if (e.NewValue != null)
             {
-                (e.NewValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged += VisualizationViewResultModel_PropertyChanged;
+                (e.NewValue as VisualizationViewModel).QueryModel.QueryResultModel.PropertyChanged += QueryResultModel_PropertyChanged;
                 this.UpdateResults(); 
             }
         }
 
-        void VisualizationViewResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void QueryResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.UpdateResults();
         }
@@ -43,7 +43,6 @@ namespace PanoramicData.view.vis.render
         protected virtual void UpdateResults()
         {
             VisualizationViewModel = (DataContext as VisualizationViewModel);
-            VisualizationViewResultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)

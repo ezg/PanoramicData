@@ -51,7 +51,6 @@ namespace PanoramicData.controller.view
             ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
             Colorer.ColorerDropped += ColorerDropped;
             DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
-            VisualizationViewModels.CollectionChanged += VisualizationViewModels_CollectionChanged;
         }
 
         public static void CreateInstance(InkableScene root, MainWindow window)
@@ -312,35 +311,6 @@ namespace PanoramicData.controller.view
                     filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                 }
             }
-        }
-
-        void VisualizationViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (var n in e.NewItems)
-                {
-                    (n as VisualizationViewModel).VisualizationViewModelUpdated += MainViewController_VisualizationViewModelUpdated;
-                    //(n as AtomViewModel).OutgoingLinkViewModels.CollectionChanged += outgoingLinkedAtomViewModels_CollectionChanged;
-                    visualizationViewModelUpdated(n as VisualizationViewModel);
-                }
-            }
-            if (e.OldItems != null)
-            {
-                foreach (var o in e.OldItems)
-                {
-                    (o as VisualizationViewModel).VisualizationViewModelUpdated -= MainViewController_VisualizationViewModelUpdated;
-                }
-            }
-        }
-        void MainViewController_VisualizationViewModelUpdated(object sender, VisualizationViewModelUpdatedEventArgs e)
-        {
-            visualizationViewModelUpdated(sender as VisualizationViewModel);
-        }
-
-        void visualizationViewModelUpdated(VisualizationViewModel visualizationViewModel)
-        {
-            visualizationViewModel.SchemaModel.QueryExecuter.ExecuteQuery(visualizationViewModel);
         }
 
         void ResizerRadialControlExecution_Dropped(object sender, AttributeViewModelEventArgs e)

@@ -1,4 +1,5 @@
-﻿using PanoramicData.model.view_new;
+﻿using PanoramicData.model.data;
+using PanoramicData.model.view_new;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace PanoramicData.controller.data
 {
     public abstract class QueryExecuter
     {
-        public abstract void ExecuteQuery(VisualizationViewModel visualizationViewModel);
+        public abstract void ExecuteQuery(QueryModel queryModel);
     }
 }

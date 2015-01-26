@@ -14,7 +14,7 @@ namespace PanoramicData.model.view_new
         {
             VisualizationViewModel visualizationViewModel = new VisualizationViewModel(schemaModel);
 
-            if (attributeViewModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
+            if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
             {
                 visualizationViewModel.VisualizationType = VisualizationType.Pie;
                 /*
@@ -28,7 +28,7 @@ namespace PanoramicData.model.view_new
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, g);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);*/
             }
-            else if (attributeViewModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
+            else if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
             {
                 /*visualizationViewModel.VisualizationType = VisualizationType.Histogram;
 
@@ -45,7 +45,7 @@ namespace PanoramicData.model.view_new
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.GroupBy, bin);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);*/
             }
-            else if (attributeViewModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.GEOGRAPHY)
+            else if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.GEOGRAPHY)
             {
                 /*visualizationViewModel.VisualizationType = VisualizationType.Map;
 
@@ -63,7 +63,7 @@ namespace PanoramicData.model.view_new
             else
             {
                 visualizationViewModel.VisualizationType = VisualizationType.Table;
-                visualizationViewModel.AddFunctionAttributeViewModel(AttributeFunction.X, new AttributeViewModel(attributeViewModel.AttributeModel, new data.AttributeOperationModel()));
+                visualizationViewModel.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, new AttributeOperationModel(attributeViewModel.AttributeOperationModel.AttributeModel));
             }
 
             return visualizationViewModel;

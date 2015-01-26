@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PanoramicData.model.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace PanoramicData.controller.data.mssql
 {
     public class MSSQLQueryExecuter : QueryExecuter
     {
-        public override void ExecuteQuery(model.view_new.VisualizationViewModel visualizationViewModel)
+        public override void ExecuteQuery(QueryModel queryModel)
         {
             throw new NotImplementedException();
         }

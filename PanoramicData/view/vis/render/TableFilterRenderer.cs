@@ -1,4 +1,5 @@
 ﻿using PanoramicData.controller.data;
+using PanoramicData.model.data;
 using PanoramicData.model.view_new;
 using PanoramicData.view.table;
 using System;
@@ -35,9 +36,9 @@ namespace PanoramicData.view.vis.render
                     {
                         row.IsHighligthed = false;
                         FilterItem fi = new FilterItem(row);
-                        if (VisualizationViewModel.FilterItems.Contains(fi))
+                        if (VisualizationViewModel.QueryModel.FilterItems.Contains(fi))
                         {
-                            VisualizationViewModel.RemoveFilterItem(fi, this);
+                            VisualizationViewModel.QueryModel.RemoveFilterItem(fi, this);
                         }
                     }
                 }
@@ -47,9 +48,9 @@ namespace PanoramicData.view.vis.render
                     {
                         row.IsHighligthed = true;
                         FilterItem fi = new FilterItem(row);
-                        if (!VisualizationViewModel.FilterItems.Contains(fi))
+                        if (!VisualizationViewModel.QueryModel.FilterItems.Contains(fi))
                         {
-                            VisualizationViewModel.AddFilterItem(fi, this);
+                            VisualizationViewModel.QueryModel.AddFilterItem(fi, this);
                         }
                     }
                 }

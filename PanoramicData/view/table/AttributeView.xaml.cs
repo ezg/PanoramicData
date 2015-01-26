@@ -178,7 +178,7 @@ namespace PanoramicData.view.table
             {
                 _currentFromInkableScene = fromInkableScene;
                 _shadow = new AttributeView();
-                _shadow.DataContext = new AttributeViewModel(DataContext as AttributeViewModel);
+                _shadow.DataContext = DataContext as AttributeViewModel;
 
                 _shadow.Measure(new Size(double.PositiveInfinity,
                                          double.PositiveInfinity));

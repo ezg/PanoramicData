@@ -30,6 +30,7 @@ using PanoramicData.view.vis;
 using PanoramicData.model.view_new;
 using PanoramicData.view.vis.render;
 using System.Collections.Specialized;
+using PanoramicData.model.data;
 
 namespace PanoramicData.view.table
 {
@@ -92,34 +93,34 @@ namespace PanoramicData.view.table
         {
             if (e.OldValue != null)
             {
-                (e.OldValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_XCollectionChanged;
-                (e.OldValue as VisualizationViewModel).VisualizationViewResultModel.PropertyChanged -= VisualizationViewResultModel_PropertyChanged;
+                (e.OldValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_XCollectionChanged;
+                (e.OldValue as VisualizationViewModel).QueryModel.QueryResultModel.PropertyChanged -= QueryResultModel_PropertyChanged;
             }
             if (e.NewValue != null)
             {
-                (e.NewValue as VisualizationViewModel).GetFunctionAttributeViewModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_XCollectionChanged;
+                (e.NewValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_XCollectionChanged;
 
-                VisualizationViewResultModel resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
-                resultModel.PropertyChanged += VisualizationViewResultModel_PropertyChanged;
-                if (resultModel.VisualizationViewResultItemModels != null)
+                QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
+                resultModel.PropertyChanged += QueryResultModel_PropertyChanged;
+                if (resultModel.QueryResultItemModels != null)
                 {
-                    CollectionChangedEventManager.AddHandler(resultModel.VisualizationViewResultItemModels, VisualizationViewResultItemModels_CollectionChanged);
+                    CollectionChangedEventManager.AddHandler(resultModel.QueryResultItemModels, QueryResultItemModels_CollectionChanged);
                     populateData();
                 }
                 populateTableHeaders();
             }
         }
 
-        void VisualizationViewResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void QueryResultModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-             VisualizationViewResultModel  resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
-             if (e.PropertyName == resultModel.GetPropertyName(() => resultModel.VisualizationViewResultItemModels))
+             QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
+             if (e.PropertyName == resultModel.GetPropertyName(() => resultModel.QueryResultItemModels))
              {
-                 CollectionChangedEventManager.AddHandler(resultModel.VisualizationViewResultItemModels, VisualizationViewResultItemModels_CollectionChanged);
+                 CollectionChangedEventManager.AddHandler(resultModel.QueryResultItemModels, QueryResultItemModels_CollectionChanged);
                  populateData();
              }
         }
-        void VisualizationViewResultItemModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        void QueryResultItemModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
         }
 
@@ -130,9 +131,9 @@ namespace PanoramicData.view.table
 
         private void populateData()
         {
-            VisualizationViewResultModel resultModel = (DataContext as VisualizationViewModel).VisualizationViewResultModel;
+            QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
 
-            listView.ItemsSource = resultModel.VisualizationViewResultItemModels;
+            listView.ItemsSource = resultModel.QueryResultItemModels;
         }
 
         private void populateTableHeaders()
@@ -141,7 +142,7 @@ namespace PanoramicData.view.table
             _dragDevice2 = null;
 
             VisualizationViewModel model = (DataContext as VisualizationViewModel);
-            List<AttributeViewModel> attributeViewModels = model.GetFunctionAttributeViewModel(AttributeFunction.X).ToList();
+            List<AttributeOperationModel> attributeOperationModels = model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).ToList();
 
             _gridView = new GridView();
             _gridView.AllowsColumnReorder = false;
@@ -199,29 +200,29 @@ namespace PanoramicData.view.table
             List<MappingEntry> newMapping = new List<MappingEntry>();
 
             int fieldsIndex = 0;
-            foreach (var attributeViewModel in attributeViewModels)
+            foreach (var attributeOperationModel in attributeOperationModels)
             {
                 // loop over the current mapping and see if any fields match. 
                 // this makes sure any reordering and adjusted widths are preserved
 
-                if (_mapping.Where(me => me.AttributeViewModel == attributeViewModel).Count() > 0)
+                if (_mapping.Where(me => me.AttributeOperationModel == attributeOperationModel).Count() > 0)
                 {
-                    MappingEntry mappingEntry = _mapping.Single(me => me.AttributeViewModel == attributeViewModel);
-                    GridViewColumn gvc = createGridViewColumn(mappingEntry.AttributeViewModel, attributeViewModels.IndexOf(mappingEntry.AttributeViewModel), mappingEntry.GridViewColumn);
+                    MappingEntry mappingEntry = _mapping.Single(me => me.AttributeOperationModel == attributeOperationModel);
+                    GridViewColumn gvc = createGridViewColumn(mappingEntry.AttributeOperationModel, attributeOperationModels.IndexOf(mappingEntry.AttributeOperationModel), mappingEntry.GridViewColumn);
                     _gridView.Columns.Add(gvc);
                     mappingEntry.GridViewColumn = gvc;
                     newMapping.Add(mappingEntry);
                 }
                 else
                 {
-                    GridViewColumn gvc = createGridViewColumn(attributeViewModel, fieldsIndex, null);
-                    if (attributeViewModels.Count == 1)
+                    GridViewColumn gvc = createGridViewColumn(attributeOperationModel, fieldsIndex, null);
+                    if (attributeOperationModels.Count == 1)
                     {
                         gvc.Width = 200;
                     }
                     _gridView.Columns.Add(gvc);
                     MappingEntry me = new MappingEntry();
-                    me.AttributeViewModel = attributeViewModel;
+                    me.AttributeOperationModel = attributeOperationModel;
                     me.GridViewColumn = gvc;
                     me.FieldsIndex = fieldsIndex;
                     newMapping.Add(me);
@@ -253,13 +254,13 @@ namespace PanoramicData.view.table
             }
         }
 
-        GridViewColumn createGridViewColumn(AttributeViewModel attributeViewModel, int index, GridViewColumn oldColumn)
+        GridViewColumn createGridViewColumn(AttributeOperationModel attributeOperationModel, int index, GridViewColumn oldColumn)
         {
             GridViewColumn gvc = new GridViewColumn();
 
             DataTemplate template = new DataTemplate();
             FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
-            tbFactory.SetValue(AttributeView.DataContextProperty, attributeViewModel);
+            tbFactory.SetValue(AttributeView.DataContextProperty, new AttributeViewModel(attributeOperationModel));
             /*tbFactory.SetValue(AttributeView.IsInteractiveProperty, false);
             tbFactory.SetValue(AttributeView.FilterModelProperty, _filterModel);
             tbFactory.SetValue(AttributeView.TableModelProperty, _tableModel);*/
@@ -303,7 +304,7 @@ namespace PanoramicData.view.table
             {
                 tbFactory = new FrameworkElementFactory(typeof(TextBlock));
                 Binding valueBinding = new Binding("Data");
-                valueBinding.Converter = new TextValueConverter(attributeViewModel);
+                valueBinding.Converter = new TextValueConverter(attributeOperationModel);
 
                 tbFactory.SetBinding(TextBlock.TextProperty, valueBinding);
                 tbFactory.SetValue(TextBlock.TagProperty, index);
@@ -1254,20 +1255,19 @@ namespace PanoramicData.view.table
 
     public class TextValueConverter : IValueConverter
     {
-        //new Binding("Data.Values.Values.ToList().[" + index + "].ShortStringValue"));
-        private AttributeViewModel _attributeViewModel = null;
+        private AttributeOperationModel _attributeOperationModel = null;
 
-        public TextValueConverter(AttributeViewModel attributeViewModel)
+        public TextValueConverter(AttributeOperationModel attributeOperationModel)
         {
-            _attributeViewModel = attributeViewModel;
+            _attributeOperationModel = attributeOperationModel;
         }
         public object Convert(object value, Type targetType, object parameter,
            CultureInfo culture)
         {
             if (value != null)
             {
-                VisualizationViewResultItemModel model = (value as VisualizationViewResultItemModel);
-                return model.Values[_attributeViewModel].ShortStringValue;
+                QueryResultItemModel model = (value as QueryResultItemModel);
+                return model.Values[_attributeOperationModel].ShortStringValue;
             }
             return null;
         }
@@ -1345,7 +1345,7 @@ namespace PanoramicData.view.table
     public class MappingEntry
     {
         public GridViewColumn GridViewColumn { get; set; }
-        public AttributeViewModel AttributeViewModel { get; set; }
+        public AttributeOperationModel AttributeOperationModel { get; set; }
         public int FieldsIndex { get; set; }
     }
 

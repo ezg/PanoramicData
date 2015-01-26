@@ -9,6 +9,24 @@ namespace PanoramicData.model.data
 {
     public class AttributeOperationModel : BindableBase
     {
+        public AttributeOperationModel(AttributeModel attributeModel)
+        {
+            _attributeModel = attributeModel;
+        }
+
+        private AttributeModel _attributeModel = null;
+        public AttributeModel AttributeModel
+        {
+            get
+            {
+                return _attributeModel;
+            }
+            set
+            {
+                this.SetProperty(ref _attributeModel, value);
+            }
+        }
+
         private AggregateFunction _aggregateFunction = AggregateFunction.None;
         public AggregateFunction AggregateFunction
         {

@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PanoramicData.model.view_new
+namespace PanoramicData.model.data
 {
-    public class VisualizationViewResultItemModel : ExtendedBindableBase
+    public class QueryResultItemModel : ExtendedBindableBase
     {
-        public VisualizationViewResultItemModel()
+        public QueryResultItemModel()
         {
         }
 
-        private Dictionary<AttributeViewModel, VisualizationViewResultItemValueModel> _values = new Dictionary<AttributeViewModel, VisualizationViewResultItemValueModel>();
-        public Dictionary<AttributeViewModel, VisualizationViewResultItemValueModel> Values
+        private Dictionary<AttributeOperationModel, QueryResultItemValueModel> _values = new Dictionary<AttributeOperationModel, QueryResultItemValueModel>();
+        public Dictionary<AttributeOperationModel, QueryResultItemValueModel> Values
         {
             get
             {

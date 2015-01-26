@@ -14,15 +14,9 @@ namespace PanoramicData.model.view_new
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelMoved;
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelDropped;
 
-        public AttributeViewModel(AttributeModel attributeModel, AttributeOperationModel attributeOperationModel)
+        public AttributeViewModel(AttributeOperationModel attributeOperationModel)
         {
-            AttributeModel = attributeModel;
             AttributeOperationModel = attributeOperationModel;
-        }
-
-        public AttributeViewModel(AttributeViewModel attributeViewModel)
-            : this(attributeViewModel.AttributeModel, attributeViewModel.AttributeOperationModel)
-        {
         }
 
         public void FireMoved(Rct bounds, AttributeViewModelEventArgType type)
@@ -103,32 +97,6 @@ namespace PanoramicData.model.view_new
             set
             {
                 this.SetProperty(ref _isFiltered, value);
-            }
-        }
-
-        private bool _isUpSorted = false;
-        public bool IsUpSorted
-        {
-            get
-            {
-                return _isUpSorted;
-            }
-            set
-            {
-                this.SetProperty(ref _isUpSorted, value);
-            }
-        }
-
-        private bool _isDownSorted = false;
-        public bool IsDownSorted
-        {
-            get
-            {
-                return _isDownSorted;
-            }
-            set
-            {
-                this.SetProperty(ref _isDownSorted, value);
             }
         }
 
@@ -221,34 +189,9 @@ namespace PanoramicData.model.view_new
             updateLabels();
         }
 
-
-        private AttributeModel _attributeModel = null;
-        public AttributeModel AttributeModel
-        {
-            get
-            {
-                return _attributeModel;
-            }
-            set
-            {
-                if (_attributeModel != null)
-                {
-                    _attributeModel.PropertyChanged -= _attributeModel_PropertyChanged;
-                }
-                this.SetProperty(ref _attributeModel, value);
-                _attributeModel.PropertyChanged += _attributeModel_PropertyChanged;
-                updateLabels();
-            }
-        }
-
-        void _attributeModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            updateLabels();
-        }
-
         private void updateLabels()
         {
-            MainLabel = _attributeModel.Name; //columnDescriptor.GetLabels(out mainLabel, out subLabel);
+            MainLabel = _attributeOperationModel.AttributeModel.Name; //columnDescriptor.GetLabels(out mainLabel, out subLabel);
         }
     }
 

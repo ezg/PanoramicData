@@ -29,15 +29,18 @@ namespace PanoramicData.model.data.sim
             string line = file.ReadLine();
             while (line != null)
             {
-                Dictionary<AttributeModel,object> items = new Dictionary<AttributeModel,object>();
-
-                List<string> values = CSVParser.CSVLineSplit(line);
-                for (int i = 0; i < values.Count; i++)
+                for (int j = 0; j < 1000; j++)
                 {
-                    items[_attributeModels[i]] = values[i];
-                }
+                    Dictionary<AttributeModel, object> items = new Dictionary<AttributeModel, object>();
 
-                _data.Add(items);
+                    List<string> values = CSVParser.CSVLineSplit(line);
+                    for (int i = 0; i < values.Count; i++)
+                    {
+                        items[_attributeModels[i]] = values[i];
+                    }
+
+                    _data.Add(items);
+                }
                 line = file.ReadLine();
             }
         }
