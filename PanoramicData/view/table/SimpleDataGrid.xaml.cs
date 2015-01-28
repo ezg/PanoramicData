@@ -31,6 +31,7 @@ using PanoramicData.model.view_new;
 using PanoramicData.view.vis.render;
 using System.Collections.Specialized;
 using PanoramicData.model.data;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.table
 {
@@ -52,9 +53,6 @@ namespace PanoramicData.view.table
         public bool CanDrag { get; set; }
         public bool CanExplore { get; set; }
         public FilterModel FilterModel { get; set; }
-
-        private TableModel _tableModel = null;
-        private FilterModel _filterModel = null;
 
         private Point _startDrag1 = new Point();
         private long _manipulationStartTime = 0;
@@ -225,7 +223,6 @@ namespace PanoramicData.view.table
 
             _mapping.Clear();
             _mapping = newMapping;
-
 
             if (_gridView.Columns.Count() > 0)
             {
@@ -408,16 +405,14 @@ namespace PanoramicData.view.table
 
         public void AttributeViewModelMoved(AttributeViewModel sender, AttributeViewModelEventArgs e, bool overElement)
         {
-            /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
          
             // hide cloumn header reorder drop highlights 
             hideColumnReorderFeedbacks();
 
-            if (overElement &&
-                (_tableModel == null || _tableModel == e.TableModel))
+            if (overElement)
             {
-                Point fromThis = inqScene.TranslatePoint(e.Bounds.Center, this);
+                Point fromThis = inkableScene.TranslatePoint(e.Bounds.Center, this);
 
                 if (CanReorder)
                 {
@@ -429,25 +424,52 @@ namespace PanoramicData.view.table
                     highlight = closestHeader.FirstVisualDescendentByName("dragHighlight");
                     highlight.Visibility = System.Windows.Visibility.Visible;
                 }
-            }*/
+            }
         }
 
         public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
-        {
-            /*SimpleDataGrid parentGrid = sender.FindParent<SimpleDataGrid>();
+        {            
+            // hide cloumn header reorder drop highlights 
+            hideColumnReorderFeedbacks();
 
-            if (_filterModel != null && _filterModel.GetColumnDescriptorsForOption(Option.X).Count == 0)
+            VisualizationViewModel model = (DataContext as VisualizationViewModel);
+            if (model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Count == 0)
             {
-                _filterModel.TableModel = e.TableModel;
-                _filterModel.AddOptionColumnDescriptor(Option.X, e.ColumnDescriptor.Clone() as PanoramicDataColumnDescriptor);
+                model.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, sender.AttributeOperationModel);
                 return;
             }
 
-            if (!_isResizing && (CanReorder || CanDrag) &&
-                (_tableModel == null || _tableModel == e.TableModel))
-            {
-                InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromThis = inkableScene.TranslatePoint(e.Bounds.Center, this);
 
+            // find closest header reorder drop highlight 
+            GridViewColumnHeader closestHeader = findClosestColumnHeader(e.Bounds.Center);
+            GridViewColumnCollection columns = ((GridView)listView.View).Columns;
+
+            if (!_isResizing && (CanReorder || CanDrag) &&
+                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Any(avm => avm == sender.AttributeOperationModel))
+            {
+                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Remove(sender.AttributeOperationModel);
+                
+            }
+            AttributeOperationModel clone = sender.AttributeOperationModel;
+            if (closestHeader.Column == null)
+            {
+                model.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, clone);
+            }
+            else if ((closestHeader.Column.Header as string) == "")
+            {
+                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Insert(0, clone);
+                model.QueryModel.FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            }
+            else
+            {
+                MappingEntry mapClosest = _mapping.Single(me => me.GridViewColumn == closestHeader.Column);
+                int indexMap = _mapping.IndexOf(mapClosest);
+                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Insert(indexMap, clone);
+                model.QueryModel.FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            }
+/*
                 Point fromThis = inqScene.TranslatePoint(e.Bounds.Center, this);
                 GridViewColumnHeader header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
 
@@ -519,7 +541,7 @@ namespace PanoramicData.view.table
                     // new column
                     else
                     {
-                        PanoramicDataColumnDescriptor clone =
+                        /*PanoramicDataColumnDescriptor clone =
                                    (PanoramicDataColumnDescriptor)e.ColumnDescriptor.Clone();
                         if (closestHeader.Column == null)
                         {
@@ -567,16 +589,6 @@ namespace PanoramicData.view.table
             }*/
         }
 
-        protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
-        {
-            return new PointHitTestResult(this, hitTestParameters.HitPoint);
-        }
-
-        protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
-        {
-            return new GeometryHitTestResult(this, IntersectionDetail.Intersects);
-        }
-
         private void hideColumnReorderFeedbacks()
         {
             IEnumerable<GridViewColumnHeader> headers = listView.VisualDescendentsOfType<GridViewColumnHeader>();
@@ -592,7 +604,7 @@ namespace PanoramicData.view.table
         }
         private GridViewColumnHeader findClosestColumnHeader(Point fromInqScene)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             IEnumerable<GridViewColumnHeader> headers = listView.VisualDescendentsOfType<GridViewColumnHeader>();
 
             // find closest header reorder drop highlight 
@@ -602,7 +614,7 @@ namespace PanoramicData.view.table
             {
                 if (h.ActualWidth != 0.0)
                 {
-                    Point p = inqScene.TranslatePoint(fromInqScene, h);
+                    Point p = inkableScene.TranslatePoint(fromInqScene, h);
                     if (Math.Abs(p.X) < closestXDist)
                     {
                         closestXDist = Math.Abs(p.X);
@@ -614,14 +626,14 @@ namespace PanoramicData.view.table
         }
         private GridViewColumnHeader findOverColumnHeader(Point fromInqScene)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             IEnumerable<GridViewColumnHeader> headers = listView.VisualDescendentsOfType<GridViewColumnHeader>();
 
             foreach (var h in headers)
             {
                 if (h.ActualWidth != 0.0)
                 {
-                    Point p = inqScene.TranslatePoint(fromInqScene, h);
+                    Point p = inkableScene.TranslatePoint(fromInqScene, h);
                     if (p.X > 0 && p.X < h.ActualWidth)
                     {
                         return h;
@@ -657,6 +669,18 @@ namespace PanoramicData.view.table
                 //filter.InitPostionAndDimension(offset, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
             }
         }
+
+
+        protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
+        {
+            return new PointHitTestResult(this, hitTestParameters.HitPoint);
+        }
+
+        protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
+        {
+            return new GeometryHitTestResult(this, IntersectionDetail.Intersects);
+        }
+
 
         public void NotifyStroqAdded(starPadSDK.Inq.Stroq s)
         {

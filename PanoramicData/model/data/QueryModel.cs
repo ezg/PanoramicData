@@ -54,11 +54,14 @@ namespace PanoramicData.model.data
         private Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>> _attributeFunctionOperationModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>>();
         public void AddFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
-            if (!_attributeFunctionOperationModels[attributeFunction].Contains(attributeOperationModel))
-            {
-                _attributeFunctionOperationModels[attributeFunction].Add(attributeOperationModel);
-                fireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
-            }
+            _attributeFunctionOperationModels[attributeFunction].Add(attributeOperationModel);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+        }
+
+        public void RemoveFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
+        {
+            _attributeFunctionOperationModels[attributeFunction].Remove(attributeOperationModel);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public ObservableCollection<AttributeOperationModel> GetFunctionAttributeOperationModel(AttributeFunction attributeFunction)
@@ -78,25 +81,25 @@ namespace PanoramicData.model.data
         public void ClearFilterItems()
         {
             _filterItems.Clear();
-            fireQueryModelUpdated(QueryModelUpdatedEventType.FilterItems);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterItems);
         }
 
         public void AddFilterItems(List<FilterItem> filterItems, object sender)
         {
             _filterItems.AddRange(filterItems);
-            fireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public void AddFilterItem(FilterItem filterItem, object sender)
         {
             _filterItems.Add(filterItem);
-            fireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public void RemoveFilterItem(FilterItem filterItem, object sender)
         {
             _filterItems.Remove(filterItem);
-            fireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public void RemoveFilterItems(List<FilterItem> filterItems, object sender)
@@ -107,11 +110,11 @@ namespace PanoramicData.model.data
             }
             if (filterItems.Count > 0)
             {
-                fireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+                FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
             }
         }
 
-        protected void fireQueryModelUpdated(QueryModelUpdatedEventType type)
+        public void FireQueryModelUpdated(QueryModelUpdatedEventType type)
         {
             if (QueryModelUpdated != null)
             {
