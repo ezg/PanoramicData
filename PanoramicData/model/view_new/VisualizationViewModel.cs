@@ -38,6 +38,10 @@ namespace PanoramicData.model.view_new
             Color.FromRgb(127, 140, 141)
         };
 
+        public VisualizationViewModel()
+        {
+        }
+
         public VisualizationViewModel(SchemaModel schemaModel)
         {
             _queryModel = new QueryModel(schemaModel);

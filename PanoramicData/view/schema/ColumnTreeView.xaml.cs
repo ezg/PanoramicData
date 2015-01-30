@@ -110,7 +110,7 @@ namespace PanoramicData.view.schema
                     else if (oi is AttributeOrgItem)
                     {
                         AttributeModel attributeModel = (AttributeModel)oi.Data;
-                        AttributeViewModel attributeViewModel = new AttributeViewModel(new AttributeOperationModel(attributeModel))
+                        AttributeViewModel attributeViewModel = new AttributeViewModel(null, new AttributeOperationModel(attributeModel))
                         {
                             IsNoChrome = true,
                             IsMenuEnabled = false

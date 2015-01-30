@@ -95,7 +95,7 @@ namespace PanoramicData
             }
             if (_schemaViewer.FilterModel != null)
             {
-                _tableModelDisposable = Observable.FromEventPattern<TableModelUpdatedEventArgs>(
+                f = Observable.FromEventPattern<TableModelUpdatedEventArgs>(
                     _schemaViewer.FilterModel.TableModel, "TableModelUpdated")
                     .Where(
                         arg =>

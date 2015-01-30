@@ -14,11 +14,9 @@ namespace PanoramicData.model.view_new
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelMoved;
         public static event EventHandler<AttributeViewModelEventArgs> AttributeViewModelDropped;
 
-        public AttributeViewModel()
-        {
-        }
+        public AttributeViewModel() { }
 
-        public AttributeViewModel(AttributeOperationModel attributeOperationModel)
+        public AttributeViewModel(VisualizationViewModel visualizationViewModel, AttributeOperationModel attributeOperationModel)
         {
             AttributeOperationModel = attributeOperationModel;
         }
@@ -65,7 +63,7 @@ namespace PanoramicData.model.view_new
             }
         }
         
-        private bool _isDraggableByPen = true;
+        private bool _isDraggableByPen = false;
         public bool IsDraggableByPen
         {
             get
@@ -114,6 +112,19 @@ namespace PanoramicData.model.view_new
             set
             {
                 this.SetProperty(ref _isMenuEnabled, value);
+            }
+        }
+
+        private bool _isScaleFunctionEnabled = true;
+        public bool IsScaleFunctionEnabled
+        {
+            get
+            {
+                return _isScaleFunctionEnabled;
+            }
+            set
+            {
+                this.SetProperty(ref _isScaleFunctionEnabled, value);
             }
         }
 
@@ -196,6 +207,86 @@ namespace PanoramicData.model.view_new
         private void updateLabels()
         {
             MainLabel = _attributeOperationModel.AttributeModel.Name; //columnDescriptor.GetLabels(out mainLabel, out subLabel);
+
+            string mainLabel = _attributeOperationModel.AttributeModel.Name;
+            string subLabel = "";
+
+            if (AttributeOperationModel.IsGrouped)
+            {
+                mainLabel = "[" + mainLabel + "]";
+            }
+            else if (AttributeOperationModel.IsBinned)
+            {
+                mainLabel = "[" + mainLabel + "] / [" + AttributeOperationModel.BinSize + "]";
+            }
+            else
+            {
+                mainLabel = addDetailToLabel(mainLabel);
+            }
+
+            MainLabel = mainLabel;
+            SubLabel = subLabel;
+        }
+
+        private string addDetailToLabel(string name)
+        {
+            if (AttributeOperationModel.AggregateFunction == AggregateFunction.Avg)
+            {
+                name = "Avg(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Concat)
+            {
+                name = "Concat(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Concat)
+            {
+                name = "Concat(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Count)
+            {
+                name = "Count(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Max)
+            {
+                name = "Max(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Min)
+            {
+                name = "Min(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Sum)
+            {
+                name = "Sum(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Vis)
+            {
+                name = "Vis(" + name + ")";
+            }
+            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Bin)
+            {
+                name = "Bin Range(" + name + ")";
+            }
+
+            if (AttributeOperationModel.ScaleFunction != ScaleFunction.None)
+            {
+                if (AttributeOperationModel.ScaleFunction == ScaleFunction.Log)
+                {
+                    name += " [Log]";
+                }
+                else if (AttributeOperationModel.ScaleFunction == ScaleFunction.Normalize)
+                {
+                    name += " [Normalize]";
+                }
+                else if (AttributeOperationModel.ScaleFunction == ScaleFunction.RunningTotal)
+                {
+                    name += " [RT]";
+                }
+                else if (AttributeOperationModel.ScaleFunction == ScaleFunction.RunningTotalNormalized)
+                {
+                    name += " [RT Norm]";
+                }
+            }
+            return name;
         }
     }
 

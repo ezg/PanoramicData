@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CombinedInputAPI;
-using PanoramicDataModel;
 using PixelLab.Common;
 using Recognizer.NDollar;
 using starPadSDK.AppLib;
@@ -24,6 +23,10 @@ using PanoramicData.view.other;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
 using PanoramicData.model.view_new;
+using System.Reactive.Linq;
+using System.Collections.Specialized;
+using PanoramicData.model.data;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.vis
 {
@@ -32,19 +35,50 @@ namespace PanoramicData.view.vis
     /// </summary>
     public partial class Grouper : UserControl, AttributeViewModelEventHandler
     {
-        public FilterModel FilterModel { get; set; }
+        private IDisposable _observableDisposable = null;
 
         public Grouper()
         {
             InitializeComponent();
             this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(GroupGrid_TouchDownEvent));
+            this.DataContextChanged += Grouper_DataContextChanged;
         }
 
-        public void Init()
+        void Grouper_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            return;
-            if (!(FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count(cd => true/*!cd.IsHidden*/) > 0) &&
-                !FilterModel.TableModel.CalculateRecursivePathInfos().Any(pp => pp.Path.Count > 0))
+            if (e.OldValue != null)
+            {
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
+            }
+            if (e.NewValue != null)
+            {
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
+                _observableDisposable = Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(
+                    (e.NewValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group), "CollectionChanged")
+                    .Throttle(TimeSpan.FromMilliseconds(50))
+                    .Subscribe((arg) =>
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
+                        {
+                            populate();
+                        }));
+                    });
+
+                populate();
+            }
+        }
+
+        public void populate()
+        {
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+
+            if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Count == 0)
             {
                 groupGridP1.Fill = Brushes.LightGray;
                 groupGridP2.Fill = Brushes.LightGray;
@@ -52,92 +86,62 @@ namespace PanoramicData.view.vis
             }
             else
             {
-                groupGridP1.Fill = FilterModel.Brush;
-                groupGridP2.Fill = FilterModel.Brush;
-                groupGridP3.Fill = FilterModel.Brush;
+                groupGridP1.Fill = (DataContext as VisualizationViewModel).Brush;
+                groupGridP2.Fill = (DataContext as VisualizationViewModel).Brush;
+                groupGridP3.Fill = (DataContext as VisualizationViewModel).Brush;
             }
         }
-
-        private Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor> _topLevelLookup = new Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor>();
-        private List<PanoramicDataColumnDescriptor> topLevelGroupings()
-        {
-            List<PanoramicDataColumnDescriptor> descriptors = new List<PanoramicDataColumnDescriptor>();
-            List<PathInfo> pathInfos = FilterModel.TableModel.CalculateRecursivePathInfos();
-            foreach (var pp in pathInfos)
-            {
-                if (pp.Path.Count > 0)
-                {
-                    DatabaseColumnDescriptor column = null;
-                    GrouperTopLevelPair pair = new GrouperTopLevelPair(pp.TableInfo.PrimaryKeyFieldInfo, pp);
-                    if (!_topLevelLookup.ContainsKey(pair))
-                    {
-                        _topLevelLookup.Add(pair, new DatabaseColumnDescriptor(pp.TableInfo.PrimaryKeyFieldInfo, pp));
-                    }
-                    column = _topLevelLookup[pair];
-                    if (!descriptors.Contains(column))
-                    {
-                        column.IsGrouped = FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Contains(column);
-                        descriptors.Add(column);
-                    }
-                }
-            }
-            return descriptors;
-        } 
-
+        
         private void GroupGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromInqScene = e.GetTouchPoint(inkableScene).Position;
 
             RadialMenuCommand root = new RadialMenuCommand();
             root.IsSelectable = false;
 
-            List<PanoramicDataColumnDescriptor> descriptors = new List<PanoramicDataColumnDescriptor>();
-            descriptors.AddRange(topLevelGroupings());
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
 
-            // field level groupings
-            descriptors.AddRange(FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Where(cd => !cd.IsPrimaryKey/* && !cd.IsHidden*/));
-
-            foreach (var descriptor in descriptors)
+            foreach (var attributeOperationModel in queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group))
             {
-                if (!(descriptor.DataType == AttributeDataTypeConstants.INT ||
-                      descriptor.DataType == AttributeDataTypeConstants.FLOAT) || descriptor.IsPrimaryKey)
+                if (!(attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.INT ||
+                      attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.FLOAT))
                 {
                     RadialMenuCommand groupDistinct = new RadialMenuCommand();
-                    groupDistinct.Name = descriptor.GetSimpleLabel().Replace(" ", "\n");
-                    groupDistinct.Data = descriptor;
+                    groupDistinct.Name = attributeOperationModel.AttributeModel.Name.Replace(" ", "\n");
+                    groupDistinct.Data = attributeOperationModel;
                     groupDistinct.IsSelectable = true;
-                    groupDistinct.IsActive = descriptor.IsGrouped;
+                    groupDistinct.IsActive = attributeOperationModel.IsGrouped;
                     groupDistinct.ActiveTriggered = (cmd) =>
                     {
-                        PanoramicDataColumnDescriptor columnDescriptor = cmd.Data as PanoramicDataColumnDescriptor;
-                        columnDescriptor.IsGrouped = true;
+                        AttributeOperationModel model = cmd.Data as AttributeOperationModel;
+                        model.IsGrouped = true;
                         if (cmd.IsActive)
-                            addGrouping(columnDescriptor);
+                            addGrouping(model);
                         else
-                            removeGrouping(columnDescriptor);
+                            removeGrouping(model);
                     };
                     root.AddSubCommand(groupDistinct);
                 }
                 else
                 {
-                    PanoramicDataColumnDescriptor binDescriptor = null;
-                    PanoramicDataColumnDescriptor groupDescriptor = null;
-                    if (descriptor.IsGrouped)
+                    AttributeOperationModel binModel = null;
+                    AttributeOperationModel groupModel = null;
+                    if (attributeOperationModel.IsGrouped)
                     {
-                        groupDescriptor = descriptor;
-                        binDescriptor = (PanoramicDataColumnDescriptor) descriptor.Clone();
+                        groupModel = attributeOperationModel;
+                        binModel = attributeOperationModel;
                     }
                     else
                     {
-                        groupDescriptor = (PanoramicDataColumnDescriptor) descriptor.Clone();
-                        binDescriptor = descriptor;
+                        groupModel = attributeOperationModel;
+                        binModel = attributeOperationModel;
                     }
 
                     RadialMenuCommand group = new RadialMenuCommand();
-                    group.Name = groupDescriptor.GetSimpleLabel().Replace(" ", "\n");
-                    group.Data = groupDescriptor;
-                    group.IsActive = groupDescriptor.IsAnyGroupingOperationApplied();
+                    group.Name = groupModel.AttributeModel.Name.Replace(" ", "\n");
+                    group.Data = groupModel;
+                    group.IsActive = groupModel.IsGrouped || groupModel.IsBinned;
                     group.IsSelectable = false;
 
                     RadialMenuCommandGroup groupGroup = new RadialMenuCommandGroup("groupGroup",
@@ -145,18 +149,18 @@ namespace PanoramicData.view.vis
 
                     RadialMenuCommand groupDistinct = new RadialMenuCommand();
                     groupDistinct.Name = "Distinct";
-                    groupDistinct.Data = groupDescriptor;
+                    groupDistinct.Data = groupModel;
                     groupDistinct.CommandGroup = groupGroup;
                     groupDistinct.IsSelectable = true;
-                    groupDistinct.IsActive = groupDescriptor.IsGrouped;
+                    groupDistinct.IsActive = groupModel.IsGrouped;
                     groupDistinct.ActiveTriggered = (cmd) =>
                     {
-                        PanoramicDataColumnDescriptor columnDescriptor = cmd.Data as PanoramicDataColumnDescriptor;
-                        columnDescriptor.IsGrouped = true;
+                        AttributeOperationModel model = cmd.Data as AttributeOperationModel;
+                        model.IsGrouped = true;
                         if (cmd.IsActive)
-                            addGrouping(columnDescriptor);
+                            addGrouping(model);
                         else
-                            removeGrouping(columnDescriptor);
+                            removeGrouping(model);
                     };
                     group.AddSubCommand(groupDistinct);
 
@@ -164,54 +168,35 @@ namespace PanoramicData.view.vis
                     RadialMenuCommand bin = new RadialMenuCommand();
                     bin.Name = "Bin";
                     bin.CommandGroup = groupGroup;
-                    bin.Data = binDescriptor;
-                    bin.IsActive = binDescriptor.IsBinned;
+                    bin.Data = binModel;
+                    bin.IsActive = binModel.IsBinned;
                     bin.IsSelectable = true;
                     bin.ActiveTriggered = (cmd) =>
                     {
-                        PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                        cd.IsBinned = true;
+                        AttributeOperationModel model = cmd.Data as AttributeOperationModel;
+                        model.IsBinned = true;
                         if (cmd.IsActive)
-                            addGrouping(cd);
+                            addGrouping(model);
                         else
-                            removeGrouping(cd);
+                            removeGrouping(model);
                     };
                     group.AddSubCommand(bin);
 
                     RadialMenuCommand binSize = new RadialMenuCommand();
                     binSize.Name = "Bin Size";
-                    binSize.Data = binDescriptor;
+                    binSize.Data = binModel;
                     binSize.AllowsNumericInput = true;
                     binSize.IsRangeNumericInput = false;
-                    binSize.MaxNumericValue = binDescriptor.MaxValue.HasValue ? binDescriptor.MaxValue.Value : 100;
+                    binSize.MaxNumericValue = binModel.MaxBinSize;
                     binSize.MinNumericValue = 1;
-                    binSize.UpperNumericValue = binDescriptor.BinSize;
+                    binSize.UpperNumericValue = binModel.BinSize;
                     binSize.IsSelectable = false;
                     binSize.ActiveTriggered = (cmd) =>
                     {
-                        PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                        cd.BinSize = cmd.UpperNumericValue;
+                        AttributeOperationModel model = cmd.Data as AttributeOperationModel;
+                        model.BinSize = cmd.UpperNumericValue;
                     };
                     bin.AddSubCommand(binSize);
-
-                    RadialMenuCommand binRange = new RadialMenuCommand();
-                    binRange.Name = "Bin Range";
-                    binRange.Data = binDescriptor;
-                    binRange.AllowsNumericInput = true;
-                    binRange.IsRangeNumericInput = true;
-                    binRange.MaxNumericValue = binDescriptor.MaxValue.HasValue ? binDescriptor.MaxValue.Value : 100;
-                    binRange.MinNumericValue = binDescriptor.MinValue.HasValue ? binDescriptor.MinValue.Value : 0;
-                    binRange.UpperNumericValue = binDescriptor.BinUpperBound;
-                    binRange.LowerNumericValue = binDescriptor.BinLowerBound;
-                    binRange.IsSelectable = false;
-                    binRange.ActiveTriggered = (cmd) =>
-                    {
-                        PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                        cd.BinUpperBound = cmd.UpperNumericValue;
-                        cd.BinLowerBound = cmd.LowerNumericValue;
-                    };
-                    bin.AddSubCommand(binRange);
-
                     root.AddSubCommand(group);
                 }
             }
@@ -219,27 +204,31 @@ namespace PanoramicData.view.vis
             if (root.InnerCommands.Count > 0)
             {
                 RadialControl rc = new RadialControl(root,
-                    new GroupGridRadialControlExecution(FilterModel, FilterModel.TableModel, inqScene));
+                    new GroupGridRadialControlExecution(queryModel, inkableScene));
                 rc.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
                     fromInqScene.Y - RadialControl.SIZE / 2);
-                inqScene.AddNoUndo(rc);
+                inkableScene.Add(rc);
             }
             e.Handled = true;
         }
 
-        private void removeGrouping(PanoramicDataColumnDescriptor columnDescriptor)
+        private void removeGrouping(AttributeOperationModel attributeOperationModel)
         {
-            if (FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Contains(columnDescriptor))
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+            if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Contains(attributeOperationModel))
             {
-                FilterModel.RemoveGrouping(columnDescriptor);
+                queryModel.RemoveFunctionAttributeOperationModel(AttributeFunction.Group, attributeOperationModel);
+                //queryModel.RemoveGrouping(attributeOperationModel);
             }
         }
 
-        private void addGrouping(PanoramicDataColumnDescriptor columnDescriptor)
+        private void addGrouping(AttributeOperationModel attributeOperationModel)
         {
-            if (!FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Contains(columnDescriptor))
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+            if (!queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Contains(attributeOperationModel))
             {
-                FilterModel.AddGrouping(columnDescriptor);
+                queryModel.AddFunctionAttributeOperationModel(AttributeFunction.Group, attributeOperationModel);
+                //queryModel.AddGrouping(columnDescriptor);
             }
         }
 
@@ -247,10 +236,7 @@ namespace PanoramicData.view.vis
         {
             if (overElement)
             {
-                //if (FilterModel.FilterRendererType != FilterRendererType.Table)
-                {
-                    groupGridRectangle.Visibility = Visibility.Visible;
-                }
+                groupGridRectangle.Visibility = Visibility.Visible;
             }
             else
             {
@@ -260,10 +246,9 @@ namespace PanoramicData.view.vis
 
         public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
-            /*var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
-            clone.IsGrouped = true;
-            addGrouping(clone);
-            groupGridRectangle.Visibility = Visibility.Collapsed;*/
+            e.AttributeViewModel.AttributeOperationModel.IsGrouped = true;
+            addGrouping(e.AttributeViewModel.AttributeOperationModel);
+            groupGridRectangle.Visibility = Visibility.Collapsed;
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
@@ -279,28 +264,22 @@ namespace PanoramicData.view.vis
 
     public class GroupGridRadialControlExecution : RadialControlExecution
     {
-        private FilterModel _filterModel = null;
-        private TableModel _tableModel = null;
-        private InqScene _inqScene = null;
+        private QueryModel _queryModel = null;
+        private InkableScene _inkableScene = null;
 
-        public GroupGridRadialControlExecution(FilterModel filterModel, TableModel tableModel, InqScene inqScene)
+        public GroupGridRadialControlExecution(QueryModel queryModel, InkableScene inkableScene)
         {
-            this._filterModel = filterModel;
-            this._tableModel = tableModel;
-            this._inqScene = inqScene;
+            this._queryModel = queryModel;
+            this._inkableScene = inkableScene;
         }
 
         public override void Remove(RadialControl sender, RadialMenuCommand cmd)
         {
             base.Remove(sender, cmd);
 
-            if (_tableModel != null)
+            if (_queryModel != null)
             {
-                _tableModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
-            else if (_filterModel != null)
-            {
-                _filterModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
+                _queryModel.RemoveAttributeOperationModel((cmd.Data as AttributeViewModel).AttributeOperationModel);
             }
         }
 
@@ -308,9 +287,9 @@ namespace PanoramicData.view.vis
         {
             base.Dispose(sender);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                _inkableScene.Remove(sender as FrameworkElement);
             }
         }
 
@@ -351,36 +330,6 @@ namespace PanoramicData.view.vis
                     }
                 }
             }
-        }
-    }
-
-    public class GrouperTopLevelPair
-    {
-        public FieldInfo FieldInfo { get; set; }
-        public PathInfo PathInfo { get; set; }
-
-        public GrouperTopLevelPair(FieldInfo fi, PathInfo pi)
-        {
-            FieldInfo = fi;
-            PathInfo = pi;
-        }
-        public override int GetHashCode()
-        {
-            int code = 0;
-            code ^= FieldInfo.GetHashCode();
-            code ^= PathInfo.GetHashCode();
-            return code;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is GrouperTopLevelPair)
-            {
-                GrouperTopLevelPair that = obj as GrouperTopLevelPair;
-
-                return this.FieldInfo.Equals(that.FieldInfo) && this.PathInfo.Equals(that.PathInfo);
-            }
-            return false;
         }
     }
 }

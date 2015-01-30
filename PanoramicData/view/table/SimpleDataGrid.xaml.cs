@@ -32,6 +32,7 @@ using PanoramicData.view.vis.render;
 using System.Collections.Specialized;
 using PanoramicData.model.data;
 using PanoramicData.view.inq;
+using System.Reactive.Linq;
 
 namespace PanoramicData.view.table
 {
@@ -46,6 +47,7 @@ namespace PanoramicData.view.table
         public delegate void CellDroppedOutsideHandler(object sender, PanoramicDataColumnDescriptor column, PanoramicDataRow row, Point position);
         public event CellDroppedOutsideHandler CellDroppedOutside;
 
+        private IDisposable _observableDisposable = null;
         private GridView _gridView = null;
 
         public bool CanReorder { get; set; }
@@ -83,12 +85,28 @@ namespace PanoramicData.view.table
         {
             if (e.OldValue != null)
             {
-                (e.OldValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).CollectionChanged -= SimpleDataGrid_XCollectionChanged;
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
                 (e.OldValue as VisualizationViewModel).QueryModel.QueryResultModel.PropertyChanged -= QueryResultModel_PropertyChanged;
             }
             if (e.NewValue != null)
             {
-                (e.NewValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).CollectionChanged += SimpleDataGrid_XCollectionChanged;
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
+                _observableDisposable = Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(
+                    (e.NewValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X), "CollectionChanged")
+                    .Throttle(TimeSpan.FromMilliseconds(50))
+                    .Subscribe((arg) =>
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
+                        {
+                            populateTableHeaders();
+                        }));
+                    });
 
                 QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
                 resultModel.PropertyChanged += QueryResultModel_PropertyChanged;
@@ -112,11 +130,6 @@ namespace PanoramicData.view.table
         }
         void QueryResultItemModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-        }
-
-        void SimpleDataGrid_XCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            populateTableHeaders();
         }
 
         private void populateData()
@@ -237,7 +250,7 @@ namespace PanoramicData.view.table
 
             DataTemplate template = new DataTemplate();
             FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
-            tbFactory.SetValue(AttributeView.DataContextProperty, new AttributeViewModel(attributeOperationModel));
+            tbFactory.SetValue(AttributeView.DataContextProperty, new AttributeViewModel(DataContext as VisualizationViewModel, attributeOperationModel));
             /*tbFactory.SetValue(AttributeView.IsInteractiveProperty, false);
             tbFactory.SetValue(AttributeView.FilterModelProperty, _filterModel);
             tbFactory.SetValue(AttributeView.TableModelProperty, _tableModel);*/
@@ -469,124 +482,6 @@ namespace PanoramicData.view.table
                 model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Insert(indexMap, clone);
                 model.QueryModel.FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
             }
-/*
-                Point fromThis = inqScene.TranslatePoint(e.Bounds.Center, this);
-                GridViewColumnHeader header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
-
-                // hide cloumn header reorder drop highlights 
-                hideColumnReorderFeedbacks();
-
-                if (CanReorder)
-                {
-                    // find closest header reorder drop highlight 
-                    GridViewColumnHeader closestHeader = findClosestColumnHeader(e.Bounds.Center);
-                    GridViewColumnCollection columns = ((GridView)listView.View).Columns;
-
-                    if (parentGrid == this) 
-                    {
-                        MappingEntry map = null;
-                        IEnumerable<MappingEntry> mapEntries = _mapping.Where(me => me.GridViewColumn == header.Column);
-                        if (mapEntries.Count() > 0)
-                        {
-                            map = mapEntries.First();
-                        }
-
-                        // column already exists within this datagrid
-                        if (map != null)
-                        {
-                            if (closestHeader.Column == null)
-                            {
-                                columns.Remove(header.Column);
-                                columns.Add(header.Column);
-                                _mapping.Remove(map);
-                                _mapping.Add(map);
-                            }
-                            else if ((closestHeader.Column.Header as string) == "")
-                            {
-                                columns.Remove(header.Column);
-                                columns.Insert(1, header.Column);
-                                _mapping.Remove(map);
-                                _mapping.Insert(1, map);
-                            }
-                            else
-                            {
-                                MappingEntry mapClosest =
-                                    _mapping.Single(me => me.GridViewColumn == closestHeader.Column);
-
-                                if (map.GridViewColumn != mapClosest.GridViewColumn)
-                                {
-                                    columns.Remove(header.Column);
-                                    _mapping.Remove(map);
-
-                                    int index = columns.IndexOf(closestHeader.Column);
-                                    if (index != -1)
-                                    {
-                                        columns.Insert(index, header.Column);
-                                    }
-
-                                    int indexMap = _mapping.IndexOf(mapClosest);
-                                    if (indexMap != -1)
-                                    {
-                                        _mapping.Insert(indexMap, map);
-                                    }
-                                }
-                            }
-
-                            for (int i = 0; i < _mapping.Count; i++)
-                            {
-                                _mapping[i].ColumnDescriptor.Order = i;
-                            }
-                        }
-                    }
-                    // new column
-                    else
-                    {
-                        /*PanoramicDataColumnDescriptor clone =
-                                   (PanoramicDataColumnDescriptor)e.ColumnDescriptor.Clone();
-                        if (closestHeader.Column == null)
-                        {
-                            int i = 0;
-                            foreach(var me in _mapping) 
-                            {
-                                me.ColumnDescriptor.Order = i;
-                                i++;
-                            }
-                            clone.Order = i;
-                        }
-                        else if ((closestHeader.Column.Header as string) == "")
-                        {
-                            clone.Order = 0;
-                            int i = 1;
-                            foreach (var me in _mapping)
-                            {
-                                me.ColumnDescriptor.Order = i;
-                                i++;
-                            }
-                        }
-                        else
-                        {
-                            MappingEntry mapClosest = _mapping.Single(me => me.GridViewColumn == closestHeader.Column);
-                            
-                            int indexMap = _mapping.IndexOf(mapClosest);
-                            if (indexMap != -1)
-                            {
-                                int i = 0;
-                                for(i = 0; i < indexMap; i++)
-                                {
-                                    _mapping[i].ColumnDescriptor.Order = i;
-                                }
-                                clone.Order = i;
-
-                                for (int k = i; k < _mapping.Count; k++)
-                                {
-                                    _mapping[k].ColumnDescriptor.Order = k+1;
-                                }
-                            }
-                        }
-                        _filterModel.AddOptionColumnDescriptor(Option.X, clone);
-                    }
-                }
-            }*/
         }
 
         private void hideColumnReorderFeedbacks()
@@ -642,34 +537,6 @@ namespace PanoramicData.view.table
             }
             return null;
         }
-        private void createExplorerDragFeedback(Point offset, GridViewColumnHeader gridViewColumnHeader)
-        {
-            IEnumerable<MappingEntry> maps = _mapping.Where(me => me.GridViewColumn == gridViewColumnHeader.Column);
-            if (maps.Count() == 1)
-            {
-                MappingEntry map = maps.First();
-                InqScene inqScene = this.FindParent<InqScene>();
-
-                _explorerFeedback = new VisualizationContainerView();
-                //EZ: _explorerFeedbackColumnDescriptor = map.ColumnDescriptor;
-                //EZ: FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
-                //EZ: filterHolderViewModel.Temporary = true;
-
-                //_explorerFeedback.FilterHolderViewModel = filterHolderViewModel;
-                //_explorerFeedback.SetDimension(new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
-                //filterHolderViewModel.AddIncomingFilter(_filterModel, FilteringType.Filter);
-                //_explorerFeedback.InitPostionAndDimension(offset, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
-                
-                inqScene.AddNoUndo(_explorerFeedback);
-                //_explorerFeedback = null;
-                //FilterHolder filter = new FilterHolder(inqScene);
-                //filterHolderViewModel = FilterHolderViewModel.CreateDefault(map.ColumnDescriptor, _filterModel.TableModel);
-                //filter.FilterHolderViewModel = filterHolderViewModel;
-                //filterHolderViewModel.Center = new Point();
-                //filter.InitPostionAndDimension(offset, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
-            }
-        }
-
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
@@ -680,11 +547,10 @@ namespace PanoramicData.view.table
         {
             return new GeometryHitTestResult(this, IntersectionDetail.Intersects);
         }
-
-
+        
         public void NotifyStroqAdded(starPadSDK.Inq.Stroq s)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inkableScene = this.FindParent<InkableScene>();
             InqAnalyzer inqAnalyzer = new InqAnalyzer();
             inqAnalyzer.AddStroke(s);
             inqAnalyzer.Analyze();
@@ -703,10 +569,10 @@ namespace PanoramicData.view.table
                         Rect bounds = s.GetBounds();
                         GeoAPI.Geometries.IGeometry geom = new Pt[]
                         {
-                            inqScene.TranslatePoint(new Point(bounds.Left, bounds.Top), this),
-                            inqScene.TranslatePoint(new Point(bounds.Right, bounds.Top), this),
-                            inqScene.TranslatePoint(new Point(bounds.Right, bounds.Bottom), this),
-                            inqScene.TranslatePoint(new Point(bounds.Left, bounds.Bottom), this)
+                            inkableScene.TranslatePoint(new Point(bounds.Left, bounds.Top), this),
+                            inkableScene.TranslatePoint(new Point(bounds.Right, bounds.Top), this),
+                            inkableScene.TranslatePoint(new Point(bounds.Right, bounds.Bottom), this),
+                            inkableScene.TranslatePoint(new Point(bounds.Left, bounds.Bottom), this)
                         }.GetPolygon();
                         var rowPresenters = this.GetIntersectedTypesRecursive<GridViewRowPresenter>(geom.GetBounds());
                         List<PanoramicDataRow> rows = new List<PanoramicDataRow>();
@@ -765,7 +631,7 @@ namespace PanoramicData.view.table
                 }
             }
 
-            inqScene.Rem(s);
+            //inkableScene.Rem(s);
         }
 
         public void NotifyStroqRemoved(starPadSDK.Inq.Stroq s)
@@ -952,57 +818,4 @@ namespace PanoramicData.view.table
         public AttributeOperationModel AttributeOperationModel { get; set; }
         public int FieldsIndex { get; set; }
     }
-
-    public class SettingsMapping
-    {
-        public PanoramicDataColumnDescriptor ColumnDescriptor { get; set; }
-        public StackPanel StackPanel { get; set; }
-        public Border Border { get; set; }
-    }
-
-    public class MultiValueImageConverter : IMultiValueConverter
-    {
-        System.Drawing.Color red = System.Drawing.Color.FromArgb(0xff, 0xff, 0, 0);
-        System.Drawing.Brush redBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
-        System.Drawing.Brush whiteBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(0xff, 0xff, 0xff, 0xff));
-        System.Drawing.Pen gray = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc), 1);
-        System.Drawing.Pen black = new System.Drawing.Pen(System.Drawing.Color.Black, 1);
-
-        public object Convert(object[] values, Type targetType, object parameter,
-            CultureInfo culture)
-        {
-            int w = (int)Math.Max(1, (double)values[0]);
-            int h = (int)Math.Max(1, (double)values[1]);
-
-            System.Drawing.Bitmap pg = new System.Drawing.Bitmap(w, h);
-            System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(pg);
-
-            int padding = (int) Math.Ceiling(h * 0.3);
-            //gr.FillRectangle(whiteBrush, 0, 0, w, h);
-            gr.DrawRectangle(gray, padding, padding, w - padding * 2, h - padding * 2);
-
-            if (values[2] != DependencyProperty.UnsetValue &&
-                (string)values[2] != "")
-            {
-                double l = w - padding * 2;
-                string[] entries = ((string)values[2]).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                double min = double.Parse(entries[0]);
-                double max = double.Parse(entries[1]);
-
-                for (int i = 2; i < entries.Count(); i++)
-                {
-                    double x = ((double.Parse(entries[i]) - min) / (max - min)) * l + padding;
-                    gr.DrawLine(black, (int)x, padding, (int)x, h - padding);
-                }
-            }
-
-            return pg.LoadImage();
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

@@ -62,7 +62,7 @@ namespace PanoramicData.view.vis
             }
         }
 
-        private Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor> _topLevelLookup = new Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor>();
+        /*private Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor> _topLevelLookup = new Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor>();
         private List<PanoramicDataColumnDescriptor> topLevelGroupings()
         {
             List<PanoramicDataColumnDescriptor> descriptors = new List<PanoramicDataColumnDescriptor>();
@@ -86,7 +86,7 @@ namespace PanoramicData.view.vis
                 }
             }
             return descriptors;
-        } 
+        } */
 
         private void colorGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
@@ -344,7 +344,7 @@ namespace PanoramicData.view.vis
             }
         }
     }
-
+    /*
     public class ColorerTopLevelPair
     {
         public FieldInfo FieldInfo { get; set; }
@@ -373,5 +373,5 @@ namespace PanoramicData.view.vis
             }
             return false;
         }
-    }
+    }*/
 }

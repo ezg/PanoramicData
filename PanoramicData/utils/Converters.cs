@@ -50,7 +50,7 @@ namespace PanoramicData.utils
         }
     }
 
-    public class SortModeAscToVisibilityConvertor : SimpleValueConverter<SortMode, Visibility>
+    public class SortModeAscToVisibilityConverter : SimpleValueConverter<SortMode, Visibility>
     {
         protected override Visibility ConvertBase(SortMode input)
         {
@@ -58,11 +58,32 @@ namespace PanoramicData.utils
         }
     }
 
-    public class SortModeDescToVisibilityConvertor : SimpleValueConverter<SortMode, Visibility>
+    public class SortModeDescToVisibilityConverter : SimpleValueConverter<SortMode, Visibility>
     {
         protected override Visibility ConvertBase(SortMode input)
         {
             return input == SortMode.Desc ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    public class VisualizationTypeToMarginConverter : SimpleValueConverter<VisualizationType, Thickness>
+    {
+        public VisualizationType TargetVisualizationType { get; set; }
+        public Thickness TargetThickness { get; set; }
+
+        protected override Thickness ConvertBase(VisualizationType input)
+        {
+            return input == TargetVisualizationType ? TargetThickness : new Thickness(0);
+        }
+    }
+
+    public class VisualizationTypeToVisibilityConverter : SimpleValueConverter<VisualizationType, Visibility>
+    {
+        public VisualizationType TargetVisualizationType { get; set; }
+
+        protected override Visibility ConvertBase(VisualizationType input)
+        {
+            return input == TargetVisualizationType ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

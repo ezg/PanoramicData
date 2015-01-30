@@ -3,6 +3,7 @@ using PanoramicData.utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,31 @@ namespace PanoramicData.model.data
             foreach (var attributeFunction in Enum.GetValues(typeof(AttributeFunction)).Cast<AttributeFunction>())
             {
                 _attributeFunctionOperationModels.Add(attributeFunction, new ObservableCollection<AttributeOperationModel>());
+                _attributeFunctionOperationModels[attributeFunction].CollectionChanged += QueryModel_CollectionChanged;
             }
+        }
+
+        void QueryModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    (item as AttributeOperationModel).PropertyChanged -= QueryModel_PropertyChanged;
+                }
+            }
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    (item as AttributeOperationModel).PropertyChanged += QueryModel_PropertyChanged;
+                }
+            }
+        }
+
+        void QueryModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);   
         }
 
         private QueryResultModel _queryResultModel = null;
@@ -54,6 +79,7 @@ namespace PanoramicData.model.data
         private Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>> _attributeFunctionOperationModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>>();
         public void AddFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
+            attributeOperationModel.QueryModel = this;
             _attributeFunctionOperationModels[attributeFunction].Add(attributeOperationModel);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
@@ -62,6 +88,18 @@ namespace PanoramicData.model.data
         {
             _attributeFunctionOperationModels[attributeFunction].Remove(attributeOperationModel);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+        }
+
+        public void RemoveAttributeOperationModel(AttributeOperationModel attributeOperationModel)
+        {
+            foreach (var key in _attributeFunctionOperationModels.Keys)
+            {
+                if (_attributeFunctionOperationModels[key].Contains(attributeOperationModel))
+                {
+                    RemoveFunctionAttributeOperationModel(key, attributeOperationModel);
+                    FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+                }
+            }
         }
 
         public ObservableCollection<AttributeOperationModel> GetFunctionAttributeOperationModel(AttributeFunction attributeFunction)

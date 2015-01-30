@@ -1,5 +1,4 @@
 ﻿using System.Reactive.Linq;
-using PanoramicDataModel;
 using System;
 using System.Linq;
 using System.Windows;
@@ -12,13 +11,13 @@ using starPadSDK.AppLib;
 using starPadSDK.Geom;
 using starPadSDK.WPFHelp;
 using starPadSDK.Inq;
-using PanoramicData.model.view;
 using PanoramicData.view.other;
 using PanoramicData.controller.data;
 using PanoramicData.view.math;
 using CombinedInputAPI;
 using PanoramicData.view.inq;
 using PanoramicData.model.view_new;
+using PanoramicData.model.data;
 
 namespace PanoramicData.view.table
 {
@@ -40,96 +39,68 @@ namespace PanoramicData.view.table
             InitializeComponent();
             this.TouchDown += AttributeView_TouchDownEvent;
         }
-
-       /* public AttributeView(bool isShadow, bool renderDark = false)
-        {
-           
-
-            this._isShadow = isShadow;
-
-            if (_isShadow)
-            {
-                HeaderBorder.Background = new SolidColorBrush(Color.FromArgb(70, 125, 125, 125));
-                HeaderBorder.HorizontalAlignment = HorizontalAlignment.Center;
-                HeaderBorder.VerticalAlignment = VerticalAlignment.Center;
-            }
-            else
-            {
-                HeaderBorder.Background = renderDark ? Brushes.DarkGray : Brushes.White;//Brushes.DarkGray;
-                rectHighlight.Visibility = Visibility.Collapsed;
-            }
-            if (Properties.Settings.Default.PanoramicDataEnableStable)
-            {
-                double s = Properties.Settings.Default.PanoramicDataStableScaleFactor;
-                mainTB.FontSize = Properties.Settings.Default.PanoramicDataStableLabelFontSize;
-                this.MinHeight = 20 * s;
-            }
-
-            this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDownEvent));
-            SetBinding(MyDataContextProperty, new Binding());
-        }*/
-        
+                
         /*public void ShortcutGesture(string recog)
         {
             if (EnableRadialMenu)
             {
                 PanoramicDataColumnDescriptor cd = (DataContext as PanoramicDataColumnDescriptor);
-                if (cd.DataType == DataTypeConstants.FLOAT ||
-                    cd.DataType == DataTypeConstants.INT ||
-                    cd.DataType == DataTypeConstants.BIT)
+                if (avm.DataType == AttributeDataTypeConstants.FLOAT ||
+                    avm.DataType == AttributeDataTypeConstants.INT ||
+                    avm.DataType == AttributeDataTypeConstants.BIT)
                 {
                     if (recog.Equals("a"))
                     {
-                        if (cd.AggregateFunction == AggregateFunction.Avg)
+                        if (avm.AggregateFunction == AggregateFunction.Avg)
                         {
-                            cd.AggregateFunction = AggregateFunction.None;
+                            avm.AggregateFunction = AggregateFunction.None;
                         }
                         else
                         {
-                            cd.AggregateFunction = AggregateFunction.Avg;
+                            avm.AggregateFunction = AggregateFunction.Avg;
                         }
                     }
                     else if (recog.Equals("s"))
                     {
-                        if (cd.AggregateFunction == AggregateFunction.Sum)
+                        if (avm.AggregateFunction == AggregateFunction.Sum)
                         {
-                            cd.AggregateFunction = AggregateFunction.None;
+                            avm.AggregateFunction = AggregateFunction.None;
                         }
                         else
                         {
-                            cd.AggregateFunction = AggregateFunction.Sum;
+                            avm.AggregateFunction = AggregateFunction.Sum;
                         }
                     }
                 }
                 if (FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count > 0 &&
-                    FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count(cd2 => cd2.IsBinned && cd.MatchSimple(cd)) > 0)
+                    FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count(cd2 => cd2.IsBinned && avm.MatchSimple(cd)) > 0)
                 {
                     if (recog.Equals("b"))
                     {
-                        if (cd.AggregateFunction == AggregateFunction.Bin)
+                        if (avm.AggregateFunction == AggregateFunction.Bin)
                         {
-                            cd.AggregateFunction = AggregateFunction.None;
+                            avm.AggregateFunction = AggregateFunction.None;
                         }
                         else
                         {
-                            cd.AggregateFunction = AggregateFunction.Bin;
+                            avm.AggregateFunction = AggregateFunction.Bin;
                         }
                     }
                 }
                 if (recog.Equals("c"))
                 {
-                    if (cd.AggregateFunction == AggregateFunction.Count)
+                    if (avm.AggregateFunction == AggregateFunction.Count)
                     {
-                        cd.AggregateFunction = AggregateFunction.None;
+                        avm.AggregateFunction = AggregateFunction.None;
                     }
                     else
                     {
-                        cd.AggregateFunction = AggregateFunction.Count;
+                        avm.AggregateFunction = AggregateFunction.Count;
                     }
                 }
                 if (recog.Equals("g"))
                 {
-                    var clone = (PanoramicDataColumnDescriptor)cd.SimpleClone();
+                    var clone = (PanoramicDataColumnDescriptor)avm.SimpleClone();
                     clone.IsGrouped = true;
 
                     if (FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Contains(clone))
@@ -152,22 +123,23 @@ namespace PanoramicData.view.table
 
         private void AttributeView_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            if (((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus) || (DataContext as AttributeViewModel).IsDraggableByPen)
+            if ((e.Device is StylusDevice || (e.Device is MouseTouchDevice && (e.Device as MouseTouchDevice).IsStylus)) && !(DataContext as AttributeViewModel).IsDraggableByPen)
             {
-                if (_dragDevice1 == null)
-                {
-                    e.Handled = true;
-                    e.TouchDevice.Capture(this);
-                    InkableScene inkableScene = this.FindParent<InkableScene>();
-                    Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
+                return;
+            }
+            if (_dragDevice1 == null)
+            {
+                e.Handled = true;
+                e.TouchDevice.Capture(this);
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
-                    _manipulationStartTime = DateTime.Now.Ticks;
-                    _startDrag = fromInkableScene;
+                _manipulationStartTime = DateTime.Now.Ticks;
+                _startDrag = fromInkableScene;
 
-                    this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDragEvent));
-                    this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchUpEvent));
-                    _dragDevice1 = e.TouchDevice;
-                }
+                this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchDragEvent));
+                this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(AttributeView_TouchUpEvent));
+                _dragDevice1 = e.TouchDevice;
             }
         }
 
@@ -178,7 +150,7 @@ namespace PanoramicData.view.table
             {
                 _currentFromInkableScene = fromInkableScene;
                 _shadow = new AttributeView();
-                _shadow.DataContext = new AttributeViewModel((DataContext as AttributeViewModel).AttributeOperationModel)
+                _shadow.DataContext = new AttributeViewModel(null, (DataContext as AttributeViewModel).AttributeOperationModel)
                 {
                     IsNoChrome = false,
                     IsMenuEnabled = true,
@@ -255,23 +227,6 @@ namespace PanoramicData.view.table
                     {
                         DisplayRadialControl(fromInkableScene);
                     }
-                    else
-                    {
-                        if (DataContext is CalculatedColumnDescriptor)
-                        {
-                            CalculatedColumnDescriptorInfo info = (DataContext as CalculatedColumnDescriptor).CalculatedColumnDescriptorInfo;
-
-                            if (info != null)
-                            {
-                                /*MathEditor me = new MathEditor(
-                                    new AttributeViewMathEditorExecution(inkableScene, info), FilterModel,
-                                    info);
-                                me.SetPosition(fromInkableScene.X - RadialControl.SIZE/2,
-                                    fromInkableScene.Y - RadialControl.SIZE/2);
-                                inkableScene.Add(me);*/
-                            }
-                        }
-                    }
                 }
 
                 ManipulationEnd(fromInkableScene);
@@ -302,15 +257,15 @@ namespace PanoramicData.view.table
             InkableScene inkableScene = this.FindParent<InkableScene>();
             if (inkableScene != null)
             {
-                /*RadialControl rc = new RadialControl(setupRadialCommands(DataContext as PanoramicDataColumnDescriptor),
-                    new ColumnHeaderRadialControlExecution(FilterModel, TableModel, inkableScene));
+                RadialControl rc = new RadialControl(setupRadialCommands(DataContext as AttributeViewModel),
+                    new ColumnHeaderRadialControlExecution((DataContext as AttributeViewModel).AttributeOperationModel.QueryModel, inkableScene));
                 rc.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
                     fromInkableScene.Y - RadialControl.SIZE / 2);
-                inkableScene.Add(rc);*/
+                inkableScene.Add(rc);
             }
         }
-
-        /*RadialMenuCommand setupRadialCommands(AttributeViewModel atrributeViewModel)
+        
+        RadialMenuCommand setupRadialCommands(AttributeViewModel atrributeViewModel)
         {
             RadialMenuCommand root = new RadialMenuCommand();
             root.Data = atrributeViewModel;
@@ -326,13 +281,13 @@ namespace PanoramicData.view.table
                 root.AddSubCommand(remove);
             }
 
-            if (EnableScaleFunctionInRadialMenu)
+            if (atrributeViewModel.IsScaleFunctionEnabled)
             {
                 RadialMenuCommandGroup scaleGroup = new RadialMenuCommandGroup("scaleGroup", RadialMenuCommandComandGroupPolicy.DeactivateOthers);
                 RadialMenuCommand scale = new RadialMenuCommand();
                 scale.Name = "Scale\nFunction";
                 scale.Data = atrributeViewModel;
-                scale.IsActive = atrributeViewModel.ScaleFunction != ScaleFunction.None;
+                scale.IsActive = atrributeViewModel.AttributeOperationModel.ScaleFunction != ScaleFunction.None;
                 root.AddSubCommand(scale);
 
                 RadialMenuCommand log = new RadialMenuCommand();
@@ -341,11 +296,11 @@ namespace PanoramicData.view.table
                 log.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 log.Data = atrributeViewModel;
                 log.IsSelectable = true;
-                log.IsActive = atrributeViewModel.ScaleFunction == ScaleFunction.Log;
+                log.IsActive = atrributeViewModel.AttributeOperationModel.ScaleFunction == ScaleFunction.Log;
                 log.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.ScaleFunction = cmd.IsActive ? ScaleFunction.Log : ScaleFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.ScaleFunction = cmd.IsActive ? ScaleFunction.Log : ScaleFunction.None;
                 };
                 scale.AddSubCommand(log);
 
@@ -355,11 +310,11 @@ namespace PanoramicData.view.table
                 norm.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 norm.Data = atrributeViewModel;
                 norm.IsSelectable = true;
-                norm.IsActive = atrributeViewModel.ScaleFunction == ScaleFunction.Normalize;
+                norm.IsActive = atrributeViewModel.AttributeOperationModel.ScaleFunction == ScaleFunction.Normalize;
                 norm.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.ScaleFunction = cmd.IsActive ? ScaleFunction.Normalize : ScaleFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.ScaleFunction = cmd.IsActive ? ScaleFunction.Normalize : ScaleFunction.None;
                 };
                 scale.AddSubCommand(norm);
 
@@ -369,11 +324,11 @@ namespace PanoramicData.view.table
                 rt.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 rt.Data = atrributeViewModel;
                 rt.IsSelectable = true;
-                rt.IsActive = atrributeViewModel.ScaleFunction == ScaleFunction.RunningTotal;
+                rt.IsActive = atrributeViewModel.AttributeOperationModel.ScaleFunction == ScaleFunction.RunningTotal;
                 rt.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.ScaleFunction = cmd.IsActive ? ScaleFunction.RunningTotal : ScaleFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.ScaleFunction = cmd.IsActive ? ScaleFunction.RunningTotal : ScaleFunction.None;
                 };
                 scale.AddSubCommand(rt);
 
@@ -383,11 +338,11 @@ namespace PanoramicData.view.table
                 rtNorm.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 rtNorm.Data = atrributeViewModel;
                 rtNorm.IsSelectable = true;
-                rtNorm.IsActive = atrributeViewModel.ScaleFunction == ScaleFunction.RunningTotalNormalized;
+                rtNorm.IsActive = atrributeViewModel.AttributeOperationModel.ScaleFunction == ScaleFunction.RunningTotalNormalized;
                 rtNorm.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.ScaleFunction = cmd.IsActive ? ScaleFunction.RunningTotalNormalized : ScaleFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.ScaleFunction = cmd.IsActive ? ScaleFunction.RunningTotalNormalized : ScaleFunction.None;
                 };
                 scale.AddSubCommand(rtNorm);
             }
@@ -395,7 +350,7 @@ namespace PanoramicData.view.table
             RadialMenuCommand sort = new RadialMenuCommand();
             sort.Name = "Sort";
             sort.Data = atrributeViewModel;
-            sort.IsActive = atrributeViewModel.SortMode != SortMode.None;
+            sort.IsActive = atrributeViewModel.AttributeOperationModel.SortMode != SortMode.None;
             sort.IsSelectable = false;
             root.AddSubCommand(sort);
 
@@ -405,12 +360,12 @@ namespace PanoramicData.view.table
             sortAsc.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
             sortAsc.CommandGroup = sortGroup;
             sortAsc.Data = atrributeViewModel;
-            sortAsc.IsActive = atrributeViewModel.SortMode == SortMode.Asc;
+            sortAsc.IsActive = atrributeViewModel.AttributeOperationModel.SortMode == SortMode.Asc;
             sortAsc.IsSelectable = true;
             sortAsc.ActiveTriggered = (cmd) => 
             {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.SortMode = cmd.IsActive ? SortMode.Asc : SortMode.None;
+                AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                avm.SortMode = cmd.IsActive ? SortMode.Asc : SortMode.None;
             };
             sort.AddSubCommand(sortAsc);
 
@@ -419,36 +374,24 @@ namespace PanoramicData.view.table
             sortAsc.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
             sortDesc.CommandGroup = sortGroup;
             sortDesc.Data = atrributeViewModel;
-            sortDesc.IsActive = atrributeViewModel.SortMode == SortMode.Desc;
+            sortDesc.IsActive = atrributeViewModel.AttributeOperationModel.SortMode == SortMode.Desc;
             sortDesc.IsSelectable = true;
             sortDesc.ActiveTriggered = (cmd) =>
             {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.SortMode = cmd.IsActive ? SortMode.Desc : SortMode.None;
+                AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                avm.SortMode = cmd.IsActive ? SortMode.Desc : SortMode.None;
             };
             sort.AddSubCommand(sortDesc);
-
-            RadialMenuCommand vis = new RadialMenuCommand();
-            vis.Name = "Vis";
-            vis.Data = atrributeViewModel;
-            vis.IsSelectable = true;
-            vis.IsActive = atrributeViewModel.IsVisualization;
-            vis.ActiveTriggered = (cmd) =>
-            {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.IsVisualization = cmd.IsActive;
-            };
-            // ez: tmp removed root.AddSubCommand(vis);
-
+            
             RadialMenuCommandGroup aggGroup = new RadialMenuCommandGroup("aggGroup", RadialMenuCommandComandGroupPolicy.DeactivateOthers);
             RadialMenuCommand aggregate = new RadialMenuCommand();
             aggregate.Name = "Transform";
             aggregate.Data = atrributeViewModel;
-            aggregate.IsActive = atrributeViewModel.AggregateFunction != AggregateFunction.None;
+            aggregate.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction != AggregateFunction.None;
             root.AddSubCommand(aggregate);
 
-            if (atrributeViewModel.DataType == DataTypeConstants.INT ||
-                atrributeViewModel.DataType == DataTypeConstants.FLOAT)
+            if (atrributeViewModel.AttributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.INT ||
+                atrributeViewModel.AttributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.FLOAT)
             {
                 RadialMenuCommand sum = new RadialMenuCommand();
                 sum.Name = "Sum";
@@ -456,11 +399,11 @@ namespace PanoramicData.view.table
                 sum.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 sum.Data = atrributeViewModel;
                 sum.IsSelectable = true;
-                sum.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Sum;
+                sum.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Sum;
                 sum.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Sum : AggregateFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Sum : AggregateFunction.None;
                 };
                 aggregate.AddSubCommand(sum);
 
@@ -470,17 +413,16 @@ namespace PanoramicData.view.table
                 avg.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 avg.Data = atrributeViewModel;
                 avg.IsSelectable = true;
-                avg.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Avg;
+                avg.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Avg;
                 avg.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Avg : AggregateFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Avg : AggregateFunction.None;
                 };
                 aggregate.AddSubCommand(avg);
             }
-            if (FilterModel != null &&
-                FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count > 0 &&
-                FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count(cd => cd.IsBinned && cd.MatchSimple(atrributeViewModel)) > 0)
+            if (atrributeViewModel.AttributeOperationModel.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Count > 0 &&
+                atrributeViewModel.AttributeOperationModel.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any(aom => aom.IsBinned && aom.Equals(atrributeViewModel.AttributeOperationModel)))
             {
                 RadialMenuCommand binRange = new RadialMenuCommand();
                 binRange.Name = "Bin Range";
@@ -488,11 +430,11 @@ namespace PanoramicData.view.table
                 binRange.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
                 binRange.Data = atrributeViewModel;
                 binRange.IsSelectable = true;
-                binRange.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Bin;
+                binRange.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Bin;
                 binRange.ActiveTriggered = (cmd) =>
                 {
-                    PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                    cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Bin : AggregateFunction.None;
+                    AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                    avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Bin : AggregateFunction.None;
                 };
                 aggregate.AddSubCommand(binRange);
             }
@@ -503,11 +445,11 @@ namespace PanoramicData.view.table
             max.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
             max.Data = atrributeViewModel;
             max.IsSelectable = true;
-            max.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Max;
+            max.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Max;
             max.ActiveTriggered = (cmd) =>
             {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Max : AggregateFunction.None;
+                AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Max : AggregateFunction.None;
             };
             aggregate.AddSubCommand(max);
 
@@ -517,11 +459,11 @@ namespace PanoramicData.view.table
             min.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
             min.Data = atrributeViewModel;
             min.IsSelectable = true;
-            min.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Min;
+            min.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Min;
             min.ActiveTriggered = (cmd) =>
             {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Min : AggregateFunction.None;
+                AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Min : AggregateFunction.None;
             };
             aggregate.AddSubCommand(min);
 
@@ -531,43 +473,38 @@ namespace PanoramicData.view.table
             count.ParentPolicy = RadialMenuCommandParentPolicy.ActivateParentWhenActive;
             count.Data = atrributeViewModel;
             count.IsSelectable = true;
-            count.IsActive = atrributeViewModel.AggregateFunction == AggregateFunction.Count;
+            count.IsActive = atrributeViewModel.AttributeOperationModel.AggregateFunction == AggregateFunction.Count;
             count.ActiveTriggered = (cmd) =>
             {
-                PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
-                cd.AggregateFunction = cmd.IsActive ? AggregateFunction.Count : AggregateFunction.None;
+                AttributeOperationModel avm = (cmd.Data as AttributeViewModel).AttributeOperationModel;
+                avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Count : AggregateFunction.None;
             };
             aggregate.AddSubCommand(count);
 
-            if (FilterModel != null)
-            {
-                RadialMenuCommand filter = new RadialMenuCommand();
-                filter.Name = "Filter";
-                filter.Data = atrributeViewModel;
-                filter.AllowsStroqInput = true;
-                filter.IsSelectable = false;
+            RadialMenuCommand filter = new RadialMenuCommand();
+            filter.Name = "Filter";
+            filter.Data = atrributeViewModel;
+            filter.AllowsStroqInput = true;
+            filter.IsSelectable = false;
 
-                RadialMenuCommand actualFilter = new RadialMenuCommand();
-                actualFilter.Name = "Dummy Command";
-                filter.AddSubCommand(actualFilter);
+            RadialMenuCommand actualFilter = new RadialMenuCommand();
+            actualFilter.Name = "Dummy Command";
+            filter.AddSubCommand(actualFilter);
 
-                root.AddSubCommand(filter);
-            }
+            root.AddSubCommand(filter);
 
             return root;
-        }*/
+        }
     }
 
     public class ColumnHeaderRadialControlExecution : RadialControlExecution
     {
-        private FilterModel _filterModel = null;
-        private TableModel _tableModel = null;
+        private QueryModel _queryModel = null;
         private InkableScene _inkableScene = null;
 
-        public ColumnHeaderRadialControlExecution(FilterModel filterModel, TableModel tableModel, InkableScene inkableScene)
+        public ColumnHeaderRadialControlExecution(QueryModel queryModel, InkableScene inkableScene)
         {
-            this._filterModel = filterModel;
-            this._tableModel = tableModel;
+            this._queryModel = queryModel;
             this._inkableScene = inkableScene;
         }
 
@@ -575,13 +512,9 @@ namespace PanoramicData.view.table
         {
             base.Remove(sender, cmd);
 
-            if (_tableModel != null)
+            if (_queryModel != null)
             {
-                _tableModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
-            else if (_filterModel != null)
-            {
-                _filterModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
+                _queryModel.RemoveAttributeOperationModel((cmd.Data as AttributeViewModel).AttributeOperationModel);
             }
         }
 
@@ -599,16 +532,16 @@ namespace PanoramicData.view.table
         {
             base.ExecuteCommand(sender, cmd, needle, stroqs);
 
-            PanoramicDataColumnDescriptor cd = cmd.Data as PanoramicDataColumnDescriptor;
+            AttributeOperationModel aom = (cmd.Data as AttributeViewModel).AttributeOperationModel;
 
             if (needle != null)
             {
                 FilteredItem fi = null;
 
-                if (needle != "")
+                /*if (needle != "")
                 {
-                    if (cd.DataType == AttributeDataTypeConstants.NVARCHAR || 
-                        cd.DataType == AttributeDataTypeConstants.GEOGRAPHY)
+                    if (aom.AttributeModel.AttributeDataType == AttributeDataTypeConstants.NVARCHAR ||
+                        aom.AttributeModel.AttributeDataType == AttributeDataTypeConstants.GEOGRAPHY)
                     {
                         fi = new FilteredItem();
                         fi.IsHandwrittenFilter = true;
@@ -617,8 +550,8 @@ namespace PanoramicData.view.table
                         val.DataType = AttributeDataTypeConstants.NVARCHAR;
                         fi.ColumnComparisonValues.Add(cd, new PanoramicDataValueComparison(val, Predicate.LIKE));
                     }
-                    else if (cd.DataType == AttributeDataTypeConstants.FLOAT ||
-                                cd.DataType == AttributeDataTypeConstants.INT)
+                    else if (aom.AttributeModel.AttributeDataType == AttributeDataTypeConstants.FLOAT ||
+                                aom.AttributeModel.AttributeDataType == AttributeDataTypeConstants.INT)
                     {
 
                         double d = 0;
@@ -686,10 +619,10 @@ namespace PanoramicData.view.table
                     }
                     if (fi != null)
                     {
-                        cd.FilterStroqs = stroqs;
+                        aom.FilterStroqs = stroqs;
                         _filterModel.AddEmbeddedFilteredItem(fi);
                     }
-                }
+                }*/
             }
 
             // exectue Action
@@ -754,7 +687,7 @@ namespace PanoramicData.view.table
     }
     
 
-    public class AttributeViewMathEditorExecution : MathEditorExecution
+    /*public class AttributeViewMathEditorExecution : MathEditorExecution
     {
         private InkableScene _inkableScene = null;
         private CalculatedColumnDescriptorInfo _calculatedColumnDescriptorInfo = null;
@@ -775,5 +708,5 @@ namespace PanoramicData.view.table
                 _inkableScene.Remove(sender as FrameworkElement);
             }
         }
-    }
+    }*/
 }

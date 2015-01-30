@@ -3,19 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PanoramicData.model.view"
+             xmlns:model="clr-namespace:PanoramicData.model.view_new"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="35">
-
-    <d:DesignProperties.DataContext>
-        <local:FilterHolderViewModel>
-            <local:FilterHolderViewModel.Color>Blue</local:FilterHolderViewModel.Color>
-            <local:FilterHolderViewModel.Margin>0</local:FilterHolderViewModel.Margin>
-            <local:FilterHolderViewModel.Label>Test gLabel</local:FilterHolderViewModel.Label>
-            <local:FilterHolderViewModel.NoChrome>False</local:FilterHolderViewModel.NoChrome>
-        </local:FilterHolderViewModel>
-    </d:DesignProperties.DataContext>
     
+    <d:DesignProperties.DataContext>
+        <model:VisualizationViewModel>
+            <model:VisualizationViewModel.Color>Blue</model:VisualizationViewModel.Color>
+        </model:VisualizationViewModel>
+    </d:DesignProperties.DataContext>
+
     <Grid
         Background="#01000000" Name="groupGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
         Width="35"

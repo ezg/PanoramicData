@@ -18,7 +18,6 @@ namespace PanoramicData.controller.data.sim
             IItemsProvider<QueryResultItemModel> itemsProvider = new SimItemsProvider(queryModel);
             AsyncVirtualizingCollection<QueryResultItemModel> dataValues = new AsyncVirtualizingCollection<QueryResultItemModel>(itemsProvider, 1000, 1000);
             queryModel.QueryResultModel.QueryResultItemModels = dataValues;
-
         }
     }
 
@@ -41,11 +40,32 @@ namespace PanoramicData.controller.data.sim
         public IList<QueryResultItemModel> FetchRange(int startIndex, int pageCount, out int overallCount)
         {
             Console.WriteLine("page : " + startIndex + " " + pageCount);
-            Thread.Sleep(1000);
+            Thread.Sleep(10);
             var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
             var xs = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
 
-            List<QueryResultItemModel> returnList = data.Skip(startIndex).Take(pageCount).Select((dict) =>
+            IList<QueryResultItemModel> returnList = computeQueryResult().Skip(startIndex).Take(pageCount).ToList();
+            overallCount = _fetchCount;
+            return returnList;
+        }
+
+        private List<QueryResultItemModel> computeQueryResult()
+        {
+            var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
+
+            var results = data.GroupBy(
+                item => getGroupByObject(item), 
+                item => item,
+                (key, g) => getQueryResultItemModel(key, g));
+
+            return results.ToList();
+            
+        }
+
+        private QueryResultItemModel getQueryResultItemModel(object key, IEnumerable<Dictionary<AttributeModel, object>> g)
+        {
+            /*
+             * Select((dict) =>
             {
                 QueryResultItemModel item = new QueryResultItemModel();
                 foreach (var attributeModel in dict.Keys)
@@ -59,9 +79,12 @@ namespace PanoramicData.controller.data.sim
                 }
 
                 return item;
-            }).ToList();
-            overallCount = _fetchCount;
-            return returnList;
+            }).ToList()*/
+        }
+
+        private object getGroupByObject(Dictionary<AttributeModel, object> item)
+        {
+            throw new NotImplementedException();
         }
 
         private QueryResultItemValueModel fromRaw(AttributeOperationModel attributeOperationModel, object value)

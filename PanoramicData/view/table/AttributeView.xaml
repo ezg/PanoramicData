@@ -34,8 +34,8 @@
     <UserControl.Resources>
         <utils:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <utils:SortModeAscToVisibilityConvertor x:Key="SortModeAscToVisibilityConvertor"/>
-        <utils:SortModeDescToVisibilityConvertor x:Key="SortModeDescToVisibilityConvertor"/>
+        <utils:SortModeAscToVisibilityConverter x:Key="SortModeAscToVisibilityConvertor"/>
+        <utils:SortModeDescToVisibilityConverter x:Key="SortModeDescToVisibilityConvertor"/>
     </UserControl.Resources>
 
     <Grid SnapsToDevicePixels="True" HorizontalAlignment="Stretch">

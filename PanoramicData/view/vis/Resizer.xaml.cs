@@ -295,11 +295,7 @@ namespace PanoramicData.view.vis
         private void init()
         {
             return;
-            if (_grouper != null)
-            {
-                _grouper.FilterModel = FilterModel;
-                _grouper.Init();
-            }
+            
             if (_colorer != null)
             {
                 _colorer.FilterModel = FilterModel;
