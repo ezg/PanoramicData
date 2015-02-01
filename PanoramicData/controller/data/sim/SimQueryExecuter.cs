@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using starPadSDK.AppLib;
 using System.Threading;
+using System.Dynamic;
 
 namespace PanoramicData.controller.data.sim
 {
@@ -33,7 +34,7 @@ namespace PanoramicData.controller.data.sim
 
         public int FetchCount()
         {
-            _fetchCount = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data.Count;
+            _fetchCount = computeQueryResult().Count;
             return _fetchCount;
         }
 
@@ -41,9 +42,7 @@ namespace PanoramicData.controller.data.sim
         {
             Console.WriteLine("page : " + startIndex + " " + pageCount);
             Thread.Sleep(10);
-            var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
-            var xs = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
-
+            
             IList<QueryResultItemModel> returnList = computeQueryResult().Skip(startIndex).Take(pageCount).ToList();
             overallCount = _fetchCount;
             return returnList;
@@ -53,38 +52,60 @@ namespace PanoramicData.controller.data.sim
         {
             var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
 
-            var results = data.GroupBy(
-                item => getGroupByObject(item), 
-                item => item,
-                (key, g) => getQueryResultItemModel(key, g));
+            var results = data.OrderBy(item => item, new ItemComparer(_queryModel)).
+                GroupBy(
+                    item => getGroupByObject(item), 
+                    item => item,
+                    (key, g) => getQueryResultItemModel(key, g));
 
             return results.ToList();
             
         }
-
-        private QueryResultItemModel getQueryResultItemModel(object key, IEnumerable<Dictionary<AttributeModel, object>> g)
-        {
-            /*
-             * Select((dict) =>
-            {
-                QueryResultItemModel item = new QueryResultItemModel();
-                foreach (var attributeModel in dict.Keys)
-                {
-                    if (xs.Count(avm => avm.AttributeModel == attributeModel) > 0)
-                    {
-                        var attributeValueViewModel = xs.First(avm => avm.AttributeModel == attributeModel);
-                        QueryResultItemValueModel valueModel = fromRaw(attributeValueViewModel, dict[attributeModel]);
-                        item.Values.Add(attributeValueViewModel, valueModel);
-                    }
-                }
-
-                return item;
-            }).ToList()*/
-        }
-
+        
         private object getGroupByObject(Dictionary<AttributeModel, object> item)
         {
-            throw new NotImplementedException();
+            var groupers = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
+            GroupingObject groupingObject = new GroupingObject(groupers.Count == 0);
+            int count = 0;
+            foreach (var attributeModel in item.Keys)
+            {
+                if (groupers.Count(avo => avo.AttributeModel == attributeModel) > 0)
+                {
+                    groupingObject.Add(count++, item[attributeModel]);
+                }
+            }
+            return groupingObject;
+        }
+
+        private QueryResultItemModel getQueryResultItemModel(object key, IEnumerable<Dictionary<AttributeModel, object>> dicts)
+        { 
+            QueryResultItemModel item = new QueryResultItemModel();
+
+            // groupers first
+            var attributeOperationModels = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
+            foreach (var attributeOperationModel in attributeOperationModels)
+            {
+                IEnumerable<object> values = dicts.Select(dict => dict[attributeOperationModel.AttributeModel]);
+                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, values.First());
+                if (!item.Values.ContainsKey(attributeOperationModel))
+                {
+                    item.Values.Add(attributeOperationModel, valueModel);
+                }
+            }
+
+            // x values
+            attributeOperationModels = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
+            foreach (var attributeOperationModel in attributeOperationModels)
+            {
+                IEnumerable<object> values = dicts.Select(dict => dict[attributeOperationModel.AttributeModel]);
+                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, values.First());
+                if (!item.Values.ContainsKey(attributeOperationModel))
+                {
+                    item.Values.Add(attributeOperationModel, valueModel);
+                }
+            }
+
+            return item;
         }
 
         private QueryResultItemValueModel fromRaw(AttributeOperationModel attributeOperationModel, object value)
@@ -138,6 +159,65 @@ namespace PanoramicData.controller.data.sim
             }
 
             return valueModel;
+        }
+    }
+
+    public class ItemComparer : IComparer<Dictionary<AttributeModel, object>>
+    {
+        private QueryModel _queryModel = null;
+
+        public ItemComparer(QueryModel queryModel)
+        {
+            _queryModel = queryModel;
+        }
+
+        public int Compare(Dictionary<AttributeModel, object> x, Dictionary<AttributeModel, object> y)
+        {
+            return string.Compare(y.LastName, x.LastName);
+        }
+    }
+
+    public class GroupingObject
+    {
+        private Dictionary<int, object> _dictionary = new Dictionary<int, object>();
+        private bool _isNotGrouped = false;
+
+        public GroupingObject(bool isNotGrouped)
+        {
+            _isNotGrouped = isNotGrouped;
+        }
+
+        public void Add(int index, object value)
+        {
+            _dictionary.Add(index, value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is GroupingObject)
+            {
+                var go = obj as GroupingObject;
+                if (_isNotGrouped)
+                    return false;
+                else
+                    return go._dictionary.SequenceEqual(this._dictionary);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (_isNotGrouped)
+            {
+                return _dictionary.GetHashCode();
+            }
+            else
+            {
+                int code = 0;
+                foreach (var v in _dictionary.Values)
+                    code ^= v.GetHashCode();
+                return code;
+            }
         }
     }
 }

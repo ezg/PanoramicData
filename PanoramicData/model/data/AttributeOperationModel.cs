@@ -144,6 +144,36 @@ namespace PanoramicData.model.data
                 this.SetProperty(ref _scaleFunction, value);
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is AttributeOperationModel)
+            {
+                var aom = obj as AttributeOperationModel;
+                return
+                    aom._aggregateFunction == this.AggregateFunction &&
+                    aom._attributeModel == this._attributeModel &&
+                    aom._isBinned == this._isBinned &&
+                    aom._binSize == this._binSize &&
+                    aom._isGrouped == this._isGrouped &&
+                    aom._scaleFunction == this._scaleFunction &&
+                    aom._sortMode == this._sortMode;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            int code = 0;
+            code ^= this.AggregateFunction.GetHashCode();
+            code ^= this._attributeModel.GetHashCode();
+            code ^= this._isBinned.GetHashCode();
+            code ^= this._binSize.GetHashCode();
+            code ^= this._isGrouped.GetHashCode();
+            code ^= this._scaleFunction.GetHashCode();
+            code ^= this._sortMode.GetHashCode();
+            return code;
+        }
     }
 
     public enum AggregateFunction { None, Sum, Count, Min, Max, Avg, Concat, Vis, Bin };

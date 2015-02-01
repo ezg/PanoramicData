@@ -36,9 +36,34 @@ namespace PanoramicData.model.data
         {
             get;
         }
+
         public abstract string AttributeDataType
         {
             get;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is AttributeModel)
+            {
+                var am = obj as AttributeModel;
+                return
+                    am.OriginModel == this.OriginModel &&
+                    am.Name == this.Name &&
+                    am.AttributeVisualizationType == this.AttributeVisualizationType &&
+                    am.AttributeDataType == this.AttributeDataType;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            int code = 0;
+            code ^= this.OriginModel.GetHashCode();
+            code ^= this.Name.GetHashCode();
+            code ^= this.AttributeVisualizationType.GetHashCode();
+            code ^= this.AttributeDataType.GetHashCode();
+            return code;
         }
     }
 
