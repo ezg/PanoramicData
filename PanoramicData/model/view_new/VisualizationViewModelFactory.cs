@@ -10,11 +10,11 @@ namespace PanoramicData.model.view_new
 {
     public class VisualizationViewModelFactory
     {
-        public static VisualizationViewModel CreateDefault(SchemaModel schemaModel, AttributeViewModel attributeViewModel)
+        public static VisualizationViewModel CreateDefault(SchemaModel schemaModel, AttributeOperationModel attributeOperationModel)
         {
             VisualizationViewModel visualizationViewModel = new VisualizationViewModel(schemaModel);
 
-            if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
+            if (attributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
             {
                 visualizationViewModel.VisualizationType = VisualizationType.Pie;
                 /*
@@ -28,7 +28,7 @@ namespace PanoramicData.model.view_new
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, g);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);*/
             }
-            else if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
+            else if (attributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
             {
                 /*visualizationViewModel.VisualizationType = VisualizationType.Histogram;
 
@@ -45,7 +45,7 @@ namespace PanoramicData.model.view_new
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.GroupBy, bin);
                 filterHolderViewModel.AddOptionColumnDescriptor(Option.Y, y);*/
             }
-            else if (attributeViewModel.AttributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.GEOGRAPHY)
+            else if (attributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.GEOGRAPHY)
             {
                 /*visualizationViewModel.VisualizationType = VisualizationType.Map;
 
@@ -63,7 +63,7 @@ namespace PanoramicData.model.view_new
             else
             {
                 visualizationViewModel.VisualizationType = VisualizationType.Table;
-                visualizationViewModel.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, new AttributeOperationModel(attributeViewModel.AttributeOperationModel.AttributeModel));
+                visualizationViewModel.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, attributeOperationModel);
             }
 
             return visualizationViewModel;

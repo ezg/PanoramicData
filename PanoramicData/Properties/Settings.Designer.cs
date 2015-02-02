@@ -217,7 +217,7 @@ namespace PanoramicData.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Test")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TestSmall")]
         public string InitialDataSet {
             get {
                 return ((string)(this["InitialDataSet"]));

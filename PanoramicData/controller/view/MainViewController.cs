@@ -138,9 +138,9 @@ namespace PanoramicData.controller.view
             InkableScene.Add(_schemaViewer);
         }
 
-        public VisualizationViewModel CreateVisualizationViewModel(AttributeViewModel attribueViewModel)
+        public VisualizationViewModel CreateVisualizationViewModel(AttributeOperationModel attributeOperationModel)
         {
-            VisualizationViewModel visModel = VisualizationViewModelFactory.CreateDefault(_schemaModel, attribueViewModel);
+            VisualizationViewModel visModel = VisualizationViewModelFactory.CreateDefault(_schemaModel, attributeOperationModel);
             _visualizationViewModels.Add(visModel);
             return visModel;
         }
@@ -203,7 +203,7 @@ namespace PanoramicData.controller.view
             else
             {
                 VisualizationContainerView visualizationContainerView = new VisualizationContainerView();
-                visualizationContainerView.DataContext = CreateVisualizationViewModel(e.AttributeViewModel);
+                visualizationContainerView.DataContext = CreateVisualizationViewModel(e.AttributeOperationModel);
                 visualizationContainerView.InitPostionAndDimension(position, size);
                /* FilterHolder filter = new FilterHolder();
                 FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateDefault(columnDescriptor, tableModel);

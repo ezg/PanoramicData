@@ -250,8 +250,11 @@ namespace PanoramicData.view.table
 
             DataTemplate template = new DataTemplate();
             FrameworkElementFactory tbFactory = new FrameworkElementFactory(typeof(AttributeView));
-            tbFactory.SetValue(AttributeView.DataContextProperty, new AttributeViewModel(DataContext as VisualizationViewModel, attributeOperationModel));
-            /*tbFactory.SetValue(AttributeView.IsInteractiveProperty, false);
+            tbFactory.SetValue(AttributeView.DataContextProperty, new AttributeViewModel(DataContext as VisualizationViewModel, attributeOperationModel)
+                {
+                    IsRemoveEnabled = true
+                });
+            /*tbFactory.SetValue(AttributeView.Is, false);
             tbFactory.SetValue(AttributeView.FilterModelProperty, _filterModel);
             tbFactory.SetValue(AttributeView.TableModelProperty, _tableModel);*/
 
@@ -399,7 +402,7 @@ namespace PanoramicData.view.table
         {
             var header = (sender as FrameworkElement).FindParent<GridViewColumnHeader>();
 
-            if (CanResize && _isResizing)
+            if (CanResize && _isResizing && header != null)
             {
                 header.Column.Width = Math.Max(35, header.Column.ActualWidth + e.DeltaManipulation.Translation.X);
                 //e.Handled = true;
@@ -460,12 +463,12 @@ namespace PanoramicData.view.table
             GridViewColumnCollection columns = ((GridView)listView.View).Columns;
 
             if (!_isResizing && (CanReorder || CanDrag) &&
-                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Any(avm => avm == sender.AttributeOperationModel))
+                model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Any(aom => object.ReferenceEquals(aom, sender.AttributeOperationModel)))
             {
                 model.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.X).Remove(sender.AttributeOperationModel);
                 
             }
-            AttributeOperationModel clone = sender.AttributeOperationModel;
+            AttributeOperationModel clone = e.AttributeOperationModel;
             if (closestHeader.Column == null)
             {
                 model.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, clone);
@@ -737,7 +740,11 @@ namespace PanoramicData.view.table
             if (value != null)
             {
                 QueryResultItemModel model = (value as QueryResultItemModel);
-                return model.Values[_attributeOperationModel].ShortStringValue;
+                if (model.Values.ContainsKey(_attributeOperationModel))
+                {
+                    return model.Values[_attributeOperationModel].ShortStringValue;
+                }
+                return "";
             }
             return null;
         }

@@ -246,8 +246,8 @@ namespace PanoramicData.view.vis
 
         public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
-            e.AttributeViewModel.AttributeOperationModel.IsGrouped = true;
-            addGrouping(e.AttributeViewModel.AttributeOperationModel);
+            e.AttributeOperationModel.IsGrouped = true;
+            addGrouping(e.AttributeOperationModel);
             groupGridRectangle.Visibility = Visibility.Collapsed;
         }
 

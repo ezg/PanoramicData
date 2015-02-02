@@ -50,22 +50,31 @@ namespace PanoramicData.controller.data.sim
 
         private List<QueryResultItemModel> computeQueryResult()
         {
-            var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
+            if (_queryModel.GetAllAttributeOperationModel().Any())
+            {
+                var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
 
-            var results = data.OrderBy(item => item, new ItemComparer(_queryModel)).
-                GroupBy(
-                    item => getGroupByObject(item), 
-                    item => item,
-                    (key, g) => getQueryResultItemModel(key, g));
+                var results = data.
+                    GroupBy(
+                        item => getGroupByObject(item),
+                        item => item,
+                        (key, g) => getQueryResultItemModel(key, g)).
+                        OrderBy(item => item, new ItemComparer(_queryModel));
 
-            return results.ToList();
-            
+                return results.ToList();
+            }
+            else
+            {
+                return new List<QueryResultItemModel>();
+            }
         }
         
         private object getGroupByObject(Dictionary<AttributeModel, object> item)
         {
             var groupers = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
-            GroupingObject groupingObject = new GroupingObject(groupers.Count == 0);
+            GroupingObject groupingObject = new GroupingObject(
+                groupers.Count > 0,
+                _queryModel.GetAllAttributeOperationModel().Any(aom => aom.AggregateFunction != AggregateFunction.None));
             int count = 0;
             foreach (var attributeModel in item.Keys)
             {
@@ -81,29 +90,77 @@ namespace PanoramicData.controller.data.sim
         { 
             QueryResultItemModel item = new QueryResultItemModel();
 
-            // groupers first
-            var attributeOperationModels = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
+            var attributeOperationModels = _queryModel.GetAllAttributeOperationModel();
             foreach (var attributeOperationModel in attributeOperationModels)
             {
                 IEnumerable<object> values = dicts.Select(dict => dict[attributeOperationModel.AttributeModel]);
-                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, values.First());
+
+                object rawValue = null;
+
+                if (attributeOperationModel.AggregateFunction == AggregateFunction.Max)
+                {
+                    rawValue = values.Max();
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Min)
+                {
+                    rawValue = values.Min();
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Avg)
+                {
+                    if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.FLOAT)
+                    {
+                        rawValue = values.Select(v => (double)v).Average();
+                    }
+                    else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.INT)
+                    {
+                        rawValue = values.Select(v => (int)v).Average();
+                    }
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Sum)
+                {
+                    if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.FLOAT)
+                    {
+                        rawValue = values.Select(v => (double)v).Sum();
+                    }
+                    else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.INT)
+                    {
+                        rawValue = values.Select(v => (int)v).Sum();
+                    }
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Count)
+                {
+                    rawValue = values.Count();
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Bin)
+                {
+                    rawValue = "ddd";
+                }
+                else if (attributeOperationModel.AggregateFunction == AggregateFunction.None)
+                {
+                    if (_queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any())
+                    {
+                        if (_queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any(aom => aom.AttributeModel == attributeOperationModel.AttributeModel))
+                        {
+                            rawValue = values.First();
+                        }
+                        else
+                        {
+                            rawValue = "...";
+                        }
+                    }
+                    else
+                    {
+                        rawValue = values.First();
+                    }
+                }
+
+                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, rawValue);
                 if (!item.Values.ContainsKey(attributeOperationModel))
                 {
                     item.Values.Add(attributeOperationModel, valueModel);
                 }
             }
 
-            // x values
-            attributeOperationModels = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.X);
-            foreach (var attributeOperationModel in attributeOperationModels)
-            {
-                IEnumerable<object> values = dicts.Select(dict => dict[attributeOperationModel.AttributeModel]);
-                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, values.First());
-                if (!item.Values.ContainsKey(attributeOperationModel))
-                {
-                    item.Values.Add(attributeOperationModel, valueModel);
-                }
-            }
 
             return item;
         }
@@ -162,7 +219,7 @@ namespace PanoramicData.controller.data.sim
         }
     }
 
-    public class ItemComparer : IComparer<Dictionary<AttributeModel, object>>
+    public class ItemComparer : IComparer<QueryResultItemModel>
     {
         private QueryModel _queryModel = null;
 
@@ -171,20 +228,48 @@ namespace PanoramicData.controller.data.sim
             _queryModel = queryModel;
         }
 
-        public int Compare(Dictionary<AttributeModel, object> x, Dictionary<AttributeModel, object> y)
+        public int Compare(QueryResultItemModel x, QueryResultItemModel y)
         {
-            return string.Compare(y.LastName, x.LastName);
+            var attributeOperationModels = _queryModel.GetAllAttributeOperationModel().Where(aom => aom.SortMode != SortMode.None);
+            foreach (var aom in attributeOperationModels)
+            {
+                int factor = aom.SortMode == SortMode.Asc ? 1 : -1;
+
+                if (x.Values[aom].Value is string &&
+                   ((string)x.Values[aom].Value).CompareTo((string)y.Values[aom].Value) != 0)
+                {
+                    return (x.Values[aom].Value as string).CompareTo(y.Values[aom].Value as string) * factor;
+                }
+                else if (x.Values[aom].Value is double &&
+                         ((double)x.Values[aom].Value).CompareTo((double) y.Values[aom].Value) != 0)
+                {
+                    return ((double)x.Values[aom].Value).CompareTo((double)y.Values[aom].Value) * factor;
+                }
+                else if (x.Values[aom].Value is int &&
+                     ((int)x.Values[aom].Value).CompareTo((int)y.Values[aom].Value) != 0)
+                {
+                    return ((double)x.Values[aom].Value).CompareTo((double)y.Values[aom].Value) * factor;
+                }
+                else if (x.Values[aom].Value is DateTime &&
+                         ((DateTime)x.Values[aom].Value).CompareTo((DateTime)y.Values[aom].Value) != 0)
+                {
+                    return ((DateTime)x.Values[aom].Value).CompareTo((DateTime)y.Values[aom].Value) * factor;
+                }
+            }
+            return 0;
         }
     }
 
     public class GroupingObject
     {
         private Dictionary<int, object> _dictionary = new Dictionary<int, object>();
-        private bool _isNotGrouped = false;
+        private bool _isAnyGrouped = false;
+        private bool _isAnyAggregated = false;
 
-        public GroupingObject(bool isNotGrouped)
+        public GroupingObject(bool isAnyGrouped, bool isAnyAggregated)
         {
-            _isNotGrouped = isNotGrouped;
+            _isAnyGrouped = isAnyGrouped;
+            _isAnyAggregated = isAnyAggregated;
         }
 
         public void Add(int index, object value)
@@ -197,26 +282,39 @@ namespace PanoramicData.controller.data.sim
             if (obj is GroupingObject)
             {
                 var go = obj as GroupingObject;
-                if (_isNotGrouped)
-                    return false;
-                else
+                if (_isAnyGrouped)
+                {
                     return go._dictionary.SequenceEqual(this._dictionary);
+                }
+                else
+                {
+                    if (_isAnyAggregated)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                    
             }
             return false;
         }
 
         public override int GetHashCode()
         {
-            if (_isNotGrouped)
-            {
-                return _dictionary.GetHashCode();
-            }
-            else
+            if (_isAnyGrouped)
             {
                 int code = 0;
                 foreach (var v in _dictionary.Values)
                     code ^= v.GetHashCode();
                 return code;
+            }
+            else
+            {
+                if (_isAnyAggregated)
+                {
+                    return 0;
+                }
+                return _dictionary.GetHashCode();
             }
         }
     }

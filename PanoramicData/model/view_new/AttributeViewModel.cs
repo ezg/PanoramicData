@@ -21,19 +21,19 @@ namespace PanoramicData.model.view_new
             AttributeOperationModel = attributeOperationModel;
         }
 
-        public void FireMoved(Rct bounds, AttributeViewModelEventArgType type)
+        public void FireMoved(Rct bounds, AttributeOperationModel attributeOperationModel, AttributeViewModelEventArgType type)
         {
             if (AttributeViewModelMoved != null)
             {
-                AttributeViewModelMoved(this, new AttributeViewModelEventArgs(this, bounds, type));
+                AttributeViewModelMoved(this, new AttributeViewModelEventArgs(attributeOperationModel, bounds, type));
             }
         }
 
-        public void FireDropped(Rct bounds, AttributeViewModelEventArgType type)
+        public void FireDropped(Rct bounds, AttributeViewModelEventArgType type, AttributeOperationModel attributeOperationModel)
         {
             if (AttributeViewModelDropped != null)
             {
-                AttributeViewModelDropped(this, new AttributeViewModelEventArgs(this, bounds, type));
+                AttributeViewModelDropped(this, new AttributeViewModelEventArgs(attributeOperationModel, bounds, type));
             }
         }
 
@@ -234,14 +234,6 @@ namespace PanoramicData.model.view_new
             {
                 name = "Avg(" + name + ")";
             }
-            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Concat)
-            {
-                name = "Concat(" + name + ")";
-            }
-            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Concat)
-            {
-                name = "Concat(" + name + ")";
-            }
             else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Count)
             {
                 name = "Count(" + name + ")";
@@ -257,10 +249,6 @@ namespace PanoramicData.model.view_new
             else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Sum)
             {
                 name = "Sum(" + name + ")";
-            }
-            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Vis)
-            {
-                name = "Vis(" + name + ")";
             }
             else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Bin)
             {
@@ -302,14 +290,14 @@ namespace PanoramicData.model.view_new
     public class AttributeViewModelEventArgs : EventArgs
     {
         public Rct Bounds { get; set; }
-        public AttributeViewModel AttributeViewModel { get; set; }
+        public AttributeOperationModel AttributeOperationModel { get; set; }
         public AttributeViewModelEventArgType Type { get; set; }
         public bool UseDefaultSize { get; set; }
         public VisualizationViewModel CreateLinkFrom { get; set; }
 
-        public AttributeViewModelEventArgs(AttributeViewModel attributeViewModel, Rct bounds, AttributeViewModelEventArgType type)
+        public  AttributeViewModelEventArgs(AttributeOperationModel attributeOperationModel, Rct bounds, AttributeViewModelEventArgType type)
         {
-            AttributeViewModel = attributeViewModel;
+            AttributeOperationModel = attributeOperationModel;
             Bounds = bounds;
             Type = type;
             UseDefaultSize = true;

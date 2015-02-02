@@ -170,7 +170,9 @@ namespace PanoramicData.view.table
                 inkableScene.Add(_shadow);
 
                 Rct bounds = _shadow.GetBounds(inkableScene);
-                (DataContext as AttributeViewModel).FireMoved(bounds, AttributeViewModelEventArgType.Default);
+                (DataContext as AttributeViewModel).FireMoved(bounds, 
+                    new AttributeOperationModel((DataContext as AttributeViewModel).AttributeOperationModel.AttributeModel),
+                    AttributeViewModelEventArgType.Default);
             }
         }
 
@@ -205,7 +207,9 @@ namespace PanoramicData.view.table
                     inkableScene.Add(_shadow);
 
                     Rct bounds = _shadow.GetBounds(inkableScene);
-                    (DataContext as AttributeViewModel).FireMoved(bounds, AttributeViewModelEventArgType.Default);
+                    (DataContext as AttributeViewModel).FireMoved(bounds, 
+                        new AttributeOperationModel((DataContext as AttributeViewModel).AttributeOperationModel.AttributeModel),
+                        AttributeViewModelEventArgType.Default);
                 }
             }
         }
@@ -245,7 +249,8 @@ namespace PanoramicData.view.table
                 InkableScene inkableScene = this.FindParent<InkableScene>();
 
                 Rct bounds = _shadow.GetBounds(inkableScene);
-                (DataContext as AttributeViewModel).FireDropped(bounds, AttributeViewModelEventArgType.Default);
+                (DataContext as AttributeViewModel).FireDropped(bounds, AttributeViewModelEventArgType.Default, 
+                    new AttributeOperationModel((DataContext as AttributeViewModel).AttributeOperationModel.AttributeModel));
 
                 inkableScene.Remove(_shadow);
                 _shadow = null;

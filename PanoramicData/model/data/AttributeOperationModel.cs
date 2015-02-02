@@ -36,7 +36,6 @@ namespace PanoramicData.model.data
             }
             set
             {
-                _queryModel = value;
                 this.SetProperty(ref _queryModel, value);
             }
         }
@@ -176,7 +175,7 @@ namespace PanoramicData.model.data
         }
     }
 
-    public enum AggregateFunction { None, Sum, Count, Min, Max, Avg, Concat, Vis, Bin };
+    public enum AggregateFunction { None, Sum, Count, Min, Max, Avg, Bin };
 
     public enum SortMode { Asc, Desc, None }
 

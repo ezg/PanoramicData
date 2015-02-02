@@ -40,6 +40,7 @@ namespace PanoramicData.model.data
             {
                 foreach (var item in e.NewItems)
                 {
+                    (item as AttributeOperationModel).QueryModel = this;
                     (item as AttributeOperationModel).PropertyChanged += QueryModel_PropertyChanged;
                 }
             }
@@ -79,7 +80,6 @@ namespace PanoramicData.model.data
         private Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>> _attributeFunctionOperationModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>>();
         public void AddFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
-            attributeOperationModel.QueryModel = this;
             _attributeFunctionOperationModels[attributeFunction].Add(attributeOperationModel);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
@@ -105,6 +105,16 @@ namespace PanoramicData.model.data
         public ObservableCollection<AttributeOperationModel> GetFunctionAttributeOperationModel(AttributeFunction attributeFunction)
         {
             return _attributeFunctionOperationModels[attributeFunction];
+        }
+
+        public List<AttributeOperationModel> GetAllAttributeOperationModel()
+        {
+            List<AttributeOperationModel> retList = new List<AttributeOperationModel>();
+            foreach (var key in _attributeFunctionOperationModels.Keys)
+            {
+                retList.AddRange(_attributeFunctionOperationModels[key]);
+            }
+            return retList;
         }
 
         private List<FilterItem> _filterItems = new List<FilterItem>();
