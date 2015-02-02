@@ -175,7 +175,7 @@ namespace PanoramicData.model.data
         }
     }
 
-    public enum AggregateFunction { None, Sum, Count, Min, Max, Avg, Bin };
+    public enum AggregateFunction { None, Sum, Count, Min, Max, Avg };
 
     public enum SortMode { Asc, Desc, None }
 

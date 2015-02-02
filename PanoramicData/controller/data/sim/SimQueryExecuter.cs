@@ -78,9 +78,15 @@ namespace PanoramicData.controller.data.sim
             int count = 0;
             foreach (var attributeModel in item.Keys)
             {
-                if (groupers.Count(avo => avo.AttributeModel == attributeModel) > 0)
+                if (groupers.Count(avo => avo.IsGrouped && avo.AttributeModel == attributeModel) > 0)
                 {
                     groupingObject.Add(count++, item[attributeModel]);
+                }
+                else if (groupers.Count(avo => avo.IsBinned && avo.AttributeModel == attributeModel) > 0)
+                {
+                    AttributeOperationModel bin = groupers.Where(avo => avo.IsBinned && avo.AttributeModel == attributeModel).First();
+                    double d = double.Parse(item[attributeModel].ToString());
+                    groupingObject.Add(count++, Math.Floor(d / bin.BinSize) * bin.BinSize);
                 }
             }
             return groupingObject;
@@ -93,6 +99,8 @@ namespace PanoramicData.controller.data.sim
             var attributeOperationModels = _queryModel.GetAllAttributeOperationModel();
             foreach (var attributeOperationModel in attributeOperationModels)
             {
+                bool binned = false;
+                double binSize = 0;
                 IEnumerable<object> values = dicts.Select(dict => dict[attributeOperationModel.AttributeModel]);
 
                 object rawValue = null;
@@ -131,17 +139,24 @@ namespace PanoramicData.controller.data.sim
                 {
                     rawValue = values.Count();
                 }
-                else if (attributeOperationModel.AggregateFunction == AggregateFunction.Bin)
-                {
-                    rawValue = "ddd";
-                }
                 else if (attributeOperationModel.AggregateFunction == AggregateFunction.None)
                 {
                     if (_queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any())
                     {
                         if (_queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any(aom => aom.AttributeModel == attributeOperationModel.AttributeModel))
                         {
-                            rawValue = values.First();
+                            AttributeOperationModel grouper = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Where(aom => aom.AttributeModel == attributeOperationModel.AttributeModel).First();
+                            if (grouper.IsGrouped)
+                            {
+                                rawValue = values.First();
+                            }
+                            else if (grouper.IsBinned)
+                            {
+                                double d = double.Parse(values.First().ToString());
+                                rawValue = Math.Floor(d / grouper.BinSize) * grouper.BinSize;
+                                binned = true;
+                                binSize = grouper.BinSize;
+                            }
                         }
                         else
                         {
@@ -154,7 +169,7 @@ namespace PanoramicData.controller.data.sim
                     }
                 }
 
-                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, rawValue);
+                QueryResultItemValueModel valueModel = fromRaw(attributeOperationModel, rawValue, binned, binSize);
                 if (!item.Values.ContainsKey(attributeOperationModel))
                 {
                     item.Values.Add(attributeOperationModel, valueModel);
@@ -165,7 +180,7 @@ namespace PanoramicData.controller.data.sim
             return item;
         }
 
-        private QueryResultItemValueModel fromRaw(AttributeOperationModel attributeOperationModel, object value)
+        private QueryResultItemValueModel fromRaw(AttributeOperationModel attributeOperationModel, object value, bool binned, double binSize)
         {
             QueryResultItemValueModel valueModel = new QueryResultItemValueModel();
 
@@ -174,9 +189,9 @@ namespace PanoramicData.controller.data.sim
             if (double.TryParse(value.ToString(), out d))
             {
                 valueModel.StringValue = valueModel.Value.ToString().Contains(".") ? d.ToString("N") : valueModel.Value.ToString();
-                if (attributeOperationModel.AggregateFunction == AggregateFunction.Bin)
+                if (binned)
                 {
-                    valueModel.StringValue = d + " - " + (d + attributeOperationModel.BinSize);
+                    valueModel.StringValue = d + " - " + (d + binSize);
                 }
                 else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
                 {

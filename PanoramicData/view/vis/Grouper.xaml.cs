@@ -130,18 +130,18 @@ namespace PanoramicData.view.vis
                     if (attributeOperationModel.IsGrouped)
                     {
                         groupModel = attributeOperationModel;
-                        binModel = attributeOperationModel;
+                        binModel = new AttributeOperationModel(attributeOperationModel.AttributeModel);
                     }
-                    else
+                    else if (attributeOperationModel.IsBinned)
                     {
-                        groupModel = attributeOperationModel;
+                        groupModel = new AttributeOperationModel(attributeOperationModel.AttributeModel);
                         binModel = attributeOperationModel;
                     }
 
                     RadialMenuCommand group = new RadialMenuCommand();
                     group.Name = groupModel.AttributeModel.Name.Replace(" ", "\n");
                     group.Data = groupModel;
-                    group.IsActive = groupModel.IsGrouped || groupModel.IsBinned;
+                    group.IsActive = groupModel.IsGrouped || binModel.IsBinned;
                     group.IsSelectable = false;
 
                     RadialMenuCommandGroup groupGroup = new RadialMenuCommandGroup("groupGroup",

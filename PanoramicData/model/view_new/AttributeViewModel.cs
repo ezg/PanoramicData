@@ -250,10 +250,10 @@ namespace PanoramicData.model.view_new
             {
                 name = "Sum(" + name + ")";
             }
-            else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Bin)
+            /*else if (AttributeOperationModel.AggregateFunction == AggregateFunction.Bin)
             {
                 name = "Bin Range(" + name + ")";
-            }
+            }*/
 
             if (AttributeOperationModel.ScaleFunction != ScaleFunction.None)
             {

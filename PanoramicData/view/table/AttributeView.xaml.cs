@@ -426,7 +426,7 @@ namespace PanoramicData.view.table
                 };
                 aggregate.AddSubCommand(avg);
             }
-            if (atrributeViewModel.AttributeOperationModel.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Count > 0 &&
+            /*if (atrributeViewModel.AttributeOperationModel.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Count > 0 &&
                 atrributeViewModel.AttributeOperationModel.QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any(aom => aom.IsBinned && aom.Equals(atrributeViewModel.AttributeOperationModel)))
             {
                 RadialMenuCommand binRange = new RadialMenuCommand();
@@ -442,7 +442,7 @@ namespace PanoramicData.view.table
                     avm.AggregateFunction = cmd.IsActive ? AggregateFunction.Bin : AggregateFunction.None;
                 };
                 aggregate.AddSubCommand(binRange);
-            }
+            }*/
 
             RadialMenuCommand max = new RadialMenuCommand();
             max.Name = "Max";
