@@ -16,6 +16,7 @@ using PanoramicData.view.table;
 using PanoramicData.controller.view;
 using PanoramicData.model.view_new;
 using PanoramicData.view.vis.render;
+using PanoramicData.utils;
 
 namespace PanoramicData.view.vis
 {
@@ -180,50 +181,50 @@ namespace PanoramicData.view.vis
             _isFrontShown = !_isFrontShown;*/
         }
 
-        public override void NotifyMove(Pt delta)
+        public override void NotifyMove(Point delta)
         {
             base.NotifyMove(delta);
 
             (DataContext as VisualizationViewModel).Position = this.GetBounds().TopLeft.GetVec().GetWindowsPoint();
-            (DataContext as VisualizationViewModel).Size = new Vec(this.Width, this.Height);
+            (DataContext as VisualizationViewModel).Size = new Vector2(this.Width, this.Height);
         }
 
-        public override void NotifyScale(Vec delta, Vec offset)
+        public override void NotifyScale(Vector2 delta, Vector2 offset)
         {
             base.NotifyScale(delta, offset);
 
             (DataContext as VisualizationViewModel).Position = this.GetBounds().TopLeft.GetVec().GetWindowsPoint();
-            (DataContext as VisualizationViewModel).Size = new Vec(this.Width, this.Height);
+            (DataContext as VisualizationViewModel).Size = new Vector2(this.Width, this.Height);
         }
 
-        public override void InitPostionAndDimension(Pt pos, Vec dim)
+        public override void InitPostionAndDimension(Point pos, Vector2 dim)
         {
             base.InitPostionAndDimension(pos, dim);
         }
 
-        public override Pt GetPosition()
+        public override Point GetPosition()
         {
             return (DataContext as VisualizationViewModel).Position;
         }
 
-        public override void SetPosition(Pt pos)
+        public override void SetPosition(Point pos)
         {
             (DataContext as VisualizationViewModel).Position = pos;
         }
 
-        public override void SetSize(Vec dim)
+        public override void SetSize(Vector2 dim)
         {
             (DataContext as VisualizationViewModel).Size = dim;
         }
 
-        public override Vec GetSize()
+        public override Vector2 GetSize()
         {
             return (DataContext as VisualizationViewModel).Size;
         }
 
-        public override Vec GetMinSize()
+        public override Vector2 GetMinSize()
         {
-            return new Vec(this.MinWidth, this.MinHeight);
+            return new Vector2(this.MinWidth, this.MinHeight);
         }
 
         public override void NotifyInteraction()

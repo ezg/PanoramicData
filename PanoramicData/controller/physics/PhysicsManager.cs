@@ -15,7 +15,6 @@ using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using Poly2Tri.Triangulation.Delaunay.Sweep;
 using starPadSDK.AppLib;
-using starPadSDK.Geom;
 using starPadSDK.Inq;
 using starPadSDK.WPFHelp;
 using Matrix = System.Windows.Media.Matrix;
@@ -139,8 +138,8 @@ namespace PanoramicData.controller.physics
                 if (element is VisualizationContainerView && !((element as VisualizationContainerView).DataContext as VisualizationViewModel).IsTemporary)
                 {
                     Vector2 vec2 = _physicalObjects[element].OuterBody.Position;
-                    Vec newPos = _physics2RealMatrixScale.Transform(new Vector(vec2.X, vec2.Y));
-                    element.SetPosition(new Pt(newPos.X + 25000 - element.GetSize().X / 2.0, newPos.Y + 25000 - element.GetSize().Y / 2.0));
+                    Vector newPos = _physics2RealMatrixScale.Transform(new Vector(vec2.X, vec2.Y));
+                    element.SetPosition(new Point(newPos.X + 25000 - element.GetSize().X / 2.0, newPos.Y + 25000 - element.GetSize().Y / 2.0));
                 }
             }
 
@@ -175,7 +174,7 @@ namespace PanoramicData.controller.physics
             }
         }
 
-        public void DragStart(MovableElement element, Pt currentPos)
+        public void DragStart(MovableElement element, Point currentPos)
         {
             if (_mouseJoints.ContainsKey(element))
             {
@@ -232,7 +231,7 @@ namespace PanoramicData.controller.physics
             }
         }
 
-        public void DragMove(MovableElement element, Pt currentPos)
+        public void DragMove(MovableElement element, Point currentPos)
         {
             FixedMouseJoint joint = null;
             _mouseJoints.TryGetValue(element, out joint);
@@ -245,7 +244,7 @@ namespace PanoramicData.controller.physics
             }
         }
 
-        public void DragEnd(MovableElement element, Pt currentPos)
+        public void DragEnd(MovableElement element, Point currentPos)
         {
             if (_mouseJoints.ContainsKey(element))
             {
@@ -309,11 +308,11 @@ namespace PanoramicData.controller.physics
 
         private PhysicalObject createPhysicalObject(MovableElement element, bool isUnderInteraction = false)
         {
-            Pt center = element.GetPosition() + element.GetSize() / 2.0;
+            Point center = element.GetPosition() + element.GetSize() / 2.0;
             center = _real2PhysicsMatrixTranslate.Transform(center);
             center = _real2PhysicsMatrixScale.Transform(center);
             float borderThickness = (float) _real2PhysicsMatrixScale.M11*2.0f;
-            Vec dim = element.GetSize();
+            PanoramicData.utils.Vector2 dim = element.GetSize();
 
             float width = (float) _real2PhysicsMatrixScale.M11*(float) dim.X;
             float height = (float) _real2PhysicsMatrixScale.M11*(float) dim.Y;

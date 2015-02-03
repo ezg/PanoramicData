@@ -5,7 +5,6 @@ using PanoramicData.view.schema;
 using PanoramicData.view.table;
 using PanoramicDataDBConnector;
 using PanoramicDataModel;
-using starPadSDK.Geom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +31,9 @@ namespace PanoramicData.controller.view
 {
     public class MainViewController
     {
+        private Gesturizer _gesturizer = new Gesturizer();
         private static MainViewController _instance;
+
         private MainViewController(InkableScene root, MainWindow window)
         {
             _root = root;
@@ -51,13 +52,16 @@ namespace PanoramicData.controller.view
             ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
             Colorer.ColorerDropped += ColorerDropped;
             DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
+            _root.InkCollectedEvent += root_InkCollectedEvent;
+
+            _gesturizer.AddGesture(new PanoramicData.view.inq.ScribbleGesture(_root));
         }
 
         public static void CreateInstance(InkableScene root, MainWindow window)
         {
             _instance = new MainViewController(root, window);
         }
-
+        
         public static MainViewController Instance
         {
             get
@@ -131,10 +135,10 @@ namespace PanoramicData.controller.view
             _schemaViewer.DataContext = schemaViewModel;
         }
 
-        public void ShowSchemaViewer(Pt pos)
+        public void ShowSchemaViewer(Point pos)
         {
             SchemaViewModel model = _schemaViewer.DataContext as SchemaViewModel;
-            model.Position = new Pt(pos.X - model.Size.X / 2.0, pos.Y - model.Size.Y / 2.0);
+            model.Position = new Point(pos.X - model.Size.X / 2.0, pos.Y - model.Size.Y / 2.0);
             InkableScene.Add(_schemaViewer);
         }
 
@@ -188,8 +192,8 @@ namespace PanoramicData.controller.view
 
             double width = e.UseDefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
             double height = e.UseDefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-            Vec size = new Vec(width, height);
-            Pt position = e.Bounds.Center - size / 2.0;
+            Vector2 size = new Vector2(width, height);
+            Point position = new Vector2(e.Bounds.Center.X, e.Bounds.Center.Y) - size / 2.0;
 
             if (hits.Count > 0)
             {
@@ -227,7 +231,7 @@ namespace PanoramicData.controller.view
             {
                 double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
                 double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-                Pt position = e.Bounds.Center;
+                Point position = e.Bounds.Center;
                 position.X -= width / 2.0;
                 position.Y -= height / 2.0;
 
@@ -252,7 +256,7 @@ namespace PanoramicData.controller.view
                 filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
                     position.Y + VisualizationContainerView.HEIGHT / 2.0);
                 //filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
+                filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
 
                 filterHolderViewModel.Color = e.FilterModel.Color;
                 e.FilterModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
@@ -270,7 +274,7 @@ namespace PanoramicData.controller.view
             {
                 double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
                 double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-                Pt position = e.Bounds.Center;
+                Point position = e.Bounds.Center;
                 position.X -= width / 2.0;
                 position.Y -= height / 2.0;
 
@@ -308,7 +312,7 @@ namespace PanoramicData.controller.view
                     filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
                         position.Y + VisualizationContainerView.HEIGHT / 2.0);
                    // filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
+                    filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                 }
             }
         }
@@ -328,6 +332,32 @@ namespace PanoramicData.controller.view
                 /*FilterHolder filter = new FilterHolder();
                 filter.FilterHolderViewModel = (FilterHolderViewModel)e.FilterModel;
                 filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));*/
+            }
+        }
+
+
+        void root_InkCollectedEvent(object sender, InkCollectedEventArgs e)
+        {
+            IList<IGesture> recognizedGestures = _gesturizer.Recognize(e.InkStroke.Clone());
+
+            foreach (IGesture recognizedGesture in recognizedGestures.ToList())
+            {
+                if (recognizedGesture is PanoramicData.view.inq.ScribbleGesture)
+                {
+                    PanoramicData.view.inq.ScribbleGesture scribble = recognizedGesture as PanoramicData.view.inq.ScribbleGesture;
+                    foreach (IScribbable hitScribbable in scribble.HitScribbables)
+                    {
+                        if (hitScribbable is InkStroke)
+                        {
+                            _root.Remove(hitScribbable as InkStroke);
+                        }
+                    }
+                }
+            }
+
+            if (recognizedGestures.Count == 0)
+            {
+                _root.Add(e.InkStroke);
             }
         }
     }

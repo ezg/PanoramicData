@@ -15,6 +15,7 @@ using PanoramicData.model.view;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
 using PanoramicData.view.vis;
+using PanoramicData.utils;
 
 namespace PanoramicData
 {
@@ -139,7 +140,7 @@ namespace PanoramicData
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();
                     //filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(new Pt(stroq[0].X - VisualizationContainerView.WIDTH / 2.0, stroq[0].Y - VisualizationContainerView.HEIGHT / 2.0), new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
+                    filter.InitPostionAndDimension(new Pt(stroq[0].X - VisualizationContainerView.WIDTH / 2.0, stroq[0].Y - VisualizationContainerView.HEIGHT / 2.0), new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                     endModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
                 }
                 else if (endElements.Count == 0 && startElements[0] is VisualizationContainerView)
@@ -150,7 +151,7 @@ namespace PanoramicData
                     filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
                     filterHolderViewModel.Center = new Point();
                     //filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(new Pt(stroq[-1].X - VisualizationContainerView.WIDTH / 2.0, stroq[-1].Y - VisualizationContainerView.HEIGHT / 2.0), new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
+                    filter.InitPostionAndDimension(new Pt(stroq[-1].X - VisualizationContainerView.WIDTH / 2.0, stroq[-1].Y - VisualizationContainerView.HEIGHT / 2.0), new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
                     filterHolderViewModel.AddIncomingFilter(startModel, FilteringType.Filter, true);
                 }
             }

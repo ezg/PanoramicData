@@ -10,6 +10,7 @@ using starPadSDK.AppLib;
 using PanoramicData.utils;
 using System.Collections.ObjectModel;
 using PanoramicData.model.data;
+using System.Windows;
 
 namespace PanoramicData.model.view_new
 {
@@ -97,8 +98,8 @@ namespace PanoramicData.model.view_new
             }
         }
 
-        private Vec _size = new Vec(180, 100);
-        public Vec Size
+        private Vector2 _size = new Vector2(180, 100);
+        public Vector2 Size
         {
             get
             {
@@ -110,8 +111,8 @@ namespace PanoramicData.model.view_new
             }
         }
 
-        private Pt _postion;
-        public Pt Position
+        private Point _postion;
+        public Point Position
         {
             get
             {

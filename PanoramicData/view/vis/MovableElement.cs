@@ -7,10 +7,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DiagramDesigner;
-using starPadSDK.Geom;
 using starPadSDK.WPFHelp;
 using PanoramicData.controller.physics;
 using PanoramicData.controller.view;
+using PanoramicData.utils;
 
 namespace PanoramicData.view.vis
 {
@@ -34,7 +34,7 @@ namespace PanoramicData.view.vis
             //PhysicsManager.Instance.UpdatePhysicalObject(this, _isUnderInteraction);
         }
 
-        public virtual void InitPostionAndDimension(Pt pos, Vec dim)
+        public virtual void InitPostionAndDimension(Point pos, Vector2 dim)
         {
             this.SetPosition(pos);
             this.SetSize(dim);
@@ -42,32 +42,32 @@ namespace PanoramicData.view.vis
             PhysicsController.Instance.AddPhysicalObject(this);
             MainViewController.Instance.InkableScene.Add(this);
         }
-        public abstract Pt GetPosition();
+        public abstract Point GetPosition();
 
-        public abstract void SetPosition(Pt pos);
+        public abstract void SetPosition(Point pos);
 
-        public abstract void SetSize(Vec dim);
+        public abstract void SetSize(Vector2 dim);
 
-        public abstract Vec GetSize();
+        public abstract Vector2 GetSize();
 
-        public abstract Vec GetMinSize();
+        public abstract Vector2 GetMinSize();
 
-        public virtual void NotifyDragStart(Pt currentPos)
+        public virtual void NotifyDragStart(Point currentPos)
         {
             PhysicsController.Instance.DragStart(this, currentPos);
         }
 
-        public virtual void NotifyDragMove(Pt currentPos)
+        public virtual void NotifyDragMove(Point currentPos)
         {
             PhysicsController.Instance.DragMove(this, currentPos);
         }
 
-        public virtual void NotifyDragEnd(Pt currentPos)
+        public virtual void NotifyDragEnd(Point currentPos)
         {
             PhysicsController.Instance.DragEnd(this, currentPos);
         }
 
-        public virtual void NotifyMove(Pt delta)
+        public virtual void NotifyMove(Point delta)
         {
             //Canvas.SetLeft(this, Canvas.GetLeft(this) + delta.X);
             //Canvas.SetTop(this, Canvas.GetTop(this) + delta.Y);
@@ -75,7 +75,7 @@ namespace PanoramicData.view.vis
         }
 
 
-        public virtual void NotifyScale(Vec delta, Vec offset)
+        public virtual void NotifyScale(Vector2 delta, Vector2 offset)
         {
             this.Width = this.Width*delta.X;
             this.Height = this.Height*delta.Y;

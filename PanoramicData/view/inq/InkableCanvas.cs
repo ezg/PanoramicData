@@ -1,7 +1,5 @@
 ﻿using CombinedInputAPI;
 using PanoramicData.utils;
-using starPadSDK.Geom;
-using starPadSDK.Inq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +18,7 @@ namespace PanoramicData.view.inq
         public delegate void InkCollectedEventHandler(object sender, InkCollectedEventArgs e);
         public event InkCollectedEventHandler InkCollectedEvent;
 
-        private Stroq _currentStroq;
+        private InkStroke _currentInkStroke;
         private bool _isPointerPressed;
 
         public InkableCanvas()
@@ -37,10 +35,10 @@ namespace PanoramicData.view.inq
 
             _isPointerPressed = true;
 
-            _currentStroq = new Stroq();
+            _currentInkStroke = new InkStroke();
             _previousContactPt = e.GetStylusPoints(this)[0].ToPoint();
-            _currentStroq.Add(new Point(_previousContactPt.X, _previousContactPt.Y));
-            Children.Add(_currentStroq);
+            _currentInkStroke.Add(new Point(_previousContactPt.X, _previousContactPt.Y));
+            Children.Add(_currentInkStroke);
             e.Handled = true;
         }
 
@@ -76,7 +74,7 @@ namespace PanoramicData.view.inq
             foreach (var stylusPoint in spc)
             {
                 Point current = MainViewController.Instance.MainWindow.TranslatePoint(stylusPoint.ToPoint(), this);
-                _currentStroq.Add(new Point(current.X, current.Y));
+                _currentInkStroke.Add(new Point(current.X, current.Y));
 
                 if (Helpers.Distance(current, _previousContactPt) > 1)
                 {
@@ -112,10 +110,10 @@ namespace PanoramicData.view.inq
         private void handleDown(Point pt)
         {
             _isPointerPressed = true;
-            List<Pt> pts = new List<Pt>();
+            List<Point> pts = new List<Point>();
             pts.Add(pt);
-            _currentStroq = new Stroq(pts);
-            addDrawingStroq(_currentStroq);
+            _currentInkStroke = new InkStroke(pts);
+            addDrawingInkStroke(_currentInkStroke);
         }
 
         protected override void OnTouchMove(TouchEventArgs e)
@@ -135,7 +133,7 @@ namespace PanoramicData.view.inq
 
         private void handleMove(Point pt)
         {
-            _currentStroq.Add(new Point(pt.X, pt.Y));
+            _currentInkStroke.Add(new Point(pt.X, pt.Y));
         }
 
         protected override void OnTouchUp(TouchEventArgs e)
@@ -156,32 +154,32 @@ namespace PanoramicData.view.inq
 
         private void handleUp(Point pt)
         {
-            _currentStroq.Add(new Point(pt.X, pt.Y));
-            removeDrawingStroq(_currentStroq);
-            fireInkCollected(_currentStroq);
-            _currentStroq = null;
+            _currentInkStroke.Add(new Point(pt.X, pt.Y));
+            removeDrawingInkStroke(_currentInkStroke);
+            fireInkCollected(_currentInkStroke);
+            _currentInkStroke = null;
             _isPointerPressed = false;
 
         }
 
-        private void addDrawingStroq(Stroq s)
+        private void addDrawingInkStroke(InkStroke s)
         {
             Children.Add(s);
         }
 
-        private void removeDrawingStroq(Stroq s)
+        private void removeDrawingInkStroke(InkStroke s)
         {
             foreach (var c in Children)
             {
-                if (c is StroqElement && (c as StroqElement).Stroq == s)
+                if (c is InkStrokeElement && (c as InkStrokeElement).InkStroke == s)
                 {
-                    Children.Remove(c as StroqElement);
+                    Children.Remove(c as InkStrokeElement);
                     break;
                 }
             }
         }
 
-        private void fireInkCollected(Stroq s)
+        private void fireInkCollected(InkStroke s)
         {
             if (InkCollectedEvent != null)
             {
@@ -193,11 +191,11 @@ namespace PanoramicData.view.inq
 
     public class InkCollectedEventArgs : RoutedEventArgs
     {
-        public Stroq Stroq { get; private set; }
+        public InkStroke InkStroke { get; private set; }
 
-        public InkCollectedEventArgs(Stroq s)
+        public InkCollectedEventArgs(InkStroke s)
         {
-            Stroq = s;
+            InkStroke = s;
         }
     }
 }

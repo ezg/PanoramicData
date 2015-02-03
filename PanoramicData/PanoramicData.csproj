@@ -196,6 +196,7 @@
     <Compile Include="model\data\AttributeModel.cs" />
     <Compile Include="model\data\AttributeOperationModel.cs" />
     <Compile Include="model\data\CalculatedAttributeModel.cs" />
+    <Compile Include="model\data\LinkModel.cs" />
     <Compile Include="model\data\mssql\MSSQLAttributeModel.cs" />
     <Compile Include="model\data\mssql\MSSQLOriginModel.cs" />
     <Compile Include="model\data\mssql\MSSQLSchemaModel.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="model\data\QueryResultItemValueModel.cs" />
     <Compile Include="model\data\QueryResultModel.cs" />
     <Compile Include="utils\Converters.cs" />
+    <Compile Include="utils\ConvexHull.cs" />
     <Compile Include="utils\CSVParser.cs" />
     <Compile Include="utils\ExtendedBindableBase.cs" />
     <Compile Include="utils\Helpers.cs" />
@@ -231,6 +233,15 @@
     <Compile Include="utils\inq\Label.cs" />
     <Compile Include="utils\inq\StroqCache.cs" />
     <Compile Include="utils\inq\StroqListener.cs" />
+    <Compile Include="utils\MathUtil.cs" />
+    <Compile Include="utils\Vector2.cs" />
+    <Compile Include="view\inq\Gesturizer.cs" />
+    <Compile Include="view\inq\IGesture.cs" />
+    <Compile Include="view\inq\InkStroke.cs" />
+    <Compile Include="view\inq\InkStrokeElement.cs" />
+    <Compile Include="view\inq\IStroqConsumer.cs" />
+    <Compile Include="view\inq\ScribbleGesture.cs" />
+    <Compile Include="view\inq\ShortStraw.cs" />
     <Compile Include="view\vis\Back.xaml.cs">
       <DependentUpon>Back.xaml</DependentUpon>
     </Compile>

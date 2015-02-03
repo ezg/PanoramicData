@@ -1,5 +1,4 @@
-﻿using starPadSDK.Inq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,22 +10,28 @@ namespace PanoramicData.view.inq
 {
     public class InkableScene : InkableCanvas
     {
-        private StroqCollection _stroqs = new StroqCollection();
-        private List<FrameworkElement> _elements = new List<FrameworkElement>();
         private Canvas _elementCanvas = new Canvas();
 
         public InkableScene()
         {
-            InkCollectedEvent += InkableScene_InkCollectedEvent;
             Children.Add(_elementCanvas);
         }
 
-        void InkableScene_InkCollectedEvent(object sender, InkCollectedEventArgs e)
+        private List<InkStroke> _inkStrokes = new List<InkStroke>();
+        public List<InkStroke> InkStrokes
         {
-            if (!_stroqs.Contains(e.Stroq))
+            get
             {
-                _elementCanvas.Children.Add(e.Stroq);
-                _stroqs.Add(e.Stroq);
+                return _inkStrokes;
+            }
+        }
+
+        private List<FrameworkElement> _elements = new List<FrameworkElement>();
+        public List<FrameworkElement> Elements
+        {
+            get
+            {
+                return _elements;
             }
         }
 
@@ -47,13 +52,29 @@ namespace PanoramicData.view.inq
                 _elements.Remove(elem);
             }
         }
-
-        public void Remove(Stroq s)
+        public void Add(InkStroke s)
         {
-            if (_stroqs.Contains(s))
+            if (!_inkStrokes.Contains(s))
             {
-                _elementCanvas.Children.Remove(s);
-                _stroqs.Remove(s);
+                _elementCanvas.Children.Add(s);
+                _inkStrokes.Add(s);
+            }
+        }
+
+        public void Remove(InkStroke s)
+        {
+            if (_inkStrokes.Contains(s))
+            {
+                foreach (var e in _elementCanvas.Children)
+                {
+                    if (e is InkStrokeElement && (e as InkStrokeElement).InkStroke == s)
+                    {
+                        _elementCanvas.Children.Remove(e as InkStrokeElement);
+                        break;
+                    }
+                }
+
+                _inkStrokes.Remove(s);
             }
         }
 

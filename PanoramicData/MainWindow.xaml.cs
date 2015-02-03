@@ -318,7 +318,7 @@ namespace PanoramicData
                
                 filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0, position.Y + VisualizationContainerView.HEIGHT / 2.0);
                 //filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vec(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
+                filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
             }
             if (Key.N == e.Key)
             {

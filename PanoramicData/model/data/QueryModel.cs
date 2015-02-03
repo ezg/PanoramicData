@@ -23,17 +23,17 @@ namespace PanoramicData.model.data
             foreach (var attributeFunction in Enum.GetValues(typeof(AttributeFunction)).Cast<AttributeFunction>())
             {
                 _attributeFunctionOperationModels.Add(attributeFunction, new ObservableCollection<AttributeOperationModel>());
-                _attributeFunctionOperationModels[attributeFunction].CollectionChanged += QueryModel_CollectionChanged;
+                _attributeFunctionOperationModels[attributeFunction].CollectionChanged += AttributeOperationModel_CollectionChanged;
             }
         }
 
-        void QueryModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void AttributeOperationModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
                 foreach (var item in e.OldItems)
                 {
-                    (item as AttributeOperationModel).PropertyChanged -= QueryModel_PropertyChanged;
+                    (item as AttributeOperationModel).PropertyChanged -= AttributeOperationModel_PropertyChanged;
                 }
             }
             if (e.NewItems != null)
@@ -41,12 +41,13 @@ namespace PanoramicData.model.data
                 foreach (var item in e.NewItems)
                 {
                     (item as AttributeOperationModel).QueryModel = this;
-                    (item as AttributeOperationModel).PropertyChanged += QueryModel_PropertyChanged;
+                    (item as AttributeOperationModel).PropertyChanged += AttributeOperationModel_PropertyChanged;
                 }
             }
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
-        void QueryModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void AttributeOperationModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);   
         }
@@ -81,13 +82,11 @@ namespace PanoramicData.model.data
         public void AddFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
             _attributeFunctionOperationModels[attributeFunction].Add(attributeOperationModel);
-            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public void RemoveFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
             _attributeFunctionOperationModels[attributeFunction].Remove(attributeOperationModel);
-            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
         public void RemoveAttributeOperationModel(AttributeOperationModel attributeOperationModel)
@@ -97,7 +96,6 @@ namespace PanoramicData.model.data
                 if (_attributeFunctionOperationModels[key].Contains(attributeOperationModel))
                 {
                     RemoveFunctionAttributeOperationModel(key, attributeOperationModel);
-                    FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
                 }
             }
         }
@@ -115,6 +113,15 @@ namespace PanoramicData.model.data
                 retList.AddRange(_attributeFunctionOperationModels[key]);
             }
             return retList;
+        }
+
+        private ObservableCollection<LinkModel> _linkModels = new ObservableCollection<LinkModel>();
+        public ObservableCollection<LinkModel> LinkModels
+        {
+            get
+            {
+                return _linkModels;
+            }
         }
 
         private List<FilterItem> _filterItems = new List<FilterItem>();

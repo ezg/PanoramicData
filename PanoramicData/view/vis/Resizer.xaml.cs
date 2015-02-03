@@ -26,6 +26,7 @@ using PanoramicData.view.table;
 using CombinedInputAPI;
 using PanoramicData.model.view_new;
 using PanoramicData.view.inq;
+using PanoramicData.utils;
 
 namespace PanoramicData.view.vis
 {
@@ -53,8 +54,8 @@ namespace PanoramicData.view.vis
 
         private Grid _frozen = null;
 
-        private Point _startDrag1 = new Point();
-        private Point _current1 = new Point();
+        private Vector2 _startDrag1 = new Point();
+        private Vector2 _current1 = new Point();
         private TouchDevice _dragDevice1 = null;
 
         private Point _startDrag2 = new Point();
@@ -161,7 +162,7 @@ namespace PanoramicData.view.vis
             if (args.NewValue != null)
             {
                 MovableElement movableParent = this.FindParent<MovableElement>();
-                movableParent.NotifyScale(new Vec((double) args.NewValue/movableParent.GetSize().X, 1.0), new Vec(0, 0));
+                movableParent.NotifyScale(new Vector2((double)args.NewValue / movableParent.GetSize().X, 1.0), new Vector2(0, 0));
             }
         }
 
@@ -596,9 +597,9 @@ namespace PanoramicData.view.vis
             if (e.TouchDevice == _dragDevice1)
             {
                 MovableElement movableParent = this.FindParent<MovableElement>();
-                Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
+                Vector2 curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
-                Vector vec = curDrag - _startDrag1;
+                Vector2 vec = curDrag - _startDrag1;
                 Point dragDelta = new Point(vec.X, vec.Y);
 
                 _startDrag1 = curDrag;
@@ -693,13 +694,13 @@ namespace PanoramicData.view.vis
         {
             InkableScene inkableScene = this.FindParent<InkableScene>();
             MovableElement movableParent = this.FindParent<MovableElement>();
-            Point curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
+            Vector2 curDrag = movableParent.TranslatePoint(e.GetTouchPoint(movableParent).Position, (FrameworkElement)inkableScene);
 
             if (e.TouchDevice == _dragDevice1)
             {
-                Vec currentSize = movableParent.GetSize();
-                Vec currentMinSize = movableParent.GetMinSize(); 
-                Vec vec = curDrag - _startDrag1;
+                Vector2 currentSize = movableParent.GetSize();
+                Vector2 currentMinSize = movableParent.GetMinSize();
+                Vector2 vec = curDrag - _startDrag1;
                 Point dragDelta = new Point(vec.X, vec.Y);
 
                 double deltaVertical = Math.Min(dragDelta.Y, currentSize.Y - currentMinSize.Y);
@@ -712,11 +713,11 @@ namespace PanoramicData.view.vis
                 Vec newSize = new Vec(currentSize.X + dragDelta.X, currentSize.Y + dragDelta.Y);
 
                 // notify content if needed
-                Vec delta = new Vec(
+                Vector2 delta = new Vector2(
                     Math.Max(newSize.X / currentSize.X, currentMinSize.X / currentSize.X),
                     Math.Max(newSize.Y / currentSize.Y, currentMinSize.Y / currentSize.Y));
 
-                movableParent.NotifyScale(delta, new Vec(0, 0));
+                movableParent.NotifyScale(delta, new Vector2(0, 0));
                 movableParent.NotifyInteraction();
             }
         }
@@ -860,8 +861,8 @@ namespace PanoramicData.view.vis
 
             if (Dropped != null)
             {
-                Vec size = _movableElement.GetSize();
-                Rct bounds = new Rct(new Pt(fromInkableScene.X - (size.X / 2.0), fromInkableScene.Y - (size.Y / 2.0)), _movableElement.GetSize());
+                Vector2 size = _movableElement.GetSize();
+                //Rct bounds = new Rct(new Point(fromInkableScene.X - (size.X / 2.0), fromInkableScene.Y - (size.Y / 2.0)), _movableElement.GetSize());
                 if (cmd.Name == "Create\nSnaphot")
                 {
                     FilterHolderViewModel frozenModel = new FilterHolderViewModel();
