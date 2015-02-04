@@ -12,8 +12,8 @@ namespace PanoramicData.utils
 {
     public class Vector2
     {
-        public double X = 0;
-        public double Y = 0;
+        public double X { get; set; }
+        public double Y { get; set; }
 
         public Vector2()
         {
