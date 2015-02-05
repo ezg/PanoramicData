@@ -44,13 +44,30 @@ namespace PanoramicData.controller.data.sim
             Thread.Sleep(10);
             
             IList<QueryResultItemModel> returnList = computeQueryResult().Skip(startIndex).Take(pageCount).ToList();
+
+            // reset selections
+            foreach (var queryResultItemModel in returnList)
+            {
+                FilterModel filterQueryResultItemModel = new FilterModel(queryResultItemModel);
+                foreach (var fi in _queryModel.FilterModels.ToArray())
+                {
+                    if (fi != null)
+                    {
+                        if (fi.Equals(filterQueryResultItemModel))
+                        {
+                            queryResultItemModel.IsSelected = true;
+                        }
+                    }
+                }
+            }
+
             overallCount = _fetchCount;
             return returnList;
         }
 
         private List<QueryResultItemModel> computeQueryResult()
         {
-            if (_queryModel.GetAllAttributeOperationModel().Any())
+            if (_queryModel.AttributeOperationModels.Any())
             {
                 var data = (_queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data;
 
@@ -74,7 +91,7 @@ namespace PanoramicData.controller.data.sim
             var groupers = _queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
             GroupingObject groupingObject = new GroupingObject(
                 groupers.Count > 0,
-                _queryModel.GetAllAttributeOperationModel().Any(aom => aom.AggregateFunction != AggregateFunction.None));
+                _queryModel.AttributeOperationModels.Any(aom => aom.AggregateFunction != AggregateFunction.None));
             int count = 0;
             foreach (var attributeModel in item.Keys)
             {
@@ -96,7 +113,7 @@ namespace PanoramicData.controller.data.sim
         { 
             QueryResultItemModel item = new QueryResultItemModel();
 
-            var attributeOperationModels = _queryModel.GetAllAttributeOperationModel();
+            var attributeOperationModels = _queryModel.AttributeOperationModels;
             foreach (var attributeOperationModel in attributeOperationModels)
             {
                 bool binned = false;
@@ -245,7 +262,7 @@ namespace PanoramicData.controller.data.sim
 
         public int Compare(QueryResultItemModel x, QueryResultItemModel y)
         {
-            var attributeOperationModels = _queryModel.GetAllAttributeOperationModel().Where(aom => aom.SortMode != SortMode.None);
+            var attributeOperationModels = _queryModel.AttributeOperationModels.Where(aom => aom.SortMode != SortMode.None);
             foreach (var aom in attributeOperationModels)
             {
                 int factor = aom.SortMode == SortMode.Asc ? 1 : -1;

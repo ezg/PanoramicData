@@ -27,8 +27,8 @@ namespace PanoramicData.model.data
                 this.SetProperty(ref _values, value);
             }
         }
-        
-        private bool _isSelected;
+
+        private bool _isSelected = false;
         public bool IsSelected
         {
             get

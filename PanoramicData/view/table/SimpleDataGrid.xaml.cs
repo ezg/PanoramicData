@@ -22,7 +22,6 @@ using Brushes = System.Windows.Media.Brushes;
 using Image = System.Windows.Controls.Image;
 using Point = System.Windows.Point;
 using TextAlignment = System.Windows.TextAlignment;
-using PanoramicData.model.view;
 using PanoramicData.controller.data;
 using PanoramicData.utils.inq;
 using PanoramicData.view.utils;
@@ -33,6 +32,7 @@ using System.Collections.Specialized;
 using PanoramicData.model.data;
 using PanoramicData.view.inq;
 using System.Reactive.Linq;
+using PanoramicData.utils;
 
 namespace PanoramicData.view.table
 {
@@ -41,9 +41,6 @@ namespace PanoramicData.view.table
     /// </summary>
     public partial class SimpleDataGrid : AttributeViewModelEventHandler, StroqListener
     {
-        public delegate void RowsSelectedHandler(object sender, List<PanoramicDataRow> rows);
-        public event RowsSelectedHandler RowsSelected;
-
         public delegate void CellDroppedOutsideHandler(object sender, PanoramicDataColumnDescriptor column, PanoramicDataRow row, Point position);
         public event CellDroppedOutsideHandler CellDroppedOutside;
 
@@ -54,7 +51,6 @@ namespace PanoramicData.view.table
         public bool CanResize { get; set; }
         public bool CanDrag { get; set; }
         public bool CanExplore { get; set; }
-        public FilterModel FilterModel { get; set; }
 
         private Point _startDrag1 = new Point();
         private long _manipulationStartTime = 0;
@@ -159,8 +155,13 @@ namespace PanoramicData.view.table
             checkboxFactory.SetBinding(CheckBox.IsCheckedProperty, new Binding("Data.IsSelected"));
             checkboxFactory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center);
             checkboxFactory.SetValue(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-            checkboxFactory.SetValue(CheckBox.IsEnabledProperty, false);
-            checkboxFactory.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchDownEvent));
+            checkboxFactory.SetValue(CheckBox.IsEnabledProperty, true);
+            checkboxFactory.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(checkboxFactory_CheckedEvent));
+            checkboxFactory.AddHandler(CheckBox.UncheckedEvent, new RoutedEventHandler(checkboxFactory_UncheckedEvent));
+
+            checkboxFactory.AddHandler(CheckBox.TouchDownEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchDownEvent));
+            checkboxFactory.AddHandler(CheckBox.TouchUpEvent, new EventHandler<TouchEventArgs>(checkboxFactory_TouchUpEvent));
+            
             template.VisualTree = checkboxFactory;
             _checkBoxColumn.CellTemplate = template;
             _gridView.Columns.Add(_checkBoxColumn);
@@ -243,7 +244,7 @@ namespace PanoramicData.view.table
                 listView.View = _gridView;
             }
         }
-
+        
         GridViewColumn createGridViewColumn(AttributeOperationModel attributeOperationModel, int index, GridViewColumn oldColumn)
         {
             GridViewColumn gvc = new GridViewColumn();
@@ -358,17 +359,63 @@ namespace PanoramicData.view.table
 
         void checkboxFactory_TouchDownEvent(object sender, TouchEventArgs e)
         {
-            if ((e.TouchDevice is MouseTouchDevice) && (e.TouchDevice as MouseTouchDevice).IsStylus)
-                return;
+            //e.TouchDevice.Capture(sender as FrameworkElement);
+            //e.Handled = true;
+        }
 
-            CheckBox b = (CheckBox)sender;
-            if ((DataWrapper<PanoramicDataRow>)b.DataContext != null)
+        void checkboxFactory_TouchUpEvent(object sender, TouchEventArgs e)
+        {
+           // e.TouchDevice.Capture(null);
+            //e.Handled = true;
+        }
+
+        void checkboxFactory_CheckedEvent(object sender, RoutedEventArgs e)
+        {
+            VisualizationViewModel model = (DataContext as VisualizationViewModel);
+            var item = ((sender as FrameworkElement).DataContext as DataWrapper<QueryResultItemModel>).Data;
+            FilterModel fi = new FilterModel(item);
+            if (!model.QueryModel.FilterModels.Contains(fi))
             {
-                PanoramicDataRow row = ((DataWrapper<PanoramicDataRow>)b.DataContext).Data;
+                model.QueryModel.AddFilterItem(fi, this);
+            }
+        }
+        void checkboxFactory_UncheckedEvent(object sender, RoutedEventArgs e)
+        {
+            VisualizationViewModel model = (DataContext as VisualizationViewModel);
+            var item = ((sender as FrameworkElement).DataContext as DataWrapper<QueryResultItemModel>).Data;
+            FilterModel fi = new FilterModel(item);
+            if (model.QueryModel.FilterModels.Contains(fi))
+            {
+                model.QueryModel.RemoveFilterItem(fi, this);
+            }
+        }
 
-                if (RowsSelected != null)
+        void toggleSelection(List<QueryResultItemModel> queryResultItemModels)
+        {
+            VisualizationViewModel model = (DataContext as VisualizationViewModel);
+
+            if (queryResultItemModels.Any(r => r.IsSelected))
+            {
+                foreach (var item in queryResultItemModels)
                 {
-                    RowsSelected(this, new List<PanoramicDataRow>(new PanoramicDataRow[] { row }));
+                    item.IsSelected = false;
+                    FilterModel fi = new FilterModel(item);
+                    if (model.QueryModel.FilterModels.Contains(fi))
+                    {
+                        model.QueryModel.RemoveFilterItem(fi, this);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in queryResultItemModels)
+                {
+                    item.IsSelected = true;
+                    FilterModel fi = new FilterModel(item);
+                    if (!model.QueryModel.FilterModels.Contains(fi))
+                    {
+                        model.QueryModel.AddFilterItem(fi, this);
+                    }
                 }
             }
         }
@@ -588,9 +635,9 @@ namespace PanoramicData.view.table
                             }
                         }
 
-                        if (rows.Count > 0 && RowsSelected != null)
+                        //if (rows.Count > 0 && RowsSelected != null)
                         {
-                            RowsSelected(this, rows);
+                            //RowsSelected(this, rows);
                         }
                     }
                     else
@@ -660,72 +707,7 @@ namespace PanoramicData.view.table
             (sender as FrameworkElement).RemoveHandler(FrameworkElement.ManipulationStartedEvent, new EventHandler<ManipulationStartedEventArgs>(ColumnHeader_ManipulationStarted));
         }
     }
-    
-    public class FilterHighlightImageConverter : IValueConverter
-    {
-        private FilterModel _filterModel = null;
-        private List<FilterModel> _filterModels = null;
-        private float _width = 0.0f;
-        private float _dim = 23;
-
-        public FilterHighlightImageConverter(FilterModel filterModel)
-        {
-            _filterModel = filterModel;
-            _filterModels = _filterModel.GetIncomingFilterModels(FilteringType.Brush).ToList();
-            _width = (float)(_dim / (double)_filterModels.Count);
-        }
-
-        public object Convert(object value, Type targetType, object parameter,
-            CultureInfo culture)
-        {
-            System.Drawing.Bitmap pg = new System.Drawing.Bitmap((int)_dim, (int)_dim);
-            if (value != null)
-            {
-                PanoramicDataRow row = (PanoramicDataRow)value;
-                System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(pg);
-                if (_filterModels.Count() > 0)
-                {
-                    for (int c = 0; c < _filterModels.Count; c++)
-                    {
-                        FilterModel fm = _filterModels[c];
-                        System.Drawing.Color fmColor = System.Drawing.Color.FromArgb(fm.Color.A, fm.Color.R,
-                            fm.Color.G, fm.Color.B);
-                        System.Drawing.Brush fmBrush = new System.Drawing.SolidBrush(fmColor);
-
-                        System.Drawing.Color fmColorTrans = System.Drawing.Color.FromArgb(50, fm.Color.R,
-                                fm.Color.G, fm.Color.B);
-                        System.Drawing.Brush fmBrushTrans = new System.Drawing.SolidBrush(fmColorTrans);
-
-                        gr.FillRectangle(fmBrushTrans,
-                            (float)(c * _width), (float)(0),
-                            _width, (float)_dim);
-
-                        double percantage = 0.0;
-                        if (row.PassesFilterModel.ContainsKey(fm) && fm.Selected)
-                        {
-                            percantage = row.PassesFilterModel[fm];
-                        }
-
-                        gr.FillRectangle(fmBrush,
-                            (float)(c * _width), (float)((1.0 - percantage) * _dim),
-                            _width, (float)(percantage * _dim));
-                    }
-                }
-
-                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(255, 125, 125, 125));
-                gr.DrawRectangle(pen, 0, 0, _dim - 1, _dim - 1);
-            }
-
-            return pg.LoadImage();
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter,
-            CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+   
     public class TextValueConverter : IValueConverter
     {
         private AttributeOperationModel _attributeOperationModel = null;
@@ -747,69 +729,6 @@ namespace PanoramicData.view.table
                 return "";
             }
             return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter,
-            CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public class ColorByImageConverter : IValueConverter
-    {
-        private FilterModel _filterModel = null;
-        private float _dim = 23;
-
-        public ColorByImageConverter(FilterModel filterModel)
-        {
-            _filterModel = filterModel;
-        }
-
-        public object Convert(object value, Type targetType, object parameter,
-            CultureInfo culture)
-        {
-            System.Drawing.Bitmap pg = new System.Drawing.Bitmap((int)_dim, (int)_dim);
-            if (value != null)
-            {
-                PanoramicDataRow row = (PanoramicDataRow)value;
-                List<PanoramicDataValue> dataValues = new List<PanoramicDataValue>();
-                List<PanoramicDataValue> groupedDataValues = new List<PanoramicDataValue>();
-                string grouping = "";
-                if (_filterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0)
-                {
-                    List<string> groupingList = new List<string>();
-                    foreach (var columnDescriptor in _filterModel.GetColumnDescriptorsForOption(Option.ColorBy))
-                    {
-                        PanoramicDataValue dataValue = row.GetValue(columnDescriptor);
-                        string main = "";
-                        string sub = "";
-                        columnDescriptor.GetLabels(out main, out sub, false);
-
-                        groupingList.Add(main + ":" + sub + ":" + dataValue.StringValue);
-                    }
-                    grouping = string.Join(":", groupingList);
-                }
-
-                System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(pg);
-                if (grouping != "")
-                {
-                        Color c = RendererResources.GetGroupingColor(grouping);
-                        System.Drawing.Color fmColor = System.Drawing.Color.FromArgb(c.A, c.R,
-                            c.G, c.B);
-                        System.Drawing.Brush fmBrush = new System.Drawing.SolidBrush(fmColor);
-
-                        gr.FillRectangle(fmBrush,
-                            (float)(0), (float)(0),
-                            (float)_dim, (float)_dim);
-                }
-
-                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(255, 125, 125, 125));
-                gr.DrawRectangle(pen, 0, 0, _dim - 1, _dim - 1);
-            }
-
-            return pg.LoadImage();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

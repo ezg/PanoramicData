@@ -92,6 +92,19 @@ namespace PanoramicData.model.data
             }
         }
 
+        public List<AttributeOperationModel> AttributeOperationModels
+        {
+            get
+            {
+                List<AttributeOperationModel> retList = new List<AttributeOperationModel>();
+                foreach (var key in _attributeFunctionOperationModels.Keys)
+                {
+                    retList.AddRange(_attributeFunctionOperationModels[key]);
+                }
+                return retList;
+            }
+        }
+
         private Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>> _attributeFunctionOperationModels = new Dictionary<AttributeFunction, ObservableCollection<AttributeOperationModel>>();
         public void AddFunctionAttributeOperationModel(AttributeFunction attributeFunction, AttributeOperationModel attributeOperationModel)
         {
@@ -119,16 +132,6 @@ namespace PanoramicData.model.data
             return _attributeFunctionOperationModels[attributeFunction];
         }
 
-        public List<AttributeOperationModel> GetAllAttributeOperationModel()
-        {
-            List<AttributeOperationModel> retList = new List<AttributeOperationModel>();
-            foreach (var key in _attributeFunctionOperationModels.Keys)
-            {
-                retList.AddRange(_attributeFunctionOperationModels[key]);
-            }
-            return retList;
-        }
-
         private ObservableCollection<LinkModel> _linkModels = new ObservableCollection<LinkModel>();
         public ObservableCollection<LinkModel> LinkModels
         {
@@ -138,44 +141,44 @@ namespace PanoramicData.model.data
             }
         }
 
-        private List<FilterItem> _filterItems = new List<FilterItem>();
-        public List<FilterItem> FilterItems
+        private List<FilterModel> _filterModels = new List<FilterModel>();
+        public List<FilterModel> FilterModels
         {
             get
             {
-                return _filterItems;
+                return _filterModels;
             }
         }
 
         public void ClearFilterItems()
         {
-            _filterItems.Clear();
+            _filterModels.Clear();
             FireQueryModelUpdated(QueryModelUpdatedEventType.FilterItems);
         }
 
-        public void AddFilterItems(List<FilterItem> filterItems, object sender)
+        public void AddFilterItems(List<FilterModel> filterItems, object sender)
         {
-            _filterItems.AddRange(filterItems);
+            _filterModels.AddRange(filterItems);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
-        public void AddFilterItem(FilterItem filterItem, object sender)
+        public void AddFilterItem(FilterModel filterItem, object sender)
         {
-            _filterItems.Add(filterItem);
+            _filterModels.Add(filterItem);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
-        public void RemoveFilterItem(FilterItem filterItem, object sender)
+        public void RemoveFilterItem(FilterModel filterItem, object sender)
         {
-            _filterItems.Remove(filterItem);
+            _filterModels.Remove(filterItem);
             FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
         }
 
-        public void RemoveFilterItems(List<FilterItem> filterItems, object sender)
+        public void RemoveFilterItems(List<FilterModel> filterItems, object sender)
         {
             foreach (var filterItem in filterItems)
             {
-                _filterItems.Remove(filterItem);
+                _filterModels.Remove(filterItem);
             }
             if (filterItems.Count > 0)
             {

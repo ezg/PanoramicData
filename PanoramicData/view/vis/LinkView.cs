@@ -551,11 +551,11 @@ namespace PanoramicData.view.vis
                         unionGeometry = unionGeometry.Union(_visualizationViewModelCenterGeometries[model]);
                     }
 
-                    Polyline pl = new Polyline();
-                pl.Points = new PointCollection(unionGeometry.Coordinates.Select((corrd) => new Point(corrd.X, corrd.Y)).ToArray());
-                pl.Stroke = Brushes.Green;
-                pl.StrokeThickness = 1;
-                MainViewController.Instance.InkableScene.Add(pl);
+                    /*Polyline pl = new Polyline();
+                    pl.Points = new PointCollection(unionGeometry.Coordinates.Select((corrd) => new Point(corrd.X, corrd.Y)).ToArray());
+                    pl.Stroke = Brushes.Green;
+                    pl.StrokeThickness = 1;
+                    MainViewController.Instance.InkableScene.Add(pl);*/
 
                     return unionGeometry;
                 }

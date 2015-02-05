@@ -21,40 +21,7 @@ namespace PanoramicData.view.vis.render
             _dataGrid.CanReorder = true;
             _dataGrid.CanResize = true;
             _dataGrid.CanExplore = true;
-            _dataGrid.RowsSelected += _dataGrid_RowsSelected;
             this.Content = _dataGrid;
-
-        }
-
-        void _dataGrid_RowsSelected(object sender, List<PanoramicDataRow> rows)
-        {
-            if (rows != null)
-            {
-                if (rows.Any(r => r.IsHighligthed))
-                {
-                    foreach (var row in rows)
-                    {
-                        row.IsHighligthed = false;
-                        FilterItem fi = new FilterItem(row);
-                        if (VisualizationViewModel.QueryModel.FilterItems.Contains(fi))
-                        {
-                            VisualizationViewModel.QueryModel.RemoveFilterItem(fi, this);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var row in rows)
-                    {
-                        row.IsHighligthed = true;
-                        FilterItem fi = new FilterItem(row);
-                        if (!VisualizationViewModel.QueryModel.FilterItems.Contains(fi))
-                        {
-                            VisualizationViewModel.QueryModel.AddFilterItem(fi, this);
-                        }
-                    }
-                }
-            }
         }
 
 

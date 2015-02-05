@@ -28,6 +28,11 @@ namespace PanoramicData.utils
             var p = new Point(p1.X - p2.X, p1.Y - p2.Y);
             return (float)Math.Sqrt(p.X * p.X + p.Y * p.Y);
         }
+
+        public static List<T> ListFromItems<T>(params T[] items)
+        {
+            return new List<T>(items);
+        }
     }
 
     public static class Extensions

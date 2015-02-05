@@ -281,30 +281,6 @@
         </Grid.Resources>
 
         <Grid Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <StackPanel 
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   Name="optionsPanel"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Top"
-                   Margin="0, 0, 0, 0"
-                   Orientation="Vertical"
-                   Background="#bbffffff"/>
-
-            <Grid Grid.Row="0"
-                  Grid.Column="1">
-                <StackPanel Name="settingsPanel" Orientation="Horizontal"></StackPanel>
-            </Grid>
             
             <ListView 
                 Grid.Row="1"
@@ -315,11 +291,12 @@
                 VerticalAlignment="Stretch"   
                 VirtualizingStackPanel.IsVirtualizing="True"
                 VirtualizingStackPanel.VirtualizationMode="Recycling"
-                ScrollViewer.IsDeferredScrollingEnabled="True"
-                ScrollViewer.PanningMode="Both"
-                ScrollViewer.PanningDeceleration="0.0005">
+                ScrollViewer.IsDeferredScrollingEnabled="True">
             </ListView>
-            
+
+            <!--
+                ScrollViewer.PanningMode="Both"
+                ScrollViewer.PanningDeceleration="0.0005"-->
             <!--
             <ItemsControl Grid.Row="1" 
                 Name="itemsControl">

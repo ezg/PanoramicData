@@ -14,7 +14,7 @@ namespace PanoramicData.model.view
         public delegate void SchemaViewModelUpdatedHandler(object sender, SchemaViewModelUpdatedEventArgs e);
         public event SchemaViewModelUpdatedHandler SchemaViewModelUpdated;
 
-        private Vec _size = new Vec(180, 100);
+        private Vec _size = new Vec(180, 300);
 
         public Vec Size
         {
