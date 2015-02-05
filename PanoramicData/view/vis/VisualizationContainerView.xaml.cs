@@ -17,10 +17,11 @@ using PanoramicData.controller.view;
 using PanoramicData.model.view_new;
 using PanoramicData.view.vis.render;
 using PanoramicData.utils;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.vis
 {
-    public partial class VisualizationContainerView : MovableElement
+    public partial class VisualizationContainerView : MovableElement, IScribbable
     {
         public static int WIDTH = 300;
         public static int HEIGHT = 200;
@@ -29,21 +30,10 @@ namespace PanoramicData.view.vis
         private Resizer _back = new Resizer(false);
         private bool _isFrontShown = true;
 
-        private FilterModelAttachment _filterAttachment = null;
-        private FilterModelAttachment _brushAttachment = null;
-
         public VisualizationContainerView()
         {
             InitializeComponent();
             this.Type = MovableElementType.Rect;
-            this.HasEnclosedAnchor = false;
-
-            _filterAttachment = new FilterModelAttachment(FilteringType.Filter);
-            MainViewController.Instance.InkableScene.Add(_filterAttachment);
-
-            _brushAttachment = new FilterModelAttachment(FilteringType.Brush);
-            MainViewController.Instance.InkableScene.Add(_brushAttachment);
-
             this.DataContextChanged += VisualizationContainerView_DataContextChanged;
         }
         
@@ -230,6 +220,17 @@ namespace PanoramicData.view.vis
         public override void NotifyInteraction()
         {
             base.NotifyInteraction();
+        }
+
+        public GeoAPI.Geometries.IGeometry Geometry
+        {
+            get
+            {
+                VisualizationViewModel model = this.DataContext as VisualizationViewModel;
+
+                Rect bounds = new Rect(model.Position , new Size(model.Size.X, model.Size.Y));
+                return bounds.GetPolygon();
+            }
         }
     }
 }

@@ -84,6 +84,19 @@ namespace PanoramicData.model.view_new
             }
         }
 
+        private SolidColorBrush _faintBrush = null;
+        public SolidColorBrush FaintBrush
+        {
+            get
+            {
+                return _faintBrush;
+            }
+            set
+            {
+                this.SetProperty(ref _faintBrush, value);
+            }
+        }
+
         private Color _color = Color.FromArgb(0xff, 0x00, 0x00, 0x00);
         public Color Color
         {
@@ -95,6 +108,7 @@ namespace PanoramicData.model.view_new
             {
                 this.SetProperty(ref _color, value);
                 Brush = new SolidColorBrush(_color);
+                FaintBrush = new SolidColorBrush(Color.FromArgb(70, _color.R, _color.G, _color.B));
             }
         }
 

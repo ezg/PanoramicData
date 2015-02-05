@@ -208,6 +208,7 @@
     <Compile Include="model\data\sim\SimAttributeModel.cs" />
     <Compile Include="model\data\sim\SimOriginModel.cs" />
     <Compile Include="model\data\AttributeFunction.cs" />
+    <Compile Include="model\view\FilteringOperation.cs" />
     <Compile Include="model\view_new\AttributeViewModel.cs" />
     <Compile Include="model\view\FilteringType.cs" />
     <Compile Include="model\view\FilterRendererType.cs" />
@@ -239,7 +240,9 @@
     <Compile Include="view\inq\IGesture.cs" />
     <Compile Include="view\inq\InkStroke.cs" />
     <Compile Include="view\inq\InkStrokeElement.cs" />
+    <Compile Include="view\inq\IScribbable.cs" />
     <Compile Include="view\inq\IStroqConsumer.cs" />
+    <Compile Include="view\inq\ConnectGesture.cs" />
     <Compile Include="view\inq\ScribbleGesture.cs" />
     <Compile Include="view\inq\ShortStraw.cs" />
     <Compile Include="view\vis\Back.xaml.cs">
@@ -301,7 +304,7 @@
     <Compile Include="view\vis\VisualizationContainerView.xaml.cs">
       <DependentUpon>VisualizationContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\vis\FilterModelAttachment.cs" />
+    <Compile Include="view\vis\LinkView.cs" />
     <Compile Include="view\other\SimpleAPage.cs" />
     <Compile Include="model\view\FilterModel.cs" />
     <Compile Include="view\vis\render\FilterRenderer.cs" />

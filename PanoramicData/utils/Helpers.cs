@@ -32,7 +32,6 @@ namespace PanoramicData.utils
 
     public static class Extensions
     {
-
         public static GeoAPI.Geometries.IPolygon GetPolygon(this List<Point> s)
         {
             GeoAPI.Geometries.ICoordinate[] coords;

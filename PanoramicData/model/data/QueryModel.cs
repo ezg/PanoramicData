@@ -1,4 +1,5 @@
-﻿using PanoramicData.model.view_new;
+﻿using PanoramicData.model.view;
+using PanoramicData.model.view_new;
 using PanoramicData.utils;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,19 @@ namespace PanoramicData.model.data
             set
             {
                 this.SetProperty(ref _schemaModel, value);
+            }
+        }
+
+        private FilteringOperation _filteringOperation = FilteringOperation.AND;
+        public FilteringOperation FilteringOperation
+        {
+            get
+            {
+                return _filteringOperation;
+            }
+            set
+            {
+                this.SetProperty(ref _filteringOperation, value);
             }
         }
 

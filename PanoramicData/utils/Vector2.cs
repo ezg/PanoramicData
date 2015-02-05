@@ -71,7 +71,17 @@ namespace PanoramicData.utils
             return new Vector2(v0.X + v1.X, v0.Y + v1.Y);
         }
 
+        public static Vector2 operator +(Point v0, Vector2 v1)
+        {
+            return new Vector2(v0.X + v1.X, v0.Y + v1.Y);
+        }
+
         public static Vector2 operator -(Vector2 v0, Vector2 v1)
+        {
+            return new Vector2(v0.X - v1.X, v0.Y - v1.Y);
+        }
+
+        public static Vector2 operator -(Point v0, Vector2 v1)
         {
             return new Vector2(v0.X - v1.X, v0.Y - v1.Y);
         }

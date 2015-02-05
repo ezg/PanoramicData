@@ -35,6 +35,15 @@ namespace PanoramicData.view.inq
             }
         }
 
+        public void AddToBack(FrameworkElement elem)
+        {
+            if (!_elements.Contains(elem))
+            {
+                _elementCanvas.Children.Insert(0, elem);
+                _elements.Add(elem);
+            }
+        }
+
         public void Add(FrameworkElement elem)
         {
             if (!_elements.Contains(elem))

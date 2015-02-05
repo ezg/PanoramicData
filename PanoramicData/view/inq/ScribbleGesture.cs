@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace PanoramicData.view.inq
 {
@@ -54,8 +56,15 @@ namespace PanoramicData.view.inq
                     }
                 }
 
-                foreach (IScribbable existingScribbable in _inkableScene.Elements.Where(e => e is IScribbable))
+                foreach (IScribbable existingScribbable in _inkableScene.Elements.Where(e => e is IScribbable).ToArray())
                 {
+                    /*Polygon p = new Polygon();
+                    PointCollection pc = new PointCollection(existingScribbable.Geometry.Coordinates.Select(c => new System.Windows.Point(c.X, c.Y)));
+                    p.Points = pc;
+                    p.Stroke = Brushes.Blue;
+                    p.StrokeThickness = 5;
+                    _inkableScene.Add(p);*/
+
                     if (inkStrokeLine.Intersects(existingScribbable.Geometry))
                     {
                         _hitScribbables.Add(existingScribbable);
@@ -76,9 +85,4 @@ namespace PanoramicData.view.inq
             return false;
         }
     }
-
-    public interface IScribbable
-    {
-        IGeometry Geometry { get; }
-    } 
 }

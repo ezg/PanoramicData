@@ -475,9 +475,9 @@ namespace PanoramicData
 
             foreach (var elem in deletions.Elements)
             {
-                if (elem is FilterModelAttachment)
+                if (elem is LinkView)
                 {
-                    (elem as FilterModelAttachment).CheckScribbleDelete(strokes[0]);
+                    //(elem as LinkView).CheckScribbleDelete(strokes[0]);
                 }
                 else if (elem is System.Windows.Controls.ContentControl)
                 {

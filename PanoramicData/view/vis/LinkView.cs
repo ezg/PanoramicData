@@ -18,137 +18,180 @@ using PanoramicData.utils.inq;
 using CombinedInputAPI;
 using System.Windows.Input;
 using PanoramicData.controller.view;
+using PanoramicData.model.data;
+using PanoramicData.model.view_new;
+using PanoramicData.utils;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.vis
 {
-    public class FilterModelAttachment : UserControl, GeometryElement, StroqListener
+    public class LinkView : UserControl, IScribbable
     {
         private List<IDisposable> _sourceDisposables = new List<IDisposable>();
         private IDisposable _destinationDisposable = null;
         private double _attachmentRectHalfSize = 15;
-        private Dictionary<FilterModel, IGeometry> _filterModelGeometries = new Dictionary<FilterModel, IGeometry>();
-        private IGeometry _filterAttachmentGeometry = null;
-        private Dictionary<FilterModel, IGeometry> _filterModelCenterGeometries = new Dictionary<FilterModel, IGeometry>();
-        private Dictionary<FilterModel, IGeometry> _filterModelIconGeometries = new Dictionary<FilterModel, IGeometry>();
+        private Dictionary<VisualizationViewModel, IGeometry> _visualizationViewModelGeometries = new Dictionary<VisualizationViewModel, IGeometry>();
+        private IGeometry _linkViewGeometry = null;
+        private Dictionary<VisualizationViewModel, IGeometry> _visualizationViewModelCenterGeometries = new Dictionary<VisualizationViewModel, IGeometry>();
+        private Dictionary<VisualizationViewModel, IGeometry> _visualizationViewModelIconGeometries = new Dictionary<VisualizationViewModel, IGeometry>();
         //private Dictionary<FilteringType, Vec> _attachmentCenters = new Dictionary<FilteringType, Vec>(); 
-
-        private ObservableCollection<FilterHolderViewModel> _sources = new ObservableCollection<FilterHolderViewModel>();
-        public ObservableCollection<FilterHolderViewModel> Sources
+        
+        public LinkView()
         {
-            get
+            this.DataContextChanged += LinkView_DataContextChanged;
+            this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(LinkView_TouchDownEvent));
+        }
+
+        void LinkView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != null)
             {
-                return _sources;
+                (e.OldValue as LinkViewModel).LinkModels.CollectionChanged -= LinkModels_CollectionChanged;
+                (e.OldValue as LinkViewModel).FromVisualizationViewModels.CollectionChanged -= FromVisualizationViewModels_CollectionChanged;
+                (e.OldValue as LinkViewModel).ToVisualizationViewModel.PropertyChanged -= ToVisualizationViewModel_PropertyChanged;
+                (e.OldValue as LinkViewModel).ToVisualizationViewModel.QueryModel.PropertyChanged -= QueryModel_PropertyChanged;
+            }
+            if (e.NewValue != null)
+            {
+                (e.NewValue as LinkViewModel).LinkModels.CollectionChanged += LinkModels_CollectionChanged;
+                (e.NewValue as LinkViewModel).FromVisualizationViewModels.CollectionChanged += FromVisualizationViewModels_CollectionChanged;
+                (e.NewValue as LinkViewModel).ToVisualizationViewModel.PropertyChanged += ToVisualizationViewModel_PropertyChanged;
+                (e.NewValue as LinkViewModel).ToVisualizationViewModel.QueryModel.PropertyChanged += QueryModel_PropertyChanged;
+                updateRendering();
             }
         }
 
-        private FilterHolderViewModel _destination = null;
-        public FilterHolderViewModel Destination
+        void QueryModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            get
+            updateRendering();
+        }
+
+        void FromVisualizationViewModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
             {
-                return _destination;
-            }
-            set
-            {
-                if (_destinationDisposable != null)
+                foreach (var item in e.OldItems)
                 {
-                    _destinationDisposable.Dispose();
+                    (item as VisualizationViewModel).PropertyChanged -= FromVisualizationViewModel_PropertyChanged;
                 }
-                _destination = value;
-
-                _destinationDisposable = Observable.FromEventPattern<FilterModelUpdatedEventArgs>(
-                    _destination, "FilterModelUpdated")
-                    //.Throttle(TimeSpan.FromMilliseconds(50))
-                    .Subscribe((arg) =>
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
-                        {
-                            update();
-                        }));
-                    });
-                update();
             }
-        }
-        private FilteringType _filteringType = FilteringType.Filter;
-
-        public FilteringType FilteringType
-        {
-            get
+            if (e.NewItems != null)
             {
-                return _filteringType;
+                foreach (var item in e.NewItems)
+                {
+                    (item as VisualizationViewModel).PropertyChanged += FromVisualizationViewModel_PropertyChanged;
+                }
             }
-            set
-            {
-                _filteringType = value;
-            }
+            updateRendering();
         }
 
-        public FilterModelAttachment(FilteringType filteringType)
+        void ToVisualizationViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            _sources.CollectionChanged += _sources_CollectionChanged;
-            _filteringType = filteringType;
-            this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(TouchDownEvent));
+            updateRendering();
         }
 
-        public void CleanUp()
+        void FromVisualizationViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            foreach (var d in _sourceDisposables)
-            {
-                d.Dispose();
-            }
-            if (_destinationDisposable != null)
-            {
-                _destinationDisposable.Dispose();
-            }
-
-            foreach (var source in _sources.ToArray())
-            {
-                Destination.RemoveIncomingFilter(source, _filteringType);
-            }
+            updateRendering();
         }
 
-        private Vec updateAttachmentCenter(FilteringType filteringType)
+        void LinkModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Rct destinationRct = new Rct(_destination.Center - _destination.Dimension * 0.5, _destination.Dimension);
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    (item as LinkModel).PropertyChanged -= LinkView_PropertyChanged;
+                }
+            }
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    (item as LinkModel).PropertyChanged += LinkView_PropertyChanged;
+                }
+            }
+            updateRendering();
+        }
+
+        void LinkView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            updateRendering();
+        }
+
+        private void updateRendering()
+        {
+            Canvas c = new Canvas();
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+            if (linkViewModel.FromVisualizationViewModels.Count > 0)
+            {
+                _visualizationViewModelGeometries.Clear();
+                _visualizationViewModelCenterGeometries.Clear();
+                _visualizationViewModelIconGeometries.Clear();
+
+                Vec attachmentCenter = updateAttachmentCenter(LinkType.Filter, c);
+                drawLinesFromModelsToAttachmentCenter(LinkType.Filter, attachmentCenter, c);
+                if (linkViewModel.LinkModels.Any(lm => lm.LinkType == LinkType.Filter))
+                {
+                    drawFilterAttachment(attachmentCenter, c);
+                }
+
+                attachmentCenter = updateAttachmentCenter(LinkType.Brush, c);
+                drawLinesFromModelsToAttachmentCenter(LinkType.Brush, attachmentCenter, c);
+                if (linkViewModel.LinkModels.Any(lm => lm.LinkType == LinkType.Brush))
+                {
+                    drawBrushAttachment(attachmentCenter, c);
+                }
+            }
+            Content = c;
+        }
+
+        private Vec updateAttachmentCenter(LinkType linkType, Canvas canvas)
+        {
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+
+            Rct destinationRct = new Rct(linkViewModel.ToVisualizationViewModel.Position, 
+                new Vec(linkViewModel.ToVisualizationViewModel.Size.X, linkViewModel.ToVisualizationViewModel.Size.Y));
             var destinationGeom = destinationRct.GetLineString();
 
             List<Pt> midPoints = new List<Pt>();
             int sourceCount = 0;
-            foreach (var s in _sources)
+            foreach (var from in linkViewModel.FromVisualizationViewModels.Where(
+                vvm => linkViewModel.LinkModels.Where(lvm => lvm.LinkType == linkType).Select(lvm => lvm.FromQueryModel).Contains(vvm.QueryModel)))
             {
-                if (_destination.IsCombinedFilter && _destination.CombinedIncomingFilterModels.Contains(s))
-                {
-                    continue;
-                }
                 sourceCount++;
-                var fromCenterToCenter = new Point[] { _destination.Center, s.Center }.GetLineString();
-                var sourceRct = new Rct(s.Center - s.Dimension * 0.5, s.Dimension).GetLineString();
-
+                var fromCenterToCenter = new Point[] { 
+                    linkViewModel.ToVisualizationViewModel.Position + linkViewModel.ToVisualizationViewModel.Size / 2.0, 
+                    from.Position + from.Size / 2.0 }.GetLineString();
+                var sourceRct = new Rct(from.Position,
+                    new Vec(from.Size.X, from.Size.Y)).GetLineString();
                 var interPtSource = sourceRct.Intersection(fromCenterToCenter);
                 var interPtDestination = destinationGeom.Intersection(fromCenterToCenter);
 
-                Vec midPoint = new Vec();
+                Vector2 midPoint = new Vector2();
                 if (interPtDestination.IsEmpty || interPtSource.IsEmpty)
                 {
-                    midPoint = (_destination.Center.GetVec() + s.Center.GetVec()) / 2.0;
+                    midPoint = (
+                        (linkViewModel.ToVisualizationViewModel.Position + linkViewModel.ToVisualizationViewModel.Size / 2.0) + 
+                        (from.Position + from.Size / 2.0)) / 2.0;
                 }
                 else
                 {
-                    midPoint = (new Vec(interPtSource.Centroid.X, interPtSource.Centroid.Y) +
-                                new Vec(interPtDestination.Centroid.X, interPtDestination.Centroid.Y)) / 2.0;
+                    midPoint = (new Vector2(interPtSource.Centroid.X, interPtSource.Centroid.Y) +
+                                new Vector2(interPtDestination.Centroid.X, interPtDestination.Centroid.Y)) / 2.0;
                 }
-                midPoints.Add(midPoint.GetWindowsPoint());
+                midPoints.Add(new Pt(midPoint.X, midPoint.Y));
             }
 
             if (sourceCount == 0)
             {
-                if (filteringType == FilteringType.Brush)
+                if (linkType == LinkType.Brush)
                 {
                     return new Vec(
                         destinationRct.Left + _attachmentRectHalfSize,
                         destinationRct.Bottom + _attachmentRectHalfSize - 2);
                 }
-                else if (filteringType == FilteringType.Filter)
+                else if (linkType == LinkType.Filter)
                 {
                     return new Vec(
                         destinationRct.Right - _attachmentRectHalfSize,
@@ -157,7 +200,9 @@ namespace PanoramicData.view.vis
             }
 
             Vec tempAttachment = midPoints.Aggregate((p1, p2) => p1 + p2).GetVec() / (double)midPoints.Count;
-            Vec destinationVec = _destination.Center.GetVec();
+            Vec destinationVec = new Vec(
+                (linkViewModel.ToVisualizationViewModel.Position + linkViewModel.ToVisualizationViewModel.Size / 2.0).X,
+                (linkViewModel.ToVisualizationViewModel.Position + linkViewModel.ToVisualizationViewModel.Size / 2.0).Y);
             var inter = destinationGeom.Intersection(new Point[] { tempAttachment.GetCoord().GetPt(), destinationVec.GetCoord().GetPt() }.GetLineString());
             Vec attachmentCenter = new Vec();
             
@@ -206,13 +251,18 @@ namespace PanoramicData.view.vis
             return attachmentCenter;
         }
 
-        private void drawLinesFromModelsToAttachmentCenter(FilteringType filteringyType, Vec attachmentCenter, Canvas c)
+        private void drawLinesFromModelsToAttachmentCenter(LinkType linkType, Vec attachmentCenter, Canvas c)
         {
-            foreach (var incomingModel in _sources)
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+            foreach (var incomingModel in linkViewModel.FromVisualizationViewModels.Where(
+                vvm => linkViewModel.LinkModels.Where(lvm => lvm.LinkType == linkType).Select(lvm => lvm.FromQueryModel).Contains(vvm.QueryModel)))
             {
-                Vec incomingCenter = incomingModel.Center.GetVec();
-                Rct incomingRct = new Rct(incomingModel.Center - incomingModel.Dimension * 0.5,
-                    incomingModel.Dimension);
+                Vec incomingCenter = new Vector(
+                    (incomingModel.Position + incomingModel.Size / 2.0).X,
+                    (incomingModel.Position + incomingModel.Size / 2.0).Y);
+                var incomingRct = new Rct(incomingModel.Position,
+                    new Vec(incomingModel.Size.X, incomingModel.Size.Y));
+
                 var inter =
                     incomingRct.GetLineString()
                         .Intersection(
@@ -238,7 +288,7 @@ namespace PanoramicData.view.vis
                     l1.Y1 = incomingStart.Y;
                     l1.X2 = incomingStart.X + cutOff.X;
                     l1.Y2 = incomingStart.Y + cutOff.Y;
-                    if (_destination.GetInvertedIncomingFilterModels(_filteringType).Contains(incomingModel))
+                    if (linkViewModel.LinkModels.Where(lm => lm.IsInverted).Select(lm => lm.FromQueryModel).Contains(incomingModel.QueryModel))
                     {
                         l1.StrokeDashArray = new DoubleCollection() { 2 };
                     }
@@ -259,9 +309,9 @@ namespace PanoramicData.view.vis
                     poly.Fill = Brushes.Gray;
                     c.Children.Add(poly);
 
-                    _filterModelCenterGeometries.Add(incomingModel,
+                    _visualizationViewModelCenterGeometries.Add(incomingModel,
                         poly.Points.GetPolygon().Buffer(3));
-                    _filterModelGeometries.Add(incomingModel,
+                    _visualizationViewModelGeometries.Add(incomingModel,
                         new Point[] { incomingStart.GetCoord().GetPt(), (incomingStart + cutOff).GetCoord().GetPt() }
                             .GetLineString());
 
@@ -276,13 +326,13 @@ namespace PanoramicData.view.vis
                     e.Stroke = Brushes.Gray;
                     e.StrokeThickness = 2;
 
-                    if (filteringyType == FilteringType.Brush)
+                    if (linkType == LinkType.Brush)
                     {
                         Canvas pathCanvas = new Canvas();
                         var p1 = new Path();
                         p1.Fill = Brushes.Gray;
                         p1.Data =
-                            Geometry.Parse(
+                            System.Windows.Media.Geometry.Parse(
                                 "m 0,0 c 0.426,0 0.772,-0.346 0.772,-0.773 0,-0.426 -0.346,-0.772 -0.772,-0.772 -0.427,0 -0.773,0.346 -0.773,0.772 C -0.773,-0.346 -0.427,0 0,0 m -9.319,11.674 c 0,0 7.188,0.868 7.188,-7.187 l 0,-5.26 c 0,-1.618 1.175,-1.888 2.131,-1.888 0,0 1.914,-0.245 1.871,1.87 l 0,5.246 c 0,0 0.214,7.219 7.446,7.219 l 0,2.21 -18.636,0 0,-2.21 z");
                         var tg = new TransformGroup();
                         tg.Children.Add(new ScaleTransform(1, -1));
@@ -293,7 +343,7 @@ namespace PanoramicData.view.vis
                         var p2 = new Path();
                         p2.Fill = Brushes.Gray;
                         p2.Data =
-                            Geometry.Parse("m 0,0 0,-0.491 0,-4.316 18.636,0 0,3.58 0,1.227 0,5.333 L 0,5.333 0,0 z");
+                            System.Windows.Media.Geometry.Parse("m 0,0 0,-0.491 0,-4.316 18.636,0 0,3.58 0,1.227 0,5.333 L 0,5.333 0,0 z");
                         tg = new TransformGroup();
                         tg.Children.Add(new ScaleTransform(1, -1));
                         tg.Children.Add(new TranslateTransform(0, 6));
@@ -309,7 +359,7 @@ namespace PanoramicData.view.vis
                         brushCanvas.Children.Add(pathCanvas);
                         
                     }
-                    else if (filteringyType == FilteringType.Filter)
+                    else if (linkType == LinkType.Filter)
                     {
                         Polygon filterIcon = new Polygon();
                         filterIcon.Points = new PointCollection();
@@ -333,7 +383,7 @@ namespace PanoramicData.view.vis
                     c.Children.Add(brushCanvas);
 
                     Rect rr = new Rct(iconPos.X - 15, iconPos.Y - 15, iconPos.X + 15, iconPos.Y + 15);
-                    _filterModelIconGeometries.Add(incomingModel,
+                    _visualizationViewModelIconGeometries.Add(incomingModel,
                         rr.GetPolygon());
                 }
 
@@ -342,8 +392,8 @@ namespace PanoramicData.view.vis
 
         private void drawFilterAttachment(Vec attachmentCenter, Canvas c)
         {
-            int sourceCount = _sources.Where(s => 
-                !(_destination.IsCombinedFilter && _destination.CombinedIncomingFilterModels.Contains(s))).Count();
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+            int sourceCount = linkViewModel.LinkModels.Count(lvm => lvm.LinkType == LinkType.Filter);
 
             Rectangle c1 = new Rectangle();
             c1.Width = _attachmentRectHalfSize * 2;
@@ -355,7 +405,7 @@ namespace PanoramicData.view.vis
             c.Children.Add(c1);
 
             c1.Fill = Brushes.White;
-            c1.Stroke = Destination.Brush;
+            c1.Stroke = linkViewModel.ToVisualizationViewModel.Brush;
             c1.StrokeThickness = 2;
 
             Polygon filterIcon = new Polygon();
@@ -366,7 +416,7 @@ namespace PanoramicData.view.vis
             filterIcon.Points.Add(new Point(10, 14));
             filterIcon.Points.Add(new Point(5, 12));
             filterIcon.Points.Add(new Point(5, 6));
-            filterIcon.Fill = sourceCount > 1 ? Destination.FaintBrush : Destination.Brush;
+            filterIcon.Fill = sourceCount > 1 ?  linkViewModel.ToVisualizationViewModel.FaintBrush : linkViewModel.ToVisualizationViewModel.Brush;
             filterIcon.Width = _attachmentRectHalfSize * 2;
             filterIcon.Height = _attachmentRectHalfSize * 2;
             Mat mat = Mat.Scale(1.2, 1.2) *
@@ -378,11 +428,11 @@ namespace PanoramicData.view.vis
             if (sourceCount > 1)
             {
                 System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-                if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.AND)
+                if (linkViewModel.ToVisualizationViewModel.QueryModel.FilteringOperation == FilteringOperation.AND)
                 {
                     label.Content = "AND";
                 }
-                else if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.OR)
+                else if (linkViewModel.ToVisualizationViewModel.QueryModel.FilteringOperation == FilteringOperation.OR)
                 {
                     label.Content = "OR";
                 }
@@ -402,13 +452,13 @@ namespace PanoramicData.view.vis
             Vec t = (attachmentCenter - new Vec(_attachmentRectHalfSize, _attachmentRectHalfSize));
             Rct r = new Rct(new Pt(t.X, t.Y),
                 new Vec(_attachmentRectHalfSize*2, _attachmentRectHalfSize*2));
-            _filterAttachmentGeometry = r.GetPolygon().Buffer(3);
+            _linkViewGeometry = r.GetPolygon().Buffer(3);
         }
 
         private void drawBrushAttachment(Vec attachmentCenter, Canvas c)
         {
-            int sourceCount = _sources.Where(s =>
-                !(_destination.IsCombinedFilter && _destination.CombinedIncomingFilterModels.Contains(s))).Count();
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+            int sourceCount = linkViewModel.LinkModels.Count(lvm => lvm.LinkType == LinkType.Brush);
 
             Rectangle c1 = new Rectangle();
             c1.Width = _attachmentRectHalfSize * 2;
@@ -420,13 +470,13 @@ namespace PanoramicData.view.vis
             c.Children.Add(c1);
 
             c1.Fill = Brushes.White;
-            c1.Stroke = Destination.Brush;
+            c1.Stroke = linkViewModel.ToVisualizationViewModel.Brush;
             c1.StrokeThickness = 2;
 
             Canvas brushCanvas = new Canvas();
             var p1 = new Path();
-            p1.Fill = sourceCount > 1 && false ? Destination.FaintBrush : Destination.Brush;
-            p1.Data = Geometry.Parse("m 0,0 c 0.426,0 0.772,-0.346 0.772,-0.773 0,-0.426 -0.346,-0.772 -0.772,-0.772 -0.427,0 -0.773,0.346 -0.773,0.772 C -0.773,-0.346 -0.427,0 0,0 m -9.319,11.674 c 0,0 7.188,0.868 7.188,-7.187 l 0,-5.26 c 0,-1.618 1.175,-1.888 2.131,-1.888 0,0 1.914,-0.245 1.871,1.87 l 0,5.246 c 0,0 0.214,7.219 7.446,7.219 l 0,2.21 -18.636,0 0,-2.21 z");
+            p1.Fill = linkViewModel.ToVisualizationViewModel.Brush;
+            p1.Data = System.Windows.Media.Geometry.Parse("m 0,0 c 0.426,0 0.772,-0.346 0.772,-0.773 0,-0.426 -0.346,-0.772 -0.772,-0.772 -0.427,0 -0.773,0.346 -0.773,0.772 C -0.773,-0.346 -0.427,0 0,0 m -9.319,11.674 c 0,0 7.188,0.868 7.188,-7.187 l 0,-5.26 c 0,-1.618 1.175,-1.888 2.131,-1.888 0,0 1.914,-0.245 1.871,1.87 l 0,5.246 c 0,0 0.214,7.219 7.446,7.219 l 0,2.21 -18.636,0 0,-2.21 z");
             var tg = new TransformGroup();
             tg.Children.Add(new ScaleTransform(1, -1));
             tg.Children.Add(new TranslateTransform(9.3, 26));
@@ -434,8 +484,8 @@ namespace PanoramicData.view.vis
             brushCanvas.Children.Add(p1);
 
             var p2 = new Path();
-            p2.Fill = sourceCount > 1 && false ? Destination.FaintBrush : Destination.Brush;
-            p2.Data = Geometry.Parse("m 0,0 0,-0.491 0,-4.316 18.636,0 0,3.58 0,1.227 0,5.333 L 0,5.333 0,0 z");
+            p2.Fill = linkViewModel.ToVisualizationViewModel.Brush;
+            p2.Data = System.Windows.Media.Geometry.Parse("m 0,0 0,-0.491 0,-4.316 18.636,0 0,3.58 0,1.227 0,5.333 L 0,5.333 0,0 z");
             tg = new TransformGroup();
             tg.Children.Add(new ScaleTransform(1, -1));
             tg.Children.Add(new TranslateTransform(0, 6));
@@ -452,126 +502,24 @@ namespace PanoramicData.view.vis
             brushCanvas.RenderTransform = new MatrixTransform(mat);
             c.Children.Add(brushCanvas);
 
-            if (sourceCount > 1  && false)
-            {
-                System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-                if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.AND)
-                {
-                    label.Content = "AND";
-                }
-                else if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.OR)
-                {
-                    label.Content = "OR";
-                }
-                label.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
-                label.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-                label.FontSize = 9;
-                label.FontWeight = FontWeights.Bold;
-                label.Width = _attachmentRectHalfSize * 2;
-                label.Height = _attachmentRectHalfSize * 2;
-                c.UseLayoutRounding = false;
-                label.RenderTransform = new TranslateTransform(attachmentCenter.X - _attachmentRectHalfSize,
-                    attachmentCenter.Y - _attachmentRectHalfSize);
-                c.Children.Add(label);
-            }
-
             Vec t = (attachmentCenter - new Vec(_attachmentRectHalfSize, _attachmentRectHalfSize));
             Rct r = new Rct(new Pt(t.X, t.Y),
                 new Vec(_attachmentRectHalfSize * 2, _attachmentRectHalfSize * 2));
-            _filterAttachmentGeometry = r.GetPolygon().Buffer(3);
+            _linkViewGeometry = r.GetPolygon().Buffer(3);
         }
-
-        private void update()
-        {
-            if (_destination != null)
-            {
-                Canvas c = new Canvas();
-
-                if (_sources.Count > 0)
-                {
-                    _filterModelGeometries.Clear();
-                    _filterModelCenterGeometries.Clear();
-                    _filterModelIconGeometries.Clear();
-
-                    Vec attachmentCenter = updateAttachmentCenter(_filteringType);
-                    drawLinesFromModelsToAttachmentCenter(_filteringType, attachmentCenter, c);
-
-                    if (_filteringType == FilteringType.Filter)
-                    {
-                        drawFilterAttachment(attachmentCenter, c);
-                    }
-                    else if (_filteringType == FilteringType.Brush)
-                    {
-                        drawBrushAttachment(attachmentCenter, c);
-                    }
-                }
-                Content = c;
-            }
-        }
-
-        void _sources_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            foreach (var d in _sourceDisposables)
-            {
-                d.Dispose();
-            }
-            
-            foreach (var s in _sources)
-            {
-                IDisposable sourceDisposable = Observable.FromEventPattern<FilterModelUpdatedEventArgs>(
-                ((FilterHolderViewModel)s), "FilterModelUpdated")
-                .Throttle(TimeSpan.FromMilliseconds(0))
-                .Subscribe((arg) =>
-                {
-                    Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
-                    {
-                        update();
-                    }));
-                });
-
-                _sourceDisposables.Add(sourceDisposable);
-            }
-            update();
-        }
-
-        public GeoAPI.Geometries.IGeometry GetGeometry()
-        {
-            if (_sources.Count > 0)
-            {
-                IGeometry unionGeometry = _filterAttachmentGeometry;
-
-                foreach (var model in _filterModelGeometries.Keys)
-                {
-                    unionGeometry = unionGeometry.Union(_filterModelGeometries[model].Buffer(3));
-                    unionGeometry = unionGeometry.Union(_filterModelCenterGeometries[model]);
-                }
-
-                /*Polyline pl = new Polyline();
-            pl.Points = new PointCollection(unionGeometry.Coordinates.Select((corrd) => new Point(corrd.X, corrd.Y)).ToArray());
-            pl.Stroke = Brushes.Green;
-            pl.StrokeThickness = 1;
-            _inqScene.AddNoUndo(pl);*/
-
-                return unionGeometry;
-            }
-            else
-            {
-                return new NetTopologySuite.Geometries.Point(-40000,-40000);
-            }
-        }
-
-        void TouchDownEvent(Object sender, TouchEventArgs e)
+        
+        void LinkView_TouchDownEvent(Object sender, TouchEventArgs e)
         {
             IPoint p = e.GetTouchPoint(MainViewController.Instance.InkableScene).Position.GetVec().GetCoord().GetPoint();
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
 
-            foreach (var filterModel in _filterModelIconGeometries.Keys)
+            foreach (var visModel in _visualizationViewModelIconGeometries.Keys)
             {
-                if (_filterModelIconGeometries[filterModel].Buffer(3).Intersects(p))
+                if (_visualizationViewModelIconGeometries[visModel].Buffer(3).Intersects(p))
                 {
-                    _destination.RemoveIncomingFilter(filterModel, _filteringType);
-                    _destination.AddIncomingFilter(filterModel,
-                        _filteringType == FilteringType.Brush ? FilteringType.Filter : FilteringType.Brush);
+                    LinkModel linkModel = linkViewModel.LinkModels.Where(lm => lm.FromQueryModel == visModel.QueryModel).First();
+                    linkModel.LinkType = linkModel.LinkType == LinkType.Brush ? LinkType.Filter : LinkType.Brush;
+                  
                     e.Handled = true;
                     break;
                 }
@@ -581,80 +529,62 @@ namespace PanoramicData.view.vis
                 return;
 
             
-            if (_filterAttachmentGeometry.Intersects(p))
+            if (_linkViewGeometry.Intersects(p))
             {
-                toggleLinkType();
+                FilteringOperation op = linkViewModel.ToVisualizationViewModel.QueryModel.FilteringOperation;
+                linkViewModel.ToVisualizationViewModel.QueryModel.FilteringOperation = op == FilteringOperation.AND ? FilteringOperation.OR : FilteringOperation.AND;
                 e.Handled = true;
             }
         }
-
-        void toggleLinkType()
+        public GeoAPI.Geometries.IGeometry Geometry
         {
-            if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.AND)
+            get
             {
-                _destination.SetFilterModelLinkType(_filteringType, FilterModelLinkType.OR);
-            }
-            else if (_destination.GetFilterModelLinkType(_filteringType) == FilterModelLinkType.OR)
-            {
-                _destination.SetFilterModelLinkType(_filteringType, FilterModelLinkType.AND);
-            }
-            update();
-        }
-
-        public void CheckScribbleDelete(starPadSDK.Inq.Stroq s)
-        {
-            IGeometry stroqGeometry = s.GetLineString();
-            foreach (var filterModel in _filterModelGeometries.Keys)
-            {
-                if (_filterModelGeometries[filterModel].Buffer(3).Intersects(stroqGeometry))
+                LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+                if (linkViewModel.LinkModels.Count > 0)
                 {
-                    _destination.RemoveIncomingFilter(filterModel, _filteringType);
+                    IGeometry unionGeometry = _linkViewGeometry;
+
+                    foreach (var model in _visualizationViewModelGeometries.Keys)
+                    {
+                        unionGeometry = unionGeometry.Union(_visualizationViewModelGeometries[model].Buffer(3));
+                        unionGeometry = unionGeometry.Union(_visualizationViewModelCenterGeometries[model]);
+                    }
+
+                    Polyline pl = new Polyline();
+                pl.Points = new PointCollection(unionGeometry.Coordinates.Select((corrd) => new Point(corrd.X, corrd.Y)).ToArray());
+                pl.Stroke = Brushes.Green;
+                pl.StrokeThickness = 1;
+                MainViewController.Instance.InkableScene.Add(pl);
+
+                    return unionGeometry;
+                }
+                else
+                {
+                    return new NetTopologySuite.Geometries.Point(-40000, -40000);
                 }
             }
-            MainViewController.Instance.InkableScene.Remove(s);   
         }
 
-        public void NotifyStroqAdded(starPadSDK.Inq.Stroq s)
+        public List<LinkModel> GetLinkModelsToRemove(IGeometry scribble)
         {
-            IGeometry stroqGeometry = s.GetLineString();
-
-            if (_filterAttachmentGeometry.Intersects(stroqGeometry))
+            LinkViewModel linkViewModel = (DataContext as LinkViewModel);
+            List<LinkModel> models = new List<LinkModel>();
+            if (scribble.Intersects(_linkViewGeometry.Buffer(3)))
             {
-                toggleLinkType();
+                models = linkViewModel.LinkModels.ToList();
             }
             else
             {
-                foreach (var filterModel in _filterModelGeometries.Keys)
+                foreach (var model in _visualizationViewModelGeometries.Keys)
                 {
-                    if (_filterModelGeometries[filterModel].Buffer(3).Intersects(stroqGeometry))
+                    if (_visualizationViewModelGeometries[model].Buffer(3).Intersects(scribble))
                     {
-                        if (s.Cusps().Length == 2)
-                        {
-                            _destination.InvertIncomingFilterModel(filterModel, _filteringType);
-                        }
-                        else 
-                        {
-                            _destination.RemoveIncomingFilter(filterModel, _filteringType);
-                            _destination.AddIncomingFilter(filterModel,
-                                _filteringType == FilteringType.Brush ? FilteringType.Filter : FilteringType.Brush);
-                        }
-                        break;
+                        models.Add(linkViewModel.LinkModels.First(lm => lm.FromQueryModel == model.QueryModel));
                     }
                 }
             }
-            MainViewController.Instance.InkableScene.Remove(s);   
-        }
-
-        public void NotifyStroqRemoved(starPadSDK.Inq.Stroq s)
-        {
-        }
-
-        public void NotifyStroqsRemoved(starPadSDK.Inq.StroqCollection sc)
-        {
-        }
-
-        public void NotifyStroqsAdded(starPadSDK.Inq.StroqCollection sc)
-        {
+            return models;
         }
     }
 }

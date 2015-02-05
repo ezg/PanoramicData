@@ -47,6 +47,41 @@ namespace PanoramicData.model.data
                 this.SetProperty(ref _linkType, value);
             }
         }
+
+        private bool _isInverted = false;
+        public bool IsInverted
+        {
+            get
+            {
+                return _isInverted;
+            }
+            set
+            {
+                this.SetProperty(ref _isInverted, value);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is LinkModel)
+            {
+                var link = obj as LinkModel;
+                return
+                    link.FromQueryModel == this.FromQueryModel &&
+                    link.ToQueryModel == this.ToQueryModel &&
+                    link.LinkType == this.LinkType;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            int code = 0;
+            code ^= this.FromQueryModel.GetHashCode();
+            code ^= this.ToQueryModel.GetHashCode();
+            code ^= this.LinkType.GetHashCode();
+            return code;
+        }
     }
 
     public enum LinkType { Filter, Brush }

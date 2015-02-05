@@ -26,6 +26,7 @@ using PanoramicData.model.data.sim;
 using PanoramicData.Properties;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using PanoramicData.controller.physics;
 
 namespace PanoramicData.controller.view
 {
@@ -53,8 +54,10 @@ namespace PanoramicData.controller.view
             Colorer.ColorerDropped += ColorerDropped;
             DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
             _root.InkCollectedEvent += root_InkCollectedEvent;
+            VisualizationViewModels.CollectionChanged += VisualizationViewModels_CollectionChanged;
 
-            _gesturizer.AddGesture(new PanoramicData.view.inq.ScribbleGesture(_root));
+            _gesturizer.AddGesture(new PanoramicData.view.inq.ConnectGesture(_root));
+            _gesturizer.AddGesture(new PanoramicData.view.inq.ScribbleGesture(_root)); 
         }
 
         public static void CreateInstance(InkableScene root, MainWindow window)
@@ -85,6 +88,15 @@ namespace PanoramicData.controller.view
             get
             {
                 return _visualizationViewModels;
+            }
+        }
+
+        private ObservableCollection<LinkViewModel> _linkViewModels = new ObservableCollection<LinkViewModel>();
+        public ObservableCollection<LinkViewModel> LinkViewModels
+        {
+            get
+            {
+                return _linkViewModels;
             }
         }
 
@@ -147,6 +159,52 @@ namespace PanoramicData.controller.view
             VisualizationViewModel visModel = VisualizationViewModelFactory.CreateDefault(_schemaModel, attributeOperationModel);
             _visualizationViewModels.Add(visModel);
             return visModel;
+        }
+
+        public void RemoveVisualizationViewModel(VisualizationContainerView visualizationContainerView)
+        {
+            _visualizationViewModels.Remove(visualizationContainerView.DataContext as VisualizationViewModel);
+            PhysicsController.Instance.RemovePhysicalObject(visualizationContainerView);
+            MainViewController.Instance.InkableScene.Remove(visualizationContainerView);
+        }
+
+        public LinkViewModel CreateLinkViewModel(LinkModel linkModel)
+        {
+            LinkViewModel linkViewModel = LinkViewModels.FirstOrDefault(lvm => lvm.ToVisualizationViewModel == VisualizationViewModels.Where(vvm => vvm.QueryModel == linkModel.ToQueryModel).First());
+            if (linkViewModel == null)
+            {
+                linkViewModel = new LinkViewModel()
+                {
+                    ToVisualizationViewModel = VisualizationViewModels.Where(vvm => vvm.QueryModel == linkModel.ToQueryModel).First(),
+                };
+                _linkViewModels.Add(linkViewModel);
+                LinkView linkView = new LinkView();
+                linkView.DataContext = linkViewModel;
+                _root.AddToBack(linkView);
+            }
+            if (!linkViewModel.LinkModels.Contains(linkModel))
+            {
+                linkViewModel.LinkModels.Add(linkModel);
+                linkViewModel.FromVisualizationViewModels.Add(VisualizationViewModels.Where(vvm => vvm.QueryModel == linkModel.FromQueryModel).First());
+            }
+            
+            return linkViewModel;
+        }
+
+        public void RemoveLinkViewModel(LinkModel linkModel)
+        {
+            foreach (var linkViewModel in LinkViewModels.ToArray()) 
+            {
+                if (linkViewModel.LinkModels.Contains(linkModel))
+                {
+                    linkViewModel.LinkModels.Remove(linkModel);
+                }
+                if (linkViewModel.LinkModels.Count == 0)
+                {
+                    LinkViewModels.Remove(linkViewModel);
+                    _root.Remove(_root.Elements.First(e => e is LinkView && (e as LinkView).DataContext == linkViewModel));
+                }
+            }
         }
 
         private void DatabaseManager_ErrorMessageChanged(object sender, string e)
@@ -336,13 +394,64 @@ namespace PanoramicData.controller.view
         }
 
 
+        void VisualizationViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    (item as VisualizationViewModel).QueryModel.LinkModels.CollectionChanged -= LinkModels_CollectionChanged;
+                }
+            }
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    (item as VisualizationViewModel).QueryModel.LinkModels.CollectionChanged += LinkModels_CollectionChanged;
+                }
+            }
+        }
+
+        void LinkModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    RemoveLinkViewModel(item as LinkModel);
+                }
+            }
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    CreateLinkViewModel(item as LinkModel);
+                }
+            }
+        }
+
         void root_InkCollectedEvent(object sender, InkCollectedEventArgs e)
         {
             IList<IGesture> recognizedGestures = _gesturizer.Recognize(e.InkStroke.Clone());
 
             foreach (IGesture recognizedGesture in recognizedGestures.ToList())
             {
-                if (recognizedGesture is PanoramicData.view.inq.ScribbleGesture)
+                if (recognizedGesture is PanoramicData.view.inq.ConnectGesture)
+                {
+                    PanoramicData.view.inq.ConnectGesture connect = recognizedGesture as PanoramicData.view.inq.ConnectGesture;
+                    LinkModel linkModel = new LinkModel()
+                    {
+                        FromQueryModel= connect.FromVisualizationViewModel.QueryModel,
+                        ToQueryModel = connect.ToVisualizationViewModel.QueryModel
+                    };
+                    if (!linkModel.FromQueryModel.LinkModels.Contains(linkModel) &&
+                        !linkModel.ToQueryModel.LinkModels.Contains(linkModel))
+                    {
+                        linkModel.FromQueryModel.LinkModels.Add(linkModel);
+                        linkModel.ToQueryModel.LinkModels.Add(linkModel);
+                    }
+                }
+                else if (recognizedGesture is PanoramicData.view.inq.ScribbleGesture)
                 {
                     PanoramicData.view.inq.ScribbleGesture scribble = recognizedGesture as PanoramicData.view.inq.ScribbleGesture;
                     foreach (IScribbable hitScribbable in scribble.HitScribbables)
@@ -350,6 +459,19 @@ namespace PanoramicData.controller.view
                         if (hitScribbable is InkStroke)
                         {
                             _root.Remove(hitScribbable as InkStroke);
+                        }
+                        else if (hitScribbable is VisualizationContainerView)
+                        {
+                            RemoveVisualizationViewModel(hitScribbable as VisualizationContainerView);
+                        }
+                        else if (hitScribbable is LinkView)
+                        {
+                            List<LinkModel> models = (hitScribbable as LinkView).GetLinkModelsToRemove(e.InkStroke.Geometry);
+                            foreach (var model in models)
+                            {
+                                model.FromQueryModel.LinkModels.Remove(model);
+                                model.ToQueryModel.LinkModels.Remove(model);
+                            }
                         }
                     }
                 }

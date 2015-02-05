@@ -20,8 +20,6 @@ namespace PanoramicData.view.vis
 
         public MovableElementType Type { get; set; }
 
-        public bool HasEnclosedAnchor { get; set; }
-
         public void PreTransformation()
         {
             _isUnderInteraction = true;

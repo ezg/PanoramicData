@@ -205,7 +205,7 @@ namespace PanoramicData
             if (e is VisualizationContainerView)
             {
                 VisualizationContainerView fh = e as VisualizationContainerView;
-                foreach (var fe in this.Elements.Where((t) => t is FilterModelAttachment))
+                foreach (var fe in this.Elements.Where((t) => t is LinkView))
                 {
                     /*FilterModelAttachment edge = (fe as FilterModelAttachment);
                     if (edge.Destination.GetIncomingFilterModels(FilteringType.Filter).Contains(fh.FilterHolderViewModel))
@@ -223,9 +223,9 @@ namespace PanoramicData
                 }
                 //fh.FilterHolderViewModel.TableModel.RemoveNamedFilterModel(fh.FilterHolderViewModel);
             }
-            else if (e is FilterModelAttachment)
+            else if (e is LinkView)
             {
-                (e as FilterModelAttachment).CleanUp();
+               //(e as LinkView).CleanUp();
             }
 
             if (e is MovableElement)

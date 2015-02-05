@@ -362,21 +362,6 @@ namespace PanoramicData.controller.physics
 
                 po.OuterBody = circle;
             }
-
-            if (element.HasEnclosedAnchor)
-            {
-                Body innerBody = BodyFactory.CreateCircle(_world,
-                    Math.Min(width, height)/4.0f, 1);
-                innerBody.FixedRotation = false;
-                innerBody.Position = new Vector2((float) center.X, (float) center.Y);
-                innerBody.BodyType = BodyType.Dynamic;//isUnderInteraction ? BodyType.Kinematic : BodyType.Dynamic;
-                innerBody.Restitution = .0f;
-                innerBody.LinearDamping = 5f;
-                innerBody.Friction = .2f;
-                innerBody.CollisionCategories = Category.Cat2;
-                innerBody.CollidesWith = Category.Cat2;
-                po.AnchorBody = innerBody;
-            }
             else
             {
                 //po.AnchorBody = po.OuterBody;

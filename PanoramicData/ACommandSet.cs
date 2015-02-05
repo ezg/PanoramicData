@@ -61,7 +61,7 @@ namespace PanoramicData
             OneStrokeGesture g = null;
             g = new ConnectGesture(_can, 
                 new Type[] { typeof(VisualizationContainerView) },
-                new Type[] { typeof(FilterModelAttachment) }, false,
+                new Type[] { typeof(LinkView) }, false,
                 this);
             _gest.Add(g);
 
@@ -85,8 +85,8 @@ namespace PanoramicData
             _gest.Add(bg);
 
             g = new ConnectGesture(_can,
-                new Type[] { typeof(VisualizationContainerView), typeof(FilterModelAttachment) },
-                new Type[] { typeof(VisualizationContainerView), typeof(FilterModelAttachment) }, true,
+                new Type[] { typeof(VisualizationContainerView), typeof(LinkView) },
+                new Type[] { typeof(VisualizationContainerView), typeof(LinkView) }, true,
                 this);
             _gest.Add(g);
 
@@ -167,10 +167,10 @@ namespace PanoramicData
                 {
                     //endModel = ((VisualizationContainerView) endElements[0]).FilterHolderViewModel;
                 }
-                else if (endElements[0] is FilterModelAttachment)
+                else if (endElements[0] is LinkView)
                 {
-                    endModel = ((FilterModelAttachment) endElements[0]).Destination;
-                    filteringType = ((FilterModelAttachment) endElements[0]).FilteringType;
+                    //endModel = ((LinkView) endElements[0]).Destination;
+                    //filteringType = ((LinkView) endElements[0]).FilteringType;
                 }
 
                 if (startModel != null && endModel != null &&
