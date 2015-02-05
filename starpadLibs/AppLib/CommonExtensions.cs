@@ -55,7 +55,7 @@ namespace starPadSDK.AppLib
         public static GeoAPI.Geometries.IPoint GetPoint(this Pt c)
         {
             return new NetTopologySuite.Geometries.Point(c.X, c.Y);
-        }
+        }    
 
         public static GeoAPI.Geometries.IPoint GetPoint(this Point c)
         {
