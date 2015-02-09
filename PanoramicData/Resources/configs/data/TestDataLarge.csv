@@ -1,5 +1,6 @@
 ﻿A,B,C,D
 int,nvarchar,int,nvarchar
+numeric,category,numeric,category
 1,a,96,C
 2,c,94,A
 3,d,19,C

@@ -21,7 +21,7 @@ namespace PanoramicData.model.data
                 this.SetProperty(ref _fromQueryModel, value);
             }
         }
-        
+
         private QueryModel _toQueryModel = null;
         public QueryModel ToQueryModel
         {
@@ -83,6 +83,4 @@ namespace PanoramicData.model.data
             return code;
         }
     }
-
-    public enum LinkType { Filter, Brush }
 }

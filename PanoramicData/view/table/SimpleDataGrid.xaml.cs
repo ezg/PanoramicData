@@ -373,10 +373,13 @@ namespace PanoramicData.view.table
         {
             VisualizationViewModel model = (DataContext as VisualizationViewModel);
             var item = ((sender as FrameworkElement).DataContext as DataWrapper<QueryResultItemModel>).Data;
-            FilterModel fi = new FilterModel(item);
-            if (!model.QueryModel.FilterModels.Contains(fi))
+            if (item != null)
             {
-                model.QueryModel.AddFilterItem(fi, this);
+                FilterModel fi = new FilterModel(item);
+                if (!model.QueryModel.FilterModels.Contains(fi))
+                {
+                    model.QueryModel.AddFilterModel(fi, this);
+                }
             }
         }
         void checkboxFactory_UncheckedEvent(object sender, RoutedEventArgs e)
@@ -386,7 +389,7 @@ namespace PanoramicData.view.table
             FilterModel fi = new FilterModel(item);
             if (model.QueryModel.FilterModels.Contains(fi))
             {
-                model.QueryModel.RemoveFilterItem(fi, this);
+                model.QueryModel.RemoveFilterModel(fi, this);
             }
         }
 
@@ -402,7 +405,7 @@ namespace PanoramicData.view.table
                     FilterModel fi = new FilterModel(item);
                     if (model.QueryModel.FilterModels.Contains(fi))
                     {
-                        model.QueryModel.RemoveFilterItem(fi, this);
+                        model.QueryModel.RemoveFilterModel(fi, this);
                     }
                 }
             }
@@ -414,7 +417,7 @@ namespace PanoramicData.view.table
                     FilterModel fi = new FilterModel(item);
                     if (!model.QueryModel.FilterModels.Contains(fi))
                     {
-                        model.QueryModel.AddFilterItem(fi, this);
+                        model.QueryModel.AddFilterModel(fi, this);
                     }
                 }
             }

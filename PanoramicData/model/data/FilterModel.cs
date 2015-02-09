@@ -121,7 +121,25 @@ namespace PanoramicData.model.data
 
         public bool Compare(QueryResultItemValueModel value)
         {
-            if (this.Predicate == Predicate.GREATER_THAN_EQUAL)
+            if (this.Predicate == Predicate.EQUALS)
+            {
+                double d1 = 0.0;
+                double d2 = 0.0;
+                if (double.TryParse(this.Value.StringValue, out d1) &&
+                    double.TryParse(value.StringValue, out d2))
+                {
+                    return d1 > d2 - 0.0001 && d1 < d2 + 0.0001;
+                }
+                else
+                {
+                    int cmp = value.StringValue.CompareTo(this.Value.StringValue);
+                    if (cmp == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (this.Predicate == Predicate.GREATER_THAN_EQUAL)
             {
                 double d1 = 0.0;
                 double d2 = 0.0;
@@ -139,7 +157,7 @@ namespace PanoramicData.model.data
                     }
                 }
             }
-            if (this.Predicate == Predicate.LESS_THAN_EQUAL)
+            else if (this.Predicate == Predicate.LESS_THAN_EQUAL)
             {
                 double d1 = 0.0;
                 double d2 = 0.0;

@@ -16,7 +16,6 @@ namespace PanoramicData.model.view_new
 
             if (attributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.ENUM)
             {
-                visualizationViewModel.VisualizationType = VisualizationType.Pie;
                 /*
                 PanoramicDataColumnDescriptor x = (PanoramicDataColumnDescriptor)columnDescriptor.Clone();
                 PanoramicDataColumnDescriptor g = (PanoramicDataColumnDescriptor)columnDescriptor.Clone();
@@ -30,6 +29,8 @@ namespace PanoramicData.model.view_new
             }
             else if (attributeOperationModel.AttributeModel.AttributeVisualizationType == AttributeVisualizationTypeConstants.NUMERIC)
             {
+                visualizationViewModel.VisualizationType = VisualizationType.Bar;
+                visualizationViewModel.QueryModel.AddFunctionAttributeOperationModel(AttributeFunction.X, attributeOperationModel);
                 /*visualizationViewModel.VisualizationType = VisualizationType.Histogram;
 
                 PanoramicDataColumnDescriptor x = (PanoramicDataColumnDescriptor)columnDescriptor.Clone();

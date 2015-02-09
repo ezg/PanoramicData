@@ -165,5 +165,5 @@ namespace PanoramicData.model.view_new
         }
     }
 
-    public enum VisualizationType { Table, Histogram, Map, Plot, Pie, Line, OneD, Frozen, Test }
+    public enum VisualizationType { Table, Bar, Map, Plot, Line }
 }

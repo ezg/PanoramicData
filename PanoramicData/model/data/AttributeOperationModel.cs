@@ -164,13 +164,13 @@ namespace PanoramicData.model.data
         public override int GetHashCode()
         {
             int code = 0;
-            code ^= this.AggregateFunction.GetHashCode();
+            code ^= this._aggregateFunction.GetHashCode();
             code ^= this._attributeModel.GetHashCode();
             code ^= this._isBinned.GetHashCode();
             code ^= this._binSize.GetHashCode();
             code ^= this._isGrouped.GetHashCode();
             code ^= this._scaleFunction.GetHashCode();
-            code ^= this._sortMode.GetHashCode();
+            //code ^= this._sortMode.GetHashCode();
             return code;
         }
     }

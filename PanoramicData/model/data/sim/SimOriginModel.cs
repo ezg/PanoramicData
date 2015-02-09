@@ -20,11 +20,12 @@ namespace PanoramicData.model.data.sim
             StreamReader file = new StreamReader(@"Resources\configs\" + _datasetConfiguration.DataFile);
             List<string> names = CSVParser.CSVLineSplit(file.ReadLine());
             List<string> dataTypes = CSVParser.CSVLineSplit(file.ReadLine());
+            List<string> visualizationTypes = CSVParser.CSVLineSplit(file.ReadLine());
 
-            _idAttributeModel = new SimAttributeModel(this, "ID", AttributeDataTypeConstants.INT);
+            _idAttributeModel = new SimAttributeModel(this, "ID", AttributeDataTypeConstants.INT, AttributeVisualizationTypeConstants.NUMERIC);
             for (int i = 0; i < names.Count; i++)
             {
-                AttributeModel attributeModel = new SimAttributeModel(this, names[i], dataTypes[i]);
+                AttributeModel attributeModel = new SimAttributeModel(this, names[i], dataTypes[i], visualizationTypes[i]);
                 _attributeModels.Add(attributeModel);
             }
             string line = file.ReadLine();

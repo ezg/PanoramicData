@@ -26,6 +26,44 @@ namespace PanoramicData.model.data
                 _attributeFunctionOperationModels.Add(attributeFunction, new ObservableCollection<AttributeOperationModel>());
                 _attributeFunctionOperationModels[attributeFunction].CollectionChanged += AttributeOperationModel_CollectionChanged;
             }
+
+            _linkModels.CollectionChanged += LinkModels_CollectionChanged;
+        }
+
+        void LinkModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            bool fire = false;
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    if ((item as LinkModel).ToQueryModel == this)
+                    {
+                        (item as LinkModel).FromQueryModel.QueryModelUpdated -= FromQueryModel_QueryModelUpdated;
+                        fire = true;
+                    }
+                }
+            }
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    if ((item as LinkModel).ToQueryModel == this)
+                    {
+                        (item as LinkModel).FromQueryModel.QueryModelUpdated += FromQueryModel_QueryModelUpdated;
+                        fire = true;
+                    }
+                }
+            }
+            if (fire)
+            {
+                FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            }
+        }
+
+        void FromQueryModel_QueryModelUpdated(object sender, QueryModelUpdatedEventArgs e)
+        {
+            FireQueryModelUpdated(QueryModelUpdatedEventType.Links);
         }
 
         void AttributeOperationModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -150,49 +188,57 @@ namespace PanoramicData.model.data
             }
         }
 
-        public void ClearFilterItems()
+        public void ClearFilterModels(bool fireUpdate = true)
         {
             _filterModels.Clear();
-            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterItems);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterModels);
         }
 
-        public void AddFilterItems(List<FilterModel> filterItems, object sender)
+        public void AddFilterModels(List<FilterModel> filterModels, object sender)
         {
-            _filterModels.AddRange(filterItems);
-            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            _filterModels.AddRange(filterModels);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterModels);
         }
 
-        public void AddFilterItem(FilterModel filterItem, object sender)
+        public void AddFilterModel(FilterModel filterModel, object sender)
         {
-            _filterModels.Add(filterItem);
-            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            _filterModels.Add(filterModel);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterModels);
         }
 
-        public void RemoveFilterItem(FilterModel filterItem, object sender)
+        public void RemoveFilterModel(FilterModel filterModel, object sender)
         {
-            _filterModels.Remove(filterItem);
-            FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+            _filterModels.Remove(filterModel);
+            FireQueryModelUpdated(QueryModelUpdatedEventType.FilterModels);
         }
 
-        public void RemoveFilterItems(List<FilterModel> filterItems, object sender)
+        public void RemoveFilterModels(List<FilterModel> filterModels, object sender)
         {
-            foreach (var filterItem in filterItems)
+            foreach (var filterItem in filterModels)
             {
                 _filterModels.Remove(filterItem);
             }
-            if (filterItems.Count > 0)
+            if (filterModels.Count > 0)
             {
-                FireQueryModelUpdated(QueryModelUpdatedEventType.Structure);
+                FireQueryModelUpdated(QueryModelUpdatedEventType.FilterModels);
             }
         }
 
         public void FireQueryModelUpdated(QueryModelUpdatedEventType type)
         {
+            if (type == QueryModelUpdatedEventType.Structure)
+            {
+                ClearFilterModels(false);
+            }
             if (QueryModelUpdated != null)
             {
                 QueryModelUpdated(this, new QueryModelUpdatedEventArgs(type));
             }
-            SchemaModel.QueryExecuter.ExecuteQuery(this);
+
+            if (type != QueryModelUpdatedEventType.FilterModels)
+            {
+                SchemaModel.QueryExecuter.ExecuteQuery(this);
+            }
         }
     }
 
@@ -207,6 +253,6 @@ namespace PanoramicData.model.data
         }
     }
 
-    public enum QueryModelUpdatedEventType { Structure, Links, FilterItems }
+    public enum QueryModelUpdatedEventType { Structure, Links, FilterModels }
 
 }

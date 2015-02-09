@@ -278,6 +278,7 @@ namespace PanoramicData.controller.view
                 filter.InitPostionAndDimension(position, new Vec(width, height));*/
             }
         }
+
         private void ColorerDropped(object sender, DatabaseTableEventArgs e)
         {
             HitTester hitTester = new HitTester();

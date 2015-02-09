@@ -51,7 +51,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="InitialDataSet" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TestSmall</Value>
+      <Value Profile="(Default)">TestLarge</Value>
     </Setting>
   </Settings>
 </SettingsFile>

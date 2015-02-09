@@ -33,9 +33,10 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <NuGetPackageImportStamp>b494fcb5</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -73,6 +74,42 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -125,6 +162,9 @@
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.DirectX">
+      <HintPath>..\packages\WindowsAPICodePack-DirectX.1.1.2\lib\Microsoft.WindowsAPICodePack.DirectX.dll</HintPath>
     </Reference>
     <Reference Include="NCalc">
       <HintPath>..\starpadLibs\NCalc.dll</HintPath>
@@ -197,6 +237,7 @@
     <Compile Include="model\data\AttributeOperationModel.cs" />
     <Compile Include="model\data\CalculatedAttributeModel.cs" />
     <Compile Include="model\data\LinkModel.cs" />
+    <Compile Include="model\data\LinkType.cs" />
     <Compile Include="model\data\mssql\MSSQLAttributeModel.cs" />
     <Compile Include="model\data\mssql\MSSQLOriginModel.cs" />
     <Compile Include="model\data\mssql\MSSQLSchemaModel.cs" />
@@ -208,11 +249,11 @@
     <Compile Include="model\data\sim\SimAttributeModel.cs" />
     <Compile Include="model\data\sim\SimOriginModel.cs" />
     <Compile Include="model\data\AttributeFunction.cs" />
-    <Compile Include="model\view\FilteringOperation.cs" />
+    <Compile Include="model\data\FilteringOperation.cs" />
     <Compile Include="model\view_new\AttributeViewModel.cs" />
     <Compile Include="model\view\FilteringType.cs" />
     <Compile Include="model\view\FilterRendererType.cs" />
-    <Compile Include="model\data\FilterItem.cs" />
+    <Compile Include="model\data\FilterModel.cs" />
     <Compile Include="model\view_new\LinkViewModel.cs" />
     <Compile Include="model\view\MainModel.cs" />
     <Compile Include="model\view\SchemaViewModel.cs" />
@@ -236,6 +277,17 @@
     <Compile Include="utils\inq\StroqListener.cs" />
     <Compile Include="utils\MathUtil.cs" />
     <Compile Include="utils\Vector2.cs" />
+    <Compile Include="view\direct2d\AnimatedScene.cs" />
+    <Compile Include="view\direct2d\D3D10Image.cs" />
+    <Compile Include="view\direct2d\Direct2DControl.cs" />
+    <Compile Include="view\direct2d\interop\ComInterface.cs" />
+    <Compile Include="view\direct2d\interop\Direct3D9Ex.cs" />
+    <Compile Include="view\direct2d\interop\Direct3DDevice9Ex.cs" />
+    <Compile Include="view\direct2d\interop\Direct3DSurface9.cs" />
+    <Compile Include="view\direct2d\interop\Direct3DTexture9.cs" />
+    <Compile Include="view\direct2d\interop\NativeMethods.cs" />
+    <Compile Include="view\direct2d\interop\NativeStructs.cs" />
+    <Compile Include="view\direct2d\Scene.cs" />
     <Compile Include="view\inq\Gesturizer.cs" />
     <Compile Include="view\inq\IGesture.cs" />
     <Compile Include="view\inq\InkStroke.cs" />
@@ -253,6 +305,7 @@
     <Compile Include="view\vis\Colorer.xaml.cs">
       <DependentUpon>Colorer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\vis\render\BarChartRenderer.cs" />
     <Compile Include="view\vis\Styler.xaml.cs">
       <DependentUpon>Styler.xaml</DependentUpon>
     </Compile>
@@ -268,7 +321,7 @@
       <DependentUpon>RecognitionResultRenderer.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\vis\render\TableFilterRenderer.cs" />
-    <Compile Include="view\vis\render\FilterRendererResources.cs" />
+    <Compile Include="view\vis\render\RendererResources.cs" />
     <Compile Include="view\vis\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
@@ -758,6 +811,13 @@
     <Folder Include="view\style\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets" Condition="Exists('..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

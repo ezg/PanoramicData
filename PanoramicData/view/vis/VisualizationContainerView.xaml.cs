@@ -37,11 +37,6 @@ namespace PanoramicData.view.vis
             this.DataContextChanged += VisualizationContainerView_DataContextChanged;
         }
         
-        ~VisualizationContainerView()
-        {
-
-        }
-
         void VisualizationContainerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue != null)
@@ -81,15 +76,11 @@ namespace PanoramicData.view.vis
 
             rotationTransition.Duration = new Duration(TimeSpan.FromSeconds(0.75));
 
-            if (visualizationViewModel.VisualizationType == VisualizationType.Pie)
+            if (visualizationViewModel.VisualizationType == VisualizationType.Bar)
             {
-                //PlotFilterRenderer4 fRenderer = new PlotFilterRenderer4(false);
-                //(_front.Content as Front).SetContent(fRenderer);
-            }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Histogram)
-            {
-                //PlotFilterRenderer4 fRenderer = new PlotFilterRenderer4(false);
-                //(_front.Content as Front).SetContent(fRenderer);
+                FilterRenderer fRenderer = new BarChartRenderer();
+                (_front.Content as Front).SetContent(fRenderer);
+                _front.CreateBitmapForInteractions = true;
             }
             else if (visualizationViewModel.VisualizationType == VisualizationType.Table)
             {
@@ -112,38 +103,6 @@ namespace PanoramicData.view.vis
                 //MapFilterRenderer2 fRenderer = new MapFilterRenderer2(false);
                 //(_front.Content as Front).SetContent(fRenderer);
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Frozen)
-            {
-                /*(_front.Content as Front).SetContent(FilterHolderViewModel.FrozenImage);
-                (_front.Content as Front).HorizontalContentAlignment = HorizontalAlignment.Left;
-                (_front.Content as Front).VerticalContentAlignment = VerticalAlignment.Top;
-                _front.ShowToggle = false;
-                _front.CreateBitmapForInteractions = false;*/
-            }
-
-            changeIncomingFilterModel();
-        }
-
-        void changeIncomingFilterModel()
-        {
-            /*if (_filterAttachment != null)
-            {
-                _filterAttachment.Destination = FilterHolderViewModel;
-                _filterAttachment.Sources.Clear();
-                foreach (var m in FilterHolderViewModel.GetIncomingFilterModels(FilteringType.Filter))
-                {
-                    _filterAttachment.Sources.Add(m as FilterHolderViewModel);
-                }
-            }
-            if (_brushAttachment != null)
-            {
-                _brushAttachment.Sources.Clear();
-                _brushAttachment.Destination = FilterHolderViewModel;
-                foreach (var m in FilterHolderViewModel.GetIncomingFilterModels(FilteringType.Brush))
-                {
-                    _brushAttachment.Sources.Add(m as FilterHolderViewModel);
-                }
-            }*/
         }
 
         public override void FlipSides()
