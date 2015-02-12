@@ -283,6 +283,10 @@ namespace PanoramicData.controller.view
                 foreach (var item in e.OldItems)
                 {
                     (item as VisualizationViewModel).QueryModel.LinkModels.CollectionChanged -= LinkModels_CollectionChanged;
+                    foreach (var link in (item as VisualizationViewModel).QueryModel.LinkModels)
+                    {
+                        RemoveLinkViewModel(link);
+                    }
                 }
             }
             if (e.NewItems != null)

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "starpadLibs", "starpadLibs", "{A86EF77E-C767-485A-A281-6CC6D863ECFF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoramicData", "PanoramicData\PanoramicData.csproj", "{6949B4C5-DAD5-4CF1-B8CB-FB5966559B81}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{EA49A9D8-FD9F-45E0-878A-9214BDAA4388}"
