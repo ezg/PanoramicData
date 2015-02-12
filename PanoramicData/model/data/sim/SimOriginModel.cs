@@ -59,6 +59,10 @@ namespace PanoramicData.model.data.sim
                             value = d;
                         }
                     }
+                    if (value == null || value.ToString().Trim() == "")
+                    {
+                        value = null;
+                    }
                     items[_attributeModels[i]] = value;
                 }
                 _data.Add(items);

@@ -16,13 +16,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CombinedInputAPI;
 using PixelLab.Common;
-using Recognizer.NDollar;
 using starPadSDK.AppLib;
-using starPadSDK.Inq;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
 using PanoramicData.model.view;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using System.Reactive.Linq;
 using System.Collections.Specialized;
 using PanoramicData.model.data;
@@ -295,7 +293,7 @@ namespace PanoramicData.view.vis
 
         public override void ExecuteCommand(
             RadialControl sender, RadialMenuCommand cmd,
-            string needle = null, StroqCollection stroqs = null)
+            string needle = null, List<InkStroke> stroqs = null)
         {
             // exectue Action
             if (cmd.ActiveTriggered != null)

@@ -7,15 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="30">
 
-    <d:DesignProperties.DataContext>
-        <local:FilterHolderViewModel>
-            <local:FilterHolderViewModel.Color>Blue</local:FilterHolderViewModel.Color>
-            <local:FilterHolderViewModel.Margin>0</local:FilterHolderViewModel.Margin>
-            <local:FilterHolderViewModel.Label>Test gLabel</local:FilterHolderViewModel.Label>
-            <local:FilterHolderViewModel.NoChrome>False</local:FilterHolderViewModel.NoChrome>
-        </local:FilterHolderViewModel>
-    </d:DesignProperties.DataContext>
-    
     <Grid
         Background="#01000000" Name="colorGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom"
         Width="30"

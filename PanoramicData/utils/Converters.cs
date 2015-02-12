@@ -1,5 +1,5 @@
 ﻿using PanoramicData.model.data;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PixelLab.Common;
 using System;
 using System.Collections.Generic;

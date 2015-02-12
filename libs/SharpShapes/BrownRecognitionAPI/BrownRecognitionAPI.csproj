@@ -50,25 +50,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\starpadLibs\Geom\Geom.csproj">
-      <Project>{25C89864-6C12-4AAC-864C-D52174926B1F}</Project>
-      <Name>Geom</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\starpadLibs\Inq\Inq.csproj">
-      <Project>{F3D6D741-D9FA-4D76-A2D8-AE4CE3BAA31A}</Project>
-      <Name>Inq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BrownRecognitionCommon\BrownRecognitionCommon.csproj">
       <Project>{76ead062-c55c-4e5f-8c0c-1e85fbb5dd5d}</Project>
       <Name>BrownRecognitionCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ShapeRecognizer\ShapeRecognizer.csproj">
-      <Project>{71a5c84b-bd8e-4152-86d6-d6dea59d80e8}</Project>
-      <Name>ShapeRecognizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TemplateRecognizer\TemplateRecognizer.csproj">
-      <Project>{c3c3bc9c-2040-4590-b7c7-9b22f43961ec}</Project>
-      <Name>TemplateRecognizer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 ﻿using PanoramicData.model.view;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.utils;
 using System;
 using System.Collections.Generic;
@@ -130,6 +130,19 @@ namespace PanoramicData.model.data
             }
         }
 
+        private VisualizationType _visualizationType;
+        public VisualizationType VisualizationType
+        {
+            get
+            {
+                return _visualizationType;
+            }
+            set
+            {
+                this.SetProperty(ref _visualizationType, value);
+            }
+        }
+
         public List<AttributeOperationModel> AttributeOperationModels
         {
             get
@@ -240,6 +253,95 @@ namespace PanoramicData.model.data
                 SchemaModel.QueryExecuter.ExecuteQuery(this);
             }
         }
+
+        public string GetDataType(AttributeOperationModel attributeOperationModel, bool considerGrouping)
+        {
+            if (!considerGrouping)
+            {
+                return attributeOperationModel.AttributeModel.AttributeDataType;
+            }
+            else
+            {
+                if (attributeOperationModel.IsBinned)
+                {
+                    return AttributeDataTypeConstants.NVARCHAR;
+                }
+
+                List<AttributeOperationModel> allOperationModels = AttributeOperationModels;
+                bool isGroupingApplied = allOperationModels.Any(aom => aom.IsBinned || aom.IsGrouped);
+
+                if (!isGroupingApplied)
+                {
+                    if (allOperationModels.Count(aom => aom.AggregateFunction != AggregateFunction.None) > 0)
+                    {
+                        if (attributeOperationModel.AggregateFunction == AggregateFunction.Avg ||
+                            attributeOperationModel.AggregateFunction == AggregateFunction.Sum ||
+                            attributeOperationModel.AggregateFunction == AggregateFunction.Max ||
+                            attributeOperationModel.AggregateFunction == AggregateFunction.Min)
+                        {
+                            if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.TIME)
+                            {
+                                return AttributeDataTypeConstants.TIME;
+                            }
+                            if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.NVARCHAR)
+                            {
+                                return AttributeDataTypeConstants.NVARCHAR;
+                            }
+                            if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
+                            {
+                                return AttributeDataTypeConstants.BIT;
+                            }
+                            return AttributeDataTypeConstants.FLOAT;
+                        }
+                        else if (attributeOperationModel.AggregateFunction == AggregateFunction.Count)
+                        {
+                            return AttributeDataTypeConstants.INT;
+                        }
+                        return AttributeDataTypeConstants.NVARCHAR;
+                    }
+                    else
+                    {
+                        return attributeOperationModel.AttributeModel.AttributeDataType;
+                    }
+                }
+                else
+                {
+                    if (attributeOperationModel.AggregateFunction == AggregateFunction.None &&
+                        allOperationModels.Any(aom => (aom.IsBinned || aom.IsGrouped) && aom.AttributeModel == attributeOperationModel.AttributeModel))
+                    {
+                        return attributeOperationModel.AttributeModel.AttributeDataType;
+                    }
+
+                    if (attributeOperationModel.AggregateFunction == AggregateFunction.Avg ||
+                        attributeOperationModel.AggregateFunction == AggregateFunction.Sum ||
+                        attributeOperationModel.AggregateFunction == AggregateFunction.Max ||
+                        attributeOperationModel.AggregateFunction == AggregateFunction.Min)
+                    {
+                        if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.NVARCHAR)
+                        {
+                            return AttributeDataTypeConstants.NVARCHAR;
+                        }
+                        if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.TIME)
+                        {
+                            return AttributeDataTypeConstants.TIME;
+                        }
+                        if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
+                        {
+                            return AttributeDataTypeConstants.BIT;
+                        }
+                        return AttributeDataTypeConstants.FLOAT;
+                    }
+                    else if (attributeOperationModel.AggregateFunction == AggregateFunction.Count)
+                    {
+                        return AttributeDataTypeConstants.INT;
+                    }
+                    else
+                    {
+                        return AttributeDataTypeConstants.NVARCHAR;
+                    }
+                }
+            }
+        }
     }
 
     public class QueryModelUpdatedEventArgs : EventArgs
@@ -254,5 +356,6 @@ namespace PanoramicData.model.data
     }
 
     public enum QueryModelUpdatedEventType { Structure, Links, FilterModels }
-
+    
+    public enum VisualizationType { Table, Bar, Map, Plot, Line }
 }

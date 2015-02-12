@@ -10,14 +10,13 @@ using PixelLab.Common;
 using starPadSDK.AppLib;
 using starPadSDK.Geom;
 using starPadSDK.WPFHelp;
-using starPadSDK.Inq;
 using PanoramicData.view.other;
 using PanoramicData.controller.data;
-using PanoramicData.view.math;
 using CombinedInputAPI;
 using PanoramicData.view.inq;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.model.data;
+using System.Collections.Generic;
 
 namespace PanoramicData.view.table
 {
@@ -533,7 +532,7 @@ namespace PanoramicData.view.table
             }
         }
 
-        public override void ExecuteCommand(RadialControl sender, RadialMenuCommand cmd, string needle = null, StroqCollection stroqs = null)
+        public override void ExecuteCommand(RadialControl sender, RadialMenuCommand cmd, string needle = null, List<InkStroke> stroqs = null)
         {
             base.ExecuteCommand(sender, cmd, needle, stroqs);
 
@@ -541,7 +540,7 @@ namespace PanoramicData.view.table
 
             if (needle != null)
             {
-                FilteredItem fi = null;
+                //FilteredItem fi = null;
 
                 /*if (needle != "")
                 {

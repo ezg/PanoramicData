@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PixelLab.Common;
-using starPadSDK.Inq;
 using PanoramicDataModel;
 using PanoramicData.model.data;
 

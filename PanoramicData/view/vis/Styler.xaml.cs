@@ -15,10 +15,12 @@ using System.Windows.Shapes;
 using PanoramicDataModel;
 using PixelLab.Common;
 using starPadSDK.AppLib;
-using starPadSDK.Inq;
 using PanoramicData.model.view;
 using PanoramicData.view.other;
 using CombinedInputAPI;
+using PanoramicData.model.data;
+using PanoramicData.model.view;
+using PanoramicData.view.inq;
 
 namespace PanoramicData.view.vis
 {
@@ -27,30 +29,17 @@ namespace PanoramicData.view.vis
     /// </summary>
     public partial class Styler : UserControl
     {
-        public FilterModel FilterModel { get; set; }
-
         public Styler()
         {
             InitializeComponent();
             this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(colorGrid_TouchDownEvent));
         }
 
-        public void Init()
-        {
-            /*if (FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count == 0)
-            {
-                stylerGridP1.Fill = Brushes.LightGray;
-            }
-            else
-            {
-                stylerGridP1.Fill = FilterModel.Brush;
-            }*/
-        }
-
         private void colorGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
             RadialMenuCommand root = new RadialMenuCommand();
             root.IsSelectable = false;
@@ -58,80 +47,63 @@ namespace PanoramicData.view.vis
             RadialMenuCommandGroup group = new RadialMenuCommandGroup("group", RadialMenuCommandComandGroupPolicy.DeactivateAndTriggerOthers);
 
             RadialMenuCommand styleCmd = new RadialMenuCommand();
-            styleCmd.Name = "Pie";
-            styleCmd.CommandGroup = group;
-            styleCmd.Data = FilterModel;
-            styleCmd.IsSelectable = true;
-            styleCmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Pie;
-            styleCmd.ActiveTriggered = (cmd) =>
-            {
-                if (cmd.IsActive)
-                {
-                    FilterModel fm = cmd.Data as FilterModel;
-                    fm.FilterRendererType = FilterRendererType.Pie;
-                }
-                cmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Pie;
-            };
-            root.AddSubCommand(styleCmd);
-
-            styleCmd = new RadialMenuCommand();
             styleCmd.Name = "Line";
             styleCmd.CommandGroup = group;
-            styleCmd.Data = FilterModel;
+            styleCmd.Data = queryModel;
             styleCmd.IsSelectable = true;
-            styleCmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Line;
+            styleCmd.IsActive = queryModel.VisualizationType == VisualizationType.Line;
             styleCmd.ActiveTriggered = (cmd) =>
             {
                 if (cmd.IsActive)
                 {
-                    FilterModel fm = cmd.Data as FilterModel;
-                    fm.FilterRendererType = FilterRendererType.Line;
+                    QueryModel qm = cmd.Data as QueryModel;
+                    qm.VisualizationType = VisualizationType.Line;
                 }
-                cmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Line;
+                cmd.IsActive = queryModel.VisualizationType == VisualizationType.Line;
             };
             root.AddSubCommand(styleCmd);
 
             styleCmd = new RadialMenuCommand();
             styleCmd.Name = "Bar";
             styleCmd.CommandGroup = group;
-            styleCmd.Data = FilterModel;
+            styleCmd.Data = queryModel;
             styleCmd.IsSelectable = true;
-            styleCmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Histogram;
+            styleCmd.IsActive = queryModel.VisualizationType == VisualizationType.Bar;
             styleCmd.ActiveTriggered = (cmd) =>
             {
                 if (cmd.IsActive)
                 {
-                    FilterModel fm = cmd.Data as FilterModel;
-                    fm.FilterRendererType = FilterRendererType.Histogram;
+                    QueryModel qm = cmd.Data as QueryModel;
+                    qm.VisualizationType = VisualizationType.Bar;
                 }
-                cmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Histogram;
+                cmd.IsActive = queryModel.VisualizationType == VisualizationType.Bar;
             };
             root.AddSubCommand(styleCmd);
 
             styleCmd = new RadialMenuCommand();
             styleCmd.Name = "Point";
             styleCmd.CommandGroup = group;
-            styleCmd.Data = FilterModel;
+            styleCmd.Data = queryModel;
             styleCmd.IsSelectable = true;
-            styleCmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Plot;
+            styleCmd.IsActive = queryModel.VisualizationType == VisualizationType.Plot;
             styleCmd.ActiveTriggered = (cmd) =>
             {
                 if (cmd.IsActive)
                 {
-                    FilterModel fm = cmd.Data as FilterModel;
-                    fm.FilterRendererType = FilterRendererType.Plot;
+                    QueryModel qm = cmd.Data as QueryModel;
+                    qm.VisualizationType = VisualizationType.Plot;
                 }
-                cmd.IsActive = FilterModel.FilterRendererType == FilterRendererType.Plot;
+                cmd.IsActive = queryModel.VisualizationType == VisualizationType.Plot;
             };
             root.AddSubCommand(styleCmd);
 
             if (root.InnerCommands.Count > 0)
             {
                 RadialControl rc = new RadialControl(root,
-                    new StylerRadialControlExecution(FilterModel, FilterModel.TableModel, inqScene));
-                rc.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
-                    fromInqScene.Y - RadialControl.SIZE / 2);
-                inqScene.AddNoUndo(rc);
+                    new StylerRadialControlExecution(inkableScene));
+                rc.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
+                    fromInkableScene.Y - RadialControl.SIZE / 2);
+                inkableScene.Add(rc);
             }
             e.Handled = true;
         }
@@ -139,44 +111,31 @@ namespace PanoramicData.view.vis
 
     public class StylerRadialControlExecution : RadialControlExecution
     {
-        private FilterModel _filterModel = null;
-        private TableModel _tableModel = null;
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
 
-        public StylerRadialControlExecution(FilterModel filterModel, TableModel tableModel, InqScene inqScene)
+        public StylerRadialControlExecution(InkableScene inkableScene)
         {
-            this._filterModel = filterModel;
-            this._tableModel = tableModel;
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
         }
 
         public override void Remove(RadialControl sender, RadialMenuCommand cmd)
         {
             base.Remove(sender, cmd);
-
-            if (_tableModel != null)
-            {
-                _tableModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
-            else if (_filterModel != null)
-            {
-                _filterModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
         }
 
         public override void Dispose(RadialControl sender)
         {
             base.Dispose(sender);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                _inkableScene.Remove(sender as FrameworkElement);
             }
         }
 
         public override void ExecuteCommand(
             RadialControl sender, RadialMenuCommand cmd,
-            string needle = null, StroqCollection stroqs = null)
+            string needle = null, List<InkStroke> stroqs = null)
         {
             // exectue Action
             if (cmd.ActiveTriggered != null)

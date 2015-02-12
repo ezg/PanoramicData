@@ -15,14 +15,11 @@ using System.Windows.Shapes;
 using CombinedInputAPI;
 using PanoramicDataModel;
 using PixelLab.Common;
-using starPadSDK.AppLib;
-using starPadSDK.Geom;
-using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
 using PanoramicData.view.inq;
 using PanoramicData.model.data;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.vis;
 
 namespace PanoramicData.view.schema
@@ -32,8 +29,6 @@ namespace PanoramicData.view.schema
     /// </summary>
     public partial class ColumnTreeView : UserControl, AttributeViewModelEventHandler
     {
-        public static event EventHandler<DatabaseTableEventArgs> DatabaseTableDropped;
-
         public SchemaViewModel SchemaViewModel { get; set; }
 
         private Point _treeViewStartDrag = new Point(0, 0);
@@ -172,8 +167,8 @@ namespace PanoramicData.view.schema
                     var element = (FrameworkElement)sender;
                     e.TouchDevice.Capture(element);
 
-                    InqScene inqScene = this.FindParent<InqScene>();
-                    _treeViewStartDrag = e.GetTouchPoint(inqScene).Position;
+                    InkableScene inkableScene = this.FindParent<InkableScene>();
+                    _treeViewStartDrag = e.GetTouchPoint(inkableScene).Position;
 
                     element.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(TreeView_TouchMoveEvent));
                     element.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(TreeView_TouchUpEvent));
@@ -268,12 +263,12 @@ namespace PanoramicData.view.schema
         {
             if (_treeViewShadow != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
+                InkableScene inkableScene = this.FindParent<InkableScene>();
                 _treeViewStartDrag = fromInqScene;
                 _treeViewShadow.RenderTransform = new TranslateTransform(
                     fromInqScene.X - _treeViewShadow.Width / 2.0,
                     fromInqScene.Y - _treeViewShadow.Height);
-                inqScene.AddNoUndo(_treeViewShadow);
+                inkableScene.Add(_treeViewShadow);
             }
         }
 

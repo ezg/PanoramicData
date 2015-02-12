@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lib="clr-namespace:PixelLab.Wpf.Transitions;assembly=PixelLab.Wpf"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
-             xmlns:model="clr-namespace:PanoramicData.model.view_new"
+             xmlns:model="clr-namespace:PanoramicData.model.view"
              xmlns:utils="clr-namespace:PanoramicData.utils"
              xmlns:vis="clr-namespace:PanoramicData.view.vis"
              mc:Ignorable="d" 
@@ -14,7 +14,7 @@
     <d:DesignProperties.DataContext>
         <model:VisualizationViewModel>
             <model:VisualizationViewModel.Color>Blue</model:VisualizationViewModel.Color>
-            <model:VisualizationViewModel.VisualizationType>Table</model:VisualizationViewModel.VisualizationType>
+            <model:VisualizationViewModel.QueryModel.VisualizationType>Table</model:VisualizationViewModel.QueryModel.VisualizationType>
         </model:VisualizationViewModel>
     </d:DesignProperties.DataContext>
 

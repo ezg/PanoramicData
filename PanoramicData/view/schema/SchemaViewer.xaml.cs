@@ -18,7 +18,6 @@ using starPadSDK.AppLib;
 using starPadSDK.Geom;
 using PanoramicData.model.view;
 using PanoramicData.view.other;
-using PanoramicData.view.math;
 using System.Reactive.Linq;
 using PanoramicDataModel;
 using PanoramicData.controller.view;

@@ -1,6 +1,5 @@
 ﻿using GeoAPI.Geometries;
 using PanoramicData.utils;
-using starPadSDK.Inq;
 using System;
 using System.Collections.Generic;
 using System.Linq;

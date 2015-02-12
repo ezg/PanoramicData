@@ -40,5 +40,18 @@ namespace PanoramicData.model.data
                 this.SetProperty(ref _isSelected, value);
             }
         }
+
+        private int _rowNumber = -1;
+        public int RowNumber
+        {
+            get
+            {
+                return _rowNumber;
+            }
+            set
+            {
+                this.SetProperty(ref _rowNumber, value);
+            }
+        }
     }
 }

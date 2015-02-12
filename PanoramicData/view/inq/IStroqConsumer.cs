@@ -1,5 +1,4 @@
-﻿using starPadSDK.Inq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +14,6 @@ namespace PanoramicData.view.inq
 
         FrameworkElement Element { get; }
 
-        void Consume(Stroq stroq, List<IStroqConsumer> allConsumers);
+        void Consume(InkStroke inkStroke, List<IStroqConsumer> allConsumers);
     }
 }

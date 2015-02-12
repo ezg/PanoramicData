@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using FarseerPhysics.Dynamics;
-using Microsoft.Research.DynamicDataDisplay;
 using starPadSDK.Geom;
 using System.IO;
 using PanoramicDataModel;
@@ -22,7 +21,6 @@ using starPadSDK.WPFHelp;
 using starPadSDK.AppLib;
 using PixelLab.Common;
 using Path = System.Windows.Shapes.Path;
-using PanoramicData.utils.inq;
 using PanoramicData.view.schema;
 using PanoramicData.model.view;
 using PanoramicData.controller.data;
@@ -31,7 +29,6 @@ using PanoramicData.Properties;
 using PanoramicData.utils;
 using CombinedInputAPI;
 using PanoramicData.controller.view;
-using starPadSDK.AppLib;
 using System.Diagnostics;
 using PanoramicData.view.vis;
 
@@ -56,19 +53,11 @@ namespace PanoramicData
 
             MouseTouchDevice.RegisterEvents(this);
 
-            // init view controller
-            MainViewController.CreateInstance(inkableScene, this);
-            DataContext = MainViewController.Instance.MainModel;
-
             if (Settings.Default.RenderFingers)
             {
                 this.Cursor = Cursors.None;
             }
-            
-            // init view titanic dataset;
-            loadTitanicData();
-            //loadHuaData();
-            
+                        
             layoutRoot.PreviewTouchDown += layoutRoot_PreviewTouchDown;
             layoutRoot.PreviewTouchMove += layoutRoot_PreviewTouchMove;
             layoutRoot.PreviewTouchUp += layoutRoot_PreviewTouchUp;
@@ -92,6 +81,10 @@ namespace PanoramicData
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            // init view controller
+            MainViewController.CreateInstance(inkableScene, this);
+            DataContext = MainViewController.Instance.MainModel;
+            // init physics
             PhysicsController.SetRootCanvas(mainGrid);
             var d = PhysicsController.Instance; // dummy first call 
         }
@@ -243,37 +236,8 @@ namespace PanoramicData
                 }
             }
 
-            if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-            {
-                return;
-            }
-            if (Key.Z == e.Key)
-            {
-                MainViewController.Instance.InkableScene.Background = Brushes.White;
-            }
-            if (Key.D == e.Key)
-            {
-                DatabaseManager.Verbose = !DatabaseManager.Verbose;
-            }
-            if (Key.M == e.Key)
-            {
-                bool? multiSample = ResourceManager.GetBool("IsMultiSamplingEnabled");
-                if (!multiSample.HasValue)
-                {
-                    multiSample = true;
-                }
-                ResourceManager.Add("IsMultiSamplingEnabled", !multiSample.Value);
-
-            }
-            if (Key.V == e.Key)
-            {
-                IDataObject iData = Clipboard.GetDataObject();
-                string[] formats = iData.GetFormats();
-                var obj = iData.GetData("Csv");
-            }
             if (Key.Q == e.Key)
             {
-                
                 _renderTouchPoints = !_renderTouchPoints;
                 if (_renderTouchPoints)
                 {
@@ -284,229 +248,6 @@ namespace PanoramicData
                     this.Cursor = System.Windows.Input.Cursors.Arrow;
                 }
             }
-            if (Key.T == e.Key)
-            {
-                loadTitanicData();
-            }
-            if (Key.C == e.Key)
-            {
-                loadCoffeeData();
-            } 
-            if (Key.G == e.Key)
-            {
-                loadCensusData();
-            }
-            if (Key.F == e.Key)
-            {
-                loadFacultyData();
-            }
-            if (Key.B == e.Key)
-            {
-                loadBaseballData();
-            }
-            if (Key.L == e.Key)
-            {
-                loadTipData();
-            }
-            if (Key.P == e.Key)
-            {
-                Pt position = this.TranslatePoint(new Point(100, 100), MainViewController.Instance.InkableScene);
-
-                VisualizationContainerView filter = new VisualizationContainerView();
-                FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
-                filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
-               
-                filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0, position.Y + VisualizationContainerView.HEIGHT / 2.0);
-                //filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
-            }
-            if (Key.N == e.Key)
-            {
-                loadNbaData();
-            }
-        }
-
-        private void loadTitanicData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("titanic", "passenger");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] {playerPath},
-                new string[][] {new string[] {"name", "passenger_class", "survived", "sex", "age", "home"}});
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadHua1Data()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua", "subject_sessions");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "block", "trial" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadHua2Data()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("hua2", "within_subject_pairs");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "block", "trial" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadCoffeeData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("coffee", "coffee_sales");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "sales_date", "sales", "profit" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            // filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadCensusData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("census", "census");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "age", "education", "martial_status" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadFacultyData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("faculty", "cs_faculty");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "Rank" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadBaseballData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("lahman", "fact");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "year" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-        private void loadTipData()
-        {
-            /*PathInfo playerPath = ModelHelpers.GeneratePathInfo("tip", "tip");
-            //TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-            //    new string[][] { new string[] { "weight", "weight" } });
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { playerPath },
-                new string[][] { new string[] { "tip", "total_bill", "percentage" } });
-
-            Pt position = this.TranslatePoint(new Point(300, 400), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-            filterHolderViewModel.Center = new Point(position.X + 650 / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(650, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
-        }
-
-
-        public void loadNbaData()
-        {
-            /*PathInfo gameLogPath = ModelHelpers.GeneratePathInfo("nba", "game_log");
-            PathInfo playerPath = ModelHelpers.GeneratePathInfo("nba", "game_log", "player");
-            PathInfo teamPath = ModelHelpers.GeneratePathInfo("nba", "game_log", "team");
-            TableModel theModel = ModelHelpers.GenerateTableModel(new PathInfo[] { gameLogPath, playerPath },
-                new string[][] { new string[] { "pts", "mp" }, new string[] { "name" } });
-
-            Pt position = this.TranslatePoint(new Point(100, 100), MainViewController.Instance.InkableScene);
-
-            FilterHolder filter = new FilterHolder();
-            FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateTable(theModel);
-
-            //filterHolderViewModel.Center = new Point(position.X + FilterHolder.WIDTH / 2.0, position.Y + FilterHolder.HEIGHT / 2.0);
-            filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
-            filter.FilterHolderViewModel = filterHolderViewModel;
-
-            //filter.InitPostionAndDimension(position, new Vec(FilterHolder.WIDTH, FilterHolder.HEIGHT));
-
-            MainViewController.Instance.InkableScene.SetSchemaViewerFilterModel(filterHolderViewModel);*/
         }
 
         void up_TouchDown(object sender, TouchEventArgs e)

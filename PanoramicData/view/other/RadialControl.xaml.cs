@@ -1,9 +1,9 @@
 ﻿using CombinedInputAPI;
+using PanoramicData.model.data;
+using PanoramicData.view.inq;
 using PanoramicDataModel;
 using PixelLab.Common;
-using starPadSDK.AppLib;
 using starPadSDK.Geom;
-using starPadSDK.Inq;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -32,8 +32,8 @@ namespace PanoramicData.view.other
         public static double OUTER_RADIUS = SIZE / 2;
         private double _x = 0;
         private double _y = 0;
-        private PanoramicData.utils.inq.InqAnalyzer _inqAnalyser = new PanoramicData.utils.inq.InqAnalyzer();
-        private SimpleAPage _aPage = new SimpleAPage();
+        //private PanoramicData.utils.inq.InqAnalyzer _inqAnalyser = new PanoramicData.utils.inq.InqAnalyzer();
+        //private SimpleAPage _aPage = new SimpleAPage();
         private Label _resultLabel = new Label();
 
         private bool _moveLower = false;
@@ -64,54 +64,20 @@ namespace PanoramicData.view.other
             _currentCommand = root;
             _execution = execution;
 
-            _inqAnalyser.ResultsUpdated += _inqAnalyser_ResultsUpdated;
-            _aPage.StroqAddedEvent += new starPadSDK.AppLib.InqScene.StroqHandler(stroqAddedEvent);
+            //_inqAnalyser.ResultsUpdated += _inqAnalyser_ResultsUpdated;
+           /* _aPage.StroqAddedEvent += new starPadSDK.AppLib.InqScene.StroqHandler(stroqAddedEvent);
             _aPage.StroqRemovedEvent += new starPadSDK.AppLib.InqScene.StroqHandler(stroqRemovedEvent);
             _aPage.StroqsAddedEvent += new starPadSDK.AppLib.InqScene.StroqsHandler(stroqsAddedEvent);
-            _aPage.StroqsRemovedEvent += new starPadSDK.AppLib.InqScene.StroqsHandler(stroqsRemovedEvent);
+            _aPage.StroqsRemovedEvent += new starPadSDK.AppLib.InqScene.StroqsHandler(stroqsRemovedEvent);*/
             
             setup(_currentCommand);
         }
 
         void _inqAnalyser_ResultsUpdated(object sender, System.Windows.Ink.ResultsUpdatedEventArgs e)
         {
-            string recognizedString = _inqAnalyser.GetRecognizedString().Trim().Replace("\r\n", " ");
-            _resultLabel.Content = recognizedString;
-            _execution.ExecuteCommand(this, _currentCommand, recognizedString, _aPage.Stroqs);
-        }
-
-        void stroqAddedEvent(Stroq s)
-        {
-            //_mathManager.UpdateMathRecognition(aPage.Stroqs);
-            _inqAnalyser.AddStroke(s);
-            _inqAnalyser.BackgroundAnalyze();
-        }
-
-        void stroqsAddedEvent(Stroq[] stroqs)
-        {
-            foreach (var s in stroqs)
-            {
-                _inqAnalyser.AddStroke(s);
-            }
-            _inqAnalyser.BackgroundAnalyze();
-            //_mathManager.UpdateMathRecognition(aPage.Stroqs);
-        }
-
-        void stroqRemovedEvent(Stroq s)
-        {
-            //_mathManager.UpdateMathRecognition(aPage.Stroqs);
-            _inqAnalyser.RemoveStroke(s);
-            _inqAnalyser.BackgroundAnalyze();
-        }
-
-        void stroqsRemovedEvent(Stroq[] stroqs)
-        {
-            //_mathManager.UpdateMathRecognition(aPage.Stroqs);
-            foreach (var s in stroqs)
-            {
-                _inqAnalyser.RemoveStroke(s);
-            }
-            _inqAnalyser.BackgroundAnalyze();
+            //string recognizedString = _inqAnalyser.GetRecognizedString().Trim().Replace("\r\n", " ");
+            //_resultLabel.Content = recognizedString;
+            //_execution.ExecuteCommand(this, _currentCommand, recognizedString, _aPage.Stroqs);
         }
 
         static DependencyObject VisualUpwardSearch<T>(DependencyObject source)
@@ -381,7 +347,7 @@ namespace PanoramicData.view.other
         private void handleDragging(TouchEventArgs e, RadialSegement radialSegement)
         {
             RadialMenuCommand cmd = radialSegement.RadialMenuCommand;
-            InqScene inqScene = this.FindParent<InqScene>();
+            InkableScene inqScene = this.FindParent<InkableScene>();
             Point fromInqScene = e.GetTouchPoint(inqScene).Position;
 
             if (inqScene != null && _draggingShadow == null)
@@ -398,7 +364,7 @@ namespace PanoramicData.view.other
                 l.FontWeight = FontWeights.Bold;
                 l.Content = radialSegement.RadialMenuCommand.Name.Replace("\n", " ");
                 _draggingShadow.Child = l;
-                inqScene.AddNoUndo(_draggingShadow);
+                inqScene.Add(_draggingShadow);
             }
 
             if (_draggingShadow != null)
@@ -447,9 +413,9 @@ namespace PanoramicData.view.other
             {
                 if (_draggingShadow != null)
                 {
-                    InqScene inqScene = this.FindParent<InqScene>();
+                    InkableScene inqScene = this.FindParent<InkableScene>();
                     Point fromInqScene = e.GetTouchPoint(inqScene).Position;
-                    inqScene.Rem(_draggingShadow);
+                    inqScene.Remove(_draggingShadow);
                     _draggingShadow = null;
 
                     // outside of radial menu => drop
@@ -521,28 +487,28 @@ namespace PanoramicData.view.other
                 r1.StrokeThickness = 3;
                 canvasMain.Children.Add(r1);
 
-                _aPage.Width = OUTER_RADIUS * 4;
-                _aPage.Height = OUTER_RADIUS * 2;
-                _aPage.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                //_aPage.Width = OUTER_RADIUS * 4;
+                //_aPage.Height = OUTER_RADIUS * 2;
+                //_aPage.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
 
-                _resultLabel.Width = _aPage.Width;
+                //_resultLabel.Width = _aPage.Width;
                 _resultLabel.Height = 35;
                 _resultLabel.HorizontalAlignment = HorizontalAlignment.Right;
                 _resultLabel.VerticalAlignment = VerticalAlignment.Bottom;
                 _resultLabel.HorizontalContentAlignment = HorizontalAlignment.Right;
 
-                if (innerCommand.Data is PanoramicDataColumnDescriptor &&
-                    (innerCommand.Data as PanoramicDataColumnDescriptor).FilterStroqs != null)
+                /*if (innerCommand.Data is AttributeOperationModel &&
+                    (innerCommand.Data as AttributeOperationModel).FilterStroqs != null)
                 {
-                    _aPage.Clear();
-                    _aPage.AddNoUndo((innerCommand.Data as PanoramicDataColumnDescriptor).FilterStroqs);
+                    //_aPage.Clear();
+                    //_aPage.AddNoUndo((innerCommand.Data as PanoramicDataColumnDescriptor).FilterStroqs);
                 } 
                 else if (innerCommand.Stroqs != null)
                 {
-                    _aPage.Clear();
-                    _aPage.AddNoUndo(innerCommand.Stroqs);
-                }
-                canvasMain.Children.Add(_aPage);
+                    //_aPage.Clear();
+                    //_aPage.AddNoUndo(innerCommand.Stroqs);
+                }*/
+                //canvasMain.Children.Add(_aPage);
                 canvasMain.Children.Add(_resultLabel);
 
                 // back button
@@ -840,8 +806,8 @@ namespace PanoramicData.view.other
         public virtual void Drop(RadialControl sender, RadialMenuCommand cmd, Point fromInqScene) { }
         public virtual void Dispose(RadialControl sender) { }
         public virtual void ExecuteCommand(
-            RadialControl sender, RadialMenuCommand cmd, 
-            string needle = null, StroqCollection stroqs = null) { }
+            RadialControl sender, RadialMenuCommand cmd,
+            string needle = null, List<InkStroke> stroqs = null) { }
     }
 
     public class RadialSegement
@@ -876,7 +842,7 @@ namespace PanoramicData.view.other
         public string Command { get; set; }
         public string Name { get; set; }
         public bool AllowsStroqInput { get; set; }
-        public StroqCollection Stroqs { get; set; }
+        public List<InkStroke> Stroqs { get; set; }
 
         public bool AllowsNumericInput { get; set; }
         public bool AllowsDragging { get; set; }

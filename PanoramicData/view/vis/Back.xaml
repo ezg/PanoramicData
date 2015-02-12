@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fr="clr-namespace:PanoramicData.view.vis.render"
              xmlns:other="clr-namespace:PanoramicData.view.other"
-             xmlns:viewmodel="clr-namespace:PanoramicData.model.view_new"
+             xmlns:viewmodel="clr-namespace:PanoramicData.model.view"
              xmlns:utils="clr-namespace:PanoramicData.utils"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -15,7 +15,6 @@
     </UserControl.Resources>
 
     <Grid Margin="0">
-        <other:SimpleAPage x:Name="aPage"/>
         <Label Name="resultLabel" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Label.Style>
                 <Style TargetType="Label">

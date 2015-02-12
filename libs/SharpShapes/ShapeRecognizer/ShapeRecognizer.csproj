@@ -74,22 +74,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\starpadLibs\DollarRecognizer\DollarRecognizer.csproj">
-      <Project>{F77B3215-1956-4D77-BC6C-D129130F9F4D}</Project>
-      <Name>DollarRecognizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\starpadLibs\Geom\Geom.csproj">
-      <Project>{25C89864-6C12-4AAC-864C-D52174926B1F}</Project>
-      <Name>Geom</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\starpadLibs\Inq\Inq.csproj">
-      <Project>{F3D6D741-D9FA-4D76-A2D8-AE4CE3BAA31A}</Project>
-      <Name>Inq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\starpadLibs\Math\CharRecognizer\CharRecognizer.csproj">
-      <Project>{AA0998D1-6EA3-4786-B7DE-6E7F260369B0}</Project>
-      <Name>CharRecognizer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BrownRecognitionCommon\BrownRecognitionCommon.csproj">
       <Project>{8B184537-FB39-4E67-BF61-B3B8E27B336A}</Project>
       <Name>BrownRecognitionCommon</Name>

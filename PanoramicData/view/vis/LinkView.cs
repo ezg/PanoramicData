@@ -11,15 +11,12 @@ using starPadSDK.Geom;
 using System.Collections.ObjectModel;
 using System;
 using System.Reactive.Linq;
-using starPadSDK.Inq;
-using starPadSDK.Inq.BobsCusps;
 using PanoramicData.model.view;
-using PanoramicData.utils.inq;
 using CombinedInputAPI;
 using System.Windows.Input;
 using PanoramicData.controller.view;
 using PanoramicData.model.data;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.utils;
 using PanoramicData.view.inq;
 

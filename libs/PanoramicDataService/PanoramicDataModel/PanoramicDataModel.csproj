@@ -54,7 +54,6 @@
     <Compile Include="FieldInfo.cs">
       <DependentUpon>MetaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="JoinedTableInfo.cs" />
     <Compile Include="MetaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,12 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\starpadLibs\Inq\Inq.csproj">
-      <Project>{f3d6d741-d9fa-4d76-a2d8-ae4ce3baa31a}</Project>
-      <Name>Inq</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

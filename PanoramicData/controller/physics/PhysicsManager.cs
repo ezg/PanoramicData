@@ -15,12 +15,11 @@ using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using Poly2Tri.Triangulation.Delaunay.Sweep;
 using starPadSDK.AppLib;
-using starPadSDK.Inq;
 using starPadSDK.WPFHelp;
 using Matrix = System.Windows.Media.Matrix;
 using PanoramicData.view.physics;
 using PanoramicData.controller.view;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.vis;
 
 namespace PanoramicData.controller.physics

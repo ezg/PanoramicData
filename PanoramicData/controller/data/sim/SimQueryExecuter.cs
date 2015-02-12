@@ -1,6 +1,6 @@
 ﻿using PanoramicData.model.data;
 using PanoramicData.model.data.sim;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using starPadSDK.AppLib;
 using System.Threading;
 using System.Dynamic;
+using System.Diagnostics;
 
 namespace PanoramicData.controller.data.sim
 {
@@ -17,7 +18,9 @@ namespace PanoramicData.controller.data.sim
         public override void ExecuteQuery(QueryModel queryModel)
         {
             IItemsProvider<QueryResultItemModel> itemsProvider = new SimItemsProvider(queryModel);
-            AsyncVirtualizingCollection<QueryResultItemModel> dataValues = new AsyncVirtualizingCollection<QueryResultItemModel>(itemsProvider, 1000, 1000);
+            AsyncVirtualizingCollection<QueryResultItemModel> dataValues = new AsyncVirtualizingCollection<QueryResultItemModel>(itemsProvider, 
+                queryModel.VisualizationType == VisualizationType.Table ? 1000 : (queryModel.SchemaModel.OriginModels[0] as SimOriginModel).Data.Count + 1,  // page size
+                1000);
             queryModel.QueryResultModel.QueryResultItemModels = dataValues;
         }
     }
@@ -40,10 +43,12 @@ namespace PanoramicData.controller.data.sim
 
         public IList<QueryResultItemModel> FetchRange(int startIndex, int pageCount, out int overallCount)
         {
-            Console.WriteLine("page : " + startIndex + " " + pageCount);
-            //Thread.Sleep(10);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            IList<QueryResultItemModel> returnList = QueryEngine.ComputeQueryResult(_queryModel).Skip(startIndex).Take(pageCount).ToList();
+            Console.WriteLine("Start Get Page : " + startIndex + " " + pageCount);
+
+            IList<QueryResultItemModel> returnList = returnList = QueryEngine.ComputeQueryResult(_queryModel).Skip(startIndex).Take(pageCount).ToList();
 
             // reset selections
             foreach (var queryResultItemModel in returnList)
@@ -62,6 +67,8 @@ namespace PanoramicData.controller.data.sim
             }
 
             overallCount = _fetchCount;
+
+            Console.WriteLine("End Get Page : " + sw.ElapsedMilliseconds + " millis");
             return returnList;
         }
     }
@@ -81,7 +88,12 @@ namespace PanoramicData.controller.data.sim
                         (key, g) => getQueryResultItemModel(key, g, queryModel)).
                         OrderBy(item => item, new ItemComparer(queryModel));
 
-                return results.ToList();
+                var restultList = results.ToList();
+                for (int i = 0; i < restultList.Count; i++)
+                {
+                    restultList[0].RowNumber = i;
+                }
+                return restultList;
             }
             else
             {
@@ -136,9 +148,9 @@ namespace PanoramicData.controller.data.sim
 
         private static object getGroupByObject(Dictionary<AttributeModel, object> item, QueryModel queryModel)
         {
-            var groupers = queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group);
+            var groupers = queryModel.AttributeOperationModels.Where(aom => aom.IsGrouped || aom.IsBinned).ToList();
             GroupingObject groupingObject = new GroupingObject(
-                groupers.Count > 0,
+                groupers.Count() > 0,
                 queryModel.AttributeOperationModels.Any(aom => aom.AggregateFunction != AggregateFunction.None));
             int count = 0;
             foreach (var attributeModel in item.Keys)
@@ -150,8 +162,15 @@ namespace PanoramicData.controller.data.sim
                 else if (groupers.Count(avo => avo.IsBinned && avo.AttributeModel == attributeModel) > 0)
                 {
                     AttributeOperationModel bin = groupers.Where(avo => avo.IsBinned && avo.AttributeModel == attributeModel).First();
-                    double d = double.Parse(item[attributeModel].ToString());
-                    groupingObject.Add(count++, Math.Floor(d / bin.BinSize) * bin.BinSize);
+                    if (item[attributeModel] == null)
+                    {
+                        groupingObject.Add(count++, item[attributeModel]);
+                    }
+                    else
+                    {
+                        double d = double.Parse(item[attributeModel].ToString());
+                        groupingObject.Add(count++, Math.Floor(d / bin.BinSize) * bin.BinSize);
+                    }
                 }
             }
             return groupingObject;
@@ -207,21 +226,30 @@ namespace PanoramicData.controller.data.sim
                 }
                 else if (attributeOperationModel.AggregateFunction == AggregateFunction.None)
                 {
-                    if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any())
+                    if (queryModel.AttributeOperationModels.Any(aom => aom.IsGrouped || aom.IsBinned))
                     {
-                        if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Any(aom => aom.AttributeModel == attributeOperationModel.AttributeModel))
+                        if (queryModel.AttributeOperationModels.Where(aom => aom.IsGrouped || aom.IsBinned).Any(aom => aom.AttributeModel == attributeOperationModel.AttributeModel))
                         {
-                            AttributeOperationModel grouper = queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Where(aom => aom.AttributeModel == attributeOperationModel.AttributeModel).First();
+                            AttributeOperationModel grouper = queryModel.AttributeOperationModels.Where(aom => aom.IsGrouped || aom.IsBinned).Where(aom => aom.AttributeModel == attributeOperationModel.AttributeModel).First();
                             if (grouper.IsGrouped)
                             {
                                 rawValue = values.First();
                             }
                             else if (grouper.IsBinned)
                             {
-                                double d = double.Parse(values.First().ToString());
-                                rawValue = Math.Floor(d / grouper.BinSize) * grouper.BinSize;
-                                binned = true;
-                                binSize = grouper.BinSize;
+                                if (values.First() != null)
+                                {
+                                    double d = double.Parse(values.First().ToString());
+                                    rawValue = Math.Floor(d / grouper.BinSize) * grouper.BinSize;
+                                    binned = true;
+                                    binSize = grouper.BinSize;
+                                }
+                                else
+                                {
+                                    rawValue = null;
+                                    binned = true;
+                                    binSize = grouper.BinSize;
+                                }
                             }
                         }
                         else
@@ -271,52 +299,60 @@ namespace PanoramicData.controller.data.sim
         {
             QueryResultItemValueModel valueModel = new QueryResultItemValueModel();
 
-            double d = 0.0;
-            valueModel.Value = value;
-            if (double.TryParse(value.ToString(), out d))
+            if (value == null)
             {
-                valueModel.StringValue = valueModel.Value.ToString().Contains(".") ? d.ToString("N") : valueModel.Value.ToString();
-                if (binned)
-                {
-                    valueModel.StringValue = d + " - " + (d + binSize);
-                }
-                else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
-                {
-                    if (d == 1.0)
-                    {
-                        valueModel.StringValue = "True";
-                    }
-                    else if (d == 0.0)
-                    {
-                        valueModel.StringValue = "False";
-                    }
-                }
+                valueModel.Value = null;
+                valueModel.StringValue = "";
+                valueModel.ShortStringValue = "";
             }
             else
             {
-                valueModel.StringValue = valueModel.Value.ToString();
-                if (valueModel.Value is DateTime)
+                double d = 0.0;
+                valueModel.Value = value;
+                if (double.TryParse(value.ToString(), out d))
                 {
-                    valueModel.StringValue = ((DateTime)valueModel.Value).ToShortDateString();
+                    valueModel.StringValue = valueModel.Value.ToString().Contains(".") ? d.ToString("N") : valueModel.Value.ToString();
+                    if (binned)
+                    {
+                        valueModel.StringValue = d + " - " + (d + binSize);
+                    }
+                    else if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.BIT)
+                    {
+                        if (d == 1.0)
+                        {
+                            valueModel.StringValue = "True";
+                        }
+                        else if (d == 0.0)
+                        {
+                            valueModel.StringValue = "False";
+                        }
+                    }
+                }
+                else
+                {
+                    valueModel.StringValue = valueModel.Value.ToString();
+                    if (valueModel.Value is DateTime)
+                    {
+                        valueModel.StringValue = ((DateTime)valueModel.Value).ToShortDateString();
+                    }
+                }
+
+                if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.GEOGRAPHY)
+                {
+
+                    string toSplit = valueModel.StringValue;
+                    if (toSplit.Contains("(") && toSplit.Contains(")"))
+                    {
+                        toSplit = toSplit.Substring(toSplit.IndexOf("("));
+                        toSplit = toSplit.Substring(1, toSplit.IndexOf(")") - 1);
+                    }
+                    valueModel.ShortStringValue = valueModel.StringValue.Replace("(" + toSplit + ")", "");
+                }
+                else
+                {
+                    valueModel.ShortStringValue = valueModel.StringValue.TrimTo(300);
                 }
             }
-
-            if (attributeOperationModel.AttributeModel.AttributeDataType == AttributeDataTypeConstants.GEOGRAPHY)
-            {
-
-                string toSplit = valueModel.StringValue;
-                if (toSplit.Contains("(") && toSplit.Contains(")"))
-                {
-                    toSplit = toSplit.Substring(toSplit.IndexOf("("));
-                    toSplit = toSplit.Substring(1, toSplit.IndexOf(")") - 1);
-                }
-                valueModel.ShortStringValue = valueModel.StringValue.Replace("(" + toSplit + ")", "");
-            }
-            else
-            {
-                valueModel.ShortStringValue = valueModel.StringValue.TrimTo(300);
-            }
-
             return valueModel;
         }
     }
@@ -442,7 +478,14 @@ namespace PanoramicData.controller.data.sim
             {
                 int code = 0;
                 foreach (var v in _dictionary.Values)
-                    code ^= v.GetHashCode();
+                    if (v == null)
+                    {
+                        code ^= "null".GetHashCode();
+                    }
+                    else
+                    {
+                        code ^= v.GetHashCode();
+                    }
                 return code;
             }
             else

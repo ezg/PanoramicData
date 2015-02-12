@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using DiagramDesigner;
 using starPadSDK.WPFHelp;
 using PanoramicData.controller.physics;
 using PanoramicData.controller.view;

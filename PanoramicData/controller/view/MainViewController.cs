@@ -20,7 +20,7 @@ using System.IO;
 using PanoramicData.controller.input;
 using PanoramicData.model.data;
 using PanoramicData.model.data.mssql;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.vis;
 using PanoramicData.model.data.sim;
 using PanoramicData.Properties;
@@ -49,9 +49,6 @@ namespace PanoramicData.controller.view
 
             AttributeViewModel.AttributeViewModelDropped += AttributeViewModelDropped;
             AttributeViewModel.AttributeViewModelMoved += AttributeViewModelMoved;
-            ResizerRadialControlExecution.Dropped += ResizerRadialControlExecution_Dropped;
-            ColumnTreeView.DatabaseTableDropped += Resizer_DatabaseTableDropped;
-            Colorer.ColorerDropped += ColorerDropped;
             DatabaseManager.ErrorMessageChanged += DatabaseManager_ErrorMessageChanged;
             _root.InkCollectedEvent += root_InkCollectedEvent;
             VisualizationViewModels.CollectionChanged += VisualizationViewModels_CollectionChanged;
@@ -278,122 +275,6 @@ namespace PanoramicData.controller.view
                 filter.InitPostionAndDimension(position, new Vec(width, height));*/
             }
         }
-
-        private void ColorerDropped(object sender, DatabaseTableEventArgs e)
-        {
-            HitTester hitTester = new HitTester();
-            Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
-
-            if (hits.Count == 0)
-            {
-                double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-                Point position = e.Bounds.Center;
-                position.X -= width / 2.0;
-                position.Y -= height / 2.0;
-
-                TableModel tableModel = e.TableModel;
-
-                VisualizationContainerView filter = new VisualizationContainerView();
-                FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
-                filterHolderViewModel.FilterRendererType = FilterRendererType.Table;
-                filterHolderViewModel.TableModel = tableModel;
-
-                foreach (var colorCd in e.FilterModel.GetColumnDescriptorsForOption(Option.ColorBy))
-                {
-                    filterHolderViewModel.AddOptionColumnDescriptor(Option.X, (PanoramicDataColumnDescriptor)colorCd.SimpleClone());
-                }
-                foreach (var colorCd in e.FilterModel.GetColumnDescriptorsForOption(Option.ColorBy))
-                {
-                    var cd = (PanoramicDataColumnDescriptor)colorCd.Clone();
-                    cd.IsGrouped = true;
-                    filterHolderViewModel.AddOptionColumnDescriptor(Option.ColorBy, cd);
-                }
-
-                filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
-                    position.Y + VisualizationContainerView.HEIGHT / 2.0);
-                //filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
-
-                filterHolderViewModel.Color = e.FilterModel.Color;
-                e.FilterModel.AddIncomingFilter(filterHolderViewModel, FilteringType.Filter, true);
-            }
-        }
-
-        void Resizer_DatabaseTableDropped(object sender, DatabaseTableEventArgs e)
-        {
-            HitTester hitTester = new HitTester();
-            Dictionary<Type, HitTestFilterBehavior> filters = new Dictionary<Type, HitTestFilterBehavior>();
-            filters.Add(typeof(AttributeViewModelEventHandler), HitTestFilterBehavior.ContinueSkipChildren);
-            List<DependencyObject> hits = hitTester.GetHits(InkableScene, e.Bounds, new Type[] { typeof(AttributeViewModelEventHandler) }.ToList(), filters);
-
-            if (hits.Count == 0)
-            {
-                double width = e.DefaultSize ? VisualizationContainerView.WIDTH : e.Bounds.Width;
-                double height = e.DefaultSize ? VisualizationContainerView.HEIGHT : e.Bounds.Height;
-                Point position = e.Bounds.Center;
-                position.X -= width / 2.0;
-                position.Y -= height / 2.0;
-
-                TableModel tableModel = e.TableModel;
-
-                VisualizationContainerView filter = new VisualizationContainerView();
-                FilterHolderViewModel filterHolderViewModel = new FilterHolderViewModel();
-                filterHolderViewModel.FilterRendererType = FilterRendererType.Pivot;
-                filterHolderViewModel.TableModel = tableModel;
-
-
-                PanoramicDataGroupDescriptor groupDescriptor = tableModel.ColumnDescriptors.Keys.First();
-                if (groupDescriptor is PathInfo)
-                {
-                    PathInfo pi = groupDescriptor as PathInfo;
-                    TableInfo root = pi.TableInfo;
-                    if (pi.Path.Count > 0)
-                    {
-                        root = pi.Path.First().FromTableInfo;
-                    }
-                    List<PathInfo> pathInfos = tableModel.CalculateRecursivePathInfos();
-
-                    foreach (var pp in pathInfos)
-                    {
-                        if (pp.Path.Count > 0)
-                        {
-                            Pivot p = new Pivot();
-                            p.Label = pp.GetLabel();
-                            p.Selected = false;
-                            p.ColumnDescriptor = new DatabaseColumnDescriptor(pp.TableInfo.PrimaryKeyFieldInfo, pp);
-                            filterHolderViewModel.AddPivot(p, this);
-                        }
-                    }
-
-                    filterHolderViewModel.Center = new Point(position.X + VisualizationContainerView.WIDTH / 2.0,
-                        position.Y + VisualizationContainerView.HEIGHT / 2.0);
-                   // filter.FilterHolderViewModel = filterHolderViewModel;
-                    filter.InitPostionAndDimension(position, new Vector2(VisualizationContainerView.WIDTH, VisualizationContainerView.HEIGHT));
-                }
-            }
-        }
-
-        void ResizerRadialControlExecution_Dropped(object sender, AttributeViewModelEventArgs e)
-        {
-            if (e.Type == AttributeViewModelEventArgType.Copy)
-            {
-                /*FilterHolder filter = new FilterHolder();
-                FilterHolderViewModel filterHolderViewModel = FilterHolderViewModel.CreateCopy(e.FilterModel);
-                filterHolderViewModel.Center = new Point();
-                filter.FilterHolderViewModel = filterHolderViewModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));*/
-            }
-            else if (e.Type == AttributeViewModelEventArgType.Snapshot)
-            {
-                /*FilterHolder filter = new FilterHolder();
-                filter.FilterHolderViewModel = (FilterHolderViewModel)e.FilterModel;
-                filter.InitPostionAndDimension(e.Bounds.TopLeft, new Vec(e.Bounds.Width, e.Bounds.Height));*/
-            }
-        }
-
 
         void VisualizationViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -11,20 +11,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using DiagramDesigner;
 using PanoramicDataModel;
-using starPadSDK.AppLib;
 using starPadSDK.Geom;
 using PixelLab.Common;
-using starPadSDK.Inq;
 using starPadSDK.WPFHelp;
 using PanoramicData.model.view;
 using PanoramicData.view.schema;
-using PanoramicData.view.math;
 using PanoramicData.view.other;
 using PanoramicData.view.table;
 using CombinedInputAPI;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.inq;
 using PanoramicData.utils;
 
@@ -76,65 +72,6 @@ namespace PanoramicData.view.vis
         private Stopwatch _headerGridStopwatch = new Stopwatch();
         private Point _headerGridStartPoint = new Point();
 
-        public static readonly DependencyProperty FilterModelProperty = DependencyProperty.Register("FilterModel",
-            typeof (FilterModel), typeof (Resizer), new PropertyMetadata(OnFilterModelChanged));
-
-        public FilterModel FilterModel
-        {
-            get
-            {
-                return (FilterModel) GetValue(FilterModelProperty);
-            }
-            set
-            {
-                SetValue(FilterModelProperty, value);
-            }
-        }
-
-        private static void OnFilterModelChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            (obj as Resizer).OnFilterModelChanged(args);
-        }
-
-        protected virtual void OnFilterModelChanged(DependencyPropertyChangedEventArgs args)
-        {
-            if (_filterModelDisposable != null)
-            {
-                _filterModelDisposable.Dispose();
-            }
-            if (_tableModelDisposable != null)
-            {
-                _tableModelDisposable.Dispose();
-            }
-            if (args.NewValue != null)
-            {
-                _filterModelDisposable = Observable.FromEventPattern<FilterModelUpdatedEventArgs>(
-                    (FilterModel) args.NewValue, "FilterModelUpdated")
-                    .Where(
-                        arg =>
-                            arg.EventArgs != null &&
-                            (arg.EventArgs.Mode != UpdatedMode.UI || (arg.EventArgs.Mode == UpdatedMode.UI && (arg.EventArgs.SubMode == SubUpdatedMode.Color || arg.EventArgs.SubMode == SubUpdatedMode.RenderStyle))) &&
-                            arg.EventArgs.Mode != UpdatedMode.FilteredItemsStatus)
-                    .Throttle(TimeSpan.FromMilliseconds(50))
-                    .Subscribe((arg) =>
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
-                        {
-                            if (arg.EventArgs.Mode == UpdatedMode.Structure ||
-                                arg.EventArgs.Mode == UpdatedMode.Incoming ||
-                                (arg.EventArgs.Mode == UpdatedMode.UI && (arg.EventArgs.SubMode == SubUpdatedMode.Color || arg.EventArgs.SubMode == SubUpdatedMode.RenderStyle)) ||
-                                (arg.EventArgs.Mode == UpdatedMode.FilteredItemsChange &&
-                                 (arg.EventArgs.Sender != this || arg.EventArgs.Sender == null)))
-                            {
-                                init();
-                            }
-                        }));
-                    });
-
-                init();
-            }
-
-        }
 
         public static readonly DependencyProperty WidthAnimationProperty = DependencyProperty.Register(
             "WidthAnimation", typeof (double),
@@ -271,131 +208,13 @@ namespace PanoramicData.view.vis
 
                 ((Label)GetTemplateChild("lblLabel")).FontSize = Properties.Settings.Default.PanoramicDataStableLabelFontSize;
             }
-
-            init();
         }
 
         void plusCanvas_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            InkableScene inkableScene = this.FindParent<InkableScene>();
-            Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
-
-            CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo = new CalculatedColumnDescriptorInfo();
-            calculatedColumnDescriptorInfo.Name = "Calculated Field " + FilterModel.TableModel.CalculatedColumnDescriptorInfos.Count;
-            calculatedColumnDescriptorInfo.TableModel = FilterModel.TableModel;
-
-            MathEditor me = new MathEditor(
-                new ResizerMathEditorExecution(inkableScene, calculatedColumnDescriptorInfo), FilterModel, calculatedColumnDescriptorInfo);
-            me.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
-                fromInkableScene.Y - RadialControl.SIZE / 2);
-            inkableScene.Add(me);
-
-            e.Handled = true;
+           
         }
-
-        private void init()
-        {
-            return;
-            
-            if (_colorer != null)
-            {
-                _colorer.FilterModel = FilterModel;
-                _colorer.Init();
-            }
-            if (_styler != null)
-            {
-                if (FilterModel.FilterRendererType == FilterRendererType.Table)
-                {
-                    _styler.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    _styler.FilterModel = FilterModel;
-                    _styler.Init();
-                }
-            }
-
-            if (_headerRowDefinition != null && (FilterModel as FilterHolderViewModel).NoChrome)
-            {
-                _headerRowDefinition.Height = new GridLength(0);
-                _resizeGrid.Visibility = Visibility.Collapsed;
-                //_headerGrid.BorderThickness = new Thickness(0);
-            }
-            if (_headerGrid != null &&
-                (FilterModel.FilterRendererType == FilterRendererType.Pivot || FilterModel.FilterRendererType == FilterRendererType.Frozen))
-            {
-                _headerBorder.CornerRadius = new CornerRadius(20, 20, 0, 0);
-                _optionGrid.Visibility = Visibility.Collapsed;
-                _dotGrid.Visibility = Visibility.Collapsed;
-            }
-
-            if (_grouper != null && _styler != null && _colorer != null)
-            {
-                _grouper.Visibility = Visibility.Visible;
-                _colorer.Visibility = Visibility.Visible;
-                _styler.Visibility = Visibility.Visible;
-                _lblRowCount.Visibility = Visibility.Collapsed;
-
-                if (FilterModel.FilterRendererType == FilterRendererType.Table)
-                {
-                    _lblRowCount.Visibility = Visibility.Visible;
-                }
-
-                if (FilterModel.FilterRendererType == FilterRendererType.Pivot ||
-                    FilterModel.FilterRendererType == FilterRendererType.Frozen ||
-                    FilterModel.FilterRendererType == FilterRendererType.Map ||
-                    FilterModel.FilterRendererType == FilterRendererType.Table ||
-                    FilterModel.FilterRendererType == FilterRendererType.Slider)
-                {
-                    _styler.Visibility = Visibility.Collapsed;
-                }
-                if (FilterModel.FilterRendererType == FilterRendererType.Pivot ||
-                    FilterModel.FilterRendererType == FilterRendererType.Frozen ||
-                    FilterModel.FilterRendererType == FilterRendererType.Map ||
-                    FilterModel.FilterRendererType == FilterRendererType.Slider ||
-                    FilterModel.FilterRendererType == FilterRendererType.Pie)
-                {
-                    _grouper.Visibility = Visibility.Collapsed;
-                }
-                if (FilterModel.FilterRendererType == FilterRendererType.Pivot ||
-                    FilterModel.FilterRendererType == FilterRendererType.Frozen ||
-                    FilterModel.FilterRendererType == FilterRendererType.Map ||
-                    FilterModel.FilterRendererType == FilterRendererType.Slider)
-                {
-                    _colorer.Visibility = Visibility.Collapsed;
-                }
-
-                if (!_isFront)
-                {
-                    _grouper.Visibility = Visibility.Collapsed;
-                    _colorer.Visibility = Visibility.Collapsed;
-                    _styler.Visibility = Visibility.Collapsed;
-                    _lblRowCount.Visibility = Visibility.Collapsed;
-                }
-            }
-            if (_contentGrid != null)
-            {
-                if (FilterModel.FilterRendererType == FilterRendererType.Table)
-                {
-                    _contentGrid.Margin= new Thickness(0, 0, 0, 30);
-                }
-                else
-                {
-                    _contentGrid.Margin = new Thickness(0, 0, 0, 0);
-                }
-            }
-            if (_lblRowCount != null)
-            {
-                _lblRowCount.DataContext = FilterModel;
-                Binding binding = new Binding
-                {
-                    Path = new PropertyPath("RowCount"),
-                    StringFormat = "{0} " + (FilterModel.FilterRendererType == FilterRendererType.Table ? " Rows" : " Datapoints")
-                };
-                _lblRowCount.SetBinding(TextBlock.TextProperty, binding);
-            }
-        }
-
+        
         void dotGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
             e.Handled = true;
@@ -427,7 +246,7 @@ namespace PanoramicData.view.vis
 
         void optionGrid_PointUp(Object sender, TouchEventArgs e)
         {
-            e.Handled = true;
+            /*e.Handled = true;
             _optionGrid.RemoveHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(optionGrid_PointDrag));
             _optionGrid.RemoveHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(optionGrid_PointUp));
 
@@ -483,7 +302,7 @@ namespace PanoramicData.view.vis
                     fromInkableScene.Y - RadialControl.SIZE / 2);
                 inkableScene.Add(rc);
             }
-            e.Handled = true;
+            e.Handled = true;*/
         }
 
         void optionGrid_PointDrag(Object sender, TouchEventArgs e)
@@ -573,14 +392,14 @@ namespace PanoramicData.view.vis
                     inkableScene.Add(_copyShadow);
                     _copyShadow = null;
 
-                    RadialMenuCommand copy = new RadialMenuCommand();
+                    /*RadialMenuCommand copy = new RadialMenuCommand();
                     copy.Name = "Create\nCopy";
                     copy.Data = FilterModel;
                     copy.AllowsDragging = true;
                     copy.IsSelectable = true;
                     copy.IsActivatable = false;
                     ResizerRadialControlExecution exec = new ResizerRadialControlExecution(FilterModel, FilterModel.TableModel, movableParent, this, inkableScene);
-                    exec.Drop(null, copy, fromInkableScene);
+                    exec.Drop(null, copy, fromInkableScene);*/
                 }
             }
 
@@ -783,178 +602,6 @@ namespace PanoramicData.view.vis
                     }
                 }
                 UpdateLayout();
-            }
-        }
-    }
-
-    public class DatabaseTableEventArgs : EventArgs
-    {
-        public Rct Bounds { get; set; }
-        public TableModel TableModel { get; set; }
-        public FilterModel FilterModel { get; set; }
-        public bool DefaultSize { get; set; }
-
-        public DatabaseTableEventArgs()
-        {
-        }
-
-        public DatabaseTableEventArgs(Rct bounds, TableModel tm, FilterModel fm, bool defaultSize)
-        {
-            this.Bounds = bounds;
-            this.TableModel = tm;
-            this.FilterModel = fm;
-            this.DefaultSize = defaultSize;
-        }
-    }
-
-    public class ResizerRadialControlExecution : RadialControlExecution
-    {
-        private FilterModel _filterModel = null;
-        private TableModel _tableModel = null;
-        private MovableElement _movableElement = null;
-        private Resizer _resizer = null;
-        private InkableScene _inkableScene = null;
-
-        public static event EventHandler<AttributeViewModelEventArgs> Dropped;
-
-        public ResizerRadialControlExecution(FilterModel filterModel, TableModel tableModel, MovableElement movableElement, Resizer resizer, InkableScene inkableScene)
-        {
-            this._filterModel = filterModel;
-            this._tableModel = tableModel;
-            this._movableElement = movableElement;
-            this._resizer = resizer;
-            this._inkableScene = inkableScene;
-        }
-
-        public override void Remove(RadialControl sender, RadialMenuCommand cmd)
-        {
-            base.Remove(sender, cmd);
-
-            if (_filterModel != null)
-            {
-                //foreach (var elem in _inkableScene.Elements.ToArray())
-                {
-                    //if (elem is VisualizationContainerView)
-                    {
-                        //if ((elem as VisualizationContainerView).FilterHolderViewModel == _filterModel)
-                        {
-                            //_inkableScene.Rem(elem);
-                            //break;
-                        }
-                    }  
-                }
-            }
-            else if (_filterModel != null)
-            {
-                _filterModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
-        }
-
-        public override void Drop(RadialControl sender, RadialMenuCommand cmd, Point fromInkableScene)
-        {
-            base.Dispose(sender);
-
-            if (_inkableScene != null && sender != null)
-            {
-                //_inkableScene.Rem(sender as FrameworkElement);
-            }
-
-            if (Dropped != null)
-            {
-                Vector2 size = _movableElement.GetSize();
-                //Rct bounds = new Rct(new Point(fromInkableScene.X - (size.X / 2.0), fromInkableScene.Y - (size.Y / 2.0)), _movableElement.GetSize());
-                if (cmd.Name == "Create\nSnaphot")
-                {
-                    FilterHolderViewModel frozenModel = new FilterHolderViewModel();
-                    frozenModel.TableModel = _filterModel.TableModel;
-                    frozenModel.Label = "Snapshot";
-                    frozenModel.Color = _filterModel.Color;
-                    frozenModel.FilterRendererType = FilterRendererType.Frozen;
-                    frozenModel.FrozenImage = _resizer.CreateImage();
-                    /*Dropped(this,
-                        new AttributeViewModelEventArgs(bounds, null, _tableModel,
-                            frozenModel, false, AttributeViewModelEventArgType.Snapshot));*/
-                }
-                else if (cmd.Name == "Create\nCopy")
-                {
-                    /*Dropped(this,
-                        new AttributeViewModelEventArgs(bounds, null, _tableModel,
-                            _filterModel, false, AttributeViewModelEventArgType.Copy));*/
-                }
-            }
-        }
-
-        public override void Dispose(RadialControl sender)
-        {
-            base.Dispose(sender);
-
-            if (_inkableScene != null)
-            {
-                //_inkableScene.Rem(sender as FrameworkElement);
-            }
-        }
-
-        public override void ExecuteCommand(
-            RadialControl sender, RadialMenuCommand cmd,
-            string needle = null, StroqCollection stroqs = null)
-        {
-            // exectue Action
-            if (cmd.ActiveTriggered != null)
-            {
-                cmd.ActiveTriggered(cmd);
-            }
-            // check group policy
-            if (cmd.CommandGroup != null)
-            {
-                if (cmd.CommandGroup.GroupPolicy == RadialMenuCommandComandGroupPolicy.MultiActive)
-                {
-                    // do nothing
-                }
-                else
-                {
-                    if (cmd.IsActive)
-                    {
-                        foreach (var c in cmd.Parent.InnerCommands)
-                        {
-                            if (c != cmd && c.CommandGroup == cmd.CommandGroup)
-                            {
-                                c.IsActive = false;
-
-                                if (cmd.CommandGroup.GroupPolicy == RadialMenuCommandComandGroupPolicy.DeactivateAndTriggerOthers &&
-                                    c.ActiveTriggered != null)
-                                {
-                                    c.ActiveTriggered(c);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public class ResizerMathEditorExecution : MathEditorExecution
-    {
-        private InkableScene _inkableScene = null;
-        private CalculatedColumnDescriptorInfo _calculatedColumnDescriptorInfo = null;
-
-        public ResizerMathEditorExecution(InkableScene inkableScene, CalculatedColumnDescriptorInfo calculatedColumnDescriptorInfo)
-        {
-            this._inkableScene = inkableScene;
-            this._calculatedColumnDescriptorInfo = calculatedColumnDescriptorInfo;
-        }
-
-        public override void Dispose(MathEditor sender)
-        {
-            base.Dispose(sender);
-            if (_calculatedColumnDescriptorInfo.Stroqs.Count > 0)
-            {
-                _calculatedColumnDescriptorInfo.TableModel.UpdateCalculatedColumnDescriptorInfo(
-                    _calculatedColumnDescriptorInfo);
-            }
-            if (_inkableScene != null)
-            {
-                //_inkableScene.Rem(sender as FrameworkElement);
             }
         }
     }

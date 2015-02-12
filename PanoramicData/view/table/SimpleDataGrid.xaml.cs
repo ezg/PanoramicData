@@ -11,7 +11,6 @@ using FarseerPhysics;
 using CombinedInputAPI;
 using starPadSDK.AppLib;
 using starPadSDK.Geom;
-using starPadSDK.Inq.BobsCusps;
 using starPadSDK.WPFHelp;
 using PixelLab.Common;
 using System.Globalization;
@@ -23,10 +22,9 @@ using Image = System.Windows.Controls.Image;
 using Point = System.Windows.Point;
 using TextAlignment = System.Windows.TextAlignment;
 using PanoramicData.controller.data;
-using PanoramicData.utils.inq;
 using PanoramicData.view.utils;
 using PanoramicData.view.vis;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.vis.render;
 using System.Collections.Specialized;
 using PanoramicData.model.data;
@@ -39,11 +37,8 @@ namespace PanoramicData.view.table
     /// <summary>
     /// Interaction logic for SimpleDataGrid.xaml
     /// </summary>
-    public partial class SimpleDataGrid : AttributeViewModelEventHandler, StroqListener
+    public partial class SimpleDataGrid : AttributeViewModelEventHandler
     {
-        public delegate void CellDroppedOutsideHandler(object sender, PanoramicDataColumnDescriptor column, PanoramicDataRow row, Point position);
-        public event CellDroppedOutsideHandler CellDroppedOutside;
-
         private IDisposable _observableDisposable = null;
         private GridView _gridView = null;
 
@@ -54,7 +49,6 @@ namespace PanoramicData.view.table
 
         private Point _startDrag1 = new Point();
         private long _manipulationStartTime = 0;
-        private PanoramicDataColumnDescriptor _headerColumnDescriptor1 = null;
 
         private TouchDevice _dragDevice1 = null;
         private TouchDevice _dragDevice2 = null;
@@ -63,7 +57,6 @@ namespace PanoramicData.view.table
         private bool _isTwoFingerExploringGraphs = true;
         private VisualizationContainerView _twoFingerExploreFeedback = null;
         private VisualizationContainerView _explorerFeedback = null;
-        private PanoramicDataColumnDescriptor _explorerFeedbackColumnDescriptor = null;
         private bool _isSimpleGridViewColumnHeaderMoveFeedbackShown = false;
         private List<MappingEntry> _mapping = new List<MappingEntry>();
 
@@ -108,7 +101,6 @@ namespace PanoramicData.view.table
                 resultModel.PropertyChanged += QueryResultModel_PropertyChanged;
                 if (resultModel.QueryResultItemModels != null)
                 {
-                    CollectionChangedEventManager.AddHandler(resultModel.QueryResultItemModels, QueryResultItemModels_CollectionChanged);
                     populateData();
                 }
                 populateTableHeaders();
@@ -120,18 +112,13 @@ namespace PanoramicData.view.table
              QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
              if (e.PropertyName == resultModel.GetPropertyName(() => resultModel.QueryResultItemModels))
              {
-                 CollectionChangedEventManager.AddHandler(resultModel.QueryResultItemModels, QueryResultItemModels_CollectionChanged);
                  populateData();
              }
-        }
-        void QueryResultItemModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
         }
 
         private void populateData()
         {
             QueryResultModel resultModel = (DataContext as VisualizationViewModel).QueryModel.QueryResultModel;
-
             listView.ItemsSource = resultModel.QueryResultItemModels;
         }
 
@@ -599,104 +586,6 @@ namespace PanoramicData.view.table
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
             return new GeometryHitTestResult(this, IntersectionDetail.Intersects);
-        }
-        
-        public void NotifyStroqAdded(starPadSDK.Inq.Stroq s)
-        {
-            InkableScene inkableScene = this.FindParent<InkableScene>();
-            InqAnalyzer inqAnalyzer = new InqAnalyzer();
-            inqAnalyzer.AddStroke(s);
-            inqAnalyzer.Analyze();
-            string recog = inqAnalyzer.GetRecognizedString().ToLower();
-
-            if (recog.Equals("a"))
-            {
-
-            }
-            else
-            {
-                GridViewColumnHeader header = findOverColumnHeader(s[0]);
-                if(header != null) {
-                    if (header.Column == _checkBoxColumn)
-                    {
-                        Rect bounds = s.GetBounds();
-                        GeoAPI.Geometries.IGeometry geom = new Pt[]
-                        {
-                            inkableScene.TranslatePoint(new Point(bounds.Left, bounds.Top), this),
-                            inkableScene.TranslatePoint(new Point(bounds.Right, bounds.Top), this),
-                            inkableScene.TranslatePoint(new Point(bounds.Right, bounds.Bottom), this),
-                            inkableScene.TranslatePoint(new Point(bounds.Left, bounds.Bottom), this)
-                        }.GetPolygon();
-                        var rowPresenters = this.GetIntersectedTypesRecursive<GridViewRowPresenter>(geom.GetBounds());
-                        List<PanoramicDataRow> rows = new List<PanoramicDataRow>();
-                        foreach (var rowPresenter in rowPresenters)
-                        {
-                            if ((DataWrapper<PanoramicDataRow>) rowPresenter.DataContext != null)
-                            {
-                                PanoramicDataRow row = ((DataWrapper<PanoramicDataRow>) rowPresenter.DataContext).Data;
-                                rows.Add(row);
-                            }
-                        }
-
-                        //if (rows.Count > 0 && RowsSelected != null)
-                        {
-                            //RowsSelected(this, rows);
-                        }
-                    }
-                    else
-                    {
-                        MappingEntry map = null;
-                        IEnumerable<MappingEntry> mapEntries = _mapping.Where(me => me.GridViewColumn == header.Column);
-                        if (mapEntries.Count() > 0)
-                        {
-                            map = mapEntries.First();
-
-                            if (s.Count > 2)
-                            {
-                                if (s.Cusps().Length == 2 && Math.Abs(s[0].X - s[-1].X) < 50 &&
-                                    s.Cusps().outSeg(0).Length > 30)
-                                {
-
-                                    bool downStroq = (s[-1].Y - s[0].Y) > 0;
-
-                                    //EZ: if ((map.ColumnDescriptor.SortMode == SortMode.None ||
-                                    /*     map.ColumnDescriptor.SortMode == SortMode.Asc) && downStroq)
-                                    {
-                                        map.ColumnDescriptor.SortMode = SortMode.Desc;
-                                    }
-                                    else if ((map.ColumnDescriptor.SortMode == SortMode.None ||
-                                              map.ColumnDescriptor.SortMode == SortMode.Desc) && !downStroq)
-                                    {
-                                        map.ColumnDescriptor.SortMode = SortMode.Asc;
-                                    }
-                                    else if (map.ColumnDescriptor.SortMode == SortMode.Desc && downStroq)
-                                    {
-                                        map.ColumnDescriptor.SortMode = SortMode.None;
-                                    }
-                                    else if (map.ColumnDescriptor.SortMode == SortMode.Asc && !downStroq)
-                                    {
-                                        map.ColumnDescriptor.SortMode = SortMode.None;
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            //inkableScene.Rem(s);
-        }
-
-        public void NotifyStroqRemoved(starPadSDK.Inq.Stroq s)
-        {
-        }
-
-        public void NotifyStroqsRemoved(starPadSDK.Inq.StroqCollection sc)
-        {
-        }
-
-        public void NotifyStroqsAdded(starPadSDK.Inq.StroqCollection sc)
-        {
         }
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)

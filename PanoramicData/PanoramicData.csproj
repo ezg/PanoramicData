@@ -120,27 +120,27 @@
     </Reference>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="GeoAPI">
-      <HintPath>..\starpadLibs\GeoAPI.dll</HintPath>
+      <HintPath>..\libs\GeoAPI.dll</HintPath>
     </Reference>
     <Reference Include="IACore">
-      <HintPath>..\starpadLibs\IACore.dll</HintPath>
+      <HintPath>..\libs\IACore.dll</HintPath>
     </Reference>
     <Reference Include="IALoader">
-      <HintPath>..\starpadLibs\IALoader.dll</HintPath>
+      <HintPath>..\libs\IALoader.dll</HintPath>
     </Reference>
     <Reference Include="IAWinFX">
-      <HintPath>..\starpadLibs\IAWinFX.dll</HintPath>
+      <HintPath>..\libs\IAWinFX.dll</HintPath>
     </Reference>
     <Reference Include="InTheHand.Net.Personal, Version=3.5.605.0, Culture=neutral, PublicKeyToken=ea38caa273134499, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\starpadLibs\32feet\InTheHand.Net.Personal.dll</HintPath>
+      <HintPath>..\libs\32feet\InTheHand.Net.Personal.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Ink, Version=6.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Windows\assembly\GAC_64\Microsoft.Ink\6.1.0.0__31bf3856ad364e35\Microsoft.Ink.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.WPF">
-      <HintPath>..\starpadLibs\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+      <HintPath>..\libs\Microsoft.Maps.MapControl.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Composition">
       <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
@@ -167,22 +167,22 @@
       <HintPath>..\packages\WindowsAPICodePack-DirectX.1.1.2\lib\Microsoft.WindowsAPICodePack.DirectX.dll</HintPath>
     </Reference>
     <Reference Include="NCalc">
-      <HintPath>..\starpadLibs\NCalc.dll</HintPath>
+      <HintPath>..\libs\NCalc.dll</HintPath>
     </Reference>
     <Reference Include="NetTopologySuite">
-      <HintPath>..\starpadLibs\NetTopologySuite.dll</HintPath>
+      <HintPath>..\libs\NetTopologySuite.dll</HintPath>
     </Reference>
     <Reference Include="PixelLab.Common">
-      <HintPath>..\starpadLibs\PixelLab.Common.dll</HintPath>
+      <HintPath>..\libs\PixelLab.Common.dll</HintPath>
     </Reference>
     <Reference Include="PixelLab.Core">
-      <HintPath>..\starpadLibs\PixelLab.Core.dll</HintPath>
+      <HintPath>..\libs\PixelLab.Core.dll</HintPath>
     </Reference>
     <Reference Include="PixelLab.Wpf">
-      <HintPath>..\starpadLibs\PixelLab.Wpf.dll</HintPath>
+      <HintPath>..\libs\PixelLab.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PowerCollections">
-      <HintPath>..\starpadLibs\PowerCollections.dll</HintPath>
+      <HintPath>..\libs\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -204,7 +204,7 @@
     <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
-      <HintPath>..\starpadLibs\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+      <HintPath>..\libs\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -224,14 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="controller\data\FilterQueryGenerator.cs" />
     <Compile Include="controller\data\mssql\MSSQLQueryExecuter.cs" />
     <Compile Include="controller\data\QueryExecuter.cs" />
-    <Compile Include="controller\data\QueryGenerator.cs" />
-    <Compile Include="controller\data\QueryItemsProvider.cs" />
     <Compile Include="controller\data\sim\SimQueryExecuter.cs" />
     <Compile Include="controller\input\DatasetConfiguration.cs" />
-    <Compile Include="controller\math\MathManager.cs" />
     <Compile Include="controller\view\MainViewController.cs" />
     <Compile Include="model\data\AttributeModel.cs" />
     <Compile Include="model\data\AttributeOperationModel.cs" />
@@ -250,15 +246,13 @@
     <Compile Include="model\data\sim\SimOriginModel.cs" />
     <Compile Include="model\data\AttributeFunction.cs" />
     <Compile Include="model\data\FilteringOperation.cs" />
-    <Compile Include="model\view_new\AttributeViewModel.cs" />
-    <Compile Include="model\view\FilteringType.cs" />
-    <Compile Include="model\view\FilterRendererType.cs" />
+    <Compile Include="model\view\AttributeViewModel.cs" />
     <Compile Include="model\data\FilterModel.cs" />
-    <Compile Include="model\view_new\LinkViewModel.cs" />
+    <Compile Include="model\view\LinkViewModel.cs" />
     <Compile Include="model\view\MainModel.cs" />
     <Compile Include="model\view\SchemaViewModel.cs" />
-    <Compile Include="model\view_new\VisualizationViewModelFactory.cs" />
-    <Compile Include="model\view_new\VisualizationViewModel.cs" />
+    <Compile Include="model\view\VisualizationViewModelFactory.cs" />
+    <Compile Include="model\view\VisualizationViewModel.cs" />
     <Compile Include="model\data\QueryResultItemModel.cs" />
     <Compile Include="model\data\QueryResultItemValueModel.cs" />
     <Compile Include="model\data\QueryResultModel.cs" />
@@ -266,15 +260,9 @@
     <Compile Include="utils\ConvexHull.cs" />
     <Compile Include="utils\CSVParser.cs" />
     <Compile Include="utils\ExtendedBindableBase.cs" />
+    <Compile Include="utils\FrostyFreeze.cs" />
     <Compile Include="utils\Helpers.cs" />
     <Compile Include="utils\HitTester.cs" />
-    <Compile Include="utils\inq\FormulaEvaluator.cs" />
-    <Compile Include="utils\inq\InkTableContent.cs" />
-    <Compile Include="utils\inq\InkTableSegmenter.cs" />
-    <Compile Include="utils\inq\InqAnalyzer.cs" />
-    <Compile Include="utils\inq\Label.cs" />
-    <Compile Include="utils\inq\StroqCache.cs" />
-    <Compile Include="utils\inq\StroqListener.cs" />
     <Compile Include="utils\MathUtil.cs" />
     <Compile Include="utils\Vector2.cs" />
     <Compile Include="view\direct2d\AnimatedScene.cs" />
@@ -300,27 +288,28 @@
     <Compile Include="view\vis\Back.xaml.cs">
       <DependentUpon>Back.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\view\CalculatedColumnDescriptor.cs" />
-    <Compile Include="model\view\CalculatedColumnDescriptorInfo.cs" />
     <Compile Include="view\vis\Colorer.xaml.cs">
       <DependentUpon>Colorer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\vis\render\BarChartRenderer.cs" />
+    <Compile Include="view\vis\render\direct2d\ScatterPlotScene.cs" />
+    <Compile Include="view\vis\render\direct2d\Direct2dXYRendererContent.xaml.cs">
+      <DependentUpon>Direct2dXYRendererContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\render\XYRenderer.xaml.cs">
+      <DependentUpon>XYRenderer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\vis\render\direct2d\XYScene.cs" />
+    <Compile Include="view\vis\render\XYRendererContent.cs" />
     <Compile Include="view\vis\Styler.xaml.cs">
       <DependentUpon>Styler.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controller\filter\FilterExpressionEvaluator.cs" />
     <Compile Include="view\vis\Front.xaml.cs">
       <DependentUpon>Front.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\vis\MovableElement.cs" />
-    <Compile Include="model\view\NamedFilterModelColumnDescriptor.cs" />
     <Compile Include="view\inq\InkableCanvas.cs" />
     <Compile Include="view\inq\InkableScene.cs" />
-    <Compile Include="view\math\RecognitionResultRenderer.xaml.cs">
-      <DependentUpon>RecognitionResultRenderer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\vis\render\TableFilterRenderer.cs" />
+    <Compile Include="view\vis\render\TableRenderer.cs" />
     <Compile Include="view\vis\render\RendererResources.cs" />
     <Compile Include="view\vis\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
@@ -329,56 +318,37 @@
       <DependentUpon>Grouper.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\view\OrgData.cs" />
-    <Compile Include="view\other\AxisFeedback.xaml.cs">
-      <DependentUpon>AxisFeedback.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\schema\ColumnTree.cs" />
     <Compile Include="view\schema\ColumnTreeView.xaml.cs">
       <DependentUpon>ColumnTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\math\MathEditor.xaml.cs">
-      <DependentUpon>MathEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="controller\sql\SqlExprEvaluator.cs" />
     <Compile Include="view\schema\SchemaViewer.xaml.cs">
       <DependentUpon>SchemaViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\other\TableFeedback.xaml.cs">
-      <DependentUpon>TableFeedback.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\other\SliderFeedback.xaml.cs">
-      <DependentUpon>SliderFeedback.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\other\RadialControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>RadialControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\other\SimpleACommandSet.cs" />
     <Compile Include="view\vis\VisualizationContainerView.xaml.cs">
       <DependentUpon>VisualizationContainerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\vis\LinkView.cs" />
-    <Compile Include="view\other\SimpleAPage.cs" />
-    <Compile Include="model\view\FilterModel.cs" />
     <Compile Include="view\vis\render\FilterRenderer.cs" />
     <Compile Include="view\utils\GridViewColumnResizeBehavior.cs" />
-    <Compile Include="model\view\FilterHolderViewModel.cs" />
-    <Compile Include="model\view\TableModel.cs" />
     <Compile Include="view\table\SimpleDataGrid.xaml.cs">
       <DependentUpon>SimpleDataGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\table\AttributeView.xaml.cs">
       <DependentUpon>AttributeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\table\AttributePlaceholderview.xaml.cs">
-      <DependentUpon>AttributePlaceholderview.xaml</DependentUpon>
+    <Compile Include="view\table\AttributePlaceholderView.xaml.cs">
+      <DependentUpon>AttributePlaceholderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="controller\data\AsyncVirtualizingCollection.cs" />
     <Compile Include="controller\data\DataPage.cs" />
     <Compile Include="controller\data\DataWrapper.cs" />
     <Compile Include="controller\data\IItemsProvider.cs" />
     <Compile Include="controller\data\VirtualizingCollection.cs" />
-    <Compile Include="PanoramicDataCommands.cs" />
     <Compile Include="controller\physics\PhysicsManager.cs" />
     <Compile Include="Service References\BingMapService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -400,6 +370,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="view\vis\render\direct2d\Direct2dXYRendererContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\vis\render\XYRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\vis\Styler.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -412,10 +390,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\math\RecognitionResultRenderer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="view\vis\Resizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -424,29 +398,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\other\AxisFeedback.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="view\schema\ColumnTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\math\MathEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="view\schema\SchemaViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\other\TableFeedback.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\other\SliderFeedback.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="view\other\RadialControl.xaml">
       <SubType>Designer</SubType>
@@ -460,7 +418,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\table\AttributePlaceholderview.xaml">
+    <Page Include="view\table\AttributePlaceholderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -472,8 +430,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ACommandSet.cs" />
-    <Compile Include="APage.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -504,10 +460,16 @@
     <None Include="Resources\configs\data\TestDataLarge.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\configs\data\Titanic.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\configs\test_small.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\configs\test_large.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\configs\titanic_csv.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\configs\titanic.ini">
@@ -632,6 +594,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\libs\CombinedInputAPI\CombinedInputAPI.csproj">
+      <Project>{eafdd97a-c8a2-4263-85ff-7300778d9111}</Project>
+      <Name>CombinedInputAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\Farseer Physics Engine 3.3.1\Farseer Physics.csproj">
+      <Project>{a4610e4c-dd34-428b-babb-779ca0b5993a}</Project>
+      <Name>Farseer Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\Geom\Geom.csproj">
+      <Project>{25c89864-6c12-4aac-864c-d52174926b1f}</Project>
+      <Name>Geom</Name>
+    </ProjectReference>
     <ProjectReference Include="..\libs\PanoramicDataService\PanoramicDataDBConnector\PanoramicDataDBConnector.csproj">
       <Project>{4508eb8e-5ddc-4122-9cae-b3a82848cc09}</Project>
       <Name>PanoramicDataDBConnector</Name>
@@ -639,102 +613,6 @@
     <ProjectReference Include="..\libs\PanoramicDataService\PanoramicDataModel\PanoramicDataModel.csproj">
       <Project>{34b328d4-255f-499e-851c-1b7407b68d65}</Project>
       <Name>PanoramicDataModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\libs\SharpShapes\BrownRecognitionAPI\BrownRecognitionAPI.csproj">
-      <Project>{35b7bcb3-e4a0-4c24-afcf-9cb6595db31a}</Project>
-      <Name>BrownRecognitionAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\libs\SharpShapes\BrownRecognitionCommon\BrownRecognitionCommon.csproj">
-      <Project>{76ead062-c55c-4e5f-8c0c-1e85fbb5dd5d}</Project>
-      <Name>BrownRecognitionCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\libs\SharpShapes\ShapeRecognizer\ShapeRecognizer.csproj">
-      <Project>{71a5c84b-bd8e-4152-86d6-d6dea59d80e8}</Project>
-      <Name>ShapeRecognizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\%24N\NDollar.csproj">
-      <Project>{f04d5438-2904-45ff-960b-10e1989cf573}</Project>
-      <Name>NDollar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\AppLib\AppLib.csproj">
-      <Project>{958e03dc-94f4-4175-adb0-26ddae87c0e3}</Project>
-      <Name>AppLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\CombinedInputAPI\CombinedInputAPI.csproj">
-      <Project>{eafdd97a-c8a2-4263-85ff-7300778d9111}</Project>
-      <Name>CombinedInputAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\DynamicDataDisplay0.3\DynamicDataDisplay.csproj">
-      <Project>{10809524-8302-43da-a2a6-825b33f1f364}</Project>
-      <Name>DynamicDataDisplay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Farseer Physics Engine 3.3.1\Farseer Physics.csproj">
-      <Project>{a4610e4c-dd34-428b-babb-779ca0b5993a}</Project>
-      <Name>Farseer Physics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Geom\Geom.csproj">
-      <Project>{25c89864-6c12-4aac-864c-d52174926b1f}</Project>
-      <Name>Geom</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\InputFrameworkBase\InputFrameworkBase.csproj">
-      <Project>{133fbae4-1213-41c7-b7a8-04e3d015a1b0}</Project>
-      <Name>InputFrameworkBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\InputFramework\InputFramework.csproj">
-      <Project>{9903115a-ee67-4170-b717-acaea00c6b14}</Project>
-      <Name>InputFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\InqUtils\InqUtils.csproj">
-      <Project>{6a89aca9-0b5e-4e30-a887-fe1a2ed19731}</Project>
-      <Name>InqUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Inq\Inq.csproj">
-      <Project>{f3d6d741-d9fa-4d76-a2d8-ae4ce3baa31a}</Project>
-      <Name>Inq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Math\CharRecognizer\CharRecognizer.csproj">
-      <Project>{aa0998d1-6ea3-4786-b7de-6e7f260369b0}</Project>
-      <Name>CharRecognizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Math\ExprWPF\ExprWPF.csproj">
-      <Project>{84cdb161-2547-4296-b563-16c1c92b50ff}</Project>
-      <Name>ExprWPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Math\Expr\Expr.csproj">
-      <Project>{286f313d-c4ea-468a-8afd-25c80b0b7af8}</Project>
-      <Name>Expr</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Math\MathRecognizer\MathRecognizer.csproj">
-      <Project>{24aa44f0-ab63-42d9-be8c-84eee87b1e66}</Project>
-      <Name>MathRecognizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\MoveResizeRotate\MoveResizeRotate.csproj">
-      <Project>{ef0b4258-89e8-423f-a38d-c1e8af9fd5c3}</Project>
-      <Name>MoveResizeRotate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Serialization\Serialization.csproj">
-      <Project>{af53ff4f-2329-475c-9bcb-007062656e95}</Project>
-      <Name>Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
-      <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
-      <Name>SharpGL.SceneGraph</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL.WPF\SharpGL.WPF.csproj">
-      <Project>{53e67055-13d2-4467-bb57-79589afac2cd}</Project>
-      <Name>SharpGL.WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\SharpGL\Core\SharpGL\SharpGL.csproj">
-      <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
-      <Name>SharpGL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\Utils\Utils\Utils.csproj">
-      <Project>{9718dc62-88f9-4b67-a000-b2185ca2c15f}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\starpadLibs\WPFHelp\WPFHelp.csproj">
-      <Project>{97cf00db-14a2-4d4a-87f4-b0933cf2c650}</Project>
-      <Name>WPFHelp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

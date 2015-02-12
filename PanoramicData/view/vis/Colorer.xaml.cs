@@ -16,13 +16,16 @@ using PanoramicDataModel;
 using PixelLab.Common;
 using starPadSDK.AppLib;
 using starPadSDK.Geom;
-using starPadSDK.Inq;
 using starPadSDK.WPFHelp;
 using PanoramicData.view.other;
 using PanoramicData.model.view;
 using PanoramicData.view.table;
 using CombinedInputAPI;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
+using PanoramicData.model.data;
+using PanoramicData.view.inq;
+using System.Reactive.Linq;
+using System.Collections.Specialized;
 
 namespace PanoramicData.view.vis
 {
@@ -31,24 +34,52 @@ namespace PanoramicData.view.vis
     /// </summary>
     public partial class Colorer : UserControl, AttributeViewModelEventHandler
     {
-        public static event EventHandler<DatabaseTableEventArgs> ColorerDropped;
-
         private Point _colorerStartDrag = new Point(0, 0);
         private Border _colorerShadow = null;
-
-        public FilterModel FilterModel { get; set; }
+        private IDisposable _observableDisposable = null;
 
         public Colorer()
         {
             InitializeComponent();
             this.AddHandler(FrameworkElement.TouchDownEvent, new EventHandler<TouchEventArgs>(colorGrid_TouchDownEvent));
+            this.DataContextChanged += Colorer_DataContextChanged;
         }
 
-        public void Init()
+        void Colorer_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            return;
-            if (FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count == 0 /*&&
-                !FilterModel.TableModel.CalculateRecursivePathInfos().Any(pp => pp.Path.Count > 0)*/)
+            if (e.OldValue != null)
+            {
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
+            }
+            if (e.NewValue != null)
+            {
+                if (_observableDisposable != null)
+                {
+                    _observableDisposable.Dispose();
+                }
+                _observableDisposable = Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(
+                    (e.NewValue as VisualizationViewModel).QueryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color), "CollectionChanged")
+                    .Throttle(TimeSpan.FromMilliseconds(50))
+                    .Subscribe((arg) =>
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
+                        {
+                            populate();
+                        }));
+                    });
+
+                populate();
+            }
+        }
+
+        public void populate()
+        {
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+
+            if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color).Count == 0)
             {
                 colorGridP1.Fill = Brushes.LightGray;
                 colorGridP2.Fill = Brushes.LightGray;
@@ -56,47 +87,23 @@ namespace PanoramicData.view.vis
             }
             else
             {
-                colorGridP1.Fill = FilterModel.Brush;
-                colorGridP2.Fill = FilterModel.Brush;
-                colorGridP3.Fill = FilterModel.Brush;
+                colorGridP1.Fill = (DataContext as VisualizationViewModel).Brush;
+                colorGridP2.Fill = (DataContext as VisualizationViewModel).Brush;
+                colorGridP3.Fill = (DataContext as VisualizationViewModel).Brush;
             }
         }
 
-        /*private Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor> _topLevelLookup = new Dictionary<GrouperTopLevelPair, DatabaseColumnDescriptor>();
-        private List<PanoramicDataColumnDescriptor> topLevelGroupings()
-        {
-            List<PanoramicDataColumnDescriptor> descriptors = new List<PanoramicDataColumnDescriptor>();
-            List<PathInfo> pathInfos = FilterModel.TableModel.CalculateRecursivePathInfos();
-            foreach (var pp in pathInfos)
-            {
-                if (pp.Path.Count > 0)
-                {
-                    DatabaseColumnDescriptor column = null;
-                    GrouperTopLevelPair pair = new GrouperTopLevelPair(pp.TableInfo.PrimaryKeyFieldInfo, pp);
-                    if (!_topLevelLookup.ContainsKey(pair))
-                    {
-                        _topLevelLookup.Add(pair, new DatabaseColumnDescriptor(pp.TableInfo.PrimaryKeyFieldInfo, pp));
-                    }
-                    column = _topLevelLookup[pair];
-                    column.IsGrouped = true;
-                    if (!descriptors.Contains(column))
-                    {
-                        descriptors.Add(column);
-                    }
-                }
-            }
-            return descriptors;
-        } */
-
         private void colorGrid_TouchDownEvent(Object sender, TouchEventArgs e)
         {
-            if (FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Count > 0)
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+
+            if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color).Count > 0)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
+                InkableScene inkableScene = this.FindParent<InkableScene>();
 
                 e.TouchDevice.Capture(this);
 
-                _colorerStartDrag = e.GetTouchPoint(inqScene).Position;
+                _colorerStartDrag = e.GetTouchPoint(inkableScene).Position;
 
                 this.AddHandler(FrameworkElement.TouchMoveEvent, new EventHandler<TouchEventArgs>(colorGrid_TouchMoveEvent));
                 this.AddHandler(FrameworkElement.TouchUpEvent, new EventHandler<TouchEventArgs>(colorGrid_TouchUpEvent));
@@ -106,6 +113,8 @@ namespace PanoramicData.view.vis
 
         private void colorGrid_TouchUpEvent(Object sender, TouchEventArgs e)
         {
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+
             var element = (FrameworkElement)sender;
             e.Handled = true;
             e.TouchDevice.Capture(null);
@@ -115,43 +124,42 @@ namespace PanoramicData.view.vis
 
             if (_colorerShadow != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
+                InkableScene inkableScene = this.FindParent<InkableScene>();
 
-                if (ColorerDropped != null)
+               /* if (ColorerDropped != null)
                 {
-                    Rct bounds = _colorerShadow.GetBounds(inqScene);
-                    ColorerDropped(this, new DatabaseTableEventArgs(bounds,
-                        FilterModel.TableModel, FilterModel, true));
-                }
+                    Rct bounds = _colorerShadow.GetBounds(inkableScene);
+                    //ColorerDropped(this, new DatabaseTableEventArgs(bounds,
+                     //   FilterModel.TableModel, FilterModel, true));
+                }*/
 
-                inqScene.Rem(_colorerShadow);
+                inkableScene.Remove(_colorerShadow);
                 _colorerShadow = null;
             }
             else
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
                 RadialMenuCommand root = new RadialMenuCommand();
                 root.IsSelectable = false;
 
-                List<PanoramicDataColumnDescriptor> descriptors = new List<PanoramicDataColumnDescriptor>();
-                //descriptors.AddRange(topLevelGroupings());
+                List<AttributeOperationModel> attributeOperationModels = new List<AttributeOperationModel>();
 
                 // field level colorings
-                descriptors.AddRange(FilterModel.GetColumnDescriptorsForOption(Option.ColorBy));
+                attributeOperationModels.AddRange(queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color));
 
-                foreach (var descriptor in descriptors)
+                foreach (var attributeOperationModel in attributeOperationModels)
                 {
                     RadialMenuCommand rmc = new RadialMenuCommand();
-                    rmc.Name = descriptor.GetSimpleLabel().Replace(" ", "\n");
-                    rmc.Data = descriptor;
+                    rmc.Name = attributeOperationModel.AttributeModel.Name.Replace(" ", "\n");
+                    rmc.Data = attributeOperationModel;
                     rmc.IsSelectable = true;
-                    rmc.IsActive = FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Contains(descriptor);
+                    rmc.IsActive = queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color).Contains(attributeOperationModel);
                     rmc.ActiveTriggered = (cmd) =>
                     {
-                        PanoramicDataColumnDescriptor columnDescriptor = cmd.Data as PanoramicDataColumnDescriptor;
-                        togglecoloring(columnDescriptor);
+                        AttributeOperationModel aom = cmd.Data as AttributeOperationModel;
+                        togglecoloring(aom);
                     };
                     root.AddSubCommand(rmc);
                 }
@@ -159,34 +167,33 @@ namespace PanoramicData.view.vis
                 if (root.InnerCommands.Count > 0)
                 {
                     RadialControl rc = new RadialControl(root,
-                        new colorGridRadialControlExecution(FilterModel, FilterModel.TableModel, inqScene));
-                    rc.SetPosition(fromInqScene.X - RadialControl.SIZE / 2,
-                        fromInqScene.Y - RadialControl.SIZE / 2);
-                    inqScene.AddNoUndo(rc);
+                        new colorGridRadialControlExecution(inkableScene));
+                    rc.SetPosition(fromInkableScene.X - RadialControl.SIZE / 2,
+                        fromInkableScene.Y - RadialControl.SIZE / 2);
+                    inkableScene.Add(rc);
                 }
             }
         }
 
         private void colorGrid_TouchMoveEvent(Object sender, TouchEventArgs e)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            Point fromInqScene = e.GetTouchPoint(inqScene).Position;
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            Point fromInkableScene = e.GetTouchPoint(inkableScene).Position;
 
-            Vec v = _colorerStartDrag - fromInqScene;
-            List<PathInfo> pathInfos = FilterModel.TableModel.CalculateRecursivePathInfos();
+            Vec v = _colorerStartDrag - fromInkableScene;
             if (v.Length > 10 && _colorerShadow == null)
             {
-                ManipulationStart(fromInqScene);
+                ManipulationStart(fromInkableScene);
             }
-            ManipulationMove(fromInqScene);
+            ManipulationMove(fromInkableScene);
         }
 
-        public void ManipulationStart(Point fromInqScene)
+        public void ManipulationStart(Point fromInkableScene)
         {
-            InqScene inqScene = this.FindParent<InqScene>();
-            if (inqScene != null)
+            InkableScene inkableScene = this.FindParent<InkableScene>();
+            if (inkableScene != null)
             {
-                _colorerStartDrag = fromInqScene;
+                _colorerStartDrag = fromInkableScene;
                 _colorerShadow = new Border();
                 _colorerShadow.Width = 120;
                 _colorerShadow.Height = 40;
@@ -200,66 +207,41 @@ namespace PanoramicData.view.vis
                 _colorerShadow.Child = l;
 
                 _colorerShadow.RenderTransform = new TranslateTransform(
-                    fromInqScene.X - _colorerShadow.Width / 2.0,
-                    fromInqScene.Y - _colorerShadow.Height);
-                inqScene.AddNoUndo(_colorerShadow);
+                    fromInkableScene.X - _colorerShadow.Width / 2.0,
+                    fromInkableScene.Y - _colorerShadow.Height);
+                inkableScene.Add(_colorerShadow);
             }
         }
 
-        public void ManipulationMove(Point fromInqScene)
+        public void ManipulationMove(Point fromInkableScene)
         {
             if (_colorerShadow != null)
             {
-                InqScene inqScene = this.FindParent<InqScene>();
-                _colorerStartDrag = fromInqScene;
+                InkableScene inkableScene = this.FindParent<InkableScene>();
+                _colorerStartDrag = fromInkableScene;
                 _colorerShadow.RenderTransform = new TranslateTransform(
-                    fromInqScene.X - _colorerShadow.Width / 2.0,
-                    fromInqScene.Y - _colorerShadow.Height);
-                inqScene.AddNoUndo(_colorerShadow);
+                    fromInkableScene.X - _colorerShadow.Width / 2.0,
+                    fromInkableScene.Y - _colorerShadow.Height);
+                inkableScene.Add(_colorerShadow);
             }
         }
 
-        private void togglecoloring(PanoramicDataColumnDescriptor columnDescriptor)
+        private void togglecoloring(AttributeOperationModel attributeOperationModel)
         {
-            if (!FilterModel.GetColumnDescriptorsForOption(Option.ColorBy).Contains(columnDescriptor))
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+            if (!queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Color).Contains(attributeOperationModel))
             {
-                if (FilterModel.FilterRendererType != FilterRendererType.Pie)
+                if (queryModel.GetFunctionAttributeOperationModel(AttributeFunction.Group).Count > 0)
                 {
-                    if (FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count > 0)
-                    {
-                        columnDescriptor.IsGrouped = true;
-                    }
-                    FilterModel.AddOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
+                    attributeOperationModel.IsGrouped = true;
                 }
-                else
-                {
-                    //FilterModel.AddOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
-                    //var clone = (PanoramicDataColumnDescriptor) columnDescriptor.Clone();
-                    //clone.IsGrouped = true;
-                    //FilterModel.AddOptionColumnDescriptor(Option.GroupBy, clone);
-                    //if (FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Count > 0)
-                    {
-                        columnDescriptor.IsGrouped = true;
-                    }
-                    FilterModel.AddOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
-                }
+                //queryModel.AddFunctionAttributeOperationModel(AttributeFunction.Group, attributeOperationModel);
+                queryModel.AddFunctionAttributeOperationModel(AttributeFunction.Color, attributeOperationModel);
             }
             else
             {
-                if (FilterModel.FilterRendererType != FilterRendererType.Pie)
-                {
-                    FilterModel.RemoveOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
-                }
-                else
-                {
-                    //FilterModel.RemoveOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
-                    //var clones = FilterModel.GetColumnDescriptorsForOption(Option.GroupBy).Where(cd => cd.MatchSimple(columnDescriptor));
-                    //foreach (var clone in clones)
-                    //{
-                    //    FilterModel.RemoveOptionColumnDescriptor(Option.GroupBy, clone);
-                    //}
-                    FilterModel.RemoveOptionColumnDescriptor(Option.ColorBy, columnDescriptor);
-                }
+                //queryModel.RemoveFunctionAttributeOperationModel(AttributeFunction.Group, attributeOperationModel);
+                queryModel.RemoveFunctionAttributeOperationModel(AttributeFunction.Color, attributeOperationModel);
             }
         }
 
@@ -267,10 +249,7 @@ namespace PanoramicData.view.vis
         {
             if (overElement)
             {
-                //if (FilterModel.FilterRendererType != FilterRendererType.Table)
-                {
-                    colorGridRectangle.Visibility = Visibility.Visible;
-                }
+                colorGridRectangle.Visibility = Visibility.Visible;
             }
             else
             {
@@ -280,9 +259,8 @@ namespace PanoramicData.view.vis
 
         public void AttributeViewModelDropped(AttributeViewModel sender, AttributeViewModelEventArgs e)
         {
-            /*var clone = (PanoramicDataColumnDescriptor)e.ColumnDescriptor.SimpleClone();
-            togglecoloring(clone);
-            colorGridRectangle.Visibility = Visibility.Collapsed;*/
+            togglecoloring(e.AttributeOperationModel);
+            colorGridRectangle.Visibility = Visibility.Collapsed;
         }
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
@@ -298,44 +276,31 @@ namespace PanoramicData.view.vis
 
     public class colorGridRadialControlExecution : RadialControlExecution
     {
-        private FilterModel _filterModel = null;
-        private TableModel _tableModel = null;
-        private InqScene _inqScene = null;
+        private InkableScene _inkableScene = null;
 
-        public colorGridRadialControlExecution(FilterModel filterModel, TableModel tableModel, InqScene inqScene)
+        public colorGridRadialControlExecution(InkableScene inkableScene)
         {
-            this._filterModel = filterModel;
-            this._tableModel = tableModel;
-            this._inqScene = inqScene;
+            this._inkableScene = inkableScene;
         }
 
         public override void Remove(RadialControl sender, RadialMenuCommand cmd)
         {
             base.Remove(sender, cmd);
-
-            if (_tableModel != null)
-            {
-                _tableModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
-            else if (_filterModel != null)
-            {
-                _filterModel.RemoveColumnDescriptor(cmd.Data as PanoramicDataColumnDescriptor);
-            }
         }
 
         public override void Dispose(RadialControl sender)
         {
             base.Dispose(sender);
 
-            if (_inqScene != null)
+            if (_inkableScene != null)
             {
-                _inqScene.Rem(sender as FrameworkElement);
+                _inkableScene.Remove(sender as FrameworkElement);
             }
         }
 
         public override void ExecuteCommand(
             RadialControl sender, RadialMenuCommand cmd,
-            string needle = null, StroqCollection stroqs = null)
+            string needle = null, List<InkStroke> stroqs = null)
         {
             // exectue Action
             if (cmd.ActiveTriggered != null)
@@ -344,34 +309,4 @@ namespace PanoramicData.view.vis
             }
         }
     }
-    /*
-    public class ColorerTopLevelPair
-    {
-        public FieldInfo FieldInfo { get; set; }
-        public PathInfo PathInfo { get; set; }
-
-        public ColorerTopLevelPair(FieldInfo fi, PathInfo pi)
-        {
-            FieldInfo = fi;
-            PathInfo = pi;
-        }
-        public override int GetHashCode()
-        {
-            int code = 0;
-            code ^= FieldInfo.GetHashCode();
-            code ^= PathInfo.GetHashCode();
-            return code;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is GrouperTopLevelPair)
-            {
-                GrouperTopLevelPair that = obj as GrouperTopLevelPair;
-
-                return this.FieldInfo.Equals(that.FieldInfo) && this.PathInfo.Equals(that.PathInfo);
-            }
-            return false;
-        }
-    }*/
 }

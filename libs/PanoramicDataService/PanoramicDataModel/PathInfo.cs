@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PanoramicDataModel
 {
 
-    public class PathInfo : PanoramicDataGroupDescriptor
+    public class PathInfo 
     {
         public PathInfo(TableInfo root)                     { Path = new List<TableDependency>(); TableInfo = root; }
         public PathInfo(IEnumerable<TableDependency> deps) { Path = new List<TableDependency>(deps); TableInfo = Path.Last().ToTableInfo; }
@@ -17,7 +17,7 @@ namespace PanoramicDataModel
             TableInfo = Path.Last().ToTableInfo;
         }
 
-        public override string GetLabel()
+        public string GetLabel()
         {
             string label = this.TableInfo.Name;
             if (this.TableInfo.TableAliases.Count > 0)

@@ -7,39 +7,22 @@ using PixelLab.Common;
 using starPadSDK.AppLib;
 using PanoramicDataModel;
 using PanoramicData.model.view;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.inq;
 
 namespace PanoramicData.view.table
 {
     /// <summary>
-    /// Interaction logic for AttributePlaceholderview.xaml
+    /// Interaction logic for AttributePlaceholderView.xaml
     /// </summary>
-    public partial class AttributePlaceholderview : UserControl, AttributeViewModelEventHandler
+    public partial class AttributePlaceholderView : UserControl, AttributeViewModelEventHandler
     {
         public delegate void ChangedHandler(object sender, AttributeViewModelEventArgs e);
         public event ChangedHandler Changed;
 
-        public static readonly DependencyProperty LabelTextProperty =
-            DependencyProperty.Register("LabelText", typeof(string),
-            typeof(AttributePlaceholderview),
-            new PropertyMetadata("Default Label:"));
-
-        public string LabelText
-        {
-            get
-            {
-                return (string)GetValue(LabelTextProperty);
-            }
-            set
-            {
-                SetValue(LabelTextProperty, value);
-            }
-        }
-
         public static readonly DependencyProperty ErrorMessageProperty =
             DependencyProperty.Register("ErrorMessage", typeof(string),
-            typeof(AttributePlaceholderview),
+            typeof(AttributePlaceholderView),
             new PropertyMetadata("Default Error Message"));
 
         public string ErrorMessage
@@ -54,7 +37,7 @@ namespace PanoramicData.view.table
             }
         }
 
-        public AttributePlaceholderview()
+        public AttributePlaceholderView()
         {
             InitializeComponent();
         }

@@ -14,10 +14,12 @@ using PanoramicData.model.view;
 using PanoramicData.view.vis;
 using PanoramicData.view.table;
 using PanoramicData.controller.view;
-using PanoramicData.model.view_new;
+using PanoramicData.model.view;
 using PanoramicData.view.vis.render;
 using PanoramicData.utils;
 using PanoramicData.view.inq;
+using PanoramicData.model.data;
+using PanoramicData.view.vis.render.direct2d;
 
 namespace PanoramicData.view.vis
 {
@@ -41,20 +43,20 @@ namespace PanoramicData.view.vis
         {
             if (e.OldValue != null)
             {
-                (e.OldValue as VisualizationViewModel).PropertyChanged -= VisualizationContainerView_PropertyChanged;
+                (e.OldValue as VisualizationViewModel).QueryModel.PropertyChanged -= QueryModel_PropertyChanged;
             }
             if (e.NewValue != null)
             {
                 VisualizationViewModel model = (e.NewValue as VisualizationViewModel);
-                model.PropertyChanged += VisualizationContainerView_PropertyChanged;
+                model.QueryModel.PropertyChanged += QueryModel_PropertyChanged;
                 visualizationTypeUpdated();
             }
         }
 
-        void VisualizationContainerView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void QueryModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            VisualizationViewModel visualizationViewModel = (DataContext as VisualizationViewModel);
-            if (e.PropertyName == visualizationViewModel.GetPropertyName(() => visualizationViewModel.VisualizationType))
+            QueryModel queryModel = (DataContext as VisualizationViewModel).QueryModel;
+            if (e.PropertyName == queryModel.GetPropertyName(() => queryModel.VisualizationType))
             {
                 visualizationTypeUpdated();
             }
@@ -68,7 +70,7 @@ namespace PanoramicData.view.vis
             _front.DataContext = visualizationViewModel;
             transitionPresenter.Content = _front;
 
-            if (visualizationViewModel.VisualizationType != VisualizationType.Table)
+            if (visualizationViewModel.QueryModel.VisualizationType != VisualizationType.Table)
             {
                 _back.Content = new Back();
                 _back.DataContext = visualizationViewModel;
@@ -76,29 +78,35 @@ namespace PanoramicData.view.vis
 
             rotationTransition.Duration = new Duration(TimeSpan.FromSeconds(0.75));
 
-            if (visualizationViewModel.VisualizationType == VisualizationType.Bar)
+            if (visualizationViewModel.QueryModel.VisualizationType == VisualizationType.Bar)
             {
-                FilterRenderer fRenderer = new BarChartRenderer();
+                FilterRenderer fRenderer = new XYRenderer()
+                {
+                    RenderContent = new Direct2dXYRendererContent()
+                    {
+                        Scene = new ScatterPlotScene()
+                    }
+                };
                 (_front.Content as Front).SetContent(fRenderer);
                 _front.CreateBitmapForInteractions = true;
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Table)
+            else if (visualizationViewModel.QueryModel.VisualizationType == VisualizationType.Table)
             {
                 FilterRenderer fRenderer = new TableRenderer();
                 (_front.Content as Front).SetContent(fRenderer);
                 _front.CreateBitmapForInteractions = true;
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Plot)
+            else if (visualizationViewModel.QueryModel.VisualizationType == VisualizationType.Plot)
             {
                 //PlotFilterRenderer4 fRenderer = new PlotFilterRenderer4(false);
                 //(_front.Content as Front).SetContent(fRenderer);
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Line)
+            else if (visualizationViewModel.QueryModel.VisualizationType == VisualizationType.Line)
             {
                 //PlotFilterRenderer4 fRenderer = new PlotFilterRenderer4(false);
                 //(_front.Content as Front).SetContent(fRenderer);
             }
-            else if (visualizationViewModel.VisualizationType == VisualizationType.Map)
+            else if (visualizationViewModel.QueryModel.VisualizationType == VisualizationType.Map)
             {
                 //MapFilterRenderer2 fRenderer = new MapFilterRenderer2(false);
                 //(_front.Content as Front).SetContent(fRenderer);
